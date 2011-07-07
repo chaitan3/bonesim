@@ -15,6 +15,8 @@ def importer():
 	return dict()
 
 def download():
+	session.JSON = ""
+	session.BioPAX = ""
 	connection = httplib.HTTPConnection("www.ebi.ac.uk")
 	connection.request("GET", "/biomodels-main/download?mid=BIOMD"+request.vars.BioModelsID.rjust(10, "0"))
 	session.SBML = connection.getresponse().read()

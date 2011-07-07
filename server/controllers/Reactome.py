@@ -15,6 +15,8 @@ def importer():
 	return dict()
 
 def upload():
+	session.JSON = ""
+	session.BioPAX = ""
 	session.RSI = request.vars.RSI
 	connection = httplib.HTTPConnection("www.reactome.org")					# retrieve page for Reactome ID
 	 #"/cgi-bin/eventbrowser_st_id?ST_ID="+str(session.RSI))
