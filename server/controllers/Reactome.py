@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 
+# TEMPORARY BUG WORKAROUND
 import sys
-sys.path.append("/var/www/web2py/applications/biographer/modules")
-
+hardcoded = "/var/www/web2py/applications/biographer/modules"
+if not hardcoded in sys.path:
+	sys.path.append(hardcoded)
 import biographer
+reload(biographer)
+# END WORKAROUND
+
 import httplib
 
 def importer():
@@ -13,7 +18,7 @@ def upload():
 	session.RSI = request.vars.RSI
 	connection = httplib.HTTPConnection("www.reactome.org")					# retrieve page for Reactome ID
 	 #"/cgi-bin/eventbrowser_st_id?ST_ID="+str(session.RSI))
-	connection.request("GET", "/cgi-bin/eventbrowser?DB=gk_current&ID=168254&ZOOM=2")
+	connection.request("GET", "/cgi-bin/eventbrowser?DB=gk_current&ID=168254&ZOOM=2&CLASSIC=1")
 	page = connection.getresponse().read()
 	if page.lower().find("internal error") > -1:						# page not found
 		session.flash = "Error: Invalid Reactome stable identifier"			# -> invalid ID

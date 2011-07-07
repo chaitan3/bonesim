@@ -1,21 +1,27 @@
 # -*- coding: utf-8 -*-
 
+# TEMPORARY BUG WORKAROUND
 import sys
-import os.path
+hardcoded = "/var/www/web2py/applications/biographer/modules"
+if not hardcoded in sys.path:
+	sys.path.append(hardcoded)
+import biographer
+reload(biographer)
+# END WORKAROUND
+
+import os
 import random
 import string
-sys.path.append("/var/www/web2py/applications/biographer/modules")
-import biographer
 
 def draw():
 	reload(biographer)
 	if session.bioGraph is not None:
-		session.graphviz = session.bioGraph.exportGraphvizScript()
-		random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(12)) + '.png'
-		local_filename = os.path.join(request.folder,"static/tmp",random_string)
-		web_filename = URL(r=request, c="static/tmp", f=random_string)
-		session.bioGraph.exportGraphvizPNG( tempfile=local_filename )
+		random_string	= ''.join( random.choice(string.ascii_uppercase + string.digits) for x in range(12) ) + '.png'
+		path		= os.path.join(request.folder, "static/graphviz", random_string)
+		url		= URL(r=request, c="static/graphviz", f=random_string)
+		dot		= session.bioGraph.Graphviz()
+		session.bioGraph.GraphvizPNG( tempfile=path )
+		return dict( url=url, dot=dot )
 	else:
-		session.graphviz = ""
-	return dict(web_filename=web_filename)
-
+		session.flash = "You must import a Graph first !"
+		return dict( url="", dot="" )

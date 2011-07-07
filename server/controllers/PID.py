@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 
+# TEMPORARY BUG WORKAROUND
 import sys
-sys.path.append("/var/www/web2py/applications/biographer/modules")
-
+hardcoded = "/var/www/web2py/applications/biographer/modules"
+if not hardcoded in sys.path:
+	sys.path.append(hardcoded)
 import biographer
+reload(biographer)
+# END WORKAROUND
+
 import httplib
 
 def importer():

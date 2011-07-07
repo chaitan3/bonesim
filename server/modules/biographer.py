@@ -87,8 +87,13 @@ class Node:
 
 		for key in self.__dict__.keys():			# check if we recognize all keys
 			if not key in NodeKeys:
-				result += 'Warning: Unrecognized Node key "'+key+'" !\n'
-				show = True
+				if key in OptionalNodeKeys:
+					result += 'Node key "'+key+'" belongs under "data" !\n'
+					self.data[key] = self.__dict__[key]
+					del self.__dict__[key]
+				else:
+					result += 'Warning: Unrecognized Node key "'+key+'" !\n'
+					show = True
 
 		for key in MandatoryNodeKeys:				# check mandatory keys
 			if not key in self.__dict__:
@@ -147,8 +152,13 @@ class Edge:
 
 		for key in self.__dict__.keys():			# check if we recognize all keys
 			if not key in EdgeKeys:
-				result += 'Warning: Unrecognized Edge key "'+key+'" !\n'
-				show = True
+				if key in OptionalEdgeKeys:
+					result += 'Edge key "'+key+'" belongs under "data" !\n'
+					self.data[key] = self.__dict__[key]
+					del self.__dict__[key]
+				else:
+					result += 'Warning: Unrecognized Edge key "'+key+'" !\n'
+					show = True
 
 		for key in MandatoryEdgeKeys:				# check for mandatory keys
 			if not key in self.__dict__.keys():
@@ -190,6 +200,7 @@ class Graph:
 		self.Edges = []
 		self.maxID = 1
 		self.IDmapNodes = self.IDmapEdges = {}
+		self.graphviz = None
 
 	def __init__(self, filename=None, JSON=None, SBML=None, ODP=None, BioPAX=None):
 		self.empty()
@@ -303,7 +314,7 @@ class Graph:
 			for reactant in reaction.getListOfReactants():		# create Edges from the educts, products and modifiers to this process node
 				e		= Edge( defaults=True )
 				e.id		= self.newID()
-				e.sbo           = 10
+				e.sbo           = SBO['consumption']
 				e.source        = reactant.getSpecies()
 				e.target	= n.id
 				self.Edges.append(e)
@@ -311,7 +322,7 @@ class Graph:
 			for product in reaction.getListOfProducts():
 				e		= Edge( defaults=True )
 				e.id		= self.newID()
-				e.sbo           = 11
+				e.sbo           = SBO['production']
 				e.source        = n.id
 				e.target	= product.getSpecies()
 				self.Edges.append(e)
@@ -356,27 +367,25 @@ class Graph:
 
 	# http://networkx.lanl.gov/pygraphviz/tutorial.html
 
-	def GraphvizObject(self):
-		self.DEBUG += "Exporting Graphviz ...\n"
-		G = pygraphviz.AGraph(directed=True)
-		for node in self.Nodes:
-			G.add_node( str(node.id),
-				    label=node.id if "label" not in node.data else node.data["label"],
-				    shape='ellipse' if node.type != TYPE["process node"] else 'box' )
-		for edge in self.Edges:
-			G.add_edge( str(edge.source), str(edge.target),
-				    arrowhead='normal' if edge.sbo in [10, 11] else 'tee' )
-		return G
+	def Graphviz(self):
+		if self.graphviz is None:
+			self.DEBUG += "Exporting Graphviz ...\n"
+			self.graphviz = pygraphviz.AGraph(directed=True)
+			for node in self.Nodes:
+				if (not node.is_abstract) and (self.EdgeCount(node.id) > 0):
+					self.graphviz.add_node( str(node.id),
+						    label=node.id if "label" not in node.data else node.data["label"],
+						    shape='ellipse' if node.type != TYPE["process node"] else 'box' )
+			for edge in self.Edges:
+				self.graphviz.add_edge( str(edge.source), str(edge.target),
+					    arrowhead='normal' if edge.sbo in [ SBO['consumption'], SBO['production'] ] else 'tee' )
+		return self.graphviz.string()
 
-	def exportGraphvizScript(self):
-		return self.GraphvizObject().string()
-
-	def exportGraphvizPNG(self, tempfile="/tmp/biographer-graphviz.png"):
-		G = self.GraphvizObject()
+	def GraphvizPNG(self, tempfile="/tmp/biographer-graphviz.png"):
 		self.DEBUG += "Graphviz -> PNG ...\n"
-		G.layout(prog='dot')
-		G.draw(tempfile)
-		return open(tempfile).read()
+		self.graphviz.layout( prog='dot' )
+		self.graphviz.draw( tempfile )
+		return open( tempfile ).read()
 		
 
 	### basic functions on Graph properties ###
