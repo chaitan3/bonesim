@@ -349,29 +349,42 @@ class Layout:
 		self.edges.append( e )
 
 	def export(self):			# export object to Layouter
-		result = str( len(self.compartments) )+"\n"
+		node_index_map = {}				# Node index map ...
+		for i in range(0, len(self.nodes)):
+			index = i+1
+			node_index_map[ self.nodes[i]['id'] ] = index
+		compartment_index_map = {}			# Compartment index map ...
 		for i in range(0, len(self.compartments)):
-			result += self.compartments[i]+"\n"
+			index = i+1
+			compartment_index_map[ self.compartments[i] ] = index
+
+		result = str( len(self.compartments) )+"\n"	# Number of Compartments
+
+		for i in range(0, len(self.compartments)):	# Compartments
+			index = i+1
+			result += str(index) +" "+ self.compartments[i]+"\n"
 		result += "///\n"
 		result += str( len(self.nodes) )+"\n"
-		index_map = {}
-		for i in range(0, len(self.nodes)):
+#........
+
+		for i in range(0, len(self.nodes)):		# Nodes
 			node = self.nodes[i]
-			index_map[ node['id'] ] = i
-			result += str(i)+"\n"
+			index = i+1
+			result += str(index)+"\n"
 			result += getLayoutNodeType(node['type'])+"\n"
 			result += str(node['id'])+"\n"
-			result += str(node['compartment'])+"\n"
+			result += str(node_index_map[node['compartment']])+"\n"
 			result += str(node['x'])+"\n"
 			result += str(node['y'])+"\n"
 			result += str(node['width'])+"\n"
 			result += str(node['height'])+"\n"
 			result += "0\n"				 # direction, a property we don't have, but the Layouter needs
+
 		result += "///\n"
-		result += str( len(self.edges) )+"\n"
+		result += str( len(self.edges) )+"\n"		# Edges
 		for i in range(0, len(self.edges)):
 			edge = self.edges[i]
-			result += str(edge['type'])+" "+str(index_map[ edge['source'] ])+" "+str(index_map[ edge['target'] ])+"\n"
+			result += str( edge['type'] )+" "+str( node_index_map[edge['source']] )+" "+str( node_index_map[edge['target']] )+"\n"
 		return result
 
 	def parse(self, layout):		# create object from Layouter input
