@@ -121,6 +121,27 @@ class Node:
 			del me["SubNodes"]
 		return me
 
+	def exportLayout(self):
+		return {
+			'id'		: self.id, \
+			'type'		: self.type, \
+			'compartment'	: self.data.compartment, \
+			'x'		: self.data.x, \
+			'y'		: self.data.y, \
+			'width'		: self.data.width, \
+			'height'	: self.data.height, \
+			'direction'	: ''
+			}
+
+	def importLayout(self, layout):
+		self.type		= layout['type']
+		self.id			= layout['id']
+		self.data.compartment 	= layout['compartment']
+		self.data.x		= layout['x']
+		self.data.y		= layout['y']
+		self.data.width		= layout['width']
+		self.data.height	= layout['height']
+
 	def selfcheck(self):						# perform some basic integrity checks
 		result = ""
 		show = False
@@ -233,6 +254,20 @@ class Edge:
 			del me["TargetNode"]
 		return me
 
+	def exportLayout(self):
+		return {
+			'id'	:	edge.id,
+			'type'	:	'Directed',
+			'source':	edge.source,
+			'target':	edge.target
+			}
+
+	def importLayout(self, layout):
+		self.id			= layout['id']
+		self.type		= layout['type']
+		self.source		= layout['source']
+		self.target		= layout['target']
+
 	def selfcheck(self):
 		result = ""
 		show = False
@@ -302,133 +337,6 @@ class Edge:
 ### end Edge ###
 
 
-### biographer Layout ###
-
-# http://code.google.com/p/biographer/wiki/LayoutInputFormat
-
-# graph exchange format mini docu:
-# --------------------------------
-# number of compartments
-# node index " " node name     (note: 0 is unknown)
-# ...
-# ///
-# number of nodes
-# node index
-# node type
-# node id/name
-# node compartment
-# node x
-# node y
-# node width
-# node height
-# node direction
-# ...
-# ///
-# number of edges
-# edgetype from to
-# ...
-
-class Layout:
-	def __init__(self, layout=None):
-		self.number_of_compartments = 0
-		self.compartments = []
-		self.nodes = []
-		self.edges = []
-		if layout is not None:
-			self.parse( layout )
-
-	def add_compartment(self, label):
-		self.compartments.append( label )
-
-	def add_node(self, d):
-		self.nodes.append( d )
-
-	def add_edge(self, e):
-		if not 'id' in e.keys():
-			e['id'] = len(self.edges)
-		self.edges.append( e )
-
-	def export(self):			# export object to Layouter
-		node_index_map = {}				# Node index map ...
-		for i in range(0, len(self.nodes)):
-			index = i+1
-			node_index_map[ self.nodes[i]['id'] ] = index
-		compartment_index_map = {}			# Compartment index map ...
-		for i in range(0, len(self.compartments)):
-			index = i+1
-			compartment_index_map[ self.compartments[i] ] = index
-
-		result = str( len(self.compartments) )+"\n"	# Number of Compartments
-
-		for i in range(0, len(self.compartments)):	# Compartments
-			index = i+1
-			result += str(index) +" "+ self.compartments[i]+"\n"
-		result += "///\n"
-		result += str( len(self.nodes) )+"\n"
-#........
-
-		for i in range(0, len(self.nodes)):		# Nodes
-			node = self.nodes[i]
-			index = i+1
-			result += str(index)+"\n"
-			result += getLayoutNodeType(node['type'])+"\n"
-			result += str(node['id'])+"\n"
-			result += str(node_index_map[node['compartment']])+"\n"
-			result += str(node['x'])+"\n"
-			result += str(node['y'])+"\n"
-			result += str(node['width'])+"\n"
-			result += str(node['height'])+"\n"
-			result += "0\n"				 # direction, a property we don't have, but the Layouter needs
-
-		result += "///\n"
-		result += str( len(self.edges) )+"\n"		# Edges
-		for i in range(0, len(self.edges)):
-			edge = self.edges[i]
-			result += str( edge['type'] )+" "+str( node_index_map[edge['source']] )+" "+str( node_index_map[edge['target']] )+"\n"
-		return result
-
-	def parse(self, layout):		# create object from Layouter input
-		pass
-
-# translations ... (to be included as import/export function in the appropriate python objects)
-
-def biographerNode2LayoutNode( node ):
-	return {'id'		: node.id, \
-		'type'		: node.type, \
-		'compartment'	: node.data.compartment, \
-		'x'		: node.data.x, \
-		'y'		: node.data.y, \
-		'width'		: node.data.width, \
-		'height'	: node.data.height, \
-		'direction'	: ''	}	# direction?
-
-def LayoutNode2biographerNode( node ):
-	result			= Node( defaults=True )
-	result.type		= node['type']
-	result.id		= node['id']
-	result.data.compartment = node['compartment']
-	result.data.x	= node['x']
-	result.data.y	= node['y']
-	result.data.width	= node['width']
-	result.data.height	= node['height']
-	# direction? nodes do not have a direction ...
-	return result
-
-def biographerEdge2LayoutEdge( edge ):
-	return {'id'	:	edge.id,
-		'type'	:	'Directed', \
-		'source':	edge.source, \
-		'target':	edge.target }
-
-def LayoutEdge2biographerEdge( edge ):
-	result			= Edge( defaults=True )
-	result.id		= edge['id']
-	result.type		= edge['type']
-	result.source		= edge['source']
-	result.target		= edge['target']
-	return result
-
-#### end helper functions / biographer Layouter ####
 
 
 ### Graph ###
@@ -455,9 +363,9 @@ class Graph:
 		return self.owns(key1) and self.owns(key2) and self.owns(key3)
 
 	def empty(self, clearDEBUG=True):					# reset current model
-		self.mapped = False
 		self.Nodes = []
 		self.Edges = []
+		self.Compartments = []
 		self.CenterNode = None
 		self.JSON = None
 		self.SBML = None
@@ -465,6 +373,7 @@ class Graph:
 		self.BioLayout = None
 		self.MD5 = None
 		self.maxID = 1
+		self.mapped = False
 		self.IDmapNodes = self.IDmapEdges = {}
 		if clearDEBUG:
 			self.DEBUG = ""
@@ -479,27 +388,38 @@ class Graph:
 			print msg
 
 	def status(self):
-		self.log("Network has "+str(self.NodeCount())+" Nodes and "+str(self.EdgeCount())+" Edges.")
+		self.log("Network has "+str(self.NodeCount())+" Nodes ("+str(len(self.Compartments))+" Compartments) and "+str(self.EdgeCount())+" Edges.")
+
+	def pickCompartments(self):						# create array Compartments with links to the appropriate Node Objects
+		self.Compartments = []
+		CompartmentNode = getNodeType("Compartment Node")
+		for node in self.Nodes:
+			if node.type == CompartmentNode:
+				self.Compartments.append(node)
 
 	def generateObjectLinks(self):
 		for n in self.Nodes:
-			n.ConnectedEdges = self.getConnectedEdges(n)		# add connected Edges as Python Object links
+			n.ConnectedEdges = self.getConnectedEdges(n)		# add connected Edges as Object links
 			n.SubNodes = []
 			if n.data.owns('subnodes'):
-				for subID in n.data.subnodes:		# add SubNodes as Python Object links
+				for subID in n.data.subnodes:			# add SubNodes as Object links
 					node = self.getNodeByID(subID)
 					if node is not None:
 						n.SubNodes.append( node )
+			n.CompartmentNode = None				# add CompartmentNode as Object Link
+			if n.data.owns('compartment'):
+				n.CompartmentNode = self.getNodeByID(n.data.compartment)
 		for e in self.Edges:
-			e.SourceNode = self.getNodeByID(e.source)		# add Source Node and
-			e.TargetNode = self.getNodeByID(e.target)		#  Target Node as Python Object links
+			e.SourceNode = self.getNodeByID(e.source)		# add Source and Target Node as Python Object links
+			e.TargetNode = self.getNodeByID(e.target)
 
-	def initialize(self, removeOrphans=False):				# do everything necessary to complete a new model
+	def initialize(self, removeOrphans=False):				# initialize the network
 		self.mapped = False
 		self.log("Initializing Graph ...")
 		self.status()
 		self.selfcheck( removeOrphanEdges=removeOrphans )
 		self.mapIDs()
+		self.pickCompartments()
 		self.generateObjectLinks()
 		self.hash()
 		self.status()
@@ -609,7 +529,7 @@ class Graph:
 		self.maxID += 1
 		return self.maxID
 
-	def getNodeByID(self, ID):
+	def getNodeByID(self, ID):						# return Node with specified ID, else None
 		if self.mapped:
 			if ID in self.IDmapNodes.keys():
 				return self.Nodes[ self.IDmapNodes[ID] ]
@@ -621,6 +541,11 @@ class Graph:
 
 	def getEdgeByID(self, ID):
 		return self.Edges[ self.IDmapEdges[ID] ]
+
+	def getNodeIndex(self, node):						# get the array index of a specified Node
+		if not node in self.Nodes:
+			return 0						# not found
+		return self.Nodes.index(node)+1					# counting starts with 1...
 
 
 	### functions for Graph creation: import / export ###
@@ -875,35 +800,74 @@ class Graph:
 
 		return self.dot, png, cached, None
 
-	def export_to_Layouter(self):
-		self.log("Exporting to Layouter ...")
-		L = Layout()
-		for node in self.Nodes:
-			L.add_node( biographerNode2LayoutNode(node) )
-		for edge in self.Edges:
-			L.add_edge( biographerEdge2LayoutEdge(edge) )
-		self.BioLayout = L.export()
-		self.status()
-		return self.BioLayout
+	### biographer Layout ###
 
-	def import_from_Layouter(self, BioLayout):
-		self.log("Importing from Layouter ...")
-		self.BioLayout = BioLayout
-		L = Layout( BioLayout )
-		self.Nodes = []
-		for node in L.nodes:
-			self.Nodes.append( LayoutNode2biographerNode(node) )
-		self.Edges = []
-		for edge in L.edges:
-			self.Edges.append( LayoutEdge2biographerEdge(edge) )
+	# http://code.google.com/p/biographer/wiki/LayoutInputFormat
+
+	# number of compartments
+	# node index " " node name     (note: 0 is unknown)
+	# ...
+	# ///
+	# number of nodes
+	# node index
+	# node type
+	# node id/name
+	# node compartment
+	# node x
+	# node y
+	# node width
+	# node height
+	# node direction
+	# ...
+	# ///
+	# number of edges
+	# edgetype from to
+	# ...
+
+	def exportLayout(self):
+		self.log("Exporting Layout ...")
+		layout = ""
+		def write(s):
+			layout += str(s)+"\n"
+
+		write( len(self.Compartments) )			# Compartments
+		for compartment in self.Compartments:
+			write( str(self.getNodeIndex(compartment)) +" "+ compartment.id )
+
+		write("///")
+
+		write( len(self.Nodes) )
+		for node in self.Nodes:				# Nodes
+			write( self.getNodeIndex(node) )
+			write( getLayoutNodeType(node.type) )
+			write( node.id )
+			write( self.getNodeIndex(node.CompartmentNode) )
+			write( node.data.x )
+			write( node.data.y )
+			write( node.data.width )
+			write( node.data.height )
+			write( 0 )				# direction, a property we don't have, but the Layouter needs
+
+		write("///")
+
+
+		write( len(self.Edges) )			# Edges
+		for edge in self.Edges:
+			write( edge.type +" "+ self.getNodeIndex(edge.SourceNode) +" "+ self.getNodeIndex(edge.TargetNode) )
+
+		return layout
+
+	def importLayout(self, layout):
+		self.log("Importing Layout ...")
+		# deleted... will change drastically anyway, makes no sense to develop now
 		self.initialize()
 
-	def doBioLayout(self, Layouter):
+	def Layout(self, Layouter):
 		timeout = 10
 		start = time()									# start a timer
 
-		self.log("Executing "+Layouter+" ...")					# Input ...
-		self.LayouterInput = self.export_to_Layouter()
+		self.log("Executing "+Layouter+" ...")						# Input ...
+		self.LayouterInput = self.exportLayout()
 		self.LayouterOutput = ""
 
 		layouter = Popen( split(Layouter), stdin=PIPE, stdout=PIPE )			# execute "layout"
@@ -919,9 +883,9 @@ class Graph:
 
 		self.LayouterOutput = layouter.communicate( input=self.LayouterInput )[0]	# Output ...
 		layouter.stdin.close()
-		self.import_from_Layouter( self.LayouterOutput )				# import STDOUT
+		self.importLayout( self.LayouterOutput )					# import STDOUT
+
 		self.log("Executable finished.")
-		
 
 
 	### basic functions on Graph properties ###
