@@ -95,6 +95,13 @@ bui.settings = {
             height : ['data', 'height'],
             subNodes : ['data', 'subnodes'],
             modifications : ['data', 'modifications']
+        },
+        edge : {
+            source : 'source',
+            target : 'target',
+            style : ['data', 'style'],
+            type : ['data', 'type'],
+            handles : ['data', 'handles']
         }
 
     },
@@ -714,25 +721,70 @@ var circularShapeLineEndCalculationHookWithoutPadding =
             return;
         }
 
-        if (canvas === undefined) {
-            canvas = jQuery('body');
-        }
-        if (viewport === undefined) {
-            viewport = jQuery(window);
-        }
-        
         var position = node.absolutePosition(),
                 size = node.size(),
-                scale = graph.scale();
+                scale = graph.scale(),
+                graphOffset = graph.htmlTopLeft();
+
+        if (canvas === undefined || viewport === undefined) {
+            canvas = jQuery('body');
+            viewport = jQuery(window);
+        }
 
         var scrollLeft = position.x * scale - ((
-                viewport.width() - size.width * scale) / 2);
+                viewport.width() - size.width * scale) / 2) + graphOffset.x;
         var scrollTop = position.y * scale - ((
-                viewport.height() - size.height * scale) / 2);
+                viewport.height() - size.height * scale) / 2) + graphOffset.y;
         canvas.animate({
             scrollLeft : scrollLeft,
             scrollTop : scrollTop
         });
+    };
+
+    /**
+     * Make all coordinates 0 thus removing negative positions.
+     * @param {Object} json The JSON data object. The coordinates will be
+     *   transformed in place.
+     */
+    bui.util.transformJSONCoordinates = function(json) {
+        var nodes = json.nodes,
+                minX = Number.MAX_VALUE,
+                minY = Number.MAX_VALUE,
+                node,
+                i;
+
+        for (i = 0; i < nodes.length; i++) {
+            node = nodes[i];
+
+            if (bui.util.propertySetAndNotNull(node,
+                ['data', 'x'], ['data', 'y'])) {
+                minX = Math.min(minX, node.data.x);
+                minY = Math.min(minY, node.data.y);
+            }
+        }
+
+        if (minX > 0) {
+            minX = 0;
+        } else {
+            minX = Math.abs(minX);
+        }
+        if (minY > 0) {
+            minY = 0;
+        } else {
+            minY = Math.abs(minY);
+        }
+
+        if (minX !== 0 && minY !== 0) {
+            for (i = 0; i < nodes.length; i++) {
+                node = nodes[i];
+
+                if (bui.util.propertySetAndNotNull(node,
+                    ['data', 'x'], ['data', 'y'])) {
+                    node.data.x += minX;
+                    node.data.y += minY;
+                }
+            }
+        }
     };
 })(bui);
 
@@ -865,6 +917,52 @@ var getSBOForInstance = function(mapping, instance) {
             var klass = mapping[sbo].klass;
 
             if (instance instanceof klass) {
+                return bui.util.toNumber(sbo);
+            }
+        }
+    }
+
+    return null;
+};
+
+/**
+ * Determine the SBO ID for a modification label using the
+ * modificationsMapping, both labels, i.e. short and long, will be matched
+ * against the first parameter.
+ *
+ * @param {String} label The label for which the SBO ID should be determined.
+ * @return {Number} SBO id or null in case no SBO could be found.
+ */
+var getModificationSBOForLabel = function(label) {
+    label = label.toLowerCase();
+    
+    for (var sbo in modificationMapping) {
+        if (modificationMapping.hasOwnProperty(sbo)) {
+            var mapping = modificationMapping[sbo];
+
+            if (label === mapping.short.toLowerCase() ||
+                    label === mapping.long.toLowerCase()) {
+                return bui.util.toNumber(sbo);
+            }
+        }
+    }
+
+    return null;
+};
+
+/**
+ * Determine the SBO ID for an edge marker id using the
+ * edgeMarkerMapping.
+ *
+ * @param {String} id The connecting arcs (marker) id.
+ * @return {Number} SBO id or null in case no SBO could be found.
+ */
+var getSBOForMarkerId = function(id) {
+    for (var sbo in edgeMarkerMapping) {
+        if (edgeMarkerMapping.hasOwnProperty(sbo)) {
+            var mapping = edgeMarkerMapping[sbo];
+
+            if (mapping.klass === id) {
                 return bui.util.toNumber(sbo);
             }
         }
@@ -1322,7 +1420,7 @@ var getSBOForInstance = function(mapping, instance) {
 
         privates.connectingArcs = {};
 
-        for(var i in bui.connectingArcs) {
+        for (var i in bui.connectingArcs) {
             if (bui.connectingArcs.hasOwnProperty(i)) {
                 var ca = bui.connectingArcs[i]();
                 var id = bui.connectingArcs[i].id;
@@ -1350,7 +1448,7 @@ var getSBOForInstance = function(mapping, instance) {
             privates.root.setAttribute('width', bottomRight.x);
         }
 
-         if (bottomRight.y > privates.rootDimensions.height) {
+        if (bottomRight.y > privates.rootDimensions.height) {
             privates.rootDimensions.height = bottomRight.y;
             privates.root.setAttribute('height', bottomRight.y);
         }
@@ -1442,7 +1540,7 @@ var getSBOForInstance = function(mapping, instance) {
          * @description
          * Retrieve the container which was provided to this object during
          * the creation.
-         * 
+         *
          * @return {HTMLElement} The container of this graph
          */
         container : function() {
@@ -1535,6 +1633,7 @@ var getSBOForInstance = function(mapping, instance) {
                     privates.scale = scale;
 
                     __setTransformString.call(this);
+                    this.reduceCanvasSize();
 
                     this.fire(bui.Graph.ListenerType.scale, [this, scale]);
                 }
@@ -1543,6 +1642,26 @@ var getSBOForInstance = function(mapping, instance) {
             }
 
             return privates.scale;
+        },
+
+        /**
+         * Fit the Graph to the viewport, i.e. scale the graph down to show
+         * the whole graph or (in the case  of a very small graph) scale it
+         * up.
+         *
+         * @return {bui.Graph} Fluent interface
+         */
+        fitToPage : function() {
+            var dimensions = this._privates(identifier).rootDimensions;
+
+            var viewportWidth = $(window).width();
+            var viewportHeight = $(window).height();
+
+            var scale = Math.min(viewportWidth / dimensions.width,
+                    viewportHeight / dimensions.height);
+            this.scale(scale);
+
+            return this;
         },
 
         /**
@@ -1602,30 +1721,31 @@ var getSBOForInstance = function(mapping, instance) {
         reduceCanvasSize : function() {
             var privates = this._privates(identifier);
 
-            var x = Number.MIN_VALUE, y = Number.MIN_VALUE;
+            var maxX = Number.MIN_VALUE,
+                    maxY = Number.MIN_VALUE;
 
-            for(var i in privates.drawables) {
+            for (var i in privates.drawables) {
                 if (privates.drawables.hasOwnProperty(i)) {
                     var drawable = privates.drawables[i];
 
                     if (drawable.bottomRight !== undefined) {
                         var bottomRight = drawable.absoluteBottomRight();
 
-                        x = Math.max(x, bottomRight.x);
-                        y = Math.max(y, bottomRight.y);
+                        maxX = Math.max(maxX, bottomRight.x);
+                        maxY = Math.max(maxY, bottomRight.y);
                     }
                 }
             }
 
             var padding = bui.settings.style.graphReduceCanvasPadding;
-            x += padding;
-            y += padding;
+            maxX += padding;
+            maxY += padding;
 
-            privates.rootDimensions.width = x;
-            privates.root.setAttribute('width', x);
+            privates.rootDimensions.width = maxX;
+            privates.root.setAttribute('width', maxX * privates.scale);
 
-            privates.rootDimensions.height = y;
-            privates.root.setAttribute('height', y);
+            privates.rootDimensions.height = maxY;
+            privates.root.setAttribute('height', maxY * privates.scale);
         },
 
         /**
@@ -1658,14 +1778,14 @@ var getSBOForInstance = function(mapping, instance) {
             var inner = this._privates(identifier).root.parentNode.innerHTML;
 
             var css = '';
-            
+
             jQuery.ajax({
-                url : bui.settings.css.stylesheetUrl,
-                async : false,
-                success : function(data) {
-                    css = data;
-                }
-            });
+                        url : bui.settings.css.stylesheetUrl,
+                        async : false,
+                        success : function(data) {
+                            css = data;
+                        }
+                    });
 
             inner = inner.replace(__getStylesheetContents(), css);
 
@@ -1712,10 +1832,10 @@ var getSBOForInstance = function(mapping, instance) {
 
         /**
          * Export the whole graph to JSON.
-         * 
+         *
          * @return {Object} The exported graph.
          */
-        toJSON : function() {
+        toJSON : function(useDataObject) {
             var json = {}, edges = [], nodes = [];
 
             var dataFormat = bui.settings.dataFormat;
@@ -1738,6 +1858,60 @@ var getSBOForInstance = function(mapping, instance) {
             }
 
             return json;
+        },
+
+        /**
+         * Reduce the whitespace on top and left hand side of the graph. This
+         * isn't done automatically through the
+         * {@link bui.Graph#reduceCanvasSize} method as this would probably
+         * confuse the user.
+         *
+         * @param {Boolean} [duration] Pass a duration in milliseconds to
+         *   animate the whitespace reduction. Defaults to no animation.
+         * @return {bui.Graph} Fluent interface
+         */
+        reduceTopLeftWhitespace : function(duration) {
+            duration = duration || 0;
+            var padding = bui.settings.style.graphReduceCanvasPadding,
+                    privates = this._privates(identifier),
+                    minX = Number.MAX_VALUE,
+                    minY = Number.MAX_VALUE,
+                    i,
+                    drawable,
+                    topLeft;
+
+            for (i in privates.drawables) {
+                if (privates.drawables.hasOwnProperty(i)) {
+                    drawable = privates.drawables[i];
+
+                    if (drawable.bottomRight !== undefined) {
+                        topLeft = drawable.absolutePosition();
+
+                        minX = Math.min(minX, topLeft.x);
+                        minY = Math.min(minY, topLeft.y);
+                    }
+                }
+            }
+
+            minX = Math.max(minX - padding, 0) * -1;
+            minY = Math.max(minY - padding, 0) * -1;
+
+            if (minX !== 0 || minY !== 0) {
+                for (i in privates.drawables) {
+                    if (privates.drawables.hasOwnProperty(i)) {
+                        drawable = privates.drawables[i];
+
+                        if (drawable.bottomRight !== undefined &&
+                                drawable.hasParent() === false) {
+                            topLeft = drawable.position();
+
+                            drawable.move(minX, minY, duration);
+                        }
+                    }
+                }
+            }
+
+            return this;
         }
     };
 
@@ -1755,10 +1929,10 @@ var getSBOForInstance = function(mapping, instance) {
     };
 })(bui);
 
-(function(bui){
+(function(bui) {
     var identifier = 'bui.Drawable';
 
-     /**
+    /**
      * @private
      * Function used for the generation of listener identifiers
      * @param {bui.Drawable} drawable
@@ -1908,13 +2082,13 @@ var getSBOForInstance = function(mapping, instance) {
                     node._privates(identifier).graph.id();
         },
 
-       /**
-        * @description
-        * Add a class to this drawable
-        *
-        * @param {String} klass the class which you want to add
-        * @return {bui.Drawable} Fluent interface
-        */
+        /**
+         * @description
+         * Add a class to this drawable
+         *
+         * @param {String} klass the class which you want to add
+         * @return {bui.Drawable} Fluent interface
+         */
         addClass : function(klass) {
             var classes = this._privates(identifier).classes;
             if (classes.indexOf(klass) == -1) {
@@ -1927,21 +2101,26 @@ var getSBOForInstance = function(mapping, instance) {
         },
 
         /**
-        * @description
-        * Remove a class from this drawable
-        *
-        * @param {String} klass the class which you want to remove
-        * @return {bui.Drawable} Fluent interface
-        */
+         * @description
+         * Remove a class from this drawable, if no parameter is passed remove all classes
+         *
+         * @param {String} klass the class which you want to remove
+         * @return {bui.Drawable} Fluent interface
+         */
         removeClass : function(klass) {
-            var classes = this._privates(identifier).classes;
+            if (klass === undefined) {
+                this._privates(identifier).classes = [];
+                this.fire(bui.Drawable.ListenerType.classes, [this, '']);
+            } else {
+                var classes = this._privates(identifier).classes;
 
-            var index = classes.indexOf(klass);
+                var index = classes.indexOf(klass);
 
-            if (index != -1) {
-                classes.splice(index, 1);
-                this.fire(bui.Drawable.ListenerType.classes, [this,
-                    this.classString()]);
+                if (index != -1) {
+                    classes.splice(index, 1);
+                    this.fire(bui.Drawable.ListenerType.classes, [this,
+                        this.classString()]);
+                }
             }
 
             return this;
@@ -1983,7 +2162,7 @@ var getSBOForInstance = function(mapping, instance) {
 
         /**
          * Update the JSON object.
-         * 
+         *
          * @param {String|String[]} path The property name which should be
          *   updated. Pass a string array to handle property chains.
          * @param {Object} value The property's value.
@@ -2002,13 +2181,13 @@ var getSBOForInstance = function(mapping, instance) {
         /**
          * Export this drawable instance to JSON
          *
-         * @return {Object} The drawable instance exported to JSON. 
+         * @return {Object} The drawable instance exported to JSON.
          */
         toJSON : function() {
             var json = {},
                     privates = this._privates(identifier),
                     dataFormat = bui.settings.dataFormat.drawable;
-            
+
             updateJson(json, dataFormat.id, privates.id);
             updateJson(json, dataFormat.visible, privates.visible);
 
@@ -2027,6 +2206,10 @@ var getSBOForInstance = function(mapping, instance) {
             } else {
                 return 'edge';
             }
+        },
+
+        identifier : function() {
+            return this.identifier;
         }
     };
 
@@ -2047,6 +2230,7 @@ var getSBOForInstance = function(mapping, instance) {
         classes :  bui.util.createListenerTypeId()
     };
 })(bui);
+
 (function(bui) {
 
     var identifier = 'bui.Node';
@@ -2076,18 +2260,19 @@ var getSBOForInstance = function(mapping, instance) {
      */
     var positionPlaceHolder = function() {
         var privates = this._privates(identifier);
-        var htmlPosition = this.htmlTopLeft();
+        var absolutePosition = this.absolutePosition();
+        var graphHtmlPosition = this.graph().htmlTopLeft();
         var correction = bui.settings.style.placeholderCorrection.position;
-        var dimensions = this.size();
-        privates.placeholder.style.left = (htmlPosition.x +
-                correction.x) + 'px';
-        privates.placeholder.style.top = (htmlPosition.y +
-                correction.y) + 'px';
+        var scale = this.graph().scale();
+        privates.placeholder.style.left = (absolutePosition.x * scale +
+                graphHtmlPosition.x + correction.x) + 'px';
+        privates.placeholder.style.top = (absolutePosition.y * scale +
+                graphHtmlPosition.y + correction.y) + 'px';
 
         correction = bui.settings.style.placeholderCorrection.size;
-        privates.placeholder.style.width = (privates.width +
+        privates.placeholder.style.width = (privates.width * scale +
                 correction.width) + 'px';
-        privates.placeholder.style.height = (privates.height +
+        privates.placeholder.style.height = (privates.height * scale +
                 correction.height) + 'px';
 
         this.updateJson(bui.settings.dataFormat.node.width, privates.width);
@@ -2123,11 +2308,19 @@ var getSBOForInstance = function(mapping, instance) {
      */
     var placeholderDragStop = function() {
         var privates = this._privates(identifier);
+        var scale = 1 / this.graph().scale();
         var placeholderOffset = jQuery(privates.placeholder).offset();
         var x = placeholderOffset.left;
         var y = placeholderOffset.top;
 
-        var parentTopLeft = privates.parent.htmlTopLeft();
+        var graphOffset = this.graph().htmlTopLeft();
+        x -= graphOffset.x;
+        y -= graphOffset.y;
+
+        x *= scale;
+        y *= scale;
+
+        var parentTopLeft = privates.parent.absolutePosition();
         x -= parentTopLeft.x;
         y -= parentTopLeft.y;
 
@@ -2154,8 +2347,9 @@ var getSBOForInstance = function(mapping, instance) {
      */
     var placeholderResizeStop = function() {
         var privates = this._privates(identifier);
-        var width = jQuery(privates.placeholder).width();
-        var height = jQuery(privates.placeholder).height();
+        var scale = 1 / this.graph().scale();
+        var width = jQuery(privates.placeholder).width() * scale;
+        var height = jQuery(privates.placeholder).height() * scale;
 
         var correction = bui.settings.style.placeholderCorrection.size;
 
@@ -2208,7 +2402,9 @@ var getSBOForInstance = function(mapping, instance) {
      * @private parent listener
      */
     var parentChanged = function(node, newParent, oldParent) {
-        oldParent.unbindAll(listenerIdentifier(this));
+        if (oldParent !== this.graph()) {
+            oldParent.unbindAll(listenerIdentifier(this));
+        }
 
         newParent.bind(bui.Drawable.ListenerType.remove,
                 parentRemoved.createDelegate(this),
@@ -2261,7 +2457,9 @@ var getSBOForInstance = function(mapping, instance) {
 
         privates.placeholder = document.createElement('div');
         privates.placeholder.setAttribute('class',
-                placeholderClass(false));
+                placeholderClass(false)+' '+this.identifier());
+        privates.placeholder.setAttribute('id',
+                'placeholder_'+this.id());
         this.graph().placeholderContainer().appendChild(privates.placeholder);
 
         positionPlaceHolder.call(this);
@@ -2905,13 +3103,7 @@ var getSBOForInstance = function(mapping, instance) {
          *   HTML offset should be taken into account. Defaults to false.
          * @return {bui.Node} Fluent interface.
          */
-        startDragging : function(x, y, correctGraphHTMLOffset) {
-            if (correctGraphHTMLOffset === true) {
-                var htmlTopLeft = this.graph().htmlTopLeft();
-                x -= htmlTopLeft.x;
-                y -= htmlTopLeft.y;
-            }
-
+        startDragging : function(x, y) {
             this.placeholderVisible(true);
 
             var placeholder = this._privates(identifier).placeholder;
@@ -2992,6 +3184,31 @@ var getSBOForInstance = function(mapping, instance) {
             }
 
             return json;
+        },
+
+        /**
+         * Move the node to the front so that no other nodes may be positioned
+         * in front of them.
+         *
+         * @return {bui.Node} Fluent interface.
+         */
+        toFront : function() {
+            var nodeGroup = this._privates(identifier).nodeGroup;
+            nodeGroup.parentNode.appendChild(nodeGroup);
+            return this;
+        },
+
+        /**
+         * Move the node to the back so that all nodes may be positioned in
+         * front of this node.
+         *
+         * @return {bui.Node} Fluent interface.
+         */
+        toBack : function() {
+            var nodeGroup = this._privates(identifier).nodeGroup,
+                    parent = nodeGroup.parentNode;
+            parent.insertBefore(nodeGroup, parent.firstChild);
+            return this;
         }
     };
 
@@ -3002,8 +3219,6 @@ var getSBOForInstance = function(mapping, instance) {
      * Observable properties which all nodes share
      */
     bui.Node.ListenerType = {
-        /** @field */
-	click : bui.util.createListenerTypeId(),
         /** @field */
         parent : bui.util.createListenerTypeId(),
         /** @field */
@@ -3266,6 +3481,17 @@ var getSBOForInstance = function(mapping, instance) {
                 width : maxWidth,
                 height : maxHeight
             };
+        },
+
+        // overridden
+        toJSON : function() {
+            var json = bui.Labelable.superClazz.prototype.toJSON.call(this),
+                    privates = this._privates(identifier),
+                    dataFormat = bui.settings.dataFormat;
+
+            updateJson(json, dataFormat.node.label, privates.label);
+
+            return json;
         }
     };
 
@@ -3612,6 +3838,7 @@ var getSBOForInstance = function(mapping, instance) {
     bui.util.setSuperClass(bui.UnitOfInformation, bui.RectangularNode);
 })(bui);
 (function(bui) {
+    var identifier = 'bui.Macromolecule';
     /**
      * @class
      * A node with the shape of an rectangle and a label inside.
@@ -3625,9 +3852,17 @@ var getSBOForInstance = function(mapping, instance) {
         this.topRadius(bui.settings.style.nodeCornerRadius);
         this.bottomRadius(bui.settings.style.nodeCornerRadius);
     };
+    bui.Macromolecule.prototype = {
+        identifier : function() {
+            return identifier;
+        },
+        _minWidth : 60,
+        _minHeight : 60,
+    };
 
     bui.util.setSuperClass(bui.Macromolecule, bui.RectangularNode);
 })(bui);
+
 (function(bui) {
     var identifier = 'bui.Complex';
 
@@ -3690,7 +3925,20 @@ var getSBOForInstance = function(mapping, instance) {
     };
 
     bui.Complex.prototype = {
-        // TODO document
+        identifier : function() {
+            return 'Complex';
+        },
+        _minWidth : 90,
+        _minHeight : 90,
+        /**
+         * Automatically layout child elements using a simple table layout
+         * strategy. You can change the strategy's settings through the first
+         * parameter. The structure of this object should be like
+         * bui.settings.style.complexTableLayout.
+         * @param {Object} [settings] Settings for the layout process.
+         *   Defaults to bui.settings.style.complexTableLayout when not
+         *   provided.
+         */
         tableLayout : function(settings) {
             if (settings === undefined) {
                 settings = bui.settings.style.complexTableLayout;
@@ -3808,9 +4056,9 @@ var getSBOForInstance = function(mapping, instance) {
 
     bui.util.setSuperClass(bui.Complex, bui.Node);
 })(bui);
+
 (function(bui) {
     var identifier = 'bui.Compartment';
-
     /**
      * @private
      * Function used for the generation of listener identifiers
@@ -3876,6 +4124,11 @@ var getSBOForInstance = function(mapping, instance) {
     };
 
     bui.Compartment.prototype = {
+        identifier : function() {
+            return 'Compartment';
+        },
+        _minWidth : 90,
+        _minHeight : 90,
         /**
          * Set or retrieve this node's label. The function call will be
          * delegated to {@link bui.Labelable#label}. Therefore, please refer
@@ -3903,7 +4156,9 @@ var getSBOForInstance = function(mapping, instance) {
 
     bui.util.setSuperClass(bui.Compartment, bui.Node);
 })(bui);
+
 (function(bui) {
+    var identifier = 'bui.NucleicAcidFeature';
     /**
      * @class
      * A node with the shape of an rectangle and a label inside.
@@ -3916,9 +4171,17 @@ var getSBOForInstance = function(mapping, instance) {
         bui.NucleicAcidFeature.superClazz.apply(this, arguments);
         this.bottomRadius(bui.settings.style.nodeCornerRadius);
     };
+    bui.NucleicAcidFeature.prototype = {
+        identifier : function() {
+            return identifier;
+        },
+        _minWidth : 60,
+        _minHeight : 60,
+    };
 
     bui.util.setSuperClass(bui.NucleicAcidFeature, bui.RectangularNode);
 })(bui);
+
 (function(bui) {
     var identifier = 'bui.StateVariable';
 
@@ -3985,13 +4248,23 @@ var getSBOForInstance = function(mapping, instance) {
         includeInJSON : false,
         _enableResizing : false,
 
-        // TODO document
+        // override
         toJSON : function() {
             // is actually an override but won't call the superclass because
             // units of information aren't considered as nodes in the JSON
-            // data format
+            // data format. We are also assuming that only the state variable's
+            // label can be edited and that therefore the JSON data needs to
+            // be extracted from the label.
 
             var json = [null, ''];
+
+            var labelParts = this.label().split('@');
+
+            json[0] = getModificationSBOForLabel(labelParts[0]);
+
+            if (labelParts.length > 1) {
+                json[1] = labelParts[1];
+            }
 
             return json;
         }
@@ -4050,12 +4323,18 @@ var getSBOForInstance = function(mapping, instance) {
     };
 
     bui.SimpleChemical.prototype = {
+        identifier : function() {
+            return identifier;
+        },
+        _minWidth : 60,
+        _minHeight : 60,
         _forceRectangular : true,
         _calculationHook : circularShapeLineEndCalculationHook
     };
 
     bui.util.setSuperClass(bui.SimpleChemical, bui.Labelable);
 })(bui);
+
 (function(bui) {
     var identifier = 'bui.UnspecifiedEntity';
 
@@ -4115,6 +4394,7 @@ var getSBOForInstance = function(mapping, instance) {
     bui.util.setSuperClass(bui.UnspecifiedEntity, bui.Labelable);
 })(bui);
 (function(bui) {
+    var identifier = 'bui.Process';
     /**
      * @class
      * Process node "process"
@@ -4130,6 +4410,9 @@ var getSBOForInstance = function(mapping, instance) {
     };
 
     bui.Process.prototype = {
+        identifier : function() {
+            return identifier;
+        },
         _enableResizing : false,
         _minWidth : bui.settings.style.processNodeMinSize.width,
         _minHeight : bui.settings.style.processNodeMinSize.height
@@ -4137,6 +4420,7 @@ var getSBOForInstance = function(mapping, instance) {
 
     bui.util.setSuperClass(bui.Process, bui.RectangularNode);
 })(bui);
+
 (function(bui) {
     var identifier = 'bui.AttachedDrawable';
 
@@ -4286,6 +4570,22 @@ var getSBOForInstance = function(mapping, instance) {
             }
 
             return privates.target;
+        },
+
+        // overridden
+        toJSON : function() {
+            var json = bui.AttachedDrawable.superClazz.prototype.toJSON.call(this),
+                    dataFormat = bui.settings.dataFormat,
+                    privates = this._privates(identifier);
+
+            if (privates.source !== null) {
+                updateJson(json, dataFormat.edge.source, privates.source.id());
+            }
+            if (privates.target !== null) {
+                updateJson(json, dataFormat.edge.target, privates.target.id());
+            }
+
+            return json;
         }
     };
 
@@ -4480,7 +4780,9 @@ var getSBOForInstance = function(mapping, instance) {
         var privates = this._privates(identifier);
         privates.hoverEffect = true;
         privates.marker = null;
+        privates.markerId = null;
         privates.hoverEffectActive = false;
+        privates.lineStyle = null;
 
         this.bind(bui.Drawable.ListenerType.visible,
                 visibilityChanged.createDelegate(this),
@@ -4572,6 +4874,7 @@ var getSBOForInstance = function(mapping, instance) {
             if (markerId !== undefined) {
                 if (markerId === null) {
                     privates.marker = null;
+                    privates.markerId = null;
                     this.fire(bui.AbstractLine.ListenerType.marker,
                             [this, null]);
                 } else {
@@ -4579,6 +4882,7 @@ var getSBOForInstance = function(mapping, instance) {
 
                     if (marker !== undefined && marker.id !== privates.marker){
                         privates.marker = marker.id;
+                        privates.markerId = markerId;
                         this.fire(bui.AbstractLine.ListenerType.marker,
                                 [this, marker.id]);
                     }
@@ -4605,6 +4909,8 @@ var getSBOForInstance = function(mapping, instance) {
                     this.removeClass(bui.AbstractLine.Style[availableStyle]);
                 }
             }
+
+            this._privates(identifier).lineStyle = style;
 
             this.addClass(bui.AbstractLine.Style[style]);
 
@@ -4657,6 +4963,28 @@ var getSBOForInstance = function(mapping, instance) {
             }
 
             return privates.hoverEffectActive;
+        },
+
+        // overridden
+        toJSON : function() {
+            var json = bui.AbstractLine.superClazz.prototype.toJSON.call(this),
+                    dataFormat = bui.settings.dataFormat,
+                    privates = this._privates(identifier);
+
+            if (privates.lineStyle !== null &&
+                    privates.lineStyle !== bui.AbstractLine.Style.solid) {
+                updateJson(json, dataFormat.edge.style, privates.lineStyle);
+            }
+
+            if (privates.markerId !== null) {
+                var sbo = getSBOForMarkerId(privates.markerId);
+
+                if (sbo !== null) {
+                    updateJson(json, dataFormat.drawable.sbo, sbo);
+                }
+            }
+
+            return json;
         }
     };
 
@@ -4954,6 +5282,24 @@ var getSBOForInstance = function(mapping, instance) {
             }
 
             return this;
+        },
+
+        // overridden
+        toJSON : function() {
+            var json = bui.Spline.superClazz.prototype.toJSON.call(this),
+                    dataFormat = bui.settings.dataFormat,
+                    privates = this._privates(identifier);
+
+            var sourcePosition =
+                    privates.sourceSplineHandle.absoluteCenter(),
+                    targetPosition =
+                    privates.targetSplineHandle.absoluteCenter();
+
+            updateJson(json, dataFormat.edge.handles, [sourcePosition,
+                targetPosition]);
+            updateJson(json, dataFormat.edge.type, 'curve');
+
+            return json;
         }
     };
 
@@ -5130,10 +5476,6 @@ var getSBOForInstance = function(mapping, instance) {
     var addHandleAfter = function(node, x, y) {
         var privates = this._privates(identifier);
 
-        var graphHtmlTopLeft = this.graph().htmlTopLeft();
-        x -= graphHtmlTopLeft.x;
-        y -= graphHtmlTopLeft.y;
-
         var handle = this.graph()
                 .add(bui.EdgeHandle)
                 .positionCenter(x, y)
@@ -5152,7 +5494,7 @@ var getSBOForInstance = function(mapping, instance) {
 
         redrawLines.call(this);
 
-        handle.startDragging(x, y);
+        return handle;
     };
 
     /**
@@ -5160,7 +5502,13 @@ var getSBOForInstance = function(mapping, instance) {
      */
     var lineMouseDown = function(line, event) {
         if (event.ctrlKey !== true) {
-            addHandleAfter.call(this, line.source(), event.pageX, event.pageY);
+            var scale = 1 / this.graph().scale();
+            var graphHtmlTopLeft = this.graph().htmlTopLeft();
+
+            addHandleAfter.call(this, line.source(),
+                    (event.pageX - graphHtmlTopLeft.x) * scale ,
+                    (event.pageY - graphHtmlTopLeft.y) * scale)
+                    .startDragging(event.clientX, event.clientY);
         }
     };
 
@@ -5168,9 +5516,10 @@ var getSBOForInstance = function(mapping, instance) {
      * @private line clicked listener
      */
     var lineClicked = function(line, event) {
-        if (event.ctrlKey === true) {
-            this.edgeHandlesVisible(!this.edgeHandlesVisible());
-        }
+        // deactivated functionality based on Falko's request
+//        if (event.ctrlKey === true) {
+//            this.edgeHandlesVisible(!this.edgeHandlesVisible());
+//        }
     };
 
     /**
@@ -5213,6 +5562,7 @@ var getSBOForInstance = function(mapping, instance) {
         privates.handles = [];
         privates.lines = [];
         privates.marker = null;
+        privates.lineStyle = null;
         redrawLines.call(this);
 
         this.bind(bui.AttachedDrawable.ListenerType.source,
@@ -5286,6 +5636,39 @@ var getSBOForInstance = function(mapping, instance) {
             privates.lineStyle = style;
             redrawLines.call(this);
             return this;
+        },
+
+        // overridden
+        toJSON : function() {
+            var json = bui.Edge.superClazz.prototype.toJSON.call(this),
+                    dataFormat = bui.settings.dataFormat,
+                    privates = this._privates(identifier);
+
+            if (privates.lineStyle !== null &&
+                    privates.lineStyle !== bui.AbstractLine.Style.solid) {
+                updateJson(json, dataFormat.edge.style, privates.lineStyle);
+            }
+
+            if (privates.handles.length > 0) {
+                var handles = [];
+
+                for (var i = 0; i < privates.handles.length; i++) {
+                    var position = privates.handles[i].absoluteCenter();
+                    handles.push(position);
+                }
+
+                updateJson(json, dataFormat.edge.handles, handles);
+            }
+
+            if (privates.marker !== null) {
+                var sbo = getSBOForMarkerId(privates.marker);
+
+                if (sbo !== null) {
+                    updateJson(json, dataFormat.drawable.sbo, sbo);
+                }
+            }
+
+            return json;
         }
     };
 
@@ -5297,7 +5680,7 @@ var getSBOForInstance = function(mapping, instance) {
  * export.
  */
 
-addMapping(nodeMapping, [285, 167], bui.UnspecifiedEntity);
+addMapping(nodeMapping, [285], bui.UnspecifiedEntity);
 addMapping(nodeMapping, [247, 240], bui.SimpleChemical);
 addMapping(nodeMapping, [245, 252], bui.Macromolecule);
 addMapping(nodeMapping, [250, 251], bui.NucleicAcidFeature);
@@ -5305,8 +5688,8 @@ addMapping(nodeMapping, [253], bui.Complex);
 addMapping(nodeMapping, [290], bui.Compartment);
 
 
-addMapping(nodeMapping, [375], bui.Process);
-addMapping(processNodeMapping, [375], bui.Process);
+addMapping(nodeMapping, [375, 167], bui.Process);
+addMapping(processNodeMapping, [375, 167], bui.Process);
 
 
 addMapping(edgeMarkerMapping, [19], bui.connectingArcs.modulation.id);
@@ -5355,6 +5738,8 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
             }
         }
 
+        nodeJSON.data = nodeJSON.data || {};
+
         if (bui.util.propertySetAndNotNull(nodeJSON,
                 ['data', 'x'], ['data', 'y'])) {
             nodeJSON.data.x = bui.util.toNumber(nodeJSON.data.x);
@@ -5369,7 +5754,11 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
             height : standardNodeSize.height
         };
 
-        if (node.sizeBasedOnLabel !== undefined) {
+        if (bui.util.propertySetAndNotNull(nodeJSON,
+                ['data', 'width'], ['data', 'height'])) {
+            size.width = nodeJSON.data.width;
+            size.height = nodeJSON.data.height;
+        } else if (node.sizeBasedOnLabel !== undefined) {
             size = node.sizeBasedOnLabel();
 
             // some padding because of various shapes
@@ -5380,6 +5769,9 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
 
         node.size(size.width, size.height)
                 .visible(true);
+
+        nodeJSON.data.width = size.width;
+        nodeJSON.data.height = size.height;
 
         if (bui.util.propertySetAndNotNull(nodeJSON,
                 ['data', 'modification'])) {
@@ -5471,7 +5863,7 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
                         if (subNode !== undefined) {
                             subNode.parent(node);
                         } else {
-                            log('Broken sub node reference to sub' +
+                            log('Warning: Broken sub node reference to sub' +
                                     ' node id: ' + subNodeId);
                         }
                     }
@@ -5496,6 +5888,11 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
                 if (node instanceof bui.Complex &&
                         node.parent() instanceof bui.Complex === false) {
                     node.tableLayout();
+
+                    var size = node.size();
+                    var json = node.json();
+                    json.data.width = size.width;
+                    json.data.height = size.height;
                 }
             }
         }
@@ -5577,6 +5974,44 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
     };
 
     /**
+     * Align nodes according to their parent-child relationships. Childs
+     * should end up on top of their parents.
+     *
+     * @param {Object} All the generated nodes. Keys of this object are the
+     *   node's ids or, if applicable, the node's ref key (node.data.ref).
+     */
+    var alignAccordingToNodeHierachy = function(nodes) {
+        var alignRecursively = function(node) {
+            var children = node.childrenWithoutAuxiliaryUnits();
+
+            node.toFront();
+
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                alignRecursively(child);
+            }
+        };
+
+        for (var id in nodes) {
+            if (nodes.hasOwnProperty(id)) {
+                var node = nodes[id];
+
+                if (node.hasParent() === false &&
+                        node.childrenWithoutAuxiliaryUnits().length > 0) {
+                    alignRecursively(node);
+                }
+
+                var auxUnits = node.auxiliaryUnits();
+                for(var i = 0; i < auxUnits.length; i++) {
+                    auxUnits[i].toFront();
+                }
+            }
+        }
+
+
+    };
+
+    /**
      * Import nodes and edges from JSON using this function.
      *
      * @param {bui.Graph} graph The target graph to which the nodes and edges
@@ -5595,6 +6030,9 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
 
         log('## Layout auxiliary units');
         positionAuxiliaryUnits(generatedNodes);
+
+        log('## Aligning nodes according to parent-child relationships');
+        alignAccordingToNodeHierachy(generatedNodes);
 
         log('## Adding all edges');
         addAllEdges(graph, data, generatedNodes);
@@ -5676,5 +6114,6 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
         }
     };
 })(bui);
+
 window.bui = bui;
 })(window);

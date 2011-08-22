@@ -1,4 +1,5 @@
 {{extend 'layout.html'}}
+    <script type="text/javascript" src="{{=URL(request.application, 'static/js', 'biographer-ui.js')}}"></script>
 <table>
 	<tr>
 		<td>
@@ -6,8 +7,103 @@
 		</td>
 		<td>
 			<div id="message"></div>
-			<button id='export_json'>export JSON</button>
-			<button id='export_svg'>export SVG</button>
+			<table>
+				<tr>
+					<th>Import</th>
+					<td>
+						<table>
+							<tr>
+								<td>
+									From File: 
+								</td>
+								<td>
+									<form id='import_form' method="post" enctype="multipart/form-data">
+										<input type="file" name="json_file" id="json_file">	
+									</form>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									From String: 
+								</td>
+								<td>
+									<input type="text" placeholder='{"nodes":[{"id":"node0","visible":true,"sbo":240,"data":{"x":50,"y":53,"width":61,"height":61,"label":"ATP"}}],"edges":[]}' id='json_string' /> <button id="load_json_string">load</button>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<th>Export</th>
+					<td>
+						<button id='export_json'>JSON</button>
+						<button id='export_svg'>SVG</button>
+						<form action="{{=URL('export')}}" id='export_form' style='display: none;'></form>
+					</td>
+				</tr>
+				<tr>
+					<th>Save</th>
+					<td>
+						<button id='save'>save to session</button>
+					</td>
+				</tr>
+				<tr>
+					<th>Edit</th>
+					<td>
+						<button id="edit_node">edit node</button>
+						<br />
+						<table id="edit_node_table">
+							<tr>
+								<th>Label</th>
+								<td> <input type="text" placeholder="new label" id='edit_label' /> </td>
+							</tr>
+							<tr>
+								<th>Unit of Information</th>
+								<td> <input type="text" placeholder="mt:prot" id='unit_of_information' /> </td>
+							</tr>
+							<tr>
+								<th>Color</th>
+								<td> 
+									<div class="colorbox"><input type="radio" name="node_color" value="none" checked/></div>
+									<div class="colorbox Silver"><input type="radio" name="node_color" value="Silver"/></div>
+									<div class="colorbox Gray"><input type="radio" name="node_color" value="Gray"/></div>
+									<div class="colorbox Red"><input type="radio" name="node_color" value="Red"/></div>
+									<div class="colorbox Maroon"><input type="radio" name="node_color" value="Maroon"/></div>
+									<div class="colorbox Yellow"><input type="radio" name="node_color" value="Yellow"/></div>
+									<div class="colorbox Olive"><input type="radio" name="node_color" value="Olive"/></div>
+									<div class="colorbox Lime"><input type="radio" name="node_color" value="Lime"/></div>
+									<br />
+									<div class="colorbox Green"><input type="radio" name="node_color" value="Green"/></div>
+									<div class="colorbox Aqua"><input type="radio" name="node_color" value="Aqua"/></div>
+									<div class="colorbox Teal"><input type="radio" name="node_color" value="Teal"/></div>
+									<div class="colorbox Blue"><input type="radio" name="node_color" value="Blue"/></div>
+									<div class="colorbox Navy"><input type="radio" name="node_color" value="Navy"/></div>
+									<div class="colorbox Fuchsia"><input type="radio" name="node_color" value="Fuchsia"/></div>
+									<div class="colorbox Purple"><input type="radio" name="node_color" value="Purple"/></div>
+								</td>
+							</tr>
+						</table>
+						<div> clear text <input type="checkbox" id="autoclear"> </div>
+						<br />
+						<br />
+						<div id="edit_message"></div>
+					</td>
+				</tr>
+				<tr>
+					<th>Remove</th>
+					<td> 
+						<button id="del_node">remove node</button> 
+						<!-- button id="del_edge" disabled>remove edge</button --> 
+					</td>
+				</tr>
+				<tr>
+					<th>Editable</th>
+					<td>
+						<button id='edit_all_nodes'>all nodes</button>
+						<button id='edit_no_nodes'>no nodes</button>
+					</td>
+				</tr>
+			</table>
 			<table>
 				<thead>
 					<tr>
@@ -19,22 +115,28 @@
 				<tr>
 					<td>SimpleChemical</td>
 					<td> <div class="symbol_box editor_draggable" id='SimpleChemical'></div> </td>
-					<td> <input type="text" placeholder="ATP" class='label' /> </td>
+					<td> <input type="text" placeholder="ATP" class='label' /> clear text<input type="checkbox" class="autoclear"></td>
+						
 				</tr>
 				<tr>
 					<td>Macromolecule</td>
 					<td> <div class="symbol_box editor_draggable" id='Macromolecule'></div> </td>
-					<td> <input type="text" placeholder="Hexokinase" class='label' /> </td>
+					<td> <input type="text" placeholder="Hexokinase" class='label' /> clear text<input type="checkbox" class="autoclear"></td>
 				</tr>
 				<tr>
 					<td>NucleicAcidFeature</td>
 					<td> <div class="symbol_box editor_draggable" id='NucleicAcidFeature'></div> </td>
-					<td> <input type="text" placeholder="ENA1" class='label' /> </td>
+					<td> <input type="text" placeholder="ENA1" class='label' /> clear text<input type="checkbox" class="autoclear"></td>
+				</tr>
+				<tr>
+					<td>UnspecifiedEntity</td>
+					<td> <div class="symbol_box editor_draggable" id='UnspecifiedEntity'></div> </td>
+					<td> <input type="text" placeholder="something" class='label' /> clear text<input type="checkbox" class="autoclear"></td>
 				</tr>
 				<tr>
 					<td>Compartment</td>
-					<td> <div class="symbol_box editor_draggable" id='Compartment'></div> </td>
-					<td> <input type="text" placeholder="Cytosol" class='label' /> </td>
+					<td> <div class="symbol_box editor_draggable no_drop_complex" id='Compartment'></div> </td>
+					<td> <input type="text" placeholder="Cytosol" class='label' /> clear text<input type="checkbox" class="autoclear"></td>
 				</tr>
 				<tr>
 					<td>Complex</td>
@@ -42,17 +144,37 @@
 					<td> </td>
 				</tr>
 				<tr>
-					<td>Reaction</td>
-					<td> <div class="symbol_box editor_draggable" id='RectangularNode'></div> </td>
-					<td> <input type="text" placeholder="Reaction" class='label' /> </td>
+					<td>Process</td>
+					<td> <div class="symbol_box editor_draggable no_drop_complex" id='Process'></div> </td>
+					<td> <input type="text" placeholder="Cytosol" class='label' /> clear text<input type="checkbox" class="autoclear"></td>
 				</tr>
 				<tr>
 					<td>Spline/Edge</td>
 					<td colspan='2'>  <button id="draw_edge_spline">Draw Edge/Spline</button>
-						<select id="select_edge_spline">
-							<option>Spline</option>
-							<option>Edge</option>
-						</select>
+						<br />
+						<table>
+							<tr>
+								<th> Type </th>
+								<td>
+									<select id="select_edge_spline">
+										<option>Spline</option>
+										<option>Edge</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>End Marker</th>
+								<td>
+									<select id="edge_marker">
+										<option>none</option>
+										<option>modulation</option>
+										<option>inhibition</option>
+										<option>necessaryStimulation</option>
+										<option>catalysis</option>
+									</select>
+								</td>
+							</tr>
+						</table>
 					<div id="edge_message"></div> </td>
 				</tr>
 			</table>
@@ -61,7 +183,9 @@
 </table>
 <br />
 <script type="text/javascript">
-var graphData = { 
+//-------------------------------------------
+//-------------------------------------------
+var graphData =  {{if session.editor_autosave:}} {{=XML(session.editor_autosave)}} {{else:}} {
    nodes : [
       {
          "data" : {
@@ -77,90 +201,34 @@ var graphData = {
       },
    ],
    edges : []
-};
-
-var selected_nodes = [];
-var edge_select_on = false;
-function edgeSelect(drawable, select_status) {
-    if (edge_select_on == true){
-	    $('#edge_message').html('please select a second node');
-	    selected_nodes.push(drawable);
-	    if (selected_nodes.length>=2){
-		edge_select_on = false;
-		$('#edge_message').html('');
-		//draw edge now
-		new_edge = graph.add(bui[$('#select_edge_spline').val()])
-			    .source(selected_nodes[0])
-			    .target(selected_nodes[1])
-			    .visible(true);
-		selected_nodes = []
-		edge_select_on = false;
-	    }
-    }
-}
-
+   }{{pass}};
 bui.ready(function() {
     bui.settings.css.stylesheetUrl = '{{=URL(request.application, 'static/css', 'visualization-svg.css')}}'
     graph = new bui.Graph($('#canvas')[0]);
     bui.importFromJSON(graph, graphData);
     //=========================
-	//add edge select listner to all nodes
-	all_drawables = graph.drawables();
-	for (var key in all_drawables) {
+    doHeartBeat();
+    //=========================
+    //add edge select listner to all nodes 
+    all_drawables = graph.drawables(); 
+    for (var key in all_drawables) {
 	    var drawable = all_drawables[key];
+	    //alert(drawable.identifier());
 	    if (drawable.drawableType()=='node'){
-		drawable.bind(bui.Node.ListenerType.click, edgeSelect, 'edge_select');
+		drawable.bind(bui.Node.ListenerType.click, nodeSelect, 'node_select');
 	    }
-	}
-    //=========================
-    $('#draw_edge_spline').click(function(){
-	$('#edge_message').html('click on two nodes to draw an edge between them');
-	edge_select_on = true;
-    });
-    //=========================
-    $('#export_json').click(function(){
-	    alert(JSON.stringify(graphData));
-    });
-    //=========================
-    $('#export_svg').click(function(){
-	    alert($('#canvas').html());
-    });
-});
-
-$(document).ready(function() {
-});
-$('.editor_draggable').draggable({
-        zIndex: 2,
-        revert: true, 
-    });
-var canvaspos = $('#canvas').position(); 	
-$('.droppable').droppable({ 
-    hoverClass: 'drop_hover',
-    greedy: true,
-    drop: function( event, ui ) {
-	if(ui.helper.hasClass('symbol_box')){
-		pos_top = ui.offset.top-canvaspos.top;
-		pos_left = ui.offset.left-canvaspos.left;
-		//new_node = graph.add(bui.SimpleChemical)
-		var size = {};
-		if(ui.helper.attr('id')=='RectangularNode'){
-			size = {h:20, w:20};
-		}else if((ui.helper.attr('id')=='Compartment')||(ui.helper.attr('id')=='Complex')){
-			size = {h:100, w:100};
-		}else {
-			size = {h:50, w:50};
-		}
-
-		new_node = graph.add(bui[ui.helper.attr('id')])
-			.position(pos_left, pos_top)
-			.size(size.h, size.w)
-			.visible(true)
-		if(ui.helper.attr('id')!='Complex'){
-			//new_node.addClass('.droppable')//FIXME this does not work, what is the object where I need to add the droppable class
-			new_node.label(ui.helper.parent().parent().find('.label').val());
-		}
-		new_node.bind(bui.Node.ListenerType.click, edgeSelect, 'edge_select');
-	}
     }
+    $('#canvas').droppable({ 
+	hoverClass: 'drop_hover',
+	drop: function(event, ui){drop_fkt(event, ui, this);},
+    });
+    $('.Complex, .Compartment').droppable({ 
+	hoverClass: 'drop_hover',
+	over : function(){$('#canvas').droppable("disable");},
+	out : function(){$('#canvas').droppable("enable");},
+	drop: function(event, ui){drop_fkt(event, ui, this);},
+    });
 });
+//-------------------------------------------
+//-------------------------------------------
 </script>
