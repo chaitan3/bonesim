@@ -1367,7 +1367,7 @@ var getSBOForMarkerId = function(id) {
      * rawSVG in order to replace it for the export process.
      */
     var __getStylesheetContents = function() {
-        return '@import url(\'' + bui.settings.css.stylesheetUrl + '\');';
+        return '@import url("' + bui.settings.css.stylesheetUrl + '\");';
     };
 
     /**
@@ -2442,6 +2442,9 @@ var getSBOForMarkerId = function(id) {
             this.fire(bui.Node.ListenerType.click, [this, event]);
         }
     };
+    var dblclick = function(event) {
+            this.placeholderVisible(!this.placeholderVisible());
+    };
 
     /**
      * @private
@@ -2469,7 +2472,8 @@ var getSBOForMarkerId = function(id) {
 
             jQuery(privates.nodeGroup)
                     .add(privates.placeholder)
-                    .click(mouseClick.createDelegate(this));
+                    .click(mouseClick.createDelegate(this))
+                    .dblclick(dblclick.createDelegate(this));
 
             if (this._enableDragging === true) {
                 jQuery(privates.placeholder).draggable({
