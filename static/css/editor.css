@@ -1,3 +1,24 @@
+
+div.flash {
+    font-weight: bold;
+    display: none;
+    position: fixed;    
+    padding: 10px;
+    top: 12%;
+    right: 10%;
+    min-width: 280px;
+    opacity: 0.85;
+    margin: 0px 0px 10px 10px;    
+    color: #fff;    
+    vertical-align: middle;
+    cursor: pointer;
+    background: #e54d4d;
+    border: 2px solid lightgreen;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    z-index: 2;
+}
+/**********************************/
 #editor-header {
 	width: 100%;
 	background-color: #2a3942;

@@ -355,6 +355,11 @@ $(document).ready(function() {
                 redrawGraph(data.graph)
                 $.modal.close()
                 return true;
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                $.modal.close();
+                jQuery('.flash').html(textStatus+' '+xhr.responseText).fadeIn();
+                return true;
             }
         });
 
