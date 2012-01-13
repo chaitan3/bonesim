@@ -16,6 +16,7 @@ from datetime import datetime		# to log with timestamp
 from copy import deepcopy
 from math import ceil
 from hashlib import md5
+import pickle
 
 import json				# JSON format
 import libsbml				# SBML format
@@ -26,6 +27,23 @@ from edge import Edge
 
 from defaults import *
 from SBO_terms import *
+
+def find_whole_word(haystack, needle):
+	allowed_chars = [' ', '\t']
+	p = haystack.find(needle)
+	while p > -1:
+		if p == 0:
+			before = " "
+		else:
+			before = haystack[p-1]
+		if p+len(needle) > len(haystack):
+			after = " "
+		else:
+			after = haystack[p+len(needle)]
+		if before in allowed_chars and after in allowed_chars:
+			return p
+		p = haystack.find(needle, p+1)
+	return -1
 
 
 ### Graph object definition ###
@@ -73,7 +91,7 @@ class Graph:
 			print msg
 
 	def status(self):
-		self.log("Network has "+str(self.NodeCount())+" Nodes ("+str(len(self.Compartments))+" Compartments) and "+str(self.EdgeCount())+" Edges.")
+		self.log("Network has "+str(self.NodeCount())+" Nodes ("+str(len(self.Compartments))+" of which are compartments) and "+str(self.EdgeCount())+" Edges.")
 
 	def pickCompartments(self):						# create array Compartments with links to the appropriate Node Objects
 		self.log("Picking Compartments ...")
@@ -145,7 +163,7 @@ class Graph:
 				n.data.compartment = TopCompartmentID
 				self.log("Strange: "+str(n.id)+".data.compartment is not defined. Node moved to top.")
 			if not n.data.compartment in compartmentIDs:		# valid compartment ?
-				self.log("Error: Compartment "+str(n.data.compartment)+" for Node "+str(n.id)+" not found ! Node moved to top.")
+				self.log("Error: Compartment '"+str(n.data.compartment)+"' for Node '"+str(n.id)+"' not found ! Node moved to top.")
 				n.data.compartment = TopCompartmentID
 
 		for e in self.Edges:
@@ -186,7 +204,7 @@ class Graph:
 	### generating a unique Graph identifier ###
 
 	def hash(self):
-		self.MD5 = md5( self.exportJSON() ).hexdigest()
+		self.MD5 = md5( pickle.dumps(self) ).hexdigest()
 		return self.MD5
 
 
@@ -519,6 +537,7 @@ class Graph:
 
 		for node in self.Nodes:
 			if node.sbo == getSBO('Compartment'):
+				self.log('Adding compartment '+str(node.id)+' ...')
 				subgraph = graphviz_model.add_subgraph(
 									[],
 									name = node.data.label if node.data.owns("label") else str(node.id),
@@ -526,12 +545,14 @@ class Graph:
 									)
 				for subnode in self.Nodes:
 					if subnode.data.owns('compartment') and (subnode.data.compartment == node.id):
+						self.log('Adding node '+str(subnode.id)+' to compartment '+str(node.id)+' ...')
 						subgraph.add_node(
 								 	str(subnode.id),
 									label = subnode.data.label if subnode.data.owns("label") else str(subnode.id),
 									shape = 'ellipse' if subnode.type != getNodeType("Process Node") else 'box'
 								)
 			else:
+				self.log('Adding node '+str(node.id)+' ...')
 				graphviz_model.add_node(
 								str(node.id),
 								label = node.data.label if node.data.owns("label") else str(node.id),
@@ -556,14 +577,15 @@ class Graph:
 
 		nodes_deleted = False
 		for node in self.Nodes:
-			p = layout.find("\t"+str(node.id)+"\t")
-			if p > -1:
-				q = layout.find(";", p)
-				node.update_from_graphviz( layout[p:q] )
-			else:
-				self.Nodes.pop( self.Nodes.index(node) )
-				nodes_deleted = True
-				self.log("Error: Updating Node "+str(node.id)+" failed! Node deleted.")
+			if node.sbo != getSBO('compartment'):
+				p = find_whole_word(layout, str(node.id))
+				if p > -1:
+					q = layout.find(";", p)
+					node.update_from_graphviz( layout[p:q] )
+				else:
+					self.Nodes.pop( self.Nodes.index(node) )
+					nodes_deleted = True
+					self.log("Error: Updating Node "+str(node.id)+" failed! Node deleted.")
 
 		self.log("Updated.")
 
