@@ -1,5 +1,8 @@
 {{extend 'layout_editor.html'}}
-<script type="text/javascript" src="{{=URL(request.application, 'static/js', 'biographer-ui.js')}}"></script>
+<!-- script type="text/javascript" src="{{=URL(request.application, 'static/js', 'biographer-ui.js')}}"></script -->
+<script type="text/javascript">
+    {{include 'editor/biographer-ui.js'}}
+</script>
 <div id="editor-header">
 	<div id="logo"> BioGrapher </div>
 	<UL>
@@ -103,6 +106,18 @@
 				<li id='edit_no_nodes'> 
 				<div>resize/move no nodes</div>
 				<img src="{{=URL(request.application, 'static/images/editor', 'select_none.png')}}"/> 
+				&nbsp;
+				</li>
+				<!-- ---------------------------------------------------------------- -->
+				<li class="spacer"></li>
+				<li id='align_vertical'> 
+				<div>align selected nodes vertically</div>
+				<img src="{{=URL(request.application, 'static/images/editor', 'align_vertical.png')}}"/> 
+				&nbsp;
+				</li>
+				<li id='align_hoizontal'> 
+				<div>align selected nodes horizontally</div>
+				<img src="{{=URL(request.application, 'static/images/editor', 'align_hoizontal.png')}}"/> 
 				&nbsp;
 				</li>
 				<!-- ---------------------------------------------------------------- -->
@@ -306,12 +321,16 @@
 						<div> stimulation </div>
 						<img src="{{=URL(request.application, 'static/images/editor', 'stimulation.png')}}"/> 
 					</div>
+					<div class="marker_select" id="assignment">
+						<div> assignment </div>
+						<img src="{{=URL(request.application, 'static/images/editor', 'assignment.png')}}"/> 
+					</div>
 					<div class="marker_select" id="necessaryStimulation">
 						<div> necessaryStimulation </div>
 						<img src="{{=URL(request.application, 'static/images/editor', 'necessaryStimulation.png')}}"/> </div>
 					<div class="marker_select" id="absoluteInhibition">
 						<div> absoluteInhibition </div>
-						<img src="{{=URL(request.application, 'static/images/editor', 'necessaryStimulation.png')}}"/> </div>
+						<img src="{{=URL(request.application, 'static/images/editor', 'absoluteInhibition.png')}}"/> </div>
 				</div>
 			</td>
 		</tr>

@@ -318,6 +318,25 @@ function layout(algorithm){
 $(document).ready(function() {
     showUndoRedo();
     //=========================
+    $('#align_vertical, #align_hoizontal').click(function(){
+        var all_drawables = graph.drawables();
+        var pos = undefined;
+        for (var key in all_drawables) {
+            drawable = all_drawables[key]
+            if ((drawable.drawableType()=='node')&&drawable.placeholderVisible()){
+                if(pos === undefined){
+                    pos = drawable.absolutePosition();
+                }else{
+                    if($(this).attr('id')=='align_hoizontal'){
+                        drawable.absolutePosition(drawable.absolutePosition().x,pos.y);
+                    }else if($(this).attr('id')=='align_vertical'){
+                        drawable.absolutePosition(pos.x, drawable.absolutePosition().y);
+                    }
+                }
+            }
+        }
+    });
+    //=========================
     $('#canvas').resizable();
     //=========================
     $('#layout_grahviz').click(function(){

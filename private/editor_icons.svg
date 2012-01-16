@@ -15,7 +15,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.48.2 r9819"
    sodipodi:docname="editor_icons.svg">
   <defs
      id="defs4">
@@ -170,16 +170,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.656854"
-     inkscape:cx="563.97193"
-     inkscape:cy="624.36847"
+     inkscape:zoom="7.9999996"
+     inkscape:cx="83.515304"
+     inkscape:cy="731.56"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1870"
-     inkscape:window-height="1056"
-     inkscape:window-x="50"
-     inkscape:window-y="24"
+     inkscape:window-width="1920"
+     inkscape:window-height="1054"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -921,13 +921,13 @@
            style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:4;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       </g>
       <image
-         sodipodi:absref="/home/fkrause/Dev/web2py/applications/biographer/private/json160.gif"
+         sodipodi:absref="/home/fkrause/Dev/biographer-server/private/json160.gif"
          xlink:href="json160.gif"
-         width="16.282143"
-         height="16.282143"
-         id="image4606"
+         y="355.62958"
          x="441.27188"
-         y="355.62958" />
+         id="image4606"
+         height="16.282143"
+         width="16.282143" />
       <g
          transform="matrix(0.82646749,0,0,0.82646749,71.126843,64.96684)"
          id="g3226">
@@ -946,13 +946,13 @@
              style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:4;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
         </g>
         <image
-           sodipodi:absref="/home/fkrause/Dev/web2py/applications/biographer/private/json160.gif"
+           sodipodi:absref="/home/fkrause/Dev/biographer-server/private/json160.gif"
            xlink:href="json160.gif"
-           width="19.700888"
-           height="19.700888"
-           id="image3224"
+           y="351.69287"
            x="447.86401"
-           y="351.69287" />
+           id="image3224"
+           height="19.700888"
+           width="19.700888" />
       </g>
     </g>
     <g
@@ -1958,6 +1958,50 @@
              y="338.36218" />
         </g>
       </g>
+    </g>
+    <g
+       id="g3835"
+       inkscape:export-filename="/home/fkrause/Dev/biographer-server/static/images/editor/necessaryInhibition.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="rect4284-7-75"
+         d="m 37.815204,315.98715 18.320842,0"
+         style="fill:none;stroke:#000000;stroke-width:2.39626169;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="rect4284-1-1-9"
+         d="m 56.9348,304.76567 0,22.44296"
+         style="fill:none;stroke:#000000;stroke-width:2.39626169;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="rect4284-1-1-9-5"
+         d="m 50.625003,304.76567 0,22.44296"
+         style="fill:none;stroke:#000000;stroke-width:2.39626169;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    </g>
+    <g
+       id="g3831"
+       inkscape:export-filename="/home/fkrause/Dev/biographer-server/static/images/editor/assignment.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path4280-4-1"
+         d="m 344.98062,439.02451 c -8.66266,-5.63588 -17.32532,-7.00938 -25.98798,0 l 6.497,-11.25312 6.49699,-11.25313 6.497,11.25313 z"
+         inkscape:transform-center-x="-4.5689092"
+         style="fill:#000000;stroke:#000000;stroke-width:2.59581398999999990;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+         transform="matrix(0,0.87588786,-0.97291042,0,517.10347,24.454087)" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="rect4284-7-7-6-3"
+         d="m 70.631494,315.23715 23.031678,0"
+         style="fill:#ffffff;stroke:#000000;stroke-width:2.68673182;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     </g>
   </g>
 </svg>
