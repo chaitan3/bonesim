@@ -139,6 +139,8 @@ class Graph:
 				for i in range(len(node.connections)):
 					try:
 						node.data.compartment = node.connections[0].data.compartment
+						if not node in node.data.compartment.data.subnodes:
+							node.data.compartment.data.subnodes.append(node)
 						break
 					except:
 						pass
