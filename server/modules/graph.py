@@ -139,6 +139,8 @@ class Graph:
 				for i in range(len(node.connections)):
 					try:
 						node.data.compartment = node.connections[0].data.compartment
+						if not node in node.data.compartment.data.subnodes:
+							node.data.compartment.data.subnodes.append(node)
 						break
 					except:
 						pass
@@ -367,65 +369,71 @@ class Graph:
 		SBML = libsbml.readSBMLFromString( SBML )
 		model = SBML.getModel()
 		if model is None:
-			self.log(error, "Error: SBML model is None !")
+			self.log(error, "Error: SBML import failed")
 			return False
 
-		for compartment in model.getListOfCompartments():
+		for compartment in model.getListOfCompartments():		# compartments
 			n = Node( defaults=True )
 			n.id			= compartment.getId()
-			n.sbo			= getSBO("Compartment")
-			n.type                  = getNodeType("Compartment Node")
+			n.sbo			= getSBO( Compartment )
+			n.type                  = getNodeType( Compartment )
 			n.data.label		= compartment.getName() if compartment.isSetName() else compartment.getId()
 			if compartment.isSetOutside():
 				n.data.compartment	= compartment.getOutside()
 			self.Nodes.append(n)
 			#self.Compartments.append(n)
 
-		for species in model.getListOfSpecies():
+		for species in model.getListOfSpecies():			# compounds
 			n = Node( defaults=True )
 			n.id			= species.getId()
-			n.sbo			= getSBO( species.getSBOTerm() )
-			n.type			= 'simple species'#getNodeType("Entitiy Pool Node")
+			sbo = species.getSBOTerm()
+			if sbo not in [-1, '-1']:
+				n.sbo		= getSBO( sbo )
+			else:
+				n.sbo		= getSBO( SimpleChemical ) # fallback value
+			n.type			= getNodeType( SimpleChemical )
 			n.data.label		= species.getName() if species.isSetName() else species.getId()
 			n.data.compartment	= species.getCompartment()
 			self.Nodes.append(n)
 
-		for reaction in model.getListOfReactions():			# create a process node
+		for reaction in model.getListOfReactions():			# process nodes
 			n			= Node( defaults=True )
 			n.id			= reaction.getId()
-			n.sbo			= '375'#getSBO("Unspecified")
-		        n.type         		= 'reaction'#getNodeType('Process Node')
+			if sbo not in [-1, '-1']:
+				n.sbo		= getSBO( sbo )
+			else:
+				n.sbo		= getSBO( Process ) # fallback value
+		        n.type         		= getNodeType( Process )
 			n.data.label		= reaction.getName() if reaction.isSetName() else reaction.getId()
 			n.data.width		= 26
 			n.data.height		= 26
 			self.Nodes.append(n)
 
-			for reactant in reaction.getListOfReactants():		# create Edges from the educts, products and modifiers to this process node
+			for reactant in reaction.getListOfReactants():		# connecting edges
 				e		= Edge( defaults=True )
-				e.id		= 'reactant'+str(len(self.Edges))
-				e.sbo           = 10#getSBO('Reactant')
-				e.type		= getEdgeType(e.sbo)#'Substrate'
+				e.id		= substrate+str(len(self.Edges))
+				e.sbo           = getSBO( substrate )
+				e.type		= getEdgeType(e.sbo)
 				e.source        = reactant.getSpecies()
 				e.target	= n.id
 				self.Edges.append(e)
 
-			for product in reaction.getListOfProducts():
+			for p in reaction.getListOfProducts():
 				e		= Edge( defaults=True )
-				e.id		= 'product'+str(len(self.Edges))
-				e.sbo           = 393#getSBO('Production')
-				e.type		= getEdgeType(e.sbo)#'Product'
+				e.id		= product+str(len(self.Edges))
+				e.sbo           = getSBO( product )
+				e.type		= getEdgeType(e.sbo)
 				e.source        = n.id
-				e.target	= product.getSpecies()
+				e.target	= p.getSpecies()
 				self.Edges.append(e)
 
 			for modifier in reaction.getListOfModifiers():
 				e		= Edge( defaults=True )
-				e.id		= 'modifier'+str(len(self.Edges))
-				#e.sbo		= getSBO( modifier.getSBOTerm() )
-				e.sbo		= 19
+				e.id		= modulation+str(len(self.Edges))
+				e.sbo		= getSBO( modulation )
 				if modifier.isSetSBOTerm():
-					e.sbo	= int(getSBO( modifier.getSBOTerm() ))
-				e.type		= getEdgeType(e.sbo)#'Modifier'
+					e.sbo	= getSBO( modifier.getSBOTerm() )
+				e.type		= getEdgeType(e.sbo)
 				e.source        = modifier.getSpecies()
 				e.target	= n.id
 				self.Edges.append(e)
@@ -480,7 +488,7 @@ class Graph:
 		write( len(self.Nodes) )
 		for node in self.Nodes:				# Nodes
 			write( self.Nodes.index(node) )
-			write( getLayoutNodeType(node.type) )
+			write( global2layouter(node.type) )
 			write( node.id )
 			if node.data.owns('compartment'):
 				write( self.Compartments.index(node.data.compartment) )
@@ -511,9 +519,9 @@ class Graph:
 			Type = lines.pop(0)
 			name = lines.pop(0)
 			compartmentidx = lines.pop(0)
-			if Type in ['Compound', 'Reaction']:
+			if Type in [Compound, Reaction]:
 				node = self.Nodes[index]
-			elif Type == 'Compartment':
+			elif Type == _Compartment:
 				node = self.Compartments[index]
 			else:
 				self.log(error, "Error: What kind of a node is '"+Type+"' that supposed to be?")
