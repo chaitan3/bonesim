@@ -82,10 +82,13 @@ class Graph:
 	def make_object_links(self):
 		self.log(progress, "Generating object links ...")
 
+		link_map = {}
+		for node in self.Nodes:
+			link_map[str(node.id).lower()] = node
 		def getNodeByID(ID):
-			for n in self.Nodes:
-				if str(n.id).lower() == str(ID).lower():
-					return n
+			ID = str(ID).lower()
+			if ID in link_map.keys():
+				return link_map[ID]
 			return None
 
 		for n in self.Nodes:						# node.data.compartment
@@ -701,12 +704,9 @@ class Graph:
 			except:
 				print "failed to add edge"
 				if self.verbosity >= debug:
-					print edge.__dict__
-					print edge.source.__dict__
-					print edge.target.__dict__
-#					print edge.exportDICT()
-#					print edge.source.exportDICT()
-#					print edge.target.exportDICT()
+					print edge.exportDICT()
+					print edge.source.exportDICT()
+					print edge.target.exportDICT()
 
 		self.log(info, 'Added '+str(counter)+' edges to graphviz model.')
 
@@ -741,11 +741,13 @@ class Graph:
 		bb = layout[p:q].split(',')
 		max_y = bb[3]
 
+		updated = 0
 		for node in self.Nodes:
 			if not node.is_abstract:
 				if not node.owns('alias'):
-					self.log(error, 'Error: Node '+str(node.id)+' lacks alias.')
+					self.log(warning, 'Warning: Node update failed, '+str(node.id)+' lacks alias.')
 				else:
+					updated += 1
 					if getNodeType(node.type) == getNodeType('Compartment'):
 						coordinates = find_subgraph_in_graphviz_output(layout, node.alias)
 						if coordinates is not None:
@@ -759,7 +761,7 @@ class Graph:
 						else:
 							self.log(warning, "Warning: Node "+str(node.id)+" not updated")
 
-		self.log(info, "Model updated.")
+		self.log(info, str(updated)+" nodes updated.")
 
 
 	### basic functions on Graph properties ###

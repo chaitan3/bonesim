@@ -159,14 +159,6 @@ class Edge:
 				result += "Warning: Edge ID < 0 !\n"
 				show = True
 
-									# check label
-		if self.data.owns("label") and not (self.data.owns("label_x") and self.data.owns("label_y")):
-			result += "Error: Label position missing !\n"
-			show = True
-		if self.data.owns("label_x") is not self.data.owns("label_y"):
-			result += "Error: Label position incomplete !\n"
-			show = True
-
 #		if show:						# if errors: show source
 #			result += "Edge contains errors: "+self.exportJSON()+"\n"
 		return result
