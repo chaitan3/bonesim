@@ -8,14 +8,11 @@ def JSON():
 		session.flash = "Unable to export: No Model is loaded"
 		return redirect( URL(r=request, c="Import", f="JSON") )
 
-	session.bioGraph.exportJSON()		# workaround for web2py bug
-	content = session.bioGraph.JSON
-
 	response.headers['Content-Type'] = 'application/json'
 	response.headers['Content-Disposition'] = 'attachment; filename=model.json'
-	return content
+	return export_JSON()
 
-def Layouter():
+def LayouterInput():
 	if session.bioGraph is None:
 		session.flash = "Unable to export: No Model is loaded"
 		return redirect( URL(r=request, c="Import", f="JSON") )
@@ -23,6 +20,16 @@ def Layouter():
 	response.headers['Content-Type'] = 'text/html'
 	response.headers['Content-Disposition'] = 'attachment; filename=model.layout'
 	return session.bioGraph.export_to_Layouter()
+
+def LayouterOutput():
+	if session.last_layout is None:
+		session.flash = "Unable to export: Not layouted yet"
+		return redirect( URL(r=request, c="Import", f="JSON") )
+
+	response.headers['Content-Type'] = 'text/html'
+	response.headers['Content-Disposition'] = 'attachment; filename=output.layout'
+	return session.last_layout
+
 
 def dot():
 	if session.bioGraph is None:
@@ -70,4 +77,16 @@ def Picture():
 	else:
 		session.flash = "Exporter failed: No output"
 		return redirect( URL(r=request, c="Workbench", f="index") )
+
+def BioModel():
+	sbml = download_BioModel( request.vars.BIOMD )
+	response.headers['Content-Type'] = 'application/sbml+xml'
+	response.headers['Content-Disposition'] = 'attachment; filename='+request.vars.BIOMD+'.sbml'
+	return sbml
+
+def Reactome():
+	sbml = download_Reactome( request.vars.ST_ID )
+	response.headers['Content-Type'] = 'application/sbml+xml'
+	response.headers['Content-Disposition'] = 'attachment; filename='+request.vars.ST_ID+'.sbml'
+	return sbml
 

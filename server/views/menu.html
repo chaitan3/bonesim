@@ -83,6 +83,7 @@
 			<a href="{{=URL(r=request, c='Import', f='SBML')}}">SBML</a><br/>
 			<a href="{{=URL(r=request, c='Import', f='BioModels')}}">BioModels.net</a><br/>
 			<a href="{{=URL(r=request, c='Import', f='Reactome')}}">Reactome</a><br/>
+			<a href="{{=URL(r=request, c='Import', f='BooleanNet')}}">BooleanNet</a><br/>
 		<!--	<a href="{{=URL(r=request, c='Import', f='ODP')}}">ODP</a><br/>
 			<a href="{{=URL(r=request, c='BioPAX', f='importer')}}">BioPAX</a><br/>
 			<a href="{{=URL(r=request, c='PID', f='importer')}}">PID</a><br/>
@@ -96,10 +97,11 @@
 		<div class=dropdown>
 			Export<br/>
 			<a href="{{=URL(r=request, c='Export', f='JSON')}}">JSON</a><br/>
-			<a href="{{=URL(r=request, c='Export', f='Layouter')}}">Layout</a><br/>
+			<a href="{{=URL(r=request, c='Export', f='LayouterInput')}}"><nobr>Layouter&nbsp;input</nobr></a><br/>
+			<a href="{{=URL(r=request, c='Export', f='LayouterOutput')}}"><nobr>Layouter&nbsp;output</nobr></a><br/>
 			<a href="{{=URL(r=request, c='Export', f='dot')}}">dot</a><br/>
 
-			<style>
+			<!--style>
 				#format		{
 						width:		60px;
 						}
@@ -124,10 +126,10 @@
 					<option value='pdf'>pdf</option>
 					<option value='svg'>svg</option>
 					<option value='tiff'>tiff</option>
-<!--					<option value='eps'>eps</option>	doesn't work	-->
+<!--					<option value='eps'>eps</option>	doesn't work	--><!--
 				</select>
 				<input type=hidden name=svg id=svg value=""/>
-			</form>
+			</form-->
 		</div>
 	</div>
 
