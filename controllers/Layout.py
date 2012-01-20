@@ -33,11 +33,10 @@ def graphviz():
 
 	server_object = deepcopy( session.bioGraph )	# without these two lines, some caching problem occurs,
 	del session.bioGraph				# and session.bioGraph does not get updated
-
-	png = layout_using_graphviz( server_object, execution_folder=os.path.join(request.folder, "cache"), png_output_folder=os.path.join(request.folder, "static/graphviz") )
-
+	out = layout_using_graphviz( server_object, execution_folder=os.path.join(request.folder, "cache"), image_output_folder=os.path.join(request.folder, "static/graphviz") )
 	session.bioGraph	= server_object
-	session.graphviz_png	= '../static/graphviz/'+png
+
+	session.graphviz_image	= '../static/graphviz/'+out
 	session.graphviz_layout = session.bioGraph.graphviz_layout
 
 	session.flash = "graphviz layout completed"

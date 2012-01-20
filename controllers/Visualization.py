@@ -19,18 +19,9 @@ def graphviz():									# graphviz
 		return redirect( URL(r=request, c="Import", f="BioModels")+"?returnto="+URL(r=request, c="Visualization", f="graphviz")+"&BioModelsID=8" )
 
 	Map = ""								# create a HTML map of the nodes in the picture, so we click 'em
-	_left = 3
-	_height = 685
-	xfactor = 1.34
-	yfactor = 1.33
-
 	image_width = 4863
 	image_height = 1883
 	for node in session.bioGraph.Nodes:
-#		width	= int(float(node.data.width)*xfactor)
-#		height	= int(float(node.data.height)*yfactor)
-#		left	= str(int(_left + float(node.data.x)*xfactor - width/2.))
-#		top	= str(int(_height - float(node.data.y)*yfactor - height/2.))
 		left	= str(int(node.data.x))
 		top	= str(int(node.data.y))
 		width	= str(int(node.data.width))

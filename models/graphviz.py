@@ -12,30 +12,30 @@ def mkdir_and_parents( path ):
 		if (len(fullpath) > 1) and (not os.path.exists(fullpath)):
 			os.mkdir(fullpath)
 
-def layout_using_graphviz(graph, execution_folder="/tmp", png_output_folder="/tmp", algorithm="dot"):
+def layout_using_graphviz(graph, execution_folder="/tmp", image_output_folder="/tmp", algorithm="dot"):
 
 	import os, pygraphviz
 	from defaults import info
 
 	mkdir_and_parents(execution_folder)
-	mkdir_and_parents(png_output_folder)
+	mkdir_and_parents(image_output_folder)
 
 	graphviz_model = graph.export_to_graphviz()
 
 	graph.log(info, "Executing graphviz ...")
 
-	png_filename = graph.MD5+".png"
-	png = os.path.join(png_output_folder, png_filename)
-	if os.path.exists(png):
-		os.remove(png)
+	out_filename = graph.MD5+".svg"
+	out = os.path.join(image_output_folder, out_filename)
+	if os.path.exists(out):
+		os.remove(out)
 
-	graphviz_model.dpi = 70;
+#	graphviz_model.dpi = 70;
 	graphviz_model.layout( prog=algorithm )
-	graphviz_model.draw( png )
+	graphviz_model.draw( out )
 	graph.graphviz_layout = graphviz_model.string()
 	graph.log(info, "graphviz completed.")
 
 	graph.import_from_graphviz( graph.graphviz_layout )
 
-	return png_filename
+	return out_filename
 

@@ -57,8 +57,8 @@ class Node:
 		p += len(key)
 		q = layout.find('"', p)
 		pos = r.findall( layout[p:q] )
-		self.data.x = int(float(pos[0]))
-		self.data.y = int(max_y) - int(float(pos[1]))
+		self.data.x = round(float(pos[0]), 1)
+		self.data.y = round(float(max_y) - float(pos[1]), 1)
 
 		key = 'width="'
 		p = layout.find(key)
@@ -67,8 +67,8 @@ class Node:
 		p += len(key)
 		q = layout.find('"', p)
 		f = float(r.findall(layout[p:q])[0])*72				# 72 dots per inch
-		self.data.width = int(f)
-		self.data.x = int(self.data.x-f/2)				# x|y points to the node center in graphviz
+		self.data.width = round(f, 1)
+		self.data.x = round(self.data.x-f/2, 1)				# x|y points to the node center in graphviz
 
 		key = 'height="'
 		p = layout.find(key)
@@ -77,8 +77,8 @@ class Node:
 		p += len(key)
 		q = layout.find('"', p)
 		f = float(r.findall(layout[p:q])[0])*72				# 72 dots per inch
-		self.data.height = int(f)
-		self.data.y = (self.data.y-f/2)
+		self.data.height = round(f, 1)
+		self.data.y = round(self.data.y-f/2, 1)
 
 #		return str(self.id)+" is now at ( "+str(self.data.x)+" | "+str(self.data.y)+" ), width = "+str(self.data.width)+", height = "+str(self.data.height)
 

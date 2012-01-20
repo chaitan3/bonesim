@@ -18,6 +18,7 @@ from copy import deepcopy
 #from cache import *
 #from biomodels import *
 #from reactome import *
+from defaults import progress
 
 def reset_current_session():
 	global session
@@ -30,7 +31,7 @@ def reset_current_session():
 		del session.bioGraph
 
 	from graph import Graph
-	session.bioGraph = Graph()			# new graph
+	session.bioGraph = Graph(verbosity=progress)	# new graph
 
 
 def import_JSON( JSONstring ):
