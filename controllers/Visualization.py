@@ -8,9 +8,7 @@ def internal():								# Ben's JavaScripts
 		session.flash = "Unable to visualize: No graph is loaded. But look at this pretty example!"
 		return redirect(URL(r=request, c="Visualization", f="example"))
 
-	session.bioGraph.exportJSON()		# workaround for web2py bug
-	net = session.bioGraph.JSON
-	return dict( network=net )
+	return dict( network=export_JSON() )
 
 def example():									# Ben's example
 	return dict()
@@ -25,15 +23,23 @@ def graphviz():									# graphviz
 	_height = 685
 	xfactor = 1.34
 	yfactor = 1.33
-	for node in session.bioGraph.Nodes:
-		width	= int(float(node.data.width)*xfactor)
-		height	= int(float(node.data.height)*yfactor)
-		left	= str(int(_left + float(node.data.x)*xfactor - width/2.))
-		top	= str(int(_height - float(node.data.y)*yfactor - height/2.))
-		width	= str(width)
-		height	= str(height)
-		if left > 0 and top > 0 and width > 0 and height > 0:
-			Map 	+= '<div class=area style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="gotoDijkstra(\''+str(node.id)+'\');">'+node.data.label+'</div>\n'
 
-	return dict( DijkstraMap=Map )
+	image_width = 4863
+	image_height = 1883
+	for node in session.bioGraph.Nodes:
+#		width	= int(float(node.data.width)*xfactor)
+#		height	= int(float(node.data.height)*yfactor)
+#		left	= str(int(_left + float(node.data.x)*xfactor - width/2.))
+#		top	= str(int(_height - float(node.data.y)*yfactor - height/2.))
+		left	= str(int(node.data.x))
+		top	= str(int(node.data.y))
+		width	= str(int(node.data.width))
+		height	= str(int(node.data.height))
+		if left > 0 and top > 0 and width > 0 and height > 0:
+			label	= node.data.label
+			if label in [None, '']:
+				label = node.id
+			Map 	+= '\t<div class=area style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;"/>'+label+'</div>\n'
+
+	return dict( BoundingBoxes=Map )
 

@@ -44,7 +44,7 @@ class Node:
 			return self.owns(key1) and self.owns(key2)
 		return self.owns(key1) and self.owns(key2) and self.owns(key3)
 
-	def update_from_graphviz_node( self, layout ):
+	def update_from_graphviz_node( self, layout, max_y ):
 		if not self.owns("data"):
 			self.data = Data()
 
@@ -57,8 +57,8 @@ class Node:
 		p += len(key)
 		q = layout.find('"', p)
 		pos = r.findall( layout[p:q] )
-		self.data.x = pos[0]
-		self.data.y = pos[1]
+		self.data.x = int(float(pos[0]))
+		self.data.y = int(max_y) - int(float(pos[1]))
 
 		key = 'width="'
 		p = layout.find(key)
@@ -66,7 +66,9 @@ class Node:
 			return False
 		p += len(key)
 		q = layout.find('"', p)
-		self.data.width = int( float( r.findall(layout[p:q])[0] ) *70)		# temporary workaround	# future
+		f = float(r.findall(layout[p:q])[0])*72				# 72 dots per inch
+		self.data.width = int(f)
+		self.data.x = int(self.data.x-f/2)				# x|y points to the node center in graphviz
 
 		key = 'height="'
 		p = layout.find(key)
@@ -74,7 +76,9 @@ class Node:
 			return False
 		p += len(key)
 		q = layout.find('"', p)
-		self.data.height = int( float( r.findall(layout[p:q])[0] ) *70)		# temporary workaround
+		f = float(r.findall(layout[p:q])[0])*72				# 72 dots per inch
+		self.data.height = int(f)
+		self.data.y = (self.data.y-f/2)
 
 #		return str(self.id)+" is now at ( "+str(self.data.x)+" | "+str(self.data.y)+" ), width = "+str(self.data.width)+", height = "+str(self.data.height)
 
@@ -101,21 +105,29 @@ class Node:
 		return json.dumps( self.exportDICT(), indent=Indent )
 
 	def exportDICT(self):
+		data = None
+		if self.owns('data'):					# necessary for speed, without deepcopy will take forever
+			data = self.data
+			del self.data
+		connections = None
+		if self.owns('connections'):
+			connections = self.connections
+			del self.connections
+		edges = None
+		if self.owns('edges'):
+			edges = self.edges
+			del self.edges
+
 		export = deepcopy(self.__dict__)			# convert self to dictionary
-		export['data'] = self.data.exportDICT()
-		
-		if "edges" in export.keys():
-#			del export['edges']
-			replacement = []
-			for edge in export['edges']:
-				replacement.append( edge.id )
-			export['edges'] = replacement
-		if "connections" in export.keys():
-#			del export['connections']
-			replacement = []
-			for node in export['connections']:
-				replacement.append( node.id )
-			export['connections'] = replacement
+
+		if data is not None:
+			self.data = data
+			export['data'] = self.data.exportDICT()
+		if edges is not None:
+			self.edges = edges
+		if connections is not None:
+			self.connections = connections
+
 		return export
 
 	def export_to_Layouter(self):
