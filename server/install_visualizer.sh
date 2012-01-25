@@ -11,7 +11,6 @@ if [ ! -e 'biographer.visualization' ]; then
 	echo 'checkout failed'
 	exit 1
 	fi
-ln biographer.visualization/target/distribution Visualization -s
 cd biographer.visualization
 rm .hg* -fR
 
@@ -20,4 +19,8 @@ sudo apt-get update; apt-get install libnode-uglify nodejs --yes
 
 # build
 python src/build/python/manage.py clean build test jslint jsdoc compress createDistribution
+
+# link
+cd ..
+ln biographer.visualization/target/distribution Visualization -s
 
