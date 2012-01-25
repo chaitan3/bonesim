@@ -2,7 +2,7 @@
 # -*- coding: iso-8859-15 -*-
 
 import sys
-hardcoded = request.folder + "/modules"
+hardcoded = request.folder + "/class"
 if not hardcoded in sys.path:
 	sys.path.append(hardcoded)
 
