@@ -3,7 +3,7 @@
 
 from copy import deepcopy
 from randomid import randomID
-import json				# JSON exchange format
+import simplejson			# JSON exchange format
 import re				# regular expressions, used for graphviz output parsing
 
 from defaults import *
