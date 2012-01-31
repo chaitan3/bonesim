@@ -18,10 +18,6 @@ from math import ceil
 from hashlib import md5
 import pickle
 
-import json				# JSON format
-import libsbml				# SBML format
-import pygraphviz
-
 from node import Node
 from edge import Edge
 
@@ -318,23 +314,31 @@ class Graph:
 		return JSON	#.replace("\n","").replace("\t","").replace(" : ",":")	# for debugging, to make it easier to track the JSON importer problem
 
 	def importJSON(self, JSON):						# import JSON
+		try:
+			import simplejson as json
+		except ImportError:
+			self.log(error, 'Fatal: JSON library not available. Aborting.')
+			return
+
 		self.reset()
 		self.log(progress, "Importing JSON ...")
 
 		JSON = self.checkJSON(JSON)
 		try:
 			JSON = json.loads(JSON)
-		#except ValueError as e:
-		#	self.log(str(e.__dict__))
-		#	return
 		except Exception, err:
-			self.log(error, "Fatal: JSON parser raised an exception! %s"%err)
+			self.log(error, "Fatal: JSON parser raised an exception: %s"%err)
 			return
 		self.Nodes = [Node(n, defaults=True) for n in JSON["nodes"]]
 		self.Edges = [Edge(e, defaults=True) for e in JSON["edges"]]
 		self.initialize()
 
 	def exportJSON(self, Indent=DefaultIndent):				# export current model to JSON code
+		try:
+			import simplejson as json
+		except ImportError:
+			self.log(error, 'Fatal: JSON library not available. Aborting.')
+			return
 
 		d = self.exportDICT(status=False)
 
@@ -351,6 +355,12 @@ class Graph:
 		return self.exportdict
 
 	def importSBML(self, SBML):						# import SBML
+		try:
+			import libsbml
+		except ImportError:
+			self.log(error, 'Fatal: libSBML not available. Aborting.')
+			return
+
 		self.reset()
 		self.log(progress, "Importing SBML ...")
 
@@ -649,6 +659,12 @@ class Graph:
 	### using graphviz
 
 	def export_to_graphviz(self):
+		try:
+			import pygraphviz
+		except ImportError:
+			self.log(error, 'Fatal: pygraphviz not available. Aborting.')
+			return
+
 		self.log(progress, "Exporting model to graphviz ...")
 
 		# http://networkx.lanl.gov/pygraphviz/tutorial.html
