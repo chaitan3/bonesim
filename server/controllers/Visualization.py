@@ -17,6 +17,7 @@ def graphviz():									# graphviz
 	Map = ""								# create a HTML map of the nodes in the picture, so we click 'em
 	image_width = 4863
 	image_height = 1883
+	nodes = []
 	import sbo
 	for node in session.bioGraph.Nodes:
 		if not node.type == sbo.Compartment:
@@ -28,7 +29,17 @@ def graphviz():									# graphviz
 				label	= node.data.label
 				if label in [None, '']:
 					label = node.id
-				Map 	+= '\t<div class=area style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;">'+label+'</div>\n'
+				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="ChangeState(event);">'+label+'</div>\n'
+				nodes.append(node.id)
+
+	Map += '\t<script>Boxes = new Array('
+	comma = False
+	for node in nodes:
+		if comma:
+			Map += ', '
+		Map += '"'+node+'"'
+		comma = True
+	Map += ');</script>\n'
 
 	return dict( BoundingBoxes=Map )
 
