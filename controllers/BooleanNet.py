@@ -18,4 +18,4 @@ def iterate():
 
 def status():
 	print "status"
-	return None
+	return XML({'test':'demo'})

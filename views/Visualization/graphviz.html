@@ -25,7 +25,7 @@
 				}
 	#canvas div:hover	{
 				cursor:			pointer;
-				opacity:		.8;
+				opacity:		1;
 				}
 	#canvas img		{
 				position:		relative;
@@ -85,6 +85,7 @@
 		}
 
 	function ChangeState(event) {
+		document.getElementById('Progress').innerHTML = 'Changing state ...';
 		e = event.srcElement;
 		currently = e.style.background;
 		if ( currently == 'red' ) state = false
@@ -98,20 +99,56 @@
 			e.style.background = 'green';
 			}
 		}
+
+	function Reset() {
+		document.getElementById('Progress').innerHTML = 'Resetting ...';
+		request = new XMLHttpRequest();
+		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="reset")}}', true);
+		r.onreadystatechange = function()	{
+						 	if (r.readyState==4 && r.status==200) for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.background = 'green';
+							}
+		request.send(null);
+		}
+
+	function Update() {
+		document.getElementById('Progress').innerHTML = 'Updating ...';
+		r = new XMLHttpRequest();
+		r.open('GET', '{{=URL(r=request, c="BooleanNet", f="status")}}', true);
+		r.onreadystatechange = function()	{
+						 	if (r.readyState==4 && r.status==200) alert(r.responseText);
+							}
+		r.send(null);
+		}
+
+	function Iterate() {
+		document.getElementById('Progress').innerHTML = 'Iterating ...';
+		request = new XMLHttpRequest();
+		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="iterate")}}', true);
+		request.onreadystatechange = function()	{
+						 	if (request.readyState==4 && request.status==200) Update();
+							}
+		request.send(null);
+		}	
 </script>
 
-<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data" style="margin:0px;">
-	<input type=hidden name=Layouter value=graphviz />
-	<input type=submit value="Load Matthias's Whi2p Network" style="float:left;" />
-</form>
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
 [ <a href="../Layout/graphviz_layout">Download DOT layout</a> ], 
 [ <a href="../Export/JSON">Download JSON model</a> ], 
 [ <a href="{{ = session.graphviz_png }}">Download picture</a> ]
-<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
-<br/>
-Use mouse wheel to zoom in or out. 
+
+<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data" style="margin:0px; float:right;">
+	<input type=button value="Reset" onClick="Reset();" />
+	<input type=button value="Iterate" onClick="Iterate();" />
+	<input type=hidden name=Layouter value=graphviz />
 {{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
+	<input type=submit value="Load Matthias's Whi2p Network" />
+{{ pass }}
+</form>
+
+<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
+
+<br/>
+Use mouse wheel to zoom in or out. <label id='Progress' style='color:green; font-weight:bold;'></label>
 
 <div id=canvas>
 
@@ -120,4 +157,3 @@ Use mouse wheel to zoom in or out.
 {{ =XML(BoundingBoxes) }}
 
 </div>
-{{ pass }}
