@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 
 def index():
-	return redirect(URL(r=request, c="Visualization", f="biographer"))
+	return redirect(URL(r=request, c="Workbench", f="index"))
 
-def internal():								# Ben's JavaScripts
-	if session.bioGraph is None:
-		session.flash = "Unable to visualize: No graph is loaded. But look at this pretty example!"
-		return redirect(URL(r=request, c="Visualization", f="example"))
-
-	return dict( network=export_JSON() )
+def internal():
+	return redirect(URL(r=request, c="Workbench", f="index"))
 
 def example():									# Ben's example
 	return dict()

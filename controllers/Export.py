@@ -63,13 +63,15 @@ def Picture():
 		content = request.vars.svg
 	else:
 		java = "/usr/bin/java"										# prepare for Java execution
-		jar = os.path.join( request.folder, "static/Exporter/svg-export-0.2.jar" )
+		jar = os.path.join( request.folder, "exporter/svg-export-0.2.jar" )
 		applet = java+" -jar "+jar+" -si -so -f "+request.vars.format
 
 		result = Popen(split(applet), stdin=PIPE, stdout=PIPE).communicate(request.vars.svg)		# call Ben's Java Exporter Applet
 		content = result[0]	# stdout
-		error = result[1]	# stderr
-		session.bioGraph.log(error)
+		msg = result[1]		# stderr
+
+		from defaults import error
+		session.bioGraph.log(error, msg)
 
 	if len(content) > 0:
 		return content
