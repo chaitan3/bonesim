@@ -6,8 +6,9 @@
 				margin:			0px;
 				padding:		0px;
 				position:		relative;
+				left:			5px;
 				width:			99%;
-				height:			85%;
+				height:			88%;
 				overflow-x:		scroll;
 				overflow-y:		scroll;
 				}
@@ -16,11 +17,11 @@
 				position:		absolute;
 				margin:			0px;
 				padding:		0px;
+				padding-top:		7px;
 				color:			white;
-				background-color:	#4e4ea9;
-				opacity:		.3;
+				background-color:	green;
+				opacity:		.15;
 				text-align:		center;
-				vertical-align:		middle;
 				}
 	#canvas div:hover	{
 				cursor:			pointer;
@@ -44,9 +45,9 @@
 
 	function handle(delta) {
 		if (delta < 0)
-			zoom(-100);
+			zoom(-60);
 		else
-			zoom(100);
+			zoom(60);
 	}
 
 	/* Code below adapted from http://www.adomas.org/javascript-mouse-wheel/ */
@@ -70,23 +71,50 @@
 	if (window.addEventListener)
 		window.addEventListener('DOMMouseScroll', wheel, false);
 	window.onmousewheel = document.onmousewheel = wheel;
+
+	function ChangeVisibility(event) {
+		if ( event.srcElement.checked ) value = 'visible'
+		else value = 'hidden';
+		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
+		}
+
+	function setState(label, state) {
+		request = new XMLHttpRequest();
+		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="setState")}}?id='+label+'&state='+state, true);
+		request.send(null);
+		}
+
+	function ChangeState(event) {
+		e = event.srcElement;
+		currently = e.style.background;
+		if ( currently == 'red' ) state = false
+		else state = true;
+
+		if ( state == true ) {
+			setState(e.id, false);
+			e.style.background = 'red';
+		} else {
+			setState(e.id, true);
+			e.style.background = 'green';
+			}
+		}
 </script>
 
+<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data" style="margin:0px;">
+	<input type=hidden name=Layouter value=graphviz />
+	<input type=submit value="Load Matthias's Whi2p Network" style="float:left;" />
+</form>
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
 [ <a href="../Layout/graphviz_layout">Download DOT layout</a> ], 
 [ <a href="../Export/JSON">Download JSON model</a> ], 
 [ <a href="{{ = session.graphviz_png }}">Download picture</a> ]
+<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
 <br/>
 Use mouse wheel to zoom in or out. 
 {{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
-<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
-	<input type=hidden name=Layouter value=graphviz />
-	<input type=submit value="Load Matthias's Whi2p Network" />
-</form>
 
 <div id=canvas>
 
-	<center>
 	<img name=network src="{{ = session.graphviz_image }}" />
 
 {{ =XML(BoundingBoxes) }}
