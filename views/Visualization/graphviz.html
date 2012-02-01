@@ -6,8 +6,8 @@
 				margin:			0px;
 				padding:		0px;
 				position:		relative;
-				width:			100%;
-				height:			75%;
+				width:			99%;
+				height:			85%;
 				overflow-x:		scroll;
 				overflow-y:		scroll;
 				}
@@ -76,6 +76,13 @@
 [ <a href="../Layout/graphviz_layout">Download DOT layout</a> ], 
 [ <a href="../Export/JSON">Download JSON model</a> ], 
 [ <a href="{{ = session.graphviz_png }}">Download picture</a> ]
+<br/>
+Use mouse wheel to zoom in or out. 
+{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
+<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
+	<input type=hidden name=Layouter value=graphviz />
+	<input type=submit value="Load Matthias's Whi2p Network" />
+</form>
 
 <div id=canvas>
 
@@ -85,10 +92,4 @@
 {{ =XML(BoundingBoxes) }}
 
 </div>
-Use mouse wheel to zoom in or out. 
-{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
-<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
-	<input type=hidden name=Layouter value=graphviz />
-	<input type=submit value="Load Matthias's Whi2p Network" />
-</form>
 {{ pass }}
