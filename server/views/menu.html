@@ -1,13 +1,9 @@
 <style>
 	#menubar			{
-					border:			1px solid gray;
-					position:		relative;
+					position:		absolute;
+					left:			20%;
 					height:			30px;
-					padding:		0px;
-					margin:			5px 0px 20px 0px;
-					color:			black;
-					background-color:	#eaeaea; 
-					opacity:		1;
+					top:			1%;
 					}
 	#menubar a			{
 					text-decoration:	none;
@@ -28,11 +24,11 @@
 					float:			left;
 					}
 	div.dropdown			{
-					border:			none;
+					border:			1px solid white;
 					position:		absolute;
 					z-index:		+1;
 					width:			auto;
-					height:			20px;
+					height:			18px;
 					overflow:		hidden;
 					padding:		5px;
 					text-align:		left;
@@ -53,8 +49,8 @@
 		<div class=dropdown>
 			<a href="{{=URL(r=request, c='Workbench', f='index')}}">Workbench</a><br/>
 			<a href="{{=URL(r=request, c='Workbench', f='Editor')}}">Editor</a><br/>
-			<a href="{{=URL(r=request, c='Workbench', f='Cutter')}}">Cutter</a><br/>
-			<a href="{{=URL(r=request, c='Workbench', f='Clear')}}">Clear</a><br/>
+<!--			<a href="{{=URL(r=request, c='Workbench', f='Cutter')}}">Cutter</a><br/-->
+			<a href="{{=URL(r=request, c='Workbench', f='Clear')}}"><nobr>Clear&nbsp;session</nobr></a><br/>
 		</div>
 	</div>
 
@@ -69,7 +65,6 @@
 	<div class=spacer style="left:220px;">
 		<div class=dropdown>
 			Visualization<br/>
-			<a href="{{=URL(r=request, c='Visualization', f='internal')}}">internal</a><br/>
 			<a href="{{=URL(r=request, c='Visualization', f='example')}}">example</a><br/>
 			<a href="{{=URL(r=request, c='Visualization', f='graphviz')}}">graphviz</a><br/>
 		</div>
@@ -82,7 +77,7 @@
 			<a href="{{=URL(r=request, c='Import', f='SBML')}}">SBML</a><br/>
 			<a href="{{=URL(r=request, c='Import', f='BioModels')}}">BioModels.net</a><br/>
 			<a href="{{=URL(r=request, c='Import', f='Reactome')}}">Reactome</a><br/>
-			<a href="{{=URL(r=request, c='Import', f='BooleanNet')}}">BooleanNet</a><br/>
+			<a href="{{=URL(r=request, c='Import', f='BooleanNet')}}"><nobr>Boolean&nbsp;Network</nobr></a><br/>
 		<!--	<a href="{{=URL(r=request, c='Import', f='ODP')}}">ODP</a><br/>
 			<a href="{{=URL(r=request, c='BioPAX', f='importer')}}">BioPAX</a><br/>
 			<a href="{{=URL(r=request, c='PID', f='importer')}}">PID</a><br/>
@@ -92,7 +87,7 @@
 		</div>
 	</div>
 
-	<div class=spacer style="left:440px;">
+	<div class=spacer style="left:470px;">
 		<div class=dropdown>
 			Export<br/>
 			<a href="{{=URL(r=request, c='Export', f='JSON')}}">JSON</a><br/>
@@ -100,43 +95,19 @@
 			<a href="{{=URL(r=request, c='Export', f='LayouterOutput')}}"><nobr>Layouter&nbsp;output</nobr></a><br/>
 			<a href="{{=URL(r=request, c='Export', f='dot')}}">dot</a><br/>
 
-			<!--style>
-				#format		{
-						width:		60px;
-						}
-			</style>
-
-			<script> 
-				function ChangeFormat() {
-					if (graph !== undefined) {
-						document.getElementById('svg').value = graph.rawSVG();
-						}
-					document.Export.submit();
+			<script>
+				function Export(format)  {
+					url = "{{=URL(r=request, c='Export', f='Picture')}}?format=jpeg&svg="
+					svg = graph.rawSVG();
+					document.location.href = url+svg;
 					}
-			</script> 
+			</script>
 
-			<form name=Export action="{{=URL(r=request, c='Export', f='Picture')}}" method=POST>
-				<nobr>
-				Picture: 
-				<select name=format id=format onChange="ChangeFormat();">
-					<option value='' selected></option>
-					<option value='jpeg'>jpeg</option>
-					<option value='png'>png</option>
-					<option value='pdf'>pdf</option>
-					<option value='svg'>svg</option>
-					<option value='tiff'>tiff</option>
-<!--					<option value='eps'>eps</option>	doesn't work	--><!--
-				</select>
-				<input type=hidden name=svg id=svg value=""/>
-			</form-->
-		</div>
-	</div>
-
-	<div class=spacer style="left:600px;">
-		<div class=dropdown>
-			Project<br/>
-			<a href="{{=URL(r=request, c='Project', f='Roadmap')}}">Roadmap</a><br/>
-			<a target="_blank" href="http://code.google.com/p/biographer/">Home</a><br/>
+			<a href="javascript:Export('jpeg');">JPEG</a><br/>
+			<a href="javascript:Export('png');">PNG</a><br/>
+			<a href="javascript:Export('pdf');">PDF</a><br/>
+			<a href="javascript:Export('svg');">SVG</a><br/>
+			<a href="javascript:Export('tiff');">TIFF</a><br/>
 		</div>
 	</div>
 </div>
