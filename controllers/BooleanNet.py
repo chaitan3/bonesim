@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-def load():
-	print "load"
-	return None
-
 def reset():
+	model = deepcopy(session.bioGraph)
+	del session.bioGraph
+	model.resetBooleanNet()
+	session.bioGraph = model
 	print "reset"
 	return None
 
@@ -13,9 +13,15 @@ def setState():
 	return None
 
 def iterate():
-	print "iterate"
+	model = deepcopy(session.bioGraph)
+	del session.bioGraph
+	model.iterateBooleanNet()
+	session.bioGraph = model
+	print "iterated"
 	return None
 
 def status():
-	print "status"
-	return XML({'test':'demo'})
+	output = ''
+	for node in session.bioGraph.Nodes:
+		output += node.id+'\n'+str(node.data.booleanstate)+'\n'
+	return output
