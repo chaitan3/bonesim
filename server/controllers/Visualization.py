@@ -17,16 +17,18 @@ def graphviz():									# graphviz
 	Map = ""								# create a HTML map of the nodes in the picture, so we click 'em
 	image_width = 4863
 	image_height = 1883
+	import sbo
 	for node in session.bioGraph.Nodes:
-		left	= str(int(node.data.x))
-		top	= str(int(node.data.y))
-		width	= str(int(node.data.width))
-		height	= str(int(node.data.height))
-		if left > 0 and top > 0 and width > 0 and height > 0:
-			label	= node.data.label
-			if label in [None, '']:
-				label = node.id
-			Map 	+= '\t<div class=area style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;"/>'+label+'</div>\n'
+		if not node.type == sbo.Compartment:
+			left	= str(int(node.data.x))
+			top	= str(int(node.data.y))
+			width	= str(int(node.data.width))
+			height	= str(int(node.data.height))
+			if left > 0 and top > 0 and width > 0 and height > 0:
+				label	= node.data.label
+				if label in [None, '']:
+					label = node.id
+				Map 	+= '\t<div class=area style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;">'+label+'</div>\n'
 
 	return dict( BoundingBoxes=Map )
 

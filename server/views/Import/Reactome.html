@@ -7,7 +7,7 @@
 
 <script>
 	function Download() {
-		id = document.ST_ID.value;
+		id = document.main.ST_ID.value;
 		if ( id != '' )	window.location.href = '{{=URL(r=request, c="Export", f="Reactome")}}?ST_ID='+id;
 		}
 	function Example() {
