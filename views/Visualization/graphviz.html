@@ -43,12 +43,10 @@
 		}
 
 	function handle(delta) {
-/*		aspect_ratio = previous_width / document.network.offsetHeight;	*/
 		if (delta < 0)
-			zoom(-300);
+			zoom(-100);
 		else
-			zoom(300);
-/*		document.network.style.height = document.network.offsetWidth / aspect_ratio;	*/
+			zoom(100);
 	}
 
 	/* Code below adapted from http://www.adomas.org/javascript-mouse-wheel/ */
