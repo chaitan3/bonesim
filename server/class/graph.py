@@ -520,6 +520,23 @@ class Graph:
 
 		self.initialize()
 
+		self.resetBooleanNet()
+#		try:
+		from boolean2 import Model
+#		except ImportError:
+#			self.log(error, 'Sorry, boolean2 python library not available.')
+#			return
+		print network
+		self.BooleanModel = Model( text=network, mode='sync' )
+		self.BooleanModel.initialize()
+
+	def resetBooleanNet(self):
+		for node in self.Nodes:
+			node.data.booleannet = False
+
+	def iterateBooleanNet(self):
+		self.BooleanMode.iterate( steps=1 )
+
 
 	### main model layouting section
 	### invoking the layout subproject, that is seperately developed

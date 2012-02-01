@@ -13,7 +13,7 @@ TopCompartmentID = 0
 
 MandatoryNodeKeys	= ['id','type','sbo','is_abstract']
 NodeKeys		= MandatoryNodeKeys + ['data']
-OptionalNodeKeys	= ['clone_marker', 'x', 'y', 'width', 'height', 'radius', 'label', 'compartment', 'subnodes', 'modifications']
+OptionalNodeKeys	= ['clone_marker', 'x', 'y', 'width', 'height', 'radius', 'label', 'compartment', 'subnodes', 'modifications', 'booleanstate']
 NodeKeyAliases		= { 'modification':'modifications', 'subcomponents':'subnodes' }
 DefaultNode		= { "type":"simple_species", "sbo":"252", "is_abstract":False, "data":{ "clone_marker":-1, "x":10, "y":10, "width":50, "height":20, "label":"", "compartment":TopCompartmentID, "subnodes":[], "modifications":[] } }
 
