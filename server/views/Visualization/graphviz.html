@@ -113,9 +113,10 @@
 	function PerformUpdate(StateSpace) {
 		s = StateSpace.split('\n');
 		for (var i = 0; i < s.length/2; i++) {
-			id = s[i*2]
-			value = s[i*2+1]
-			alert(id+' = '+value);
+			e = document.getElementById( s[i*2] );
+			value = s[i*2+1];
+			if ( value == 'True' )	e.style.background = 'green'
+			else			e.style.background = 'red';
 			}
 		}
 
@@ -163,6 +164,8 @@ Use mouse wheel to zoom in or out. <label id='Progress' style='color:green; font
 
 	<img name=network src="{{ = session.graphviz_image }}" />
 
-{{ =XML(BoundingBoxes) }}
+{{ = XML(BoundingBoxes) }}
+
+	<script>Boxes = new Array({{ = XML(Boxes) }});</script>
 
 </div>

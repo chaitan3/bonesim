@@ -32,14 +32,13 @@ def graphviz():									# graphviz
 				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="ChangeState(event);">'+label+'</div>\n'
 				nodes.append(node.id)
 
-	Map += '\t<script>Boxes = new Array('
+	Boxes = ''
 	comma = False
 	for node in nodes:
 		if comma:
-			Map += ', '
-		Map += '"'+node+'"'
+			Boxes += ', '
+		Boxes += '"'+node+'"'
 		comma = True
-	Map += ');</script>\n'
 
-	return dict( BoundingBoxes=Map )
+	return dict( BoundingBoxes=Map, Boxes=Boxes )
 

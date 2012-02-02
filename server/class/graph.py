@@ -317,7 +317,7 @@ class Graph:
 		try:
 			import simplejson as json
 		except ImportError:
-			self.log(error, 'Fatal: JSON library not available. Aborting.')
+			self.log(error, 'Import error: JSON library')
 			return
 
 		self.reset()
@@ -337,7 +337,7 @@ class Graph:
 		try:
 			import simplejson as json
 		except ImportError:
-			self.log(error, 'Fatal: JSON library not available. Aborting.')
+			self.log(error, 'Import error: JSON library')
 			return
 
 		d = self.exportDICT(status=False)
@@ -358,7 +358,7 @@ class Graph:
 		try:
 			import libsbml
 		except ImportError:
-			self.log(error, 'Fatal: libSBML not available. Aborting.')
+			self.log(error, 'Import error: SBML library')
 			return
 
 		self.reset()
@@ -517,26 +517,37 @@ class Graph:
 									node.sbo = getSBO(node.type)
 									self.Nodes.append(node)
 									node_name_dictionary.append(word)
-
+		self.BooleanNet = network
 		self.initialize()
-
 		self.resetBooleanNet()
-#		try:
-		from boolean2 import Model
-#		except ImportError:
-#			self.log(error, 'Sorry, boolean2 python library not available.')
-#			return
-		print network
-		self.BooleanModel = Model( text=network, mode='sync' )
-		self.BooleanModel.initialize()
 
 	def resetBooleanNet(self):
 		for node in self.Nodes:
-			node.data.booleannet = False
+			node.data.booleanstate = False
 
 	def iterateBooleanNet(self):
-		self.BooleanMode.iterate( steps=1 )
+		print "iterating..."
+		try:
+			from boolean2 import Model, util
+		except ImportError:
+			self.log(error, 'Import error: boolean2 python library')
+			return
+		BooleanModel = Model( text=self.BooleanNet, mode='sync' )
+		BooleanModel.initialize( missing=util.false )
 
+		for node in self.Nodes:
+			BooleanModel.data[node.id] = [node.data.booleanstate]
+
+		BooleanModel.iterate( steps=1 )
+
+		for node in self.Nodes:
+			node.data.booleanstate = BooleanModel.data[node.id][0]
+
+	def exportBooleanNet(self):
+		output = ''
+		for node in self.Nodes:
+			output += node.id+'\n'+str(node.data.booleanstate)+'\n'
+		return output
 
 	### main model layouting section
 	### invoking the layout subproject, that is seperately developed
@@ -679,7 +690,7 @@ class Graph:
 		try:
 			import pygraphviz
 		except ImportError:
-			self.log(error, 'Fatal: pygraphviz not available. Aborting.')
+			self.log(error, 'Import error: pygraphviz')
 			return
 
 		self.log(progress, "Exporting model to graphviz ...")
