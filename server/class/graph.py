@@ -525,6 +525,12 @@ class Graph:
 		for node in self.Nodes:
 			node.data.booleanstate = False
 
+	def setBooleanNet(self, label, value):
+		for node in self.Nodes:
+			if node.id == label:
+				node.data.booleanstate = (value == 'true')
+				return
+
 	def iterateBooleanNet(self):
 		print "iterating..."
 		try:
@@ -547,7 +553,7 @@ class Graph:
 		output = ''
 		for node in self.Nodes:
 			output += node.id+'\n'+str(node.data.booleanstate)+'\n'
-		return output
+		return output.strip('\n')
 
 	### main model layouting section
 	### invoking the layout subproject, that is seperately developed

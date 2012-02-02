@@ -78,28 +78,6 @@
 		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
 		}
 
-	function setState(label, state) {
-		request = new XMLHttpRequest();
-		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="setState")}}?id='+label+'&state='+state, true);
-		request.send(null);
-		}
-
-	function ChangeState(event) {
-		document.getElementById('Progress').innerHTML = 'Changing state ...';
-		e = event.srcElement;
-		currently = e.style.background;
-		if ( currently == 'red' ) state = false
-		else state = true;
-
-		if ( state == true ) {
-			setState(e.id, false);
-			e.style.background = 'red';
-		} else {
-			setState(e.id, true);
-			e.style.background = 'green';
-			}
-		}
-
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
 		request = new XMLHttpRequest();
@@ -114,10 +92,14 @@
 		s = StateSpace.split('\n');
 		for (var i = 0; i < s.length/2; i++) {
 			e = document.getElementById( s[i*2] );
-			value = s[i*2+1];
-			if ( value == 'True' )	e.style.background = 'green'
-			else			e.style.background = 'red';
+			if ( e == null ) alert('Node not found: '+s[i*2])
+			else	{
+				value = s[i*2+1];
+				if ( value == 'True' )	e.style.background = 'green'
+				else			e.style.background = 'red';
+				}
 			}
+		document.getElementById('Progress').innerHTML = 'Updated.';
 		}
 
 	function Update() {
@@ -139,6 +121,31 @@
 							}
 		request.send(null);
 		}	
+
+	function setState(label, state) {
+		request = new XMLHttpRequest();
+		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="setState")}}?id='+label+'&state='+state, true);
+		request.onreadystatechange = function()	{
+						 	if (request.readyState==4 && request.status==200) Iterate();
+							}
+		request.send(null);
+		}
+
+	function ChangeState(event) {
+		document.getElementById('Progress').innerHTML = 'Changing node ...';
+		e = event.srcElement;
+		currently = e.style.background;
+		if ( currently == 'red' ) state = false
+		else state = true;
+
+		if ( state == true ) {
+			setState(e.id, false);
+			e.style.background = 'red';
+		} else {
+			setState(e.id, true);
+			e.style.background = 'green';
+			}
+		}
 </script>
 
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
