@@ -529,7 +529,9 @@ class Graph:
 		for node in self.Nodes:
 			if node.id == label:
 				node.data.booleanstate = (value == 'true')
+				self.log(debug, label+' = '+value)
 				return
+		self.log(debug, 'Update failed: '+label+' -> '+value)
 
 	def iterateBooleanNet(self):
 		print "iterating..."
@@ -539,11 +541,12 @@ class Graph:
 			self.log(error, 'Import error: boolean2 python library')
 			return
 		BooleanModel = Model( text=self.BooleanNet, mode='sync' )
-		BooleanModel.initialize( missing=util.false )
 
+		currentstate = {}
 		for node in self.Nodes:
-			BooleanModel.data[node.id] = [node.data.booleanstate]
+			currentstate[node.id] = node.data.booleanstate
 
+		BooleanModel.initialize( defaults=currentstate, missing=util.false )
 		BooleanModel.iterate( steps=1 )
 
 		for node in self.Nodes:
