@@ -29,16 +29,32 @@ def graphviz():									# graphviz
 				label	= node.data.label
 				if label in [None, '']:
 					label = node.id
-				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="NodeClick(event);"></div>\n'
-				nodes.append(node.id)
+				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="javascript:'+node.id+' = ! '+node.id+';"></div>\n'
+				nodes.append(node)
 
 	Boxes = ''
 	comma = False
 	for node in nodes:
 		if comma:
 			Boxes += ', '
-		Boxes += '"'+node+'"'
+		Boxes += '"'+node.id+'"'
 		comma = True
 
-	return dict( BoundingBoxes=Map, Boxes=Boxes )
+	reset = ''
+	updateBoxes = ''
+	for node in nodes:
+		reset += "\t\t"+node.id+" = true;\n"
+		updateBoxes += "\t\tif ( "+node.id+" )	document.getElementById('"+node.id+"').style.background = green\n"
+		updateBoxes += "\t\telse		document.getElementById('"+node.id+"').style.background = red;\n"
+
+	updateRules = ''
+	shiftRules = ''
+	for line in session.bioGraph.BooleanNet.split('\n'):
+		if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
+			updateRules += '\t\t'+line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('*','_new')+';\n'
+			node = line.split('=')[0].strip()
+			shiftRules += '\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
+
+
+	return dict( BoundingBoxes=Map, Boxes=Boxes, reset=reset, updateRules=updateRules, shiftRules=shiftRules, updateBoxes=updateBoxes )
 
