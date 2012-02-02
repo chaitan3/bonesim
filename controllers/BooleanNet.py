@@ -9,6 +9,10 @@ def reset():
 	return None
 
 def setState():
+	model = deepcopy(session.bioGraph)
+	del session.bioGraph
+	model.setBooleanNet(request.vars.id, request.vars.state)
+	session.bioGraph = model
 	print "set "+request.vars.id+" to "+request.vars.state
 	return None
 
