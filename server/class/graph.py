@@ -438,6 +438,8 @@ class Graph:
 
 		self.initialize()
 
+	## Boolean Network section
+
 	def importBooleanNet(self, network):
 		self.reset()
 		self.log(info, 'Importing Boolean Network ...')
@@ -548,9 +550,8 @@ class Graph:
 
 		BooleanModel.initialize( defaults=currentstate, missing=util.false )
 		BooleanModel.iterate( steps=1 )
-
 		for node in self.Nodes:
-			node.data.booleanstate = BooleanModel.data[node.id][0]
+			node.data.booleanstate = BooleanModel.data[node.id][1]
 
 	def exportBooleanNet(self):
 		output = ''
