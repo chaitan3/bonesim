@@ -550,12 +550,7 @@ class Graph:
 			currentstate[node.id] = node.data.booleanstate
 
 		BooleanModel.initialize( defaults=currentstate, missing=util.false )
-
-		print BooleanModel.data['Gpr1p_receptor_firing']
-
 		BooleanModel.iterate( steps=1 )
-
-		print BooleanModel.data['Gpr1p_receptor_firing']
 
 		self.BooleanChangeset = []
 		for node in self.Nodes:

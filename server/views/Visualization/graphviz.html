@@ -80,7 +80,7 @@
 	window.setTimeout('zoom(-2700); adjust_size();', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
 
 	var green = '#10b010';
-	var red = '#c01010';
+	var red = 'transparent';//'#a00808';
 
 	function wheel(event){
 		var delta = 0;
@@ -114,78 +114,31 @@
 
 	function ChangeVisibility(event) {
 		if ( event.srcElement.checked ) value = 'visible'
-		else value = 'hidden';
+		else				value = 'hidden';
 		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
 		}
 
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
-		request = new XMLHttpRequest();
-		request.open('GET', '{{ = URL(r=request, c="BooleanNet", f="reset") }}', true);
-		request.onreadystatechange = function()	{
-						 	if (request.readyState==4 && request.status==200) for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.background = green;
-							}
-		request.send(null);
+{{ = XML(reset) }}
+		document.getElementById('Progress').innerHTML = 'Reset.';
 		}
 
-	function PerformUpdate(StateSpace) {
-		s = StateSpace.split('\n');
-		for (var i = 0; i < s.length/2; i++) {
-			label = s[i*2]
-			e = document.getElementById(label);
-			if ( e == null ) {
-				if ( label != '' ) alert('Node not found: '+label);
-				}
-			else	{
-				value = s[i*2+1];
-				if ( value == 'True' )	e.style.background = green
-				else			e.style.background = red;
-				}
-			}
-		document.getElementById('Progress').innerHTML = 'Updated.';
-		}
-
-	function Update() {
-		document.getElementById('Progress').innerHTML = 'Updating ...';
-		r = new XMLHttpRequest();
-		r.open('GET', '{{=URL(r=request, c="BooleanNet", f="status")}}', true);
-		r.onreadystatechange = function()	{
-						 	if (r.readyState==4 && r.status==200) PerformUpdate(r.responseText);
-							}
-		r.send(null);
-		}
-
-	window.setTimeout('Update();', 300);
+	window.setTimeout('Reset();', 200);
 
 	function Iterate() {
-		document.getElementById('Progress').innerHTML = 'Iterating ...';
-		request = new XMLHttpRequest();
-		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="iterate")}}', true);
-		request.onreadystatechange = function()	{
-						 	if (request.readyState==4 && request.status==200) {
-								Update();
-								if ( document.getElementById('ContinuousIteration').checked == 1 ) window.setTimeout('Iterate();', 750);
-								}
-							}
-		request.send(null);
-		}	
+		document.getElementById('Progress').innerHTML = 'Updating ...';
+{{ = XML(updateRules) }}
+{{ = XML(shiftRules) }}
+{{ = XML(updateBoxes) }}
+		document.getElementById('Progress').innerHTML = 'Updated.';
+		if ( document.getElementById('ContinuousIteration').checked == 1 ) window.setTimeout('Iterate();', 100);
+		}
 
 	window.setTimeout('Iterate();', 800);
 
 	function Stop() {
 		document.getElementById('ContinuousIteration').checked = false;
-		}
-
-	function setState(label, state) {
-		request = new XMLHttpRequest();
-		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="setState")}}?id='+label+'&state='+state, true);
-		if ( document.getElementById('ContinuousIteration').checked != 1 ) {	// if we are not continuously iterating, iterate once, to update model
-			request.onreadystatechange = function()	{
-							 	if (request.readyState==4 && request.status==200) Iterate();
-								}
-			}
-		else	Update();
-		request.send(null);
 		}
 
 	function NodeClick(event) {
@@ -195,18 +148,11 @@
 		s = currently.replace('rgb(','').split(',')
 		var R = parseInt(s[0]);
 		var G = parseInt(s[1]);
-//		alert(R+' - '+G);
 		if ( G > R )	state = true
 		else		state = false;
-
-		if ( state == true ) {
-			e.style.background = red;
-			setState(e.id, false);
-		} else {
-			e.style.background = green;
-			setState(e.id, true);
-			}
-		if ( document.getElementById('ContinuousIteration').checked == 1 ) Iterate();
+		if ( state == true )	e.style.background = red;
+		else			e.style.background = green;
+		document.getElementById('Progress').innerHTML = 'Changed.';
 		}
 </script>
 
@@ -217,17 +163,17 @@
 
 <div id=Controls>
 	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
-	<input id=ContinuousIteration type=checkbox checked> Continuous Iteration
+	<input id=ContinuousIteration type=checkbox checked onClick="Iterate();"> Continuous Iteration
 
 	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
-		<input type=button value="Reset" onClick="Reset();" />
-		<input type=button value="Iterate" onClick="Iterate();" />
-		<input type=button value="Stop" onClick="Stop();" />
-		<input type=button value="Adjust" onClick="adjust_size();" />
 		<input type=hidden name=Layouter value=graphviz />
 	{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
 		<input type=submit value="Load Matthias's Whi2p Network" />
 	{{ pass }}
+		<input type=button value="Adjust" onClick="adjust_size();" />
+		<input type=button value="Reset" onClick="Reset();" />
+		<input type=button value="Iterate once" onClick="Stop(); Iterate();" />
+		<input type=button value="Stop" onClick="Stop();" />
 	</form>
 </div>
 
