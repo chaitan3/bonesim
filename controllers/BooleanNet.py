@@ -21,7 +21,4 @@ def iterate():
 	return None
 
 def status():
-	output = ''
-	for node in session.bioGraph.Nodes:
-		output += node.id+'\n'+str(node.data.booleanstate)+'\n'
-	return output
+	return session.bioGraph.exportBooleanNet()
