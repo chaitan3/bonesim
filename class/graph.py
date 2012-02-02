@@ -526,6 +526,7 @@ class Graph:
 	def resetBooleanNet(self):
 		for node in self.Nodes:
 			node.data.booleanstate = False
+		self.BooleanChangeset = self.Nodes
 
 	def setBooleanNet(self, label, value):
 		for node in self.Nodes:
@@ -549,13 +550,23 @@ class Graph:
 			currentstate[node.id] = node.data.booleanstate
 
 		BooleanModel.initialize( defaults=currentstate, missing=util.false )
+
+		print BooleanModel.data['Gpr1p_receptor_firing']
+
 		BooleanModel.iterate( steps=1 )
+
+		print BooleanModel.data['Gpr1p_receptor_firing']
+
+		self.BooleanChangeset = []
 		for node in self.Nodes:
-			node.data.booleanstate = BooleanModel.data[node.id][1]
+			if currentstate[node.id] != BooleanModel.data[node.id][1]:
+				node.data.booleanstate = BooleanModel.data[node.id][1]
+				self.BooleanChangeset.append(node)
 
 	def exportBooleanNet(self):
 		output = ''
-		for node in self.Nodes:
+		print self.BooleanChangeset
+		for node in self.BooleanChangeset:
 			output += node.id+'\n'+str(node.data.booleanstate)+'\n'
 		return output.strip('\n')
 

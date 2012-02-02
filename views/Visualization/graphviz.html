@@ -77,7 +77,7 @@
 		zoom_divs(factor-1);
 		}
 
-	window.setTimeout('zoom(-2500); adjust_size();', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
+	window.setTimeout('zoom(-2700); adjust_size();', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
 
 	var green = '#10b010';
 	var red = '#c01010';
@@ -131,8 +131,11 @@
 	function PerformUpdate(StateSpace) {
 		s = StateSpace.split('\n');
 		for (var i = 0; i < s.length/2; i++) {
-			e = document.getElementById( s[i*2] );
-			if ( e == null ) alert('Node not found: '+s[i*2])
+			label = s[i*2]
+			e = document.getElementById(label);
+			if ( e == null ) {
+				if ( label != '' ) alert('Node not found: '+label);
+				}
 			else	{
 				value = s[i*2+1];
 				if ( value == 'True' )	e.style.background = green
@@ -161,11 +164,13 @@
 		request.onreadystatechange = function()	{
 						 	if (request.readyState==4 && request.status==200) {
 								Update();
-								if ( document.getElementById('ContinuousIteration').checked == 1 ) window.setTimeout('Iterate();', 500);
+								if ( document.getElementById('ContinuousIteration').checked == 1 ) window.setTimeout('Iterate();', 750);
 								}
 							}
 		request.send(null);
 		}	
+
+	window.setTimeout('Iterate();', 800);
 
 	function Stop() {
 		document.getElementById('ContinuousIteration').checked = false;
@@ -179,6 +184,7 @@
 							 	if (request.readyState==4 && request.status==200) Iterate();
 								}
 			}
+		else	Update();
 		request.send(null);
 		}
 
@@ -200,6 +206,7 @@
 			e.style.background = green;
 			setState(e.id, true);
 			}
+		if ( document.getElementById('ContinuousIteration').checked == 1 ) Iterate();
 		}
 </script>
 
@@ -210,7 +217,7 @@
 
 <div id=Controls>
 	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
-	<input id=ContinuousIteration type=checkbox> Continuous Iteration
+	<input id=ContinuousIteration type=checkbox checked> Continuous Iteration
 
 	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
 		<input type=button value="Reset" onClick="Reset();" />
