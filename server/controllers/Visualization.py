@@ -29,7 +29,7 @@ def graphviz():									# graphviz
 				label	= node.data.label
 				if label in [None, '']:
 					label = node.id
-				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="ChangeState(event);">'+label+'</div>\n'
+				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="NodeClick(event);"></div>\n'
 				nodes.append(node.id)
 
 	Boxes = ''

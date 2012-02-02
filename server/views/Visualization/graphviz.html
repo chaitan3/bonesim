@@ -20,12 +20,12 @@
 				padding-top:		7px;
 				color:			white;
 				background-color:	green;
-				opacity:		.15;
+				opacity:		.4;
 				text-align:		center;
 				}
 	#canvas div:hover	{
 				cursor:			pointer;
-				opacity:		1;
+				opacity:		.7;
 				}
 	#canvas img		{
 				position:		relative;
@@ -50,8 +50,10 @@
 			zoom(60);
 	}
 
-	/* Code below adapted from http://www.adomas.org/javascript-mouse-wheel/ */
-	/* Thanks to Adomas Paltanavicius */
+	window.setTimeout('zoom(-1115);', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
+
+	var green = '#10b010';
+	var red = '#c01010';
 
 	function wheel(event){
 		var delta = 0;
@@ -83,7 +85,7 @@
 		request = new XMLHttpRequest();
 		request.open('GET', '{{ = URL(r=request, c="BooleanNet", f="reset") }}', true);
 		request.onreadystatechange = function()	{
-						 	if (request.readyState==4 && request.status==200) for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.background = 'green';
+						 	if (request.readyState==4 && request.status==200) for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.background = green;
 							}
 		request.send(null);
 		}
@@ -95,8 +97,8 @@
 			if ( e == null ) alert('Node not found: '+s[i*2])
 			else	{
 				value = s[i*2+1];
-				if ( value == 'True' )	e.style.background = 'green'
-				else			e.style.background = 'red';
+				if ( value == 'True' )	e.style.background = green
+				else			e.style.background = red;
 				}
 			}
 		document.getElementById('Progress').innerHTML = 'Updated.';
@@ -111,6 +113,8 @@
 							}
 		r.send(null);
 		}
+
+	window.setTimeout('Update();', 300);
 
 	function Iterate() {
 		document.getElementById('Progress').innerHTML = 'Iterating ...';
@@ -131,19 +135,23 @@
 		request.send(null);
 		}
 
-	function ChangeState(event) {
+	function NodeClick(event) {
 		document.getElementById('Progress').innerHTML = 'Changing node ...';
 		e = event.srcElement;
-		currently = e.style.background;
-		if ( currently == 'red' ) state = false
-		else state = true;
+		currently = window.getComputedStyle(e).getPropertyValue('background-color');
+		s = currently.replace('rgb(','').split(',')
+		var R = parseInt(s[0]);
+		var G = parseInt(s[1]);
+//		alert(R+' - '+G);
+		if ( G > R )	state = true
+		else		state = false;
 
 		if ( state == true ) {
+			e.style.background = red;
 			setState(e.id, false);
-			e.style.background = 'red';
 		} else {
+			e.style.background = green;
 			setState(e.id, true);
-			e.style.background = 'green';
 			}
 		}
 </script>
