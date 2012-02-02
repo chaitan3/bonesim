@@ -1,14 +1,21 @@
 {{extend 'content.html'}}
 
 <style>
+	#Controls		{
+				border:			1px solid black;
+				position:		absolute;
+				top:			-5%;
+				right:			1%;
+				}
+
 	#canvas			{
-				border:			1pt solid #000;
+				border:			1px solid black;
 				margin:			0px;
 				padding:		0px;
 				position:		relative;
 				left:			5px;
 				width:			99%;
-				height:			88%;
+				height:			94%;
 				overflow-x:		scroll;
 				overflow-y:		scroll;
 				}
@@ -43,14 +50,34 @@
 		if ( width + add > 100 ) document.network.style.width = width + add;
 		}
 
-	function handle(delta) {
-		if (delta < 0)
-			zoom(-60);
-		else
-			zoom(60);
-	}
+	function zoom_divs(add) {
+		for (var i = 0; i < Boxes.length; i++) {
+			box = document.getElementById(Boxes[i]);
+			box.style.width = box.offsetWidth*(1+add);
+//			box.style.height = box.offsetHeight*(1+add);	// FIXME: Chrome bug?
+			box.style.left = box.offsetLeft*(1+add);
+			box.style.top = box.offsetTop*(1+add);
+			}
+		}
 
-	window.setTimeout('zoom(-1115);', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
+	function adjust_size() {
+		network = document.getElementById('network');
+		picw = network.offsetWidth;
+//		pich = network.offsetHeight;
+		maxx = 0;
+//		maxy = 0;
+		for (var i = 0; i < Boxes.length; i++) {
+			box = document.getElementById(Boxes[i]);
+			max_x = box.offsetLeft + box.offsetWidth;
+			if ( max_x > maxx ) maxx = max_x;
+//			max_y = box.offsetTop + box.offsetHeight;
+//			if ( max_y > maxy ) maxy = max_y;
+			}
+		factor = picw / maxx;
+		zoom_divs(factor-1);
+		}
+
+	window.setTimeout('zoom(-2500); adjust_size();', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
 
 	var green = '#10b010';
 	var red = '#c01010';
@@ -63,8 +90,19 @@
 		} else if (event.detail) {
 			delta = -event.detail/3;
 		}
-		if (delta)
-			handle(delta);
+		if (delta) {
+			if ( event.shiftKey ) {
+				if (delta < 0)
+					zoom_divs(-0.05);
+				else
+					zoom_divs(0.05);
+			} else	{
+				if (delta < 0)
+					zoom(-60);
+				else
+					zoom(60);
+				}
+			}
 		if (event.preventDefault)
 		        event.preventDefault();
 		event.returnValue = false;
@@ -121,17 +159,26 @@
 		request = new XMLHttpRequest();
 		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="iterate")}}', true);
 		request.onreadystatechange = function()	{
-						 	if (request.readyState==4 && request.status==200) Update();
+						 	if (request.readyState==4 && request.status==200) {
+								Update();
+								if ( document.getElementById('ContinuousIteration').checked == 1 ) window.setTimeout('Iterate();', 500);
+								}
 							}
 		request.send(null);
 		}	
 
+	function Stop() {
+		document.getElementById('ContinuousIteration').checked = false;
+		}
+
 	function setState(label, state) {
 		request = new XMLHttpRequest();
 		request.open('GET', '{{=URL(r=request, c="BooleanNet", f="setState")}}?id='+label+'&state='+state, true);
-		request.onreadystatechange = function()	{
-						 	if (request.readyState==4 && request.status==200) Iterate();
-							}
+		if ( document.getElementById('ContinuousIteration').checked != 1 ) {	// if we are not continuously iterating, iterate once, to update model
+			request.onreadystatechange = function()	{
+							 	if (request.readyState==4 && request.status==200) Iterate();
+								}
+			}
 		request.send(null);
 		}
 
@@ -161,23 +208,28 @@
 [ <a href="../Export/JSON">Download JSON model</a> ], 
 [ <a href="{{ = session.graphviz_png }}">Download picture</a> ]
 
-<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data" style="margin:0px; float:right;">
-	<input type=button value="Reset" onClick="Reset();" />
-	<input type=button value="Iterate" onClick="Iterate();" />
-	<input type=hidden name=Layouter value=graphviz />
-{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
-	<input type=submit value="Load Matthias's Whi2p Network" />
-{{ pass }}
-</form>
+<div id=Controls>
+	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
+	<input id=ContinuousIteration type=checkbox> Continuous Iteration
 
-<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
+	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
+		<input type=button value="Reset" onClick="Reset();" />
+		<input type=button value="Iterate" onClick="Iterate();" />
+		<input type=button value="Stop" onClick="Stop();" />
+		<input type=button value="Adjust" onClick="adjust_size();" />
+		<input type=hidden name=Layouter value=graphviz />
+	{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
+		<input type=submit value="Load Matthias's Whi2p Network" />
+	{{ pass }}
+	</form>
+</div>
 
 <br/>
-Use mouse wheel to zoom in or out. <label id='Progress' style='color:green; font-weight:bold;'></label>
+Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. <label id='Progress' style='color:green; font-weight:bold;'></label>
 
 <div id=canvas>
 
-	<img name=network src="{{ = session.graphviz_image }}" />
+	<img name=network id=network src="{{ = session.graphviz_image }}" />
 
 {{ = XML(BoundingBoxes) }}
 
