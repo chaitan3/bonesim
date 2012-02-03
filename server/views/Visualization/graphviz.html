@@ -6,6 +6,9 @@
 				position:		absolute;
 				top:			-10%;
 				right:			1%;
+				z-index:		+5;
+				background-color:	white;
+				opacity:		1;
 				}
 
 	#canvas			{
@@ -45,17 +48,6 @@
 </style>
 
 <script>
-	function zoom(add) {
-		width = document.network.offsetWidth;
-		newwidth = width*(1+add);
-		height = document.network.offsetHeight;
-		newheight = height*(1+add);
-		if ( newwidth > 10 && newheight > 10 ) {
-			document.network.style.width = newwidth;
-			document.network.style.height = newheight;
-			}
-		}
-
 	function zoom_divs(add) {
 		for (var i = 0; i < Boxes.length; i++) {
 			box = document.getElementById(Boxes[i]);
@@ -81,6 +73,18 @@
 			}
 		factor = picw / maxx;
 		zoom_divs(factor-1);
+		}
+
+	function zoom(add) {
+		width = document.network.offsetWidth;
+		newwidth = width*(1+add);
+		height = document.network.offsetHeight;
+		newheight = height*(1+add);
+		if ( newwidth > 10 && newheight > 10 ) {
+			document.network.style.width = newwidth;
+			document.network.style.height = newheight;
+			AdjustDivs();
+			}
 		}
 
 	var green = '#10b010';
@@ -193,9 +197,11 @@
 	<br/>
 
 	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
-		<select name=Model>
-			<option selected>Simple network</option>
-			<option>Current network</option>
+		<select name=Model onChange='submit();'>
+			<option value='default'>default</option>
+			<option value='basic'>Simple network</option>
+			<option value='detailed'>Detailed network</option>
+			<option value='paper'>Paper</option>
 		</select>
 		<input type=hidden name=Layouter value=graphviz />
 		<input type=submit value="Load" />
@@ -229,12 +235,13 @@ Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. Click the node
 
 	function FitToWindow() {
 		canvas = document.getElementById('canvas');
-		canvas.style.height = window.innerHeight*0.85;
 		network = document.getElementById('network');
-		network.style.height = window.innerHeight*0.80;
+		canvas.style.height = window.innerHeight*0.85;
+		if ( network.clientHeight > network.clientWidth )	network.style.height = window.innerHeight*0.75;	// FIXME: Chrome bug ?
+								else	network.style.width = window.innerWidth*0.96;
 		}
 
-	window.setTimeout('AutoLoad();', 300);
+	window.setTimeout('AutoLoad();', 2000);
 	window.setTimeout('FitToWindow(); AdjustDivs();', 500);
 	window.setTimeout('Iterate();', 700);
 </script>
