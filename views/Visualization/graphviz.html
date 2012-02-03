@@ -4,7 +4,7 @@
 	#Controls		{
 				border:			1px solid black;
 				position:		absolute;
-				top:			-5%;
+				top:			-10%;
 				right:			1%;
 				}
 
@@ -47,7 +47,13 @@
 <script>
 	function zoom(add) {
 		width = document.network.offsetWidth;
-		if ( width + add > 100 ) document.network.style.width = width + add;
+		newwidth = width*(1+add);
+		height = document.network.offsetHeight;
+		newheight = height*(1+add);
+		if ( newwidth > 10 && newheight > 10 ) {
+			document.network.style.width = newwidth;
+			document.network.style.height = newheight;
+			}
 		}
 
 	function zoom_divs(add) {
@@ -60,7 +66,7 @@
 			}
 		}
 
-	function adjust_size() {
+	function AdjustDivs() {
 		network = document.getElementById('network');
 		picw = network.offsetWidth;
 //		pich = network.offsetHeight;
@@ -76,8 +82,6 @@
 		factor = picw / maxx;
 		zoom_divs(factor-1);
 		}
-
-	window.setTimeout('zoom(-2700); adjust_size();', 300);		// FIXME: temporary workaround for the problem, that graphviz pictures have strange dimensions
 
 	var green = '#10b010';
 	var red = 'transparent';//'#a00808';
@@ -98,9 +102,9 @@
 					zoom_divs(0.05);
 			} else	{
 				if (delta < 0)
-					zoom(-60);
+					zoom(-0.1);
 				else
-					zoom(60);
+					zoom(+0.1);
 				}
 			}
 		if (event.preventDefault)
@@ -112,12 +116,6 @@
 		window.addEventListener('DOMMouseScroll', wheel, false);
 	window.onmousewheel = document.onmousewheel = wheel;
 
-	function ChangeVisibility(event) {
-		if ( event.srcElement.checked ) value = 'visible'
-		else				value = 'hidden';
-		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
-		}
-
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
 {{ = XML(reset) }}
@@ -127,15 +125,17 @@
 	window.setTimeout('Reset();', 200);
 
 	function Iterate() {
-		document.getElementById('Progress').innerHTML = 'Updating ...';
+		e = document.getElementById('Progress');
+		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )	e.innerHTML = 'Iterating ...'
+											else	e.innerHTML = e.innerHTML+'.';
 {{ = XML(updateRules) }}
 {{ = XML(shiftRules) }}
 {{ = XML(updateBoxes) }}
-		document.getElementById('Progress').innerHTML = 'Updated.';
-		if ( document.getElementById('ContinuousIteration').checked == 1 ) window.setTimeout('Iterate();', 100);
+		try { delay=parseInt(document.getElementById('Delay').value); }
+		catch(err) { delay=120; };
+		if ( document.getElementById('ContinuousIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
+										else 	e.innerHTML = 'Stopped.';
 		}
-
-	window.setTimeout('Iterate();', 800);
 
 	function Stop() {
 		document.getElementById('ContinuousIteration').checked = false;
@@ -154,6 +154,18 @@
 		else			e.style.background = green;
 		document.getElementById('Progress').innerHTML = 'Changed.';
 		}
+
+	function ChangeVisibility(event) {
+		if ( event.srcElement.checked ) {
+			value = 'visible';
+			Iterate();
+			}
+		else	{
+			value = 'hidden';
+			Stop();
+			}
+		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
+		}
 </script>
 
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
@@ -163,22 +175,26 @@
 
 <div id=Controls>
 	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
-	<input id=ContinuousIteration type=checkbox checked onClick="Iterate();"> Continuous Iteration
+	<input id=ContinuousIteration type=checkbox checked onClick="Iterate();"> Iterate ...
+	<input id=Delay type=text value='120' style='width:50px;' />ms
+	<br/>
 
 	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
+		<select name=Model>
+			<option selected>Simple network</option>
+			<option>Current network</option>
+		</select>
 		<input type=hidden name=Layouter value=graphviz />
-	{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
-		<input type=submit value="Load Matthias's Whi2p Network" />
-	{{ pass }}
-		<input type=button value="Adjust" onClick="adjust_size();" />
+		<input type=submit value="Load" />
 		<input type=button value="Reset" onClick="Reset();" />
 		<input type=button value="Iterate once" onClick="Stop(); Iterate();" />
 		<input type=button value="Stop" onClick="Stop();" />
 	</form>
+	<label id='Progress' style='color:green; font-weight:bold;'></label>
 </div>
 
 <br/>
-Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. <label id='Progress' style='color:green; font-weight:bold;'></label>
+Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes.
 
 <div id=canvas>
 
@@ -189,3 +205,23 @@ Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. <label id='Pro
 	<script>Boxes = new Array({{ = XML(Boxes) }});</script>
 
 </div>
+
+<script>
+	function AutoLoad() {
+		network = document.getElementById('network');
+		src = network.src.substr(network.src.length-4, 4);
+		if ( src == 'None' ) document.main.submit();
+		}
+
+	function FitToWindow() {
+		canvas = document.getElementById('canvas');
+		canvas.style.height = window.innerHeight*0.85;
+		network = document.getElementById('network');
+		network.style.height = window.innerHeight*0.80;
+		}
+
+	window.setTimeout('AutoLoad();', 300);
+	window.setTimeout('FitToWindow(); AdjustDivs();', 500);
+	window.setTimeout('Iterate();', 700);
+</script>
+

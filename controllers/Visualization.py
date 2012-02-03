@@ -29,7 +29,7 @@ def graphviz():									# graphviz
 				label	= node.data.label
 				if label in [None, '']:
 					label = node.id
-				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="javascript:'+node.id+' = ! '+node.id+';"></div>\n'
+				Map 	+= '\t<div class=area id="'+node.id+'" style="left:'+left+'px; top:'+top+'px; width:'+width+'px; height:'+height+'px;" onClick="'+node.id+' = ! '+node.id+'; NodeClick(event);"></div>\n'
 				nodes.append(node)
 
 	Boxes = ''
@@ -49,12 +49,12 @@ def graphviz():									# graphviz
 
 	updateRules = ''
 	shiftRules = ''
-	for line in session.bioGraph.BooleanNet.split('\n'):
-		if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
-			updateRules += '\t\t'+line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('*','_new')+';\n'
-			node = line.split('=')[0].strip()
-			shiftRules += '\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
+	if session.bioGraph.owns('BooleanNet'):
+		for line in session.bioGraph.BooleanNet.split('\n'):
+			if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
+				updateRules += '\t\t'+line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new')+';\n'
+				node = line.split('=')[0].strip()
+				shiftRules += '\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
 
-
-	return dict( BoundingBoxes=Map, Boxes=Boxes, reset=reset, updateRules=updateRules, shiftRules=shiftRules, updateBoxes=updateBoxes )
+	return dict( BoundingBoxes=Map.rstrip(), Boxes=Boxes.rstrip(), reset=reset.rstrip(), updateRules=updateRules.rstrip(), shiftRules=shiftRules.rstrip(), updateBoxes=updateBoxes.rstrip() )
 
