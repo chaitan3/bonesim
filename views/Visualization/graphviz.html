@@ -128,13 +128,21 @@
 		e = document.getElementById('Progress');
 		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )	e.innerHTML = 'Iterating ...'
 											else	e.innerHTML = e.innerHTML+'.';
+		steps = document.getElementById('Steps');
+		steps.innerHTML = parseInt(steps.innerHTML)+1;
 {{ = XML(updateRules) }}
+		if ( {{ = XML(checkSteadyState) }} ) {
 {{ = XML(shiftRules) }}
 {{ = XML(updateBoxes) }}
-		try { delay=parseInt(document.getElementById('Delay').value); }
-		catch(err) { delay=120; };
-		if ( document.getElementById('ContinuousIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
-										else 	e.innerHTML = 'Stopped.';
+			try { delay=parseInt(document.getElementById('Delay').value); }
+			catch(err) { delay=120; };
+			if ( document.getElementById('ContinuousIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
+											else 	e.innerHTML = 'Stopped.';
+			}
+		else 	{	// no changes -> steady state
+			document.getElementById('ContinuousIteration').checked = false;
+			e.innerHTML = 'Boolean network reached steady state.';
+			}
 		}
 
 	function Stop() {
@@ -153,6 +161,11 @@
 		if ( state == true )	e.style.background = red;
 		else			e.style.background = green;
 		document.getElementById('Progress').innerHTML = 'Changed.';
+		if ( document.getElementById('ContinuousIteration').checked == 0 ) {
+			document.getElementById('Steps').innerHTML = 0;
+			document.getElementById('ContinuousIteration').checked = true;
+			Iterate();
+			}
 		}
 
 	function ChangeVisibility(event) {
@@ -191,10 +204,11 @@
 		<input type=button value="Stop" onClick="Stop();" />
 	</form>
 	<label id='Progress' style='color:green; font-weight:bold;'></label>
+	<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
 </div>
 
 <br/>
-Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes.
+Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. Click the nodes to change their activity state.
 
 <div id=canvas>
 
