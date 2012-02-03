@@ -11,86 +11,22 @@
 				opacity:		1;
 				}
 
-	#canvas			{
-				border:			1px solid black;
-				margin:			0px;
-				padding:		0px;
-				position:		relative;
-				left:			5px;
-				width:			99%;
-				height:			94%;
-				overflow-x:		scroll;
-				overflow-y:		scroll;
-				}
-	#canvas div		{
+	#network		{
 				border:			none;
 				position:		absolute;
-				margin:			0px;
-				padding:		0px;
-				padding-top:		7px;
-				color:			white;
-				background-color:	green;
-				opacity:		.4;
-				text-align:		center;
+				top:			15%;
+				left:			1%;
+				width:			98%;
+				height:			83%;
 				}
-	#canvas div:hover	{
-				cursor:			pointer;
-				opacity:		.7;
-				}
-	#canvas img		{
-				position:		relative;
-				top:			0px;
-				left:			0px;
-/*				width:			95%;*/
-				margin:			0px;
-				padding:		0px;
-				}
+
 </style>
 
 <script>
-	function zoom_divs(add) {
-		for (var i = 0; i < Boxes.length; i++) {
-			box = document.getElementById(Boxes[i]);
-			box.style.width = box.offsetWidth*(1+add);
-//			box.style.height = box.offsetHeight*(1+add);	// FIXME: Chrome bug?
-			box.style.left = box.offsetLeft*(1+add);
-			box.style.top = box.offsetTop*(1+add);
-			}
-		}
+	var green = '#10d010';
+	var red = 'white'; //'#d01010';
 
-	function AdjustDivs() {
-		network = document.getElementById('network');
-		picw = network.offsetWidth;
-//		pich = network.offsetHeight;
-		maxx = 0;
-//		maxy = 0;
-		for (var i = 0; i < Boxes.length; i++) {
-			box = document.getElementById(Boxes[i]);
-			max_x = box.offsetLeft + box.offsetWidth;
-			if ( max_x > maxx ) maxx = max_x;
-//			max_y = box.offsetTop + box.offsetHeight;
-//			if ( max_y > maxy ) maxy = max_y;
-			}
-		factor = picw / maxx;
-		zoom_divs(factor-1);
-		}
-
-	function zoom(add) {
-		width = document.network.offsetWidth;
-		newwidth = width*(1+add);
-		height = document.network.offsetHeight;
-		newheight = height*(1+add);
-		if ( newwidth > 10 && newheight > 10 ) {
-			document.network.style.width = newwidth;
-			document.network.style.height = newheight;
-			AdjustDivs();
-			}
-		}
-
-	var green = '#10b010';
-	var red = 'transparent';//'#a00808';
-
-	function wheel(event){
+/*	function wheel(event){
 		var delta = 0;
 		if (!event) event = window.event;
 		if (event.wheelDelta) {
@@ -119,7 +55,7 @@
 	if (window.addEventListener)
 		window.addEventListener('DOMMouseScroll', wheel, false);
 	window.onmousewheel = document.onmousewheel = wheel;
-
+*/
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
 {{ = XML(reset) }}
@@ -134,6 +70,7 @@
 											else	e.innerHTML = e.innerHTML+'.';
 		steps = document.getElementById('Steps');
 		steps.innerHTML = parseInt(steps.innerHTML)+1;
+		var network = document.network.getSVGDocument();
 {{ = XML(updateRules) }}
 		if ( {{ = XML(checkSteadyState) }} ) {
 {{ = XML(shiftRules) }}
@@ -153,10 +90,11 @@
 		document.getElementById('ContinuousIteration').checked = false;
 		}
 
-	function NodeClick(event) {
+	function NodeClick(node) {
 		document.getElementById('Progress').innerHTML = 'Changing node ...';
-		e = event.srcElement;
-		currently = window.getComputedStyle(e).getPropertyValue('background-color');
+		var network = document.network.getSVGDocument();
+		e = network.getElementById(node);
+		currently = window.getComputedStyle(e).getPropertyValue('fill');
 		s = currently.replace('rgb(','').split(',')
 		var R = parseInt(s[0]);
 		var G = parseInt(s[1]);
@@ -165,7 +103,7 @@
 		if ( state == true )	e.style.background = red;
 		else			e.style.background = green;
 		document.getElementById('Progress').innerHTML = 'Changed.';
-		if ( document.getElementById('ContinuousIteration').checked == 0 ) {
+		if ( document.getElementById('ContinuousIteration').checked == 0 ) {	// if not iterating, start iterating again
 			document.getElementById('Steps').innerHTML = 0;
 			document.getElementById('ContinuousIteration').checked = true;
 			Iterate();
@@ -188,7 +126,7 @@
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
 [ <a href="../Layout/graphviz_layout">Download DOT layout</a> ], 
 [ <a href="../Export/JSON">Download JSON model</a> ], 
-[ <a href="{{ = session.graphviz_png }}">Download picture</a> ]
+[ <a href="{{ = session.graphviz_image }}">Download picture</a> ]
 
 <div id=Controls>
 	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
@@ -216,15 +154,7 @@
 <br/>
 Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. Click the nodes to change their activity state.
 
-<div id=canvas>
-
-	<img name=network id=network src="{{ = session.graphviz_image }}" />
-
-{{ = XML(BoundingBoxes) }}
-
-	<script>Boxes = new Array({{ = XML(Boxes) }});</script>
-
-</div>
+<embed name=network id=network src="{{ = session.graphviz_image }}" />
 
 <script>
 	function AutoLoad() {
@@ -233,16 +163,7 @@ Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. Click the node
 		if ( src == 'None' ) document.main.submit();
 		}
 
-	function FitToWindow() {
-		canvas = document.getElementById('canvas');
-		network = document.getElementById('network');
-		canvas.style.height = window.innerHeight*0.85;
-		if ( network.clientHeight > network.clientWidth )	network.style.height = window.innerHeight*0.75;	// FIXME: Chrome bug ?
-								else	network.style.width = window.innerWidth*0.96;
-		}
-
-	window.setTimeout('AutoLoad();', 2000);
-	window.setTimeout('FitToWindow(); AdjustDivs();', 500);
-	window.setTimeout('Iterate();', 700);
+	window.setTimeout('AutoLoad();', 500);
+	window.setTimeout('Iterate();', 1000);
 </script>
 
