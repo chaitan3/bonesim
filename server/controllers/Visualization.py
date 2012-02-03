@@ -44,17 +44,23 @@ def graphviz():									# graphviz
 	updateBoxes = ''
 	for node in nodes:
 		reset += "\t\t"+node.id+" = true;\n"
-		updateBoxes += "\t\tif ( "+node.id+" )	document.getElementById('"+node.id+"').style.background = green\n"
-		updateBoxes += "\t\telse		document.getElementById('"+node.id+"').style.background = red;\n"
+		updateBoxes += "\t\t\tif ( "+node.id+" )	document.getElementById('"+node.id+"').style.background = green\n"
+		updateBoxes += "\t\t\telse		document.getElementById('"+node.id+"').style.background = red;\n"
 
 	updateRules = ''
+	checkSteadyState = ''
+	OR = False
 	shiftRules = ''
 	if session.bioGraph.owns('BooleanNet'):
 		for line in session.bioGraph.BooleanNet.split('\n'):
 			if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
 				updateRules += '\t\t'+line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new')+';\n'
 				node = line.split('=')[0].strip()
-				shiftRules += '\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
+				if OR:
+					checkSteadyState += ' || '
+				checkSteadyState += '( '+node.replace('*','')+' != '+node.replace('*','')+'_new )'
+				OR = True
+				shiftRules += '\t\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
 
-	return dict( BoundingBoxes=Map.rstrip(), Boxes=Boxes.rstrip(), reset=reset.rstrip(), updateRules=updateRules.rstrip(), shiftRules=shiftRules.rstrip(), updateBoxes=updateBoxes.rstrip() )
+	return dict( BoundingBoxes=Map.rstrip(), Boxes=Boxes.rstrip(), reset=reset.rstrip(), updateRules=updateRules.rstrip(), checkSteadyState=checkSteadyState.strip(), shiftRules=shiftRules.rstrip(), updateBoxes=updateBoxes.rstrip() )
 
