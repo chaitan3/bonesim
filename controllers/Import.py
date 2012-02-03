@@ -110,18 +110,26 @@ def BooleanNet():
 	if request.env.request_method == "POST":
 
 		reset_current_session()
+		model = deepcopy(session.bioGraph)
+		del session.bioGraph
 		if request.vars.File in ['', None]:
-			session.bioGraph.importBooleanNet( open('/home/Master/Network/Whi2p.boolenet').read() )
+			if request.vars.Model == 'basic':
+				model.importBooleanNet( open('/home/Master/Network/Basic.boolenet').read() )
+			elif request.vars.Model == 'detailed':
+				model.importBooleanNet( open('/home/Master/Network/Detailed.boolenet').read() )
+			elif request.vars.Model == 'paper':
+				model.importBooleanNet( open('/home/Master/Network/Paper.boolenet').read() )
+			else:
+				model.importBooleanNet( open('/home/Master/Network/Whi2p.boolenet').read() )
 		else:
-			session.bioGraph.importBooleanNet( request.vars.File.file.read() )
+			model.importBooleanNet( request.vars.File.file.read() )
+		session.bioGraph = model
 
 		Layouter = request.vars.Layouter				# a Layouter was chosen
 		if Layouter == "ask":
 			return redirect( URL(r=request,c='Layout',f='choose') )
-		if Layouter == "internal":
+		elif Layouter == "internal":
 			return redirect( URL(r=request,c='Layout',f='internal') )
-		if Layouter == "graphviz":
+		else:
 			return redirect( URL(r=request,c='Layout',f='graphviz') )
-
-		return redirect( URL(r=request, c='Workbench', f='index') )	# else: goto Workbench
 
