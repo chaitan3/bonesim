@@ -26,43 +26,17 @@
 	var green = '#10d010';
 	var red = 'white'; //'#d01010';
 
-/*	function wheel(event){
-		var delta = 0;
-		if (!event) event = window.event;
-		if (event.wheelDelta) {
-			delta = event.wheelDelta/120; 
-		} else if (event.detail) {
-			delta = -event.detail/3;
+	function PaintBoxes() {
+		var network = document.network.getSVGDocument();
+{{ = XML(updateBoxes) }}
 		}
-		if (delta) {
-			if ( event.shiftKey ) {
-				if (delta < 0)
-					zoom_divs(-0.05);
-				else
-					zoom_divs(0.05);
-			} else	{
-				if (delta < 0)
-					zoom(-0.1);
-				else
-					zoom(+0.1);
-				}
-			}
-		if (event.preventDefault)
-		        event.preventDefault();
-		event.returnValue = false;
-	}
 
-	if (window.addEventListener)
-		window.addEventListener('DOMMouseScroll', wheel, false);
-	window.onmousewheel = document.onmousewheel = wheel;
-*/
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
 {{ = XML(reset) }}
+		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Reset.';
 		}
-
-	window.setTimeout('Reset();', 200);
 
 	function Iterate() {
 		e = document.getElementById('Progress');
@@ -74,13 +48,14 @@
 {{ = XML(updateRules) }}
 		if ( {{ = XML(checkSteadyState) }} ) {
 {{ = XML(shiftRules) }}
-{{ = XML(updateBoxes) }}
+			PaintBoxes();
 			try { delay=parseInt(document.getElementById('Delay').value); }
 			catch(err) { delay=120; };
 			if ( document.getElementById('ContinuousIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
 											else 	e.innerHTML = 'Stopped.';
 			}
 		else 	{	// no changes -> steady state
+			PaintBoxes();
 			document.getElementById('ContinuousIteration').checked = false;
 			e.innerHTML = 'Boolean network reached steady state.';
 			}
@@ -92,7 +67,7 @@
 
 	function NodeClick(node) {
 		document.getElementById('Progress').innerHTML = 'Changing node ...';
-		var network = document.network.getSVGDocument();
+/*		var network = document.network.getSVGDocument();
 		e = network.getElementById(node);
 		currently = window.getComputedStyle(e).getPropertyValue('fill');
 		s = currently.replace('rgb(','').split(',')
@@ -101,9 +76,14 @@
 		if ( G > R )	state = true
 		else		state = false;
 		if ( state == true )	e.style.background = red;
-		else			e.style.background = green;
+		else			e.style.background = green;	*/
+		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Changed.';
-		if ( document.getElementById('ContinuousIteration').checked == 0 ) {	// if not iterating, start iterating again
+
+		//
+		// if not iterating, start iterating again
+		//
+		if ( document.getElementById('ContinuousIteration').checked == 0 ) {
 			document.getElementById('Steps').innerHTML = 0;
 			document.getElementById('ContinuousIteration').checked = true;
 			Iterate();
@@ -152,10 +132,10 @@
 </div>
 
 <br/>
-Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. Click the nodes to change their activity state.
+Click the nodes to change their respective state. State-of-the-art browser required (Chrome or Firefox; not Internet Explorer). SVG support required. JavaScript needs to be enabled.
 
 <embed name=network id=network src="{{ = session.graphviz_image }}" />
-
+ 
 <script>
 	function AutoLoad() {
 		network = document.getElementById('network');
@@ -163,7 +143,8 @@ Use mouse wheel to zoom in or out. Shift+Wheel to zoom the boxes. Click the node
 		if ( src == 'None' ) document.main.submit();
 		}
 
-	window.setTimeout('AutoLoad();', 500);
+	window.setTimeout('AutoLoad();', 200);
+	window.setTimeout('Reset();', 400);
 	window.setTimeout('Iterate();', 1000);
 </script>
 

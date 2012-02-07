@@ -124,6 +124,7 @@ def BooleanNet():
 		else:
 			model.importBooleanNet( request.vars.File.file.read() )
 		session.bioGraph = model
+		print len(model.Nodes)
 
 		Layouter = request.vars.Layouter				# a Layouter was chosen
 		if Layouter == "ask":
