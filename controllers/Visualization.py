@@ -44,8 +44,8 @@ def graphviz():									# graphviz
 	updateBoxes = ''
 	for node in nodes:
 		reset += "\t\t"+node.id+" = true;\n"
-		updateBoxes += "\t\t\tif ( "+node.id+" )	network.getElementById('"+node.id+"').style.fill = green\n"
-		updateBoxes += "\t\t\telse		network.getElementById('"+node.id+"').style.fill = red;\n"
+		updateBoxes += "\t\tif ( "+node.id+" )	network.getElementById('"+node.id+"').style.fill = green\n"
+		updateBoxes += "\t\telse		network.getElementById('"+node.id+"').style.fill = red;\n"
 
 	updateRules = ''
 	checkSteadyState = ''
