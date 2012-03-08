@@ -67,16 +67,6 @@
 
 	function NodeClick(node) {
 		document.getElementById('Progress').innerHTML = 'Changing node ...';
-/*		var network = document.network.getSVGDocument();
-		e = network.getElementById(node);
-		currently = window.getComputedStyle(e).getPropertyValue('fill');
-		s = currently.replace('rgb(','').split(',')
-		var R = parseInt(s[0]);
-		var G = parseInt(s[1]);
-		if ( G > R )	state = true
-		else		state = false;
-		if ( state == true )	e.style.background = red;
-		else			e.style.background = green;	*/
 		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Changed.';
 
