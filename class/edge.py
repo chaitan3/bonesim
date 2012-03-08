@@ -3,7 +3,7 @@
 
 from copy import deepcopy
 from randomid import randomID
-import json
+import simplejson as json
 
 from defaults import *
 from sbo import *

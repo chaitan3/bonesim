@@ -114,13 +114,13 @@ def BooleanNet():
 		del session.bioGraph
 		if request.vars.File in ['', None]:
 			if request.vars.Model == 'basic':
-				model.importBooleanNet( open('/home/Master/Network/Basic.boolenet').read() )
+				model.importBooleanNet( open('/home/code/biographer/Basic.boolenet').read() )
 			elif request.vars.Model == 'detailed':
-				model.importBooleanNet( open('/home/Master/Network/Detailed.boolenet').read() )
+				model.importBooleanNet( open('/home/code/biographer/Detailed.boolenet').read() )
 			elif request.vars.Model == 'paper':
-				model.importBooleanNet( open('/home/Master/Network/Paper.boolenet').read() )
+				model.importBooleanNet( open('/home/code/biographer/Paper.boolenet').read() )
 			else:
-				model.importBooleanNet( open('/home/Master/Network/Whi2p.boolenet').read() )
+				model.importBooleanNet( open('/home/code/biographer/Whi2p.boolenet').read() )
 		else:
 			model.importBooleanNet( request.vars.File.file.read() )
 		session.bioGraph = model
