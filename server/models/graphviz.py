@@ -41,7 +41,12 @@ def prepareSVG(f):
 
 def layout_using_graphviz(graph, execution_folder="/tmp", image_output_folder="/tmp", algorithm="dot"):
 
-	import os, pygraphviz
+	import os
+	try:
+		import pygraphviz
+	except ImportError:
+		print 'Import Error: python-graphviz'
+		return ''
 	from defaults import info
 
 	mkdir_and_parents(execution_folder)

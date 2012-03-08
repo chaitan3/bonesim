@@ -1,5 +1,10 @@
 #!/bin/bash
 
-./install_layouter.sh
-./install_visualizer.sh
-./install_exporter.sh
+./add-layouter.sh
+./add-ui.sh
+./add-exporter.sh
+
+./get-simplejson.sh
+./get-graphviz.sh
+./get-libsbml.sh
+

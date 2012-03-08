@@ -34,6 +34,10 @@ def graphviz():
 	server_object = deepcopy( session.bioGraph )	# without these two lines, some caching problem occurs,
 	del session.bioGraph				# and session.bioGraph does not get updated
 	out = layout_using_graphviz( server_object, execution_folder=os.path.join(request.folder, "cache"), image_output_folder=os.path.join(request.folder, "static/graphviz") )
+	if out is None:
+		session.flash = "graphviz failed. see console for details."
+		return redirect( URL(r=request, c="Workbench", f="index") )
+
 	session.bioGraph	= server_object
 
 	session.graphviz_image	= '../static/graphviz/'+out
