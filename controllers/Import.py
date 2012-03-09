@@ -105,24 +105,23 @@ def Reactome():
 
 def BooleanNet():
 	if request.env.request_method == "GET":
-		return dict()
+		NetworkFolder = os.path.join(request.folder, "BooleanNetworks")
+		if not os.path.exists(NetworkFolder):
+			os.mkdir(NetworkFolder)
+		return dict(AvailableNetworks=os.listdir(NetworkFolder))
 
 	if request.env.request_method == "POST":
-
 		reset_current_session()
 		model = deepcopy(session.bioGraph)
 		del session.bioGraph
-		if request.vars.File in ['', None]:
-			if request.vars.Model == 'basic':
-				model.importBooleanNetwork( open('/home/code/biographer/Basic.boolenet').read() )
-			elif request.vars.Model == 'detailed':
-				model.importBooleanNetwork( open('/home/code/biographer/Detailed.boolenet').read() )
-			elif request.vars.Model == 'paper':
-				model.importBooleanNetwork( open('/home/code/biographer/Paper.boolenet').read() )
-			else:
-				model.importBooleanNetwork( open('/home/code/biographer/Whi2p.boolenet').read() )
+
+		if not request.vars.File in ['', None]:
+			model.importBooleanNetwork( request.vars.File.file.read() )	# upload file
+		elif not request.vars.Model in ['', None]:				# choose a network on the server
+			model.importBooleanNetwork( open(os.path.join(request.folder, "BooleanNetworks", request.vars.Model)).read() )
 		else:
-			model.importBooleanNetwork( request.vars.File.file.read() )
+			return redirect( URL(r=request,c='Import',f='BooleanNet') )
+
 		model.importBooleanNetworkScenarios('/home/code/biographer/Whi2p.scenarios')
 		session.bioGraph = model
 

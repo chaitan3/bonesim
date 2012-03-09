@@ -70,10 +70,7 @@
 		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Changed.';
 
-		//
-		// if not iterating, start iterating again
-		//
-		if ( document.getElementById('OngoingIteration').checked == 0 ) {
+		if ( document.getElementById('IterationContinues').checked == 1 ) {
 			document.getElementById('Steps').innerHTML = 0;
 			document.getElementById('OngoingIteration').checked = true;
 			Iterate();
@@ -98,7 +95,7 @@
 		window.setTimeout(event.srcElement.options[event.srcElement.selectedIndex].value, delay);
 		}
 
-{{ = XML(Scenarios) }}
+{{ = XML(ScenarioFunctions) }}
 
 </script>
 
@@ -108,46 +105,40 @@
 [ <a href="{{ = session.graphviz_image }}">Download picture</a> ]
 
 <div id=Controls>
-	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
+	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Simulate Boolean Network
+	<input name=OngoingIteration id=OngoingIteration type=checkbox checked onClick="Iterate();"> Iterating.
+	<br/>
+	&nbsp;Delay between iterations: <input id=Delay type=text value='120' style='width:50px; text-align:right;' /> ms
+	<br/>
+	<input name=IterationContinues id=IterationContinues type=checkbox checked onClick="Iterate();"> Autostart simulation when network nodes are clicked
+	<br/>
 
-		<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Simulate Boolean Network
-		<input name=OngoingIteration id=OngoingIteration type=checkbox checked onClick="Iterate();"> Iterating.
-		<br/>
-		&nbsp;Delay between iterations: <input id=Delay type=text value='120' style='width:50px; text-align:right;' /> ms
-		<br/>
-		<input name=IterationContinues id=IterationContinues type=checkbox checked onClick="Iterate();"> Autostart simulation when network nodes are clicked
-		<br/>
-
+	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data" style="display:inline;">
 		&nbsp;Available networks:
-		<select name=Model onChange='submit();'>
-			<option value='default'>default</option>
-			<option value='basic'>Simple network</option>
-			<option value='detailed'>Detailed network</option>
-			<option value='paper'>Paper</option>
+		<select name=Model>
+			<option selected></option>
+{{for model in AvailableNetworks:}}			<option value="{{=model}}">{{=model}}</option>{{pass}}
 		</select>
 		<input type=submit value="Load network" />
 		<br/>
-
-		&nbsp;Available scenarios:
-		<select name=Scenario onChange="selectScenario(event);">
-			<option value="null;"></option>
-			<option disabled=true>WT yeast</option>
-			<option value="Scenario1();">abundant nutrients, WT yeast</option>
-			<option value="Scenario2();">nutrient depletion, WT yeast</option>
-			<option value="Scenario3();">nutrient depletion, &Delta;Whi2 yeast</option>
-		</select>
-		<br/>
-
-		<input type=hidden name=Layouter value=graphviz />
-		<input type=button value="Reset state space" onClick="Reset();" />
-		<input type=button value="Start" onClick="document.main.OngoingIteration.checked=1; Iterate();" />
-		<input type=button value="Iterate once" onClick="Stop(); Iterate();" />
-		<input type=button value="Stop" onClick="Stop();" />
-		<br/>
-
-		&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
-		<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
 	</form>
+
+	&nbsp;Available scenarios:
+	<select name=Scenario onChange="selectScenario(event);">
+		<option value="null;" selected></option>
+{{ = XML(ScenarioOptions) }}
+	</select>
+	<br/>
+
+	<input type=hidden name=Layouter value=graphviz />
+	<input type=button value="Reset state space" onClick="Reset();" />
+	<input type=button value="Start" onClick="document.main.OngoingIteration.checked=1; Iterate();" />
+	<input type=button value="Iterate once" onClick="Stop(); Iterate();" />
+	<input type=button value="Stop" onClick="Stop();" />
+	<br/>
+
+	&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
+	<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
 </div>
 
 <br/>
