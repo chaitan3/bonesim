@@ -36,7 +36,6 @@
 	SimulationRunning = false;
 
 	function installSVGonClickListeners() {
-		svg = document.network.getSVGDocument();
 {{ = XML(onClickListeners) }}		
 		}
 
@@ -99,6 +98,35 @@
 
 {{ = XML(ScenarioFunctions) }}
 
+	function refreshSVG() {
+		document.network.style.visibility = "hidden";
+		document.network.style.visibility = "visible";
+		}
+
+	function colorifyAttractorEdge(node1, node2) {
+		path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+		path.setAttributeNS(null, 'style', 'fill:none; stroke:#f9f883; stroke-width:80; stroke-linecap:round; opacity:0.5;');
+		x1 = svg.getElementById(node1).cx.baseVal.value;
+		y1 = svg.getElementById(node1).cy.baseVal.value;
+		x2 = svg.getElementById(node2).cx.baseVal.value;
+		y2 = svg.getElementById(node2).cy.baseVal.value;
+		path.setAttributeNS(null, 'd', 'M '+x1+','+y1+' '+x2+','+y2);
+		svg.getElementById('graph1').insertBefore(path, node1);
+		}
+
+	function FindAttractors() {
+		// query the server via XmlHttpRequest ... BooleanNet python simulation ...
+
+//		polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+//		polygon.setAttributeNS(null, 'fill', cyclic_attraktor);
+//		polygon.setAttributeNS(null, 'points', '-1,1 -1,-100 100,-100 100,1 -1,1');
+
+		colorifyAttractorEdge('Ras2', 'cAMP');
+		colorifyAttractorEdge('cAMP', 'PKA');
+		colorifyAttractorEdge('PKA', 'Ras2');
+		refreshSVG();
+		}
+
 </script>
 
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
@@ -131,7 +159,7 @@
 
 	<input type=button value="Reset state space" onClick="Reset();" />
 	<br/>
-	<input type=button value="(Find attractors)" />
+	<input type=button value="Find attractors" onClick="FindAttractors();" />
 	<br/>
 
 	&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
@@ -143,16 +171,14 @@ Press Ctrl when clicking to fix or unfix a node.
 State-of-the-art browser required (Chrome or Firefox; not Internet Explorer).
 SVG support required. JavaScript needs to be enabled.
 
-<embed name=network id=network src="{{ = session.graphviz_image }}" />
+<object type="image/svg+xml" name=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; installSVGonClickListeners(); Reset(); Iterate();" ></object>
  
 <script>
 	function AutoLoad() {
-		network = document.getElementById('network');
-		src = network.src.substr(network.src.length-4, 4);
-		if ( src == 'None' ) document.main.submit();
+		if ( document.getElementById('network').contentDocument == undefined ) document.main.submit();
 		}
 
 	window.setTimeout('AutoLoad();', 50);
-	window.setTimeout('installSVGonClickListeners(); Reset(); Iterate();', 400);
+//	window.setTimeout('', 400);
 </script>
 
