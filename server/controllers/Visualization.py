@@ -16,6 +16,7 @@ def graphviz():									# graphviz
 
 	VisibleNodes = []
 
+	onClickListeners = ''
 	paintBoxes = ''
 	resetRules = ''
 
@@ -33,12 +34,15 @@ def graphviz():									# graphviz
 				VisibleNodes.append(node)
 
 		for node in VisibleNodes:
+			onClickListeners += 'svg.getElementById("'+node.id+'").onclick = function(event) { if (! event.ctrlKey) { '+node.id+' = ! '+node.id+'; } else { update_'+node.id+' = ! update_'+node.id+'; }; NodeClicked(); };\n'
+
+			paintBoxes += "\t\tif ( "+node.id+" )	svg.getElementById('"+node.id+"').style.fill = active\n"
+			paintBoxes += "\t\telse		svg.getElementById('"+node.id+"').style.fill = inactive;\n"
+			paintBoxes += "\t\tif ( update_"+node.id+" )	svg.getElementById('"+node.id+"').style['stroke-dasharray'] = 'none'\n"
+			paintBoxes += "\t\telse		svg.getElementById('"+node.id+"').style['stroke-dasharray'] = '3,3';\n"
+
 			resetRules += "\t\t"+node.id+" = true;\n"
 			resetRules += "\t\tupdate_"+node.id+" = true;\n"
-			paintBoxes += "\t\tif ( "+node.id+" )	network.getElementById('"+node.id+"').style.fill = active\n"
-			paintBoxes += "\t\telse		network.getElementById('"+node.id+"').style.fill = inactive;\n"
-			paintBoxes += "\t\tif ( update_"+node.id+" )	network.getElementById('"+node.id+"').style.stroke = black\n"
-			paintBoxes += "\t\telse		network.getElementById('"+node.id+"').style.stroke = yellow;\n"
 
 		# JavaScript update rules
 		for line in session.bioGraph.BooleanNetwork.split('\n'):
@@ -58,7 +62,7 @@ def graphviz():									# graphviz
 			ScenarioFunctions += '\tfunction Scenario'+str(i+1)+'() {\n'
 			for node in Scenario['statespace'].keys():
 				ScenarioFunctions += '\t\t'+node+' = '+str(Scenario['statespace'][node]).lower()+';\n'
-			ScenarioFunctions += '\t\tNodeClick(null, null);\n\t\t}\n\n'
+			ScenarioFunctions += '\t\tNodeClicked();\n\t\t}\n\n'
 
 			ScenarioOptions += '\t\t<option value="Scenario'+str(i+1)+'();">'+Scenario['title']+'</option>\n'
 
@@ -69,5 +73,5 @@ def graphviz():									# graphviz
 	if not os.path.exists(NetworkFolder):
 		os.mkdir(NetworkFolder)
 
-	return dict( AvailableNetworks=os.listdir(NetworkFolder), paintBoxes=paintBoxes.rstrip(), resetRules=resetRules.rstrip(), updateRules=updateRules.rstrip(), checkSteadyState=checkSteadyState.strip(), shiftRules=shiftRules.rstrip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
+	return dict( AvailableNetworks=os.listdir(NetworkFolder), onClickListeners=onClickListeners.rstrip(), paintBoxes=paintBoxes.rstrip(), resetRules=resetRules.rstrip(), updateRules=updateRules.rstrip(), checkSteadyState=checkSteadyState.strip(), shiftRules=shiftRules.rstrip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
 
