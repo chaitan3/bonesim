@@ -440,7 +440,7 @@ class Graph:
 
 	## Boolean Network section
 
-	def importBooleanNet(self, network):
+	def importBooleanNetwork(self, network):
 		self.reset()
 		self.log(info, 'Importing Boolean Network ...')
 
@@ -519,51 +519,40 @@ class Graph:
 									node.sbo = getSBO(node.type)
 									self.Nodes.append(node)
 									node_name_dictionary.append(word)
-		self.BooleanNet = network
+		self.BooleanNetwork = network
 		self.initialize()
-		self.resetBooleanNet()
+		return self.BooleanNetwork
 
-	def resetBooleanNet(self):
-		for node in self.Nodes:
-			node.data.booleanstate = False
-		self.BooleanChangeset = self.Nodes
-
-	def setBooleanNet(self, label, value):
-		for node in self.Nodes:
-			if node.id == label:
-				node.data.booleanstate = (value == 'true')
-				self.log(debug, label+' = '+value)
-				return
-		self.log(debug, 'Update failed: '+label+' -> '+value)
-
-	def iterateBooleanNet(self):
-		print "iterating..."
+	def importBooleanNetworkScenarios(self, filename):
 		try:
-			from boolean2 import Model, util
+			from ConfigParser import RawConfigParser
 		except ImportError:
-			self.log(error, 'Import error: boolean2 python library')
-			return
-		BooleanModel = Model( text=self.BooleanNet, mode='sync' )
+			self.log(error, 'Import Error: RawConfigParser')
+			return None
+		self.log(info, 'Loading Boolean Network Scenarios from '+filename+' ...')
 
-		currentstate = {}
-		for node in self.Nodes:
-			currentstate[node.id] = node.data.booleanstate
+		self.BooleanNetworkScenarios = []
+		parser = RawConfigParser()
+		parser.read(filename)
+		for section in parser.sections():
+			group = ''
+			title = ''
+			statespace = {}
+			for item in parser.items(section):
+				if item[0].lower() == 'group':
+					group = item[1]
+				elif item[0].lower() == 'title':
+					title = item[1]
+				else:
+					try:
+						statespace[str(item[0])] = bool(item[1])
+					except:
+						self.debug(error, 'State-Space definition "'+str(item[0])+'" in Boolean Network Scenario section "'+str(section)+'" is not a Boolean: '+str(item[1]))
+						pass
+			self.BooleanNetworkScenarios.append({'group':group, 'title':title, 'statespace':statespace})
 
-		BooleanModel.initialize( defaults=currentstate, missing=util.false )
-		BooleanModel.iterate( steps=1 )
-
-		self.BooleanChangeset = []
-		for node in self.Nodes:
-			if currentstate[node.id] != BooleanModel.data[node.id][1]:
-				node.data.booleanstate = BooleanModel.data[node.id][1]
-				self.BooleanChangeset.append(node)
-
-	def exportBooleanNet(self):
-		output = ''
-		print self.BooleanChangeset
-		for node in self.BooleanChangeset:
-			output += node.id+'\n'+str(node.data.booleanstate)+'\n'
-		return output.strip('\n')
+		self.log(info, str(len(self.BooleanNetworkScenarios))+' scenarios loaded.')
+		return self.BooleanNetworkScenarios
 
 	### main model layouting section
 	### invoking the layout subproject, that is seperately developed
