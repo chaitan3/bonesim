@@ -31,9 +31,17 @@
 
 	active = green;
 	inactive = 'white';
+	cyclic_attraktor = '#f9f883';
+
+	SimulationRunning = false;
+
+	function installSVGonClickListeners() {
+		svg = document.network.getSVGDocument();
+{{ = XML(onClickListeners) }}		
+		}
 
 	function PaintBoxes() {
-		var network = document.network.getSVGDocument();
+//		var svg = document.network.getSVGDocument();
 {{ = XML(paintBoxes) }}
 		}
 
@@ -45,60 +53,42 @@
 		}
 
 	function Iterate() {
+		SimulationRunning = true;
 		e = document.getElementById('Progress');
 		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )	e.innerHTML = 'Iterating ...'
 											else	e.innerHTML = e.innerHTML+'.';
 		steps = document.getElementById('Steps');
 		steps.innerHTML = parseInt(steps.innerHTML)+1;
-		var network = document.network.getSVGDocument();
+//		var svg = document.network.getSVGDocument();
 {{ = XML(updateRules) }}
-		if ( {{ = XML(checkSteadyState) }} ) {
+		if ( {{ = XML(checkSteadyState) }} ) {	// network updated -> steady state not reached
 {{ = XML(shiftRules) }}
 			PaintBoxes();
 			try { delay=parseInt(document.getElementById('Delay').value); }
 			catch(err) { delay=120; };
-			if ( document.getElementById('OngoingIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
-											else 	e.innerHTML = 'Stopped.';
+			window.setTimeout('Iterate();', delay)
 			}
 		else 	{	// no changes -> steady state
 			PaintBoxes();
-			document.getElementById('OngoingIteration').checked = false;
 			e.innerHTML = 'Boolean network reached steady state.';
+			SimulationRunning = false;
 			}
 		}
 
-	function Stop() {
-		document.getElementById('OngoingIteration').checked = false;
-		}
-
-	function NodeClick(event, node) {
+	function NodeClicked() { // you shouldn't need to know which one,
+				 // since if there is something to do with this node,
+				 // it shall be done from inside the SVG
 		document.getElementById('Progress').innerHTML = 'Changing node ...';
-		// variable has already been changed from within the SVG
-		// Ctrl key pressed ?
-		if (event != null && event.ctrlKey == true && node != null) {
-			window.setTimeout('update_'+node+' = ! update_'+node+';', 0);
-//			window.setTimeout(node+' = ! '+node+';', 0);
-			}
+
 		PaintBoxes();
-		document.getElementById('Progress').innerHTML = 'Changed.';
 
-		if ( document.getElementById('IterationContinues').checked == 1 ) {
+		// start Simulation, if it's not running already
+		if ( ! SimulationRunning ) {
 			document.getElementById('Steps').innerHTML = 0;
-			document.getElementById('OngoingIteration').checked = true;
 			Iterate();
 			}
-		}
 
-	function ChangeVisibility(event) {
-		if ( event.srcElement.checked ) {
-			value = 'visible';
-			Iterate();
-			}
-		else	{
-			value = 'hidden';
-			Stop();
-			}
-		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
+		document.getElementById('Progress').innerHTML = 'Changed.';
 		}
 
 	function selectScenario(event) {
@@ -117,12 +107,7 @@
 [ <a href="{{ = session.graphviz_image }}">Download picture</a> ]
 
 <div id=Controls>
-	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Simulate Boolean Network
-	<input name=OngoingIteration id=OngoingIteration type=checkbox checked onClick="Iterate();"> Iterating.
-	<br/>
-	&nbsp;Delay between iterations: <input id=Delay type=text value='120' style='width:50px; text-align:right;' /> ms
-	<br/>
-	<input name=IterationContinues id=IterationContinues type=checkbox checked onClick="Iterate();"> Autostart simulation when network nodes are clicked
+	&nbsp;Delay between iteration steps: <input id=Delay type=text value='100' style='width:50px; text-align:right;' /> ms
 	<br/>
 
 	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data" style="display:inline;">
@@ -131,6 +116,7 @@
 			<option selected></option>
 {{for model in AvailableNetworks:}}			<option value="{{=model}}">{{=model}}</option>{{pass}}
 		</select>
+		<input type=hidden name=Layouter value=graphviz />
 		<input type=submit value="Load network" />
 		<br/>
 	</form>
@@ -140,20 +126,18 @@
 		<option value="null;" selected></option>
 {{ = XML(ScenarioOptions) }}
 	</select>
+	<input type=button value="(Plot)" />
 	<br/>
 
-	<input type=hidden name=Layouter value=graphviz />
 	<input type=button value="Reset state space" onClick="Reset();" />
-	<input type=button value="Start" onClick="document.main.OngoingIteration.checked=1; Iterate();" />
-	<input type=button value="Iterate once" onClick="Stop(); Iterate();" />
-	<input type=button value="Stop" onClick="Stop();" />
+	<br/>
+	<input type=button value="(Find attractors)" />
 	<br/>
 
 	&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
 	<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
 </div>
 
-<br/>
 Click the nodes to change their respective state.
 Press Ctrl when clicking to fix or unfix a node.
 State-of-the-art browser required (Chrome or Firefox; not Internet Explorer).
@@ -168,8 +152,7 @@ SVG support required. JavaScript needs to be enabled.
 		if ( src == 'None' ) document.main.submit();
 		}
 
-	window.setTimeout('AutoLoad();', 200);
-	window.setTimeout('Reset();', 400);
-	window.setTimeout('Iterate();', 1000);
+	window.setTimeout('AutoLoad();', 50);
+	window.setTimeout('installSVGonClickListeners(); Reset(); Iterate();', 400);
 </script>
 
