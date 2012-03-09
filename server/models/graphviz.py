@@ -25,7 +25,7 @@ def prepareSVG(f):
 				q = replacement.find('</text>', p)
 				label = replacement[p:q]
 				name = label.replace(' ','_')
-				replacement = replacement.replace('class="node"', 'class="node" onclick="parent.'+name+' = ! parent.'+name+'; parent.NodeClick(\''+name+'\');"')
+				replacement = replacement.replace('class="node"', 'class="node" onclick="parent.'+name+' = ! parent.'+name+'; parent.NodeClick(event, \''+name+'\');"')
 				replacement = replacement.replace('fill="none"', 'id="'+name+'" fill="white" style="cursor:pointer"') # onclick="parent.'+name+' = ! parent.'+name+'; parent.NodeClick(\''+name+'\');"')
 				outfile.write(replacement+line+'\n')
 				inside_node = False

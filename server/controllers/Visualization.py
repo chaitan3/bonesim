@@ -16,8 +16,8 @@ def graphviz():									# graphviz
 
 	VisibleNodes = []
 
-	updateBoxes = ''
-	reset = ''
+	paintBoxes = ''
+	resetRules = ''
 
 	updateRules = ''
 	conditions = []
@@ -33,17 +33,22 @@ def graphviz():									# graphviz
 				VisibleNodes.append(node)
 
 		for node in VisibleNodes:
-			reset += "\t\t"+node.id+" = true;\n"
-			updateBoxes += "\t\tif ( "+node.id+" )	network.getElementById('"+node.id+"').style.fill = green\n"
-			updateBoxes += "\t\telse		network.getElementById('"+node.id+"').style.fill = red;\n"
+			resetRules += "\t\t"+node.id+" = true;\n"
+			resetRules += "\t\tupdate_"+node.id+" = true;\n"
+			paintBoxes += "\t\tif ( "+node.id+" )	network.getElementById('"+node.id+"').style.fill = active\n"
+			paintBoxes += "\t\telse		network.getElementById('"+node.id+"').style.fill = inactive;\n"
+			paintBoxes += "\t\tif ( update_"+node.id+" )	network.getElementById('"+node.id+"').style.stroke = black\n"
+			paintBoxes += "\t\telse		network.getElementById('"+node.id+"').style.stroke = yellow;\n"
 
 		# JavaScript update rules
 		for line in session.bioGraph.BooleanNetwork.split('\n'):
 			if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
-				updateRules += '\t\t'+line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new')+';\n'
+				s = line.replace('*','=').split('=')
+				left = s[0].strip()
+				rule_in_JavaScript = line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new')
+				updateRules += '\t\tif ( update_'+left+' ) '+rule_in_JavaScript+';\n\t\telse\t'+left+'_new = '+left+';\n'
 				node = line.split('=')[0].strip()
 				conditions.append('( '+node.replace('*','')+'_new != '+node.replace('*','')+' )')
-				OR = True
 				shiftRules += '\t\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
 
 		# Scenarios
@@ -53,7 +58,7 @@ def graphviz():									# graphviz
 			ScenarioFunctions += '\tfunction Scenario'+str(i+1)+'() {\n'
 			for node in Scenario['statespace'].keys():
 				ScenarioFunctions += '\t\t'+node+' = '+str(Scenario['statespace'][node]).lower()+';\n'
-			ScenarioFunctions += '\t\tNodeClick(null);\n\t\t}\n\n'
+			ScenarioFunctions += '\t\tNodeClick(null, null);\n\t\t}\n\n'
 
 			ScenarioOptions += '\t\t<option value="Scenario'+str(i+1)+'();">'+Scenario['title']+'</option>\n'
 
@@ -64,5 +69,5 @@ def graphviz():									# graphviz
 	if not os.path.exists(NetworkFolder):
 		os.mkdir(NetworkFolder)
 
-	return dict( AvailableNetworks=os.listdir(NetworkFolder), updateBoxes=updateBoxes.rstrip(), reset=reset.rstrip(), updateRules=updateRules.rstrip(), checkSteadyState=checkSteadyState.strip(), shiftRules=shiftRules.rstrip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
+	return dict( AvailableNetworks=os.listdir(NetworkFolder), paintBoxes=paintBoxes.rstrip(), resetRules=resetRules.rstrip(), updateRules=updateRules.rstrip(), checkSteadyState=checkSteadyState.strip(), shiftRules=shiftRules.rstrip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
 

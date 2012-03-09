@@ -23,17 +23,23 @@
 </style>
 
 <script>
-	var green = '#10d010';
-	var red = 'white'; //'#d01010';
+	green = '#10d010';
+	red = '#d01010';
+	yellow = '#f4fd01';
+	black = '#000000';
+	blue = '#7474cf';
+
+	active = green;
+	inactive = 'white';
 
 	function PaintBoxes() {
 		var network = document.network.getSVGDocument();
-{{ = XML(updateBoxes) }}
+{{ = XML(paintBoxes) }}
 		}
 
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
-{{ = XML(reset) }}
+{{ = XML(resetRules) }}
 		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Reset.';
 		}
@@ -65,8 +71,14 @@
 		document.getElementById('OngoingIteration').checked = false;
 		}
 
-	function NodeClick(node) {
+	function NodeClick(event, node) {
 		document.getElementById('Progress').innerHTML = 'Changing node ...';
+		// variable has already been changed from within the SVG
+		// Ctrl key pressed ?
+		if (event != null && event.ctrlKey == true && node != null) {
+			window.setTimeout('update_'+node+' = ! update_'+node+';', 0);
+//			window.setTimeout(node+' = ! '+node+';', 0);
+			}
 		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Changed.';
 
@@ -142,7 +154,10 @@
 </div>
 
 <br/>
-Click the nodes to change their respective state. State-of-the-art browser required (Chrome or Firefox; not Internet Explorer). SVG support required. JavaScript needs to be enabled.
+Click the nodes to change their respective state.
+Press Ctrl when clicking to fix or unfix a node.
+State-of-the-art browser required (Chrome or Firefox; not Internet Explorer).
+SVG support required. JavaScript needs to be enabled.
 
 <embed name=network id=network src="{{ = session.graphviz_image }}" />
  
