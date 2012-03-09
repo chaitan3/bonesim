@@ -701,7 +701,7 @@ class Graph:
 
 		# http://networkx.lanl.gov/pygraphviz/tutorial.html
 		graphviz_model = pygraphviz.AGraph(directed=True)
-		graphviz_model.node_attr.update(fontsize=10)
+		graphviz_model.node_attr.update(fontsize=14)
 
 		global alias_counter
 		alias_counter = 0
