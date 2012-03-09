@@ -1,24 +1,27 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
 
+# reload modules when changes are made
+# see http://web2py.com/book/default/chapter/04#Accessing-the-API-from-Python-modules
+from gluon.custom_import import track_changes
+track_changes(True)
+
 import sys
-hardcoded = request.folder + "/class"
-if not hardcoded in sys.path:
-	sys.path.append(hardcoded)
-
-from graph import Graph
-
 import os
 from copy import deepcopy
 
-#
-# the following lines are not necessary,
-# since all in /models is imported automatically by web2py
-#
+# also import the class's modules!
+hardcoded = request.folder + "/class"
+if not hardcoded in sys.path:
+	sys.path.append(hardcoded)
+from graph import Graph
+from defaults import progress
+
+# the following lines shouldn't be necessary,
+# since web2py automatically imports everything in /models
 #from cache import *
 #from biomodels import *
 #from reactome import *
-from defaults import progress
 
 def reset_current_session():
 	global session

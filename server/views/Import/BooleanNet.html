@@ -12,6 +12,15 @@
 		<td><input type=file name=File onChange="submit();"/></td>
 	</tr>
 	<tr>
+		<td>Or choose a network on the server:</td>
+		<td>
+			<select name=Model onChange="submit();">
+				<option selected></option>
+{{for model in AvailableNetworks:}}				<option value="{{=model}}">{{=model}}</option>{{pass}}
+			</select>
+		</td>
+	</tr>
+	<tr>
 		<td>Layouter:</td>
 		<td>
 		<select name=Layouter>
@@ -20,16 +29,6 @@
 			<option value="biographer">biographer (native Layouter)</option>
 			<option value="graphviz" selected>graphviz</option>
 		</select>
-		</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>
-			<input type=submit value=Load />
-{{ if os.path.exists('/home/Master/Network/Whi2p.boolenet'): }}
-			&nbsp;or&nbsp;
-			<input type=submit value="Load Matthias's Whi2p Network" />
-{{ pass }}
 		</td>
 	</tr>
    </table>

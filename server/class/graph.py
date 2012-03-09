@@ -533,6 +533,7 @@ class Graph:
 
 		self.BooleanNetworkScenarios = []
 		parser = RawConfigParser()
+		parser.optionxform = str	# don't lower-case statespace node names 
 		parser.read(filename)
 		for section in parser.sections():
 			group = ''
@@ -544,11 +545,9 @@ class Graph:
 				elif item[0].lower() == 'title':
 					title = item[1]
 				else:
-					try:
-						statespace[str(item[0])] = bool(item[1])
-					except:
-						self.debug(error, 'State-Space definition "'+str(item[0])+'" in Boolean Network Scenario section "'+str(section)+'" is not a Boolean: '+str(item[1]))
-						pass
+					statespace[item[0]] = item[1].lower() == 'true'
+					if not item[1].lower() in ['true', 'false']:
+						self.debug(warning, 'State-Space definition "'+item[0]+'" in Boolean Network Scenario section "'+str(section)+'" is not a Boolean: '+item[1])
 			self.BooleanNetworkScenarios.append({'group':group, 'title':title, 'statespace':statespace})
 
 		self.log(info, str(len(self.BooleanNetworkScenarios))+' scenarios loaded.')
