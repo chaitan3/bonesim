@@ -51,18 +51,18 @@
 			PaintBoxes();
 			try { delay=parseInt(document.getElementById('Delay').value); }
 			catch(err) { delay=120; };
-			if ( document.getElementById('ContinuousIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
+			if ( document.getElementById('OngoingIteration').checked == 1 )	window.setTimeout('Iterate();', delay);
 											else 	e.innerHTML = 'Stopped.';
 			}
 		else 	{	// no changes -> steady state
 			PaintBoxes();
-			document.getElementById('ContinuousIteration').checked = false;
+			document.getElementById('OngoingIteration').checked = false;
 			e.innerHTML = 'Boolean network reached steady state.';
 			}
 		}
 
 	function Stop() {
-		document.getElementById('ContinuousIteration').checked = false;
+		document.getElementById('OngoingIteration').checked = false;
 		}
 
 	function NodeClick(node) {
@@ -73,9 +73,9 @@
 		//
 		// if not iterating, start iterating again
 		//
-		if ( document.getElementById('ContinuousIteration').checked == 0 ) {
+		if ( document.getElementById('OngoingIteration').checked == 0 ) {
 			document.getElementById('Steps').innerHTML = 0;
-			document.getElementById('ContinuousIteration').checked = true;
+			document.getElementById('OngoingIteration').checked = true;
 			Iterate();
 			}
 		}
@@ -91,6 +91,15 @@
 			}
 		for (var i = 0; i < Boxes.length; i++) document.getElementById(Boxes[i]).style.visibility = value;
 		}
+
+	function selectScenario(event) {
+		try { delay=parseInt(document.getElementById('Delay').value); }
+		catch(err) { delay=120; };
+		window.setTimeout(event.srcElement.options[event.srcElement.selectedIndex].value, delay);
+		}
+
+{{ = XML(Scenarios) }}
+
 </script>
 
 [ <a href="../Layout/graphviz">Redo layout</a> ], 
@@ -99,26 +108,46 @@
 [ <a href="{{ = session.graphviz_image }}">Download picture</a> ]
 
 <div id=Controls>
-	<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Show boolean network boxes
-	<input id=ContinuousIteration type=checkbox checked onClick="Iterate();"> Iterate ...
-	<input id=Delay type=text value='120' style='width:50px;' />ms
-	<br/>
-
 	<form name=main action="{{=URL(r=request, c='Import', f='BooleanNet')}}" method=POST enctype="multipart/form-data">
+
+		<input id=ShowBooleBoxes type=checkbox onClick="ChangeVisibility(event);" checked> Simulate Boolean Network
+		<input name=OngoingIteration id=OngoingIteration type=checkbox checked onClick="Iterate();"> Iterating.
+		<br/>
+		&nbsp;Delay between iterations: <input id=Delay type=text value='120' style='width:50px; text-align:right;' /> ms
+		<br/>
+		<input name=IterationContinues id=IterationContinues type=checkbox checked onClick="Iterate();"> Autostart simulation when network nodes are clicked
+		<br/>
+
+		&nbsp;Available networks:
 		<select name=Model onChange='submit();'>
 			<option value='default'>default</option>
 			<option value='basic'>Simple network</option>
 			<option value='detailed'>Detailed network</option>
 			<option value='paper'>Paper</option>
 		</select>
+		<input type=submit value="Load network" />
+		<br/>
+
+		&nbsp;Available scenarios:
+		<select name=Scenario onChange="selectScenario(event);">
+			<option value="null;"></option>
+			<option disabled=true>WT yeast</option>
+			<option value="Scenario1();">abundant nutrients, WT yeast</option>
+			<option value="Scenario2();">nutrient depletion, WT yeast</option>
+			<option value="Scenario3();">nutrient depletion, &Delta;Whi2 yeast</option>
+		</select>
+		<br/>
+
 		<input type=hidden name=Layouter value=graphviz />
-		<input type=submit value="Load" />
-		<input type=button value="Reset" onClick="Reset();" />
+		<input type=button value="Reset state space" onClick="Reset();" />
+		<input type=button value="Start" onClick="document.main.OngoingIteration.checked=1; Iterate();" />
 		<input type=button value="Iterate once" onClick="Stop(); Iterate();" />
 		<input type=button value="Stop" onClick="Stop();" />
+		<br/>
+
+		&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
+		<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
 	</form>
-	<label id='Progress' style='color:green; font-weight:bold;'></label>
-	<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
 </div>
 
 <br/>
