@@ -23,49 +23,100 @@
 </style>
 
 <script>
+	function deepcopy(obj) {
+		var copy = {};
+		for (key in obj)
+			copy[key] = obj[key];
+		return copy;
+		}
+
+	// settings
 	green = '#10d010';
 	red = '#d01010';
 	yellow = '#f4fd01';
 	black = '#000000';
 	blue = '#7474cf';
-
 	active = green;
 	inactive = 'white';
 	cyclic_attraktor = '#f9f883';
 
+	// input, provided by the server
+	Nodes = [ {{=XML(Nodes)}} ];
+	update_rules = { {{=XML(updateRules)}} };
+
+	// initialize, prepare for simulation
 	SimulationRunning = false;
+	reset_Statespace = {};
+	Nodes_getting_updated = {};
+	for (n in Nodes) {
+		reset_Statespace[Nodes[n]] = true;
+		Nodes_getting_updated[Nodes[n]] = true;
+		}
+	Statespace = deepcopy(reset_Statespace);
+
+	function SVGonClick(event) {
+		node = event.srcElement.id;
+		if (event.ctrlKey)
+			Nodes_getting_updated[node] = ! Nodes_getting_updated[node];
+		else
+			Statespace[node] = ! Statespace[node];
+		RefreshGraph();
+		};
 
 	function installSVGonClickListeners() {
-{{ = XML(onClickListeners) }}		
+		for (n in Nodes)
+			svg.getElementById(Nodes[n]).onclick = SVGonClick;
 		}
 
 	function PaintBoxes() {
-//		var svg = document.network.getSVGDocument();
-{{ = XML(paintBoxes) }}
+		for (n in Nodes) {
+			if ( Statespace[Nodes[n]] )
+				svg.getElementById(Nodes[n]).style.fill = active;
+			else
+				svg.getElementById(Nodes[n]).style.fill = inactive;
+
+			if ( Nodes_getting_updated[Nodes[n]] )
+				svg.getElementById(Nodes[n]).style['stroke-dasharray'] = 'none';
+			else
+				svg.getElementById(Nodes[n]).style['stroke-dasharray'] = '3,3';
+			}
 		}
 
 	function Reset() {
 		document.getElementById('Progress').innerHTML = 'Resetting ...';
-{{ = XML(resetRules) }}
+		Statespace = reset_Statespace;
 		PaintBoxes();
 		document.getElementById('Progress').innerHTML = 'Reset.';
 		}
 
 	function Iterate() {
 		SimulationRunning = true;
+
+		// messages
 		e = document.getElementById('Progress');
-		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )	e.innerHTML = 'Iterating ...'
-											else	e.innerHTML = e.innerHTML+'.';
+		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )
+			e.innerHTML = 'Iterating ...'
+		else	e.innerHTML = e.innerHTML+'.';
 		steps = document.getElementById('Steps');
 		steps.innerHTML = parseInt(steps.innerHTML)+1;
-//		var svg = document.network.getSVGDocument();
-{{ = XML(updateRules) }}
-		if ( {{ = XML(checkSteadyState) }} ) {	// network updated -> steady state not reached
-{{ = XML(shiftRules) }}
+
+		// calculation
+		updates_made = false;
+		var updated_Statespace = deepcopy(Statespace);
+		for (node in update_rules)	// for key in hash
+			if ( Nodes_getting_updated[node] ) {
+				updated_Statespace[node] = eval( update_rules[node] );
+				if ( updated_Statespace[node] != Statespace[node] )
+					updates_made = true;
+				}
+
+		// steady state ?
+		if ( updates_made ) {	// network updated -> steady state not reached
+			Statespace = updated_Statespace;
 			PaintBoxes();
-			try { delay=parseInt(document.getElementById('Delay').value); }
-			catch(err) { delay=120; };
-			window.setTimeout('Iterate();', delay)
+			try { delay=parseInt(document.getElementById('Delay').value);	}
+			catch(err) { delay=120;	}
+			window.setTimeout('Iterate();', delay);
 			}
 		else 	{	// no changes -> steady state
 			PaintBoxes();
@@ -74,25 +125,24 @@
 			}
 		}
 
-	function NodeClicked() { // you shouldn't need to know which one,
-				 // since if there is something to do with this node,
-				 // it shall be done from inside the SVG
-		document.getElementById('Progress').innerHTML = 'Changing node ...';
-
+	function RefreshGraph() {
+		document.getElementById('Progress').innerHTML = 'Refreshing graph ...';
 		PaintBoxes();
-
 		// start Simulation, if it's not running already
 		if ( ! SimulationRunning ) {
 			document.getElementById('Steps').innerHTML = 0;
 			Iterate();
 			}
-
-		document.getElementById('Progress').innerHTML = 'Changed.';
+		document.getElementById('Progress').innerHTML = 'Graph refreshed.';
 		}
 
 	function selectScenario(event) {
-		try { delay=parseInt(document.getElementById('Delay').value); }
-		catch(err) { delay=120; };
+		try	{
+			delay=parseInt(document.getElementById('Delay').value);
+			}
+		catch(err) {
+			delay=120;
+			}
 		window.setTimeout(event.srcElement.options[event.srcElement.selectedIndex].value, delay);
 		}
 
@@ -103,15 +153,24 @@
 		document.network.style.visibility = "visible";
 		}
 
+	function bringtoFront(element) {
+		cache = element;
+		alert(element);
+		graph.removeChild(svg.getElementById(element));
+		graph.appendChild(svg.getElementById(cache));
+		}
+
 	function colorifyAttractorEdge(node1, node2) {
 		path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-		path.setAttributeNS(null, 'style', 'fill:none; stroke:#f9f883; stroke-width:80; stroke-linecap:round; opacity:0.5;');
+		path.setAttributeNS(null, 'style', 'fill:none; stroke:#f9f883; stroke-width:80; stroke-linecap:round;');
 		x1 = svg.getElementById(node1).cx.baseVal.value;
 		y1 = svg.getElementById(node1).cy.baseVal.value;
 		x2 = svg.getElementById(node2).cx.baseVal.value;
 		y2 = svg.getElementById(node2).cy.baseVal.value;
 		path.setAttributeNS(null, 'd', 'M '+x1+','+y1+' '+x2+','+y2);
-		svg.getElementById('graph1').insertBefore(path, node1);
+		graph.appendChild(path);
+//		bringtoFront(node1);
+//		bringtoFront(node2);
 		}
 
 	function FindAttractors() {
@@ -122,17 +181,12 @@
 //		polygon.setAttributeNS(null, 'points', '-1,1 -1,-100 100,-100 100,1 -1,1');
 
 		colorifyAttractorEdge('Ras2', 'cAMP');
-		colorifyAttractorEdge('cAMP', 'PKA');
-		colorifyAttractorEdge('PKA', 'Ras2');
+//		colorifyAttractorEdge('cAMP', 'PKA');
+//		colorifyAttractorEdge('PKA', 'Ras2');
 		refreshSVG();
 		}
 
 </script>
-
-[ <a href="../Layout/graphviz">Redo layout</a> ], 
-[ <a href="../Layout/graphviz_layout">Download DOT layout</a> ], 
-[ <a href="../Export/JSON">Download JSON model</a> ], 
-[ <a href="{{ = session.graphviz_image }}">Download picture</a> ]
 
 <div id=Controls>
 	&nbsp;Delay between iteration steps: <input id=Delay type=text value='100' style='width:50px; text-align:right;' /> ms
@@ -171,14 +225,13 @@ Press Ctrl when clicking to fix or unfix a node.
 State-of-the-art browser required (Chrome or Firefox; not Internet Explorer).
 SVG support required. JavaScript needs to be enabled.
 
-<object type="image/svg+xml" name=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; installSVGonClickListeners(); Reset(); Iterate();" ></object>
+<object type="image/svg+xml" name=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; graph=svg.getElementById('graph1'); installSVGonClickListeners(); Reset(); Iterate();" ></object>
  
 <script>
 	function AutoLoad() {
-		if ( document.getElementById('network').contentDocument == undefined ) document.main.submit();
+		if ( document.getElementById('network').contentDocument == undefined )
+			document.main.submit();
 		}
-
-	window.setTimeout('AutoLoad();', 50);
-//	window.setTimeout('', 400);
+	window.setTimeout('AutoLoad();', 100);
 </script>
 

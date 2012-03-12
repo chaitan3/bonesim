@@ -17,43 +17,30 @@ def graphviz():									# graphviz
 	VisibleNodes = []
 
 	onClickListeners = ''
-	paintBoxes = ''
-	resetRules = ''
 
-	updateRules = ''
-	conditions = []
-	shiftRules = ''
+	updateRules = {}
 
 	ScenarioFunctions = ''
 	ScenarioOptions = ''
 
 	if session.bioGraph.owns('BooleanNetwork'):
-		import sbo
+		import sbo, re
 		for node in session.bioGraph.Nodes:
 			if not node.type == sbo.Compartment:
 				VisibleNodes.append(node)
-
-		for node in VisibleNodes:
-			onClickListeners += 'svg.getElementById("'+node.id+'").onclick = function(event) { if (! event.ctrlKey) { '+node.id+' = ! '+node.id+'; } else { update_'+node.id+' = ! update_'+node.id+'; }; NodeClicked(); };\n'
-
-			paintBoxes += "\t\tif ( "+node.id+" )	svg.getElementById('"+node.id+"').style.fill = active\n"
-			paintBoxes += "\t\telse		svg.getElementById('"+node.id+"').style.fill = inactive;\n"
-			paintBoxes += "\t\tif ( update_"+node.id+" )	svg.getElementById('"+node.id+"').style['stroke-dasharray'] = 'none'\n"
-			paintBoxes += "\t\telse		svg.getElementById('"+node.id+"').style['stroke-dasharray'] = '3,3';\n"
-
-			resetRules += "\t\t"+node.id+" = true;\n"
-			resetRules += "\t\tupdate_"+node.id+" = true;\n"
 
 		# JavaScript update rules
 		for line in session.bioGraph.BooleanNetwork.split('\n'):
 			if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
 				s = line.replace('*','=').split('=')
 				left = s[0].strip()
-				rule_in_JavaScript = line.replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new')
-				updateRules += '\t\tif ( update_'+left+' ) '+rule_in_JavaScript+';\n\t\telse\t'+left+'_new = '+left+';\n'
-				node = line.split('=')[0].strip()
-				conditions.append('( '+node.replace('*','')+'_new != '+node.replace('*','')+' )')
-				shiftRules += '\t\t\t'+node.replace('*','')+' = '+node.replace('*','_new')+';\n'
+				JavaScript = ''.join(s[1:]).replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new').replace('\t','')
+				
+				for node in re.split('\W+', JavaScript):
+					if node != '':
+						regex = re.compile('\\b'+node+'\\b')
+						JavaScript = regex.sub('Statespace["'+node+'"]', JavaScript)
+				updateRules[left] = JavaScript.strip()
 
 		# Scenarios
 		for i in range(len(session.bioGraph.BooleanNetworkScenarios)):
@@ -61,17 +48,14 @@ def graphviz():									# graphviz
 
 			ScenarioFunctions += '\tfunction Scenario'+str(i+1)+'() {\n'
 			for node in Scenario['statespace'].keys():
-				ScenarioFunctions += '\t\t'+node+' = '+str(Scenario['statespace'][node]).lower()+';\n'
-			ScenarioFunctions += '\t\tNodeClicked();\n\t\t}\n\n'
+				ScenarioFunctions += '\t\tStatespace["'+node+'"] = '+str(Scenario['statespace'][node]).lower()+';\n'
+			ScenarioFunctions += '\t\tRefreshGraph();\n\t\t}\n\n'
 
 			ScenarioOptions += '\t\t<option value="Scenario'+str(i+1)+'();">'+Scenario['title']+'</option>\n'
-
-
-	checkSteadyState = ' || '.join(conditions)	# JavaScript's logic or
 
 	NetworkFolder = os.path.join(request.folder, "BooleanNetworks")
 	if not os.path.exists(NetworkFolder):
 		os.mkdir(NetworkFolder)
 
-	return dict( AvailableNetworks=os.listdir(NetworkFolder), onClickListeners=onClickListeners.rstrip(), paintBoxes=paintBoxes.rstrip(), resetRules=resetRules.rstrip(), updateRules=updateRules.rstrip(), checkSteadyState=checkSteadyState.strip(), shiftRules=shiftRules.rstrip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
+	return dict( AvailableNetworks=os.listdir(NetworkFolder), Nodes=',\n'.join("\t\t'"+node.id+"'" for node in session.bioGraph.Nodes).strip(), updateRules=',\n'.join(["\t\t'"+key+"':'"+updateRules[key]+"'" for key in updateRules.keys()]).strip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
 
