@@ -53,9 +53,5 @@ def graphviz():									# graphviz
 
 			ScenarioOptions += '\t\t<option value="Scenario'+str(i+1)+'();">'+Scenario['title']+'</option>\n'
 
-	NetworkFolder = os.path.join(request.folder, "BooleanNetworks")
-	if not os.path.exists(NetworkFolder):
-		os.mkdir(NetworkFolder)
-
-	return dict( AvailableNetworks=os.listdir(NetworkFolder), Nodes=',\n'.join("\t\t'"+node.id+"'" for node in session.bioGraph.Nodes).strip(), updateRules=',\n'.join(["\t\t'"+key+"':'"+updateRules[key]+"'" for key in updateRules.keys()]).strip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
+	return dict( Nodes=',\n'.join("\t\t'"+node.id+"'" for node in session.bioGraph.Nodes).strip(), updateRules=',\n'.join(["\t\t'"+key+"':'"+updateRules[key]+"'" for key in updateRules.keys()]).strip(), ScenarioFunctions=ScenarioFunctions.rstrip(), ScenarioOptions=ScenarioOptions.rstrip() )
 
