@@ -6,12 +6,12 @@ rm Visualization -fR
 rm biographer.visualization -fR
 
 # download
-hg clone --rev ce0138fb634d https://code.google.com/p/biographer.visualization/
-if [ ! -e 'biographer.visualization' ]; then
+hg clone --rev ce0138fb634d https://code.google.com/p/biographer.visualization/ UI
+if [ ! -e 'UI' ]; then
 	echo 'checkout failed'
 	exit 1
 	fi
-cd biographer.visualization
+cd UI
 rm .hg* -fR
 
 # resolve dependencies
@@ -22,5 +22,5 @@ python src/build/python/manage.py clean build test jslint jsdoc compress createD
 
 # link
 cd ..
-ln biographer.visualization/target/distribution Visualization -s
+ln UI/target/distribution Visualization -s
 
