@@ -110,7 +110,41 @@ function updateUI() {
 		updateUI_process = window.setTimeout('updateUI();', 20);
 	}
 
-function Reset() {
+function Import(evt) {
+	var reader = new FileReader();
+	reader.readAsText(evt.srcElement.files[0]);
+	reader.onload = StateLoaded;
+	}
+
+function SaveState() {
+	}
+
+function StateLoaded(evt) {  
+	var fileString = evt.target.result;
+//	alert(fileString);
+	try	{
+		obj = JSON.parse(fileString);
+		}
+	catch(err) {
+		alert(err);
+		}
+	finally {
+		for (key in obj) {
+			alert(key);
+			}
+		}
+	}
+
+function LoadState(evt) {
+	var reader = new FileReader();
+	reader.readAsText(evt.srcElement.files[0]);
+	reader.onload = StateLoaded;
+	}
+
+function CompareState() {
+	}
+
+function ResetState() {
 	document.getElementById('Progress').innerHTML = 'Resetting ...';
 	Statespace = deepcopy(reset_Statespace);
 	updateUI();
