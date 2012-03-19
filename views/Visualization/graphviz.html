@@ -46,40 +46,58 @@
 </script>
 
 <div id=Controls>
-	<input type=button onClick='javascript:window.location.href="../Import/BooleanNet";' value="Import another network" />
-	<br/>
+	<table>
+		<tr>
+		<td>
+			Import network:
+			<br/>
+			<select size=3 style="width:220px;">
+			</select>
+			<br/>
+			<input type=button value="Load"/>
+			<input type=file value="" onchange="Import(event);"/>
 
-	<input type=button onClick='ViewPython();' value="View Python source"/>
-	<input type=button onClick='EditNetwork();' value="Edit network" />
-	<br/>
-	<input type=button onClick='Preferences();' value="Edit simulation preferences" />
-	<br/>
+			<br/>
 
-	&nbsp;Delay between iteration steps: <input id=Delay type=text value='200' style='width:50px; text-align:right;' /> ms
-	<br/>
+			<input type=button onClick='ViewPython();' value="View Python source"/>
+			<input type=button onClick='EditNetwork();' value="Edit network" />
+			<br/>
+			<input type=button onClick='Preferences();' value="Edit simulation preferences" />
+			<br/>
 
-	&nbsp;Available scenarios:
-	<select name=Scenario onChange="selectScenario(event);">
-		<option value="null;" selected></option>
-{{ = XML(ScenarioOptions) }}
-	</select>
-	<input type=button value="(Plot)" />
-	<br/>
-
-	<input type=button value="Reset statespace" onClick="Reset();" />
-	<input type=button value="Simulate" onClick="Iterate();" />
-	<br/>
-	<input type=button value="Find attractors" onClick="FindAttractors();" />
-	<br/>
-
-	&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
-	<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
+			&nbsp;Delay between iterations: <input id=Delay type=text value='200' style='width:50px; text-align:right;' /> ms
+			<br/>
+			<input type=button value="Simulate" onClick="Iterate();" />
+			<input type=button value="Find attractors" onClick="FindAttractors();" />
+		</td>
+		<td>
+			Current network state:<br/>
+			Load: <input type=file value="Load" onchange="LoadState(event);"/>
+			<br/>
+			<input type=button value="Save" onclick="SaveState();"/>
+			<input type=button value="Compare" onclick="CompareState();" />
+			<br/>
+			<select size=3 style="width:220px;">
+			</select>
+			<br/>
+			<input type=button value="Apply" onclick="ApplyState();" />
+			<input type=button value="Reset" onclick="ResetState();" />
+			
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2>
+			&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
+			<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
+		</td>
+	</tr>
+	</table>
 </div>
 
 <label id=debug></label>
 
-<img name=preview id=preview src="{{ = session.graphviz_image }}" style="width:100px; height:100px;"/>
-<object type="image/svg+xml" name=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; graph=svg.getElementById('graph1'); installSVGonClickListeners(); Reset(); Iterate();"></object>
+<!--img name=preview id=preview src="{{ = session.graphviz_image }}" style="width:100px; height:100px;"/-->
+<object type="image/svg+xml" name=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; graph=svg.getElementById('graph1'); installSVGonClickListeners(); ResetState(); Iterate();"></object>
 <script>
 	function AutoLoad() {
 		if ( document.getElementById('network').contentDocument.URL == 'about:blank' )
