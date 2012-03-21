@@ -1,0 +1,55 @@
+
+#
+# Hypothetical Whi2-associated signal transduction module
+#
+# Boolean Network modeled by Matthias Bock
+#
+
+starvation*			= not Glucose
+
+# Ras-PKA pathway
+Ras2*				= Glucose
+cAMP*				= Ras2
+PKA*				= cAMP
+MsnX_desphosphorylation*	= ((not PKA) or TORC1) and (PsrX and Whi2)
+
+# TOR kinase pathway
+TORC1*				= Rapamycin or starvation
+
+Whi2*				= (not dWhi2) and stress
+
+PsrX*				= starvation and Whi2
+Atg32*				= PsrX
+
+App1*				= Whi2
+actin_disorganization*		= starvation and (not App1)
+
+Spc98*				= Whi2
+unknown_microtubule_activity*	= Spc98
+
+mitophagy*			= Atg32 and Atg11 and Atg20 and Atg24
+
+# stress responsive elements
+
+STRE1*				= TORC1 or (not PKA)
+STRE2*				= MsnX_desphosphorylation
+
+bulk_autophagy*			= STRE1
+Atg1*				= bulk_autophagy
+Atg13*				= bulk_autophagy
+Atg17*				= bulk_autophagy
+
+selective_autophagy*		= STRE2
+Atg11*				= selective_autophagy
+Atg20*				= selective_autophagy
+Atg24*				= selective_autophagy
+
+G1_arrest*			= STRE2
+heatshock_resistance*		= STRE2
+carbohydrate_storage*		= STRE2
+
+mitochondrial_dysfunctions*	= starvation and (not mitophagy)
+
+cvt*				= Atg1 and Atg13 and Atg17
+autophagosome*			= Atg1 and Atg13 and Atg17
+

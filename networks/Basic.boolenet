@@ -1,0 +1,42 @@
+
+#
+# Hypothetical Whi2p-associated signal transduction module
+#
+# Boolean Network modeled by Matthias Bock
+#
+
+
+##
+## input values
+##
+
+Glucose				= True
+Whi2p_present			= True
+
+##
+## desired output values
+##
+
+bulk_autophagy			= False
+mitophagy			= False
+
+general_stress_response		= False
+G1_arrest			= False
+heatshock_resistance		= False
+carbohydrate_storage		= False
+mitochondrial_dysfunctions	= False
+
+
+##
+## logic
+##
+
+bulk_autophagy*			= not Glucose
+mitophagy*			= (not Glucose) and Whi2p_present
+
+general_stress_response*	= (not Glucose) and Whi2p_present
+G1_arrest*			= general_stress_response
+heatshock_resistance*		= general_stress_response
+carbohydrate_storage*		= general_stress_response
+mitochondrial_dysfunctions*	= (not Glucose) and (not Whi2p_present)
+

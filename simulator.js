@@ -287,3 +287,6 @@ function ViewPython() {
 	doc.close();
 	}
 
+openControlsWindow() {
+	window.open(
+	}
