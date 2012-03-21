@@ -1,18 +1,9 @@
 # -*- coding: utf-8 -*-
 
 def index():
-	return redirect(URL(r=request, c="Workbench", f="index"))
-
-def internal():
-	return redirect(URL(r=request, c="Workbench", f="index"))
-
-def example():									# Ben's example
-	return dict()
-
-def graphviz():									# graphviz
 	if session.bioGraph is None:
 		session.flash = "Unable to visualize: No graph is loaded. Import a model from BioModels.net ?"
-		return redirect( URL(r=request, c="Import", f="BioModels")+"?returnto="+URL(r=request, c="Visualization", f="graphviz")+"&BioModelsID=8" )
+		return redirect( URL(r=request, c="Import", f="BioModels")+"?returnto="+URL(r=request, c="UI", f="index")+"&BioModelsID=8" )
 
 	VisibleNodes = []
 
