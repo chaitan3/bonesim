@@ -45,49 +45,57 @@
 <div id=Controls>
 	<table>
 		<tr>
-		<td>
-			Import network:
-			<br/>
-			<select size=3 style="width:220px;">
-			</select>
-			<br/>
-			<input type=button value="Load"/>
-			<input type=file value="" onchange="Import(event);"/>
+			<td>
+				Import network:
+				<br/>
+				<select size=3 style="width:220px;">
+				</select>
+				<br/>
+				<input type=button value="Load"/>
+				<input type=file value="" onchange="Import(event);"/>
 
-			<br/>
+				<br/>
 
-			<input type=button onClick='ViewPython();' value="View Python source"/>
-			<input type=button onClick='EditNetwork();' value="Edit network" />
-			<br/>
-			<input type=button onClick='Preferences();' value="Edit simulation preferences" />
-			<br/>
+				<input type=button onClick='ViewPython();' value="View Python source"/>
+				<input type=button onClick='EditNetwork();' value="Edit network" />
+				<br/>
+				<input type=button onClick='Preferences();' value="Edit simulation preferences" />
+				<br/>
 
-			&nbsp;Delay between iterations: <input id=Delay type=text value='200' style='width:50px; text-align:right;' /> ms
-			<br/>
-			<input type=button value="Simulate" onClick="Iterate();" />
-			<input type=button value="Find attractors" onClick="FindAttractors();" />
-		</td>
-		<td>
-			Current network state:<br/>
-			Load: <input type=file value="Load" onchange="LoadState(event);"/>
-			<br/>
-			<input type=button value="Save" onclick="SaveState();"/>
-			<input type=button value="Compare" onclick="CompareState();" />
-			<br/>
-			<select size=3 style="width:220px;">
-			</select>
-			<br/>
-			<input type=button value="Apply" onclick="ApplyState();" />
-			<input type=button value="Reset" onclick="ResetState();" />
+				&nbsp;Delay between iterations: <input id=Delay type=text value='200' style='width:50px; text-align:right;' /> ms
+				<br/>
+				<input type=button value="Simulate" onClick="Iterate();" />
+				<input type=button value="Find attractors" onClick="FindAttractors();" />
+			</td>
+			<td>
+				Current network state:<br/>
+				Load: <input type=file value="Load" onchange="LoadState(event);"/>
+				<br/>
+				<input type=button value="Save" onclick="SaveState();"/>
+				<input type=button value="Compare" onclick="CompareState();" />
+				<br/>
+				<select size=3 style="width:220px;">
+				</select>
+				<br/>
+				<input type=button value="Apply" onclick="ApplyState();" />
+				<input type=button value="Reset" onclick="ResetState();" />
 			
-		</td>
-	</tr>
-	<tr>
-		<td colspan=2>
-			&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
-			<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
-		</td>
-	</tr>
+			</td>
+		</tr>
+		<tr style="border: 1px dashed green">
+			<td colspan=2>
+				&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
+				<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2>
+				Statespace:
+				<br/>
+				<select size=6 style="width:520px;">
+				</select>
+			</td>
+		</tr>
 	</table>
 </div>
 
@@ -126,13 +134,14 @@
 </div>
 
 <div id=biographertab>
-	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-html.css" />
-	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
-
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
+
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/biographer-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-html.css" />
+	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-svg.css" />
 
 	<div class=network id=canvas>
 	</div>
@@ -141,9 +150,10 @@
 		network = {{ = XML(session.bioGraph.exportJSON()) }};
 
 		bui.ready(function() {
-		    graph = new bui.Graph( document.getElementById('canvas') );
-		    bui.importFromJSON(graph, network);
-		});
+			graph = new bui.Graph( document.getElementById('canvas') );
+			bui.settings.css.stylesheetUrl = '{{=URL(request.application, 'static/css', 'visualization-svg.css')}}';
+		    	bui.importFromJSON(graph, network);
+			});
 	</script>
 </div>
 
