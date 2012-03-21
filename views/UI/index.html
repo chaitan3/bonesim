@@ -11,15 +11,12 @@
 				opacity:		1;
 				}
 
-	#network		{
+	.network		{
 				border:			none;
-/*				position:		absolute;
-				top:			15%;
-				left:			1%;*/
 				width:			100%;
 				height:			94%;
+				overflow:		scroll;
 				}
-
 </style>
 
 <script src="../static/BooleanNet/Simulator.js"></script>
@@ -115,9 +112,10 @@
 <input type=button value="Graphviz Tree" onclick="showGraphviz();"/>
 <input type=button value="biographer UI" onclick="showbiographer();"/>
 
-<!--img name=preview id=preview src="{{ = session.graphviz_image }}" style="width:100px; height:100px;"/-->
 <div id=graphviztab>
-	<object type="image/svg+xml" name=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; graph=svg.getElementById('graph1'); installSVGonClickListeners(); ResetState(); Iterate();"></object>
+	<!--img name=preview id=preview src="{{ = session.graphviz_image }}" style="width:100px; height:100px;"/-->
+	<object type="image/svg+xml" class=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; graph=svg.getElementById('graph1'); installSVGonClickListeners(); ResetState(); Iterate();"></object>
+
 	<script>
 		function AutoLoad() {
 			if ( document.getElementById('network').contentDocument.URL == 'about:blank' )
@@ -136,12 +134,14 @@
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/biographer-ui.js"></script>
 
+	<div class=network id=canvas>
+	</div>
+
 	<script>
 		network = {{ = XML(session.bioGraph.exportJSON()) }};
 
 		bui.ready(function() {
-		    var canvas = document.getElementById('canvas');
-		    graph = new bui.Graph(canvas);
+		    graph = new bui.Graph( document.getElementById('canvas') );
 		    bui.importFromJSON(graph, network);
 		});
 	</script>
