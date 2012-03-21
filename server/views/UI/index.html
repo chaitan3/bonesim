@@ -1,16 +1,6 @@
 {{extend 'content.html'}}
 
 <style>
-	#Controls		{
-				border:			1px solid black;
-				position:		absolute;
-				top:			-10%;
-				right:			1%;
-				z-index:		+5;
-				background-color:	white;
-				opacity:		1;
-				}
-
 	.network		{
 				border:			none;
 				width:			100%;
@@ -19,7 +9,8 @@
 				}
 </style>
 
-<script src="../static/BooleanNet/Simulator.js"></script>
+<script id=simulator src="../static/simulator/simulator.js"></script>
+
 <script>
 	// settings
 	green = '#10d010';
@@ -38,66 +29,8 @@
 
 	// initialize, prepare for simulation
 	initialize();
-
-{{ = XML(ScenarioFunctions) }}
+	openControlsWindow();
 </script>
-
-<div id=Controls>
-	<table>
-		<tr>
-			<td>
-				Import network:
-				<br/>
-				<select size=3 style="width:220px;">
-				</select>
-				<br/>
-				<input type=button value="Load"/>
-				<input type=file value="" onchange="Import(event);"/>
-
-				<br/>
-
-				<input type=button onClick='ViewPython();' value="View Python source"/>
-				<input type=button onClick='EditNetwork();' value="Edit network" />
-				<br/>
-				<input type=button onClick='Preferences();' value="Edit simulation preferences" />
-				<br/>
-
-				&nbsp;Delay between iterations: <input id=Delay type=text value='200' style='width:50px; text-align:right;' /> ms
-				<br/>
-				<input type=button value="Simulate" onClick="Iterate();" />
-				<input type=button value="Find attractors" onClick="FindAttractors();" />
-			</td>
-			<td>
-				Current network state:<br/>
-				Load: <input type=file value="Load" onchange="LoadState(event);"/>
-				<br/>
-				<input type=button value="Save" onclick="SaveState();"/>
-				<input type=button value="Compare" onclick="CompareState();" />
-				<br/>
-				<select size=3 style="width:220px;">
-				</select>
-				<br/>
-				<input type=button value="Apply" onclick="ApplyState();" />
-				<input type=button value="Reset" onclick="ResetState();" />
-			
-			</td>
-		</tr>
-		<tr style="border: 1px dashed green">
-			<td colspan=2>
-				&nbsp;<label id='Progress' style='color:green; font-weight:bold;'></label>
-				<label id='Steps' style='color:blue; font-weight:bold; float:right;'>0</label>
-			</td>
-		</tr>
-		<tr>
-			<td colspan=2>
-				Statespace:
-				<br/>
-				<select size=6 style="width:520px;">
-				</select>
-			</td>
-		</tr>
-	</table>
-</div>
 
 <style>
 	#biographertab	{
@@ -105,60 +38,21 @@
 			}
 </style>
 
+<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
+<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
+<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
+
+<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/biographer-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-html.css" />
+<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-svg.css" />
+
 <script>
-	function showGraphviz() {
-		document.getElementById("graphviztab").style.display = "inline";
-		document.getElementById("biographertab").style.display = "none";
-		}
+	network = {{ = XML(session.bioGraph.exportJSON()) }};
 
-	function showbiographer() {
-		document.getElementById("graphviztab").style.display = "none";
-		document.getElementById("biographertab").style.display = "inline";
-		}
+	bui.ready(function() {
+		graph = new bui.Graph( document.getElementById('biographertab') );
+	    	bui.importFromJSON(graph, network);
+		});
 </script>
-
-<input type=button value="Graphviz Tree" onclick="showGraphviz();"/>
-<input type=button value="biographer UI" onclick="showbiographer();"/>
-
-<div id=graphviztab>
-	<!--img name=preview id=preview src="{{ = session.graphviz_image }}" style="width:100px; height:100px;"/-->
-	<object type="image/svg+xml" class=network id=network data="{{ = session.graphviz_image }}" onLoad="svg=this.contentDocument; graph=svg.getElementById('graph1'); installSVGonClickListeners(); ResetState(); Iterate();"></object>
-
-	<script>
-		function AutoLoad() {
-			if ( document.getElementById('network').contentDocument.URL == 'about:blank' )
-				window.location.href='../Import/BooleanNet';
-			}
-		window.setTimeout('AutoLoad();', 1000);
-	</script>
-</div>
-
-<div id=biographertab>
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
-
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/biographer-ui.js"></script>
-	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-html.css" />
-	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-svg.css" />
-
-	<div class=network id=canvas>
-	</div>
-
-	<script>
-		network = {{ = XML(session.bioGraph.exportJSON()) }};
-
-		bui.ready(function() {
-			graph = new bui.Graph( document.getElementById('canvas') );
-			bui.settings.css.stylesheetUrl = '{{=URL(request.application, 'static/css', 'visualization-svg.css')}}';
-		    	bui.importFromJSON(graph, network);
-			});
-	</script>
-</div>
-
-Click the nodes to change their state.
-Ctrl+Click to fix or release a node.
-State-of-the-art browser required (Chrome or Firefox; not Internet Explorer).
-SVG and JavaScript support required.
 
