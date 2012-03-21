@@ -13,7 +13,7 @@ def choose():
 		else:								# same, as in Import.py
 			returnto = str(request.vars.returnto)
 		if returnto == "":
-			returnto = URL(r=request,c='Workbench',f='index')
+			returnto = URL(r=request,c='UI',f='index')
 
 		return redirect( returnto )
 
@@ -24,7 +24,7 @@ def internal():
 
 	layout( session.bioGraph, path_to_layout_binary=os.path.join(request.folder, "layout/build/layout"), execution_folder=os.path.join(request.folder, "cache") )
 
-	return redirect( URL(r=request, c="Workbench", f="index") )
+	return redirect( URL(r=request, c="UI", f="index") )
 
 def graphviz():
 	if session.bioGraph is None:
@@ -36,7 +36,7 @@ def graphviz():
 	out = layout_using_graphviz( server_object, execution_folder=os.path.join(request.folder, "cache"), image_output_folder=os.path.join(request.folder, "static/graphviz") )
 	if out is None:
 		session.flash = "graphviz failed. see console for details."
-		return redirect( URL(r=request, c="Workbench", f="index") )
+		return redirect( URL(r=request, c="UI", f="index") )
 
 	session.bioGraph	= server_object
 
@@ -45,7 +45,7 @@ def graphviz():
 
 	session.flash = "graphviz layout completed"
 
-	return redirect( URL(r=request, c="Visualization", f="graphviz") )
+	return redirect( URL(r=request, c="UI", f="index") )
 
 def graphviz_layout():
 	response.headers['Content-Type'] = 'text/vnd.graphviz'

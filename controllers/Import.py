@@ -57,7 +57,7 @@ def BioModels():
 
 		if not import_BioModel( request.vars.BioModelsID ):
 			session.flash = 'BioModel import failed. See web2py log for details.'
-			return redirect( URL(r=request, c='Workbench', f='index') )
+			return redirect( URL(r=request, c='UI', f='index') )
 
 		if type(request.vars.returnto) == type([]):			# evaluate returnto parameters
 			returnto = str(request.vars.returnto[0])
@@ -74,7 +74,7 @@ def BioModels():
 		if Layouter == "graphviz":
 			return redirect( URL(r=request,c='Layout',f='graphviz') )
 
-		return redirect( URL(r=request, c='Workbench', f='index') )	# else: goto Workbench
+		return redirect( URL(r=request, c='UI', f='index') )
 
 	if request.env.request_method == "GET":
 
@@ -91,7 +91,7 @@ def Reactome():
 
 		if not import_Reactome( request.vars.ST_ID ):
 			session.flash = 'Reactome import failed. See web2py log for details.'
-			return redirect( URL(r=request, c='Workbench', f='index') )
+			return redirect( URL(r=request, c='UI', f='index') )
 
 		Layouter = request.vars.Layouter				# a Layouter was chosen
 		if Layouter == "ask":
@@ -101,7 +101,7 @@ def Reactome():
 		if Layouter == "graphviz":
 			return redirect( URL(r=request,c='Layout',f='graphviz') )
 
-		return redirect( URL(r=request, c='Workbench', f='index') )	# else: goto Workbench
+		return redirect( URL(r=request, c='UI', f='index') )
 
 def BooleanNet():
 	if request.env.request_method == "GET":

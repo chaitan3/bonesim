@@ -45,28 +45,17 @@
 </style>
 
 <div id=menubar>
-	<div class=spacer style="left:0px;">
-		<div class=dropdown>
-			<a href="{{=URL(r=request, c='Workbench', f='index')}}">Workbench</a><br/>
-			<a href="{{=URL(r=request, c='Workbench', f='Editor')}}">Editor</a><br/>
-<!--			<a href="{{=URL(r=request, c='Workbench', f='Cutter')}}">Cutter</a><br/-->
-			<a href="{{=URL(r=request, c='Workbench', f='Clear')}}"><nobr>Clear&nbsp;session</nobr></a><br/>
-		</div>
-	</div>
-
 	<div class=spacer style="left:110px;">
 		<div class=dropdown>
-			Layout<br/>
-			<a href="{{=URL(r=request, c='Layout', f='internal')}}">internal</a><br/>
-			<a href="{{=URL(r=request, c='Layout', f='graphviz')}}">graphviz</a><br/>
+			<a href="{{=URL(r=request, c='UI', f='index')}}">UI</a><br/>
 		</div>
 	</div>
 
 	<div class=spacer style="left:220px;">
 		<div class=dropdown>
-			Visualization<br/>
-			<a href="{{=URL(r=request, c='Visualization', f='example')}}">example</a><br/>
-			<a href="{{=URL(r=request, c='Visualization', f='graphviz')}}">graphviz</a><br/>
+			Do layout<br/>
+			<a href="{{=URL(r=request, c='Layout', f='internal')}}">biographer</a><br/>
+			<a href="{{=URL(r=request, c='Layout', f='graphviz')}}">graphviz</a><br/>
 		</div>
 	</div>
 

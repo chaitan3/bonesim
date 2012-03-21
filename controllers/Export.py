@@ -53,11 +53,11 @@ def Picture():
 
 	if not request.vars.format in formats_supported:				# Error: format not specified
 		session.flash = "Error: No export format specified or format not supported"
-		return redirect( URL(r=request, c="Workbench", f="index") )
+		return redirect( URL(r=request, c="UI", f="index") )
 
 	if request.vars.svg is None or request.vars.svg == "":				# Error: no input
 		session.flash = "Error: No SVG input provided"
-		return redirect( URL(r=request, c="Workbench", f="index") )
+		return redirect( URL(r=request, c="UI", f="index") )
 
 	if request.vars.format == "svg":
 		content = request.vars.svg
@@ -78,7 +78,7 @@ def Picture():
 
 	else:
 		session.flash = "Exporter failed: No output"
-		return redirect( URL(r=request, c="Workbench", f="index") )
+		return redirect( URL(r=request, c="UI", f="index") )
 
 def BioModel():
 	sbml = download_BioModel( request.vars.BIOMD )
