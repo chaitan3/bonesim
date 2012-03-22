@@ -362,14 +362,15 @@ class Graph:
 			return
 
 		self.reset()
-		self.log(progress, "Importing SBML ...")
+		self.log(progress, "Importing "+str(len(SBML))+" bytes of SBML ...")
 
-		SBML = libsbml.readSBMLFromString( SBML )
-		model = SBML.getModel()
+		sbml = libsbml.readSBMLFromString( SBML )
+		model = sbml.getModel()
 		if model is None:
 			self.log(error, "Error: SBML import failed")
 			return False
 
+		self.log(debug, str(len(model.getListOfCompartments()))+' compartments')
 		for compartment in model.getListOfCompartments():		# compartments
 			n = Node( defaults=True )
 			n.id			= compartment.getId()
@@ -381,6 +382,7 @@ class Graph:
 			self.Nodes.append(n)
 			#self.Compartments.append(n)
 
+		self.log(debug, str(len(model.getListOfSpecies()))+' species')
 		for species in model.getListOfSpecies():			# compounds
 			n = Node( defaults=True )
 			n.id			= species.getId()
@@ -394,6 +396,7 @@ class Graph:
 			n.data.compartment	= species.getCompartment()
 			self.Nodes.append(n)
 
+		self.log(debug, str(len(model.getListOfReactions()))+' reactions')
 		for reaction in model.getListOfReactions():			# process nodes
 			n			= Node( defaults=True )
 			n.id			= reaction.getId()

@@ -37,11 +37,11 @@
 	function Opened(evt) {
 		debug('Opened.');
 		var SBML = evt.target.result;
-//		alert(SBML);
 		debug('Asking server for translation ...');
-		debug( GET('{{biographer}}/Translate/SBML?SBML='+SBML) );
+		JSON = POST('{{biographer}}/Translate/SBML', 'SBML='+SBML);
 //		window.opener.bui.importFromJSON(JSON);
-//		debug('Done.');
+		debug('Done.');
+		window.setTimeout('window.close();', 500);
 		}
 
 </script>
@@ -74,7 +74,6 @@
 			<td id=LoadCol>
 				<input type=file id=File onchange="Load();" />
 				<br/>
-				<input type=button value=Load onclick="Load();" />
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
 		</tr>
