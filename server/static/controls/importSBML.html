@@ -1,7 +1,38 @@
 <html>
 
+<style>
+	table		{
+			border:		none;
+			margin:		0;
+			padding:	0;
+			}
+	#Progress	{
+			display:	none;
+			}
+</style>
+
 <body>
-{{test}}
+	<table>
+		<tr>
+			<td>
+				<img src="{{images}}/SBML.png" style="vertical-align:middle;"/>
+			</td>
+			<td id=Progress>
+				Test
+			</td>
+			<td id=Load>
+				<input type=file name=File onChange="submit();"/>
+				<br/>
+				<input type=button value=Load />
+				<input type=button value=Cancel onclick="window.close();" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan3>
+				<label id=debug></label>
+			</td>
+		</tr>
+	</table>
 </body>
 
 </html>
