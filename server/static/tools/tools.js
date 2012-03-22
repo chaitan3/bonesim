@@ -13,9 +13,6 @@ function POST(URL, form) {
 	return r.responseText;
 	}
 
-r.open('POST', 'http://localhost/js/verarbeitung.php', true);
-		r.send('vor='+vorname+'&nach='+nachname);
-
 function replace_all(haystack, needle, replacement) {
 	while ( haystack.indexOf(needle) > -1 ) {
 		haystack = haystack.replace(needle, replacement);

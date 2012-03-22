@@ -19,7 +19,7 @@ var Controls = ( function()	{
 				Layout: function()	{
 						if ( typeof(LayoutWindow) != 'undefined' )
 							LayoutWindow.close();
-						LayoutWindow = Template.popup('Layout', 'width=250px,height=150px', templates+'/Layout.html', {'biographer':biographer, 'images':images, 'tools':tools});
+						LayoutWindow = Template.popup('Layout', 'width=250px,height=200px', templates+'/Layout.html', {'biographer':biographer, 'images':images, 'tools':tools});
 						},
 				loadBooleanNetwork: function()	{
 						if ( typeof(loadBooleanNetworkwindow) != 'undefined' )

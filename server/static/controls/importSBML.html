@@ -8,12 +8,15 @@
 			border:			none;
 			margin:			0;
 			padding:		0;
+			width:			100%;
+			height:			100%;
 			}
 	#Tron		{
 			display:		none;
 			}
 	#ProgressCol	{
 			display:		none;
+			text-align:		right;
 			}
 	#debug		{
 			color:			green;
@@ -36,12 +39,37 @@
 
 	function Opened(evt) {
 		debug('Opened.');
-		var SBML = evt.target.result;
-		debug('Asking server for translation ...');
-		JSON = POST('{{biographer}}/Translate/SBML', 'SBML='+SBML);
-//		window.opener.bui.importFromJSON(JSON);
+		SBML = evt.target.result;
+		debug('Asking the server for a translation ...');
+		window.setTimeout('Translate();', 100);
+		}
+
+	function Translate() {
+		translated = POST('{{biographer}}/Translate/SBML', 'SBML='+SBML).replace('\n','').replace('\t','');
+		window.open('data:text/html,translated');
+		debug('Translated. Parsing JSON ...');
+		window.setTimeout('Parse();', 100);
+		}
+
+	function Parse() {
+		try 	{	// json = JSON.parse(translated);
+				eval('json = '+translated+';');	// very dangerous for man-in-the middle code injection !!!
+								// but seems to be faster
+			}
+		catch(err) {	debug('Fatal: JSON parsing failed.');
+				alert('Server did not send a valid JSON response!');
+				return
+			}
+		debug('Server response successfully parsed. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges. <br>Trying to update UI ...');
+		window.setTimeout('UpdateUI();', 100);
+		}
+
+	function UpdateUI() {
+		bui = window.opener.bui;
+		graph = window.opener.graph;
+		bui.importFromJSON(graph, json);
 		debug('Done.');
-		window.setTimeout('window.close();', 500);
+		window.setTimeout('window.close();', 1000);
 		}
 
 </script>
