@@ -31,6 +31,9 @@
 					}
 	</style>
 
+	<script src="{{ = URL(request.application, 'static/templates', 'templates.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/controls', 'controls.js') }}"></script>
+
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
@@ -40,19 +43,22 @@
 	<link rel="stylesheet" type="text/css" href="{{ = URL(request.application, 'static/bui/css', 'visualization-html.css') }}"/>
 
 	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
-
-	<script src="{{ = URL(request.application, 'static', 'controls.js') }}"></script>
 </head>
 
 <body id=body>
+	<script>
+		templates = "{{ = URL(request.application, 'static', 'controls') }}/";
+		alert(templates);
+	</script>
+
 	<div class=layout id=controls>
 		<label id=title>biographer</label>
-		<input type=button value=Layout 		onclick="controls.Layout();"/>
-		<input type=button value="Import JSON"		onclick="controls.importJSON();"/>
-		<input type=button value="Import SBML"		onclick="controls.importSBML();"/>
-		<input type=button value="Export JSON"		onclick="controls.exportJSON();"/>
-		<input type=button value="View SVG source"	onclick="controls.viewSVGsource();"/>
-		<input type=button value="Load Boolean Network"	onclick="controls.loadBooleanNetwork();"/>
+		<input type=button value="Import JSON"		onclick="Controls.importJSON();"/>
+		<input type=button value="Import SBML"		onclick="Controls.importSBML();"/>
+		<input type=button value="Export JSON"		onclick="Controls.exportJSON();"/>
+		<input type=button value="Layout" 		onclick="Controls.Layout();"/>
+		<input type=button value="View SVG Source"	onclick="Controls.viewSVGsource();"/>
+		<input type=button value="Load Boolean Network"	onclick="Controls.loadBooleanNetwork();"/>
 	</div>
 
 	<div class=layout id=canvas>
