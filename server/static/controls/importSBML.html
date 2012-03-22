@@ -1,15 +1,38 @@
 <html>
 
 <style>
-	table		{
-			border:		none;
-			margin:		0;
-			padding:	0;
+	body		{
+			background-color:	black;
 			}
-	#Progress	{
-			display:	none;
+	table		{
+			border:			none;
+			margin:			0;
+			padding:		0;
+			}
+	#Tron		{
+			display:		none;
+			}
+	#ProgressCol	{
+			display:		none;
+			}
+	#debug		{
+			color:			green;
+			font-weight:		bold;
 			}
 </style>
+
+<script src="{{tools}}/tools.js"></script>
+
+<script>
+	function Load() {
+		document.getElementById('LoadCol').style.display = 'none';
+		document.getElementById('ProgressCol').style.display = 'inline';
+		rotateAroundCenter();
+		document.getElementById('debug').innerHTML = 'Loading SBML ...';
+		alert( GET('{{biographer}}/Translate/SBML?JSON=test') );
+//		window.opener.bui.importFromJSON(JSON);
+		}
+</script>
 
 <body>
 	<table>
@@ -17,13 +40,29 @@
 			<td>
 				<img src="{{images}}/SBML.png" style="vertical-align:middle;"/>
 			</td>
-			<td id=Progress>
-				Test
+			<td id=ProgressCol>
+				<img id=Tron src="{{images}}/Progress.svg"/>
+				<canvas id=canvas width=70 height=70></canvas>
+				<script>
+					canvas = document.getElementById('canvas');
+					img = document.getElementById('Tron');
+					function rotateAroundCenter() {
+						alpha = 15;
+						width = 70;
+						height = 70;
+						var context = canvas.getContext('2d');
+						context.translate(width/2, height/2);
+						context.rotate(alpha*Math.PI/180);
+						context.translate(-width/2, -height/2);
+						context.drawImage(img, 0, 0);
+						window.setTimeout('rotateAroundCenter();', 50);
+						}
+				</script>
 			</td>
-			<td id=Load>
-				<input type=file name=File onChange="submit();"/>
+			<td id=LoadCol>
+				<input type=file id=File />
 				<br/>
-				<input type=button value=Load />
+				<input type=button value=Load onclick="Load();" />
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
 		</tr>

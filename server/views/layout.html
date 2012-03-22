@@ -31,7 +31,8 @@
 					}
 	</style>
 
-	<script src="{{ = URL(request.application, 'static/templates', 'templates.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'tools.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'templates.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/controls', 'controls.js') }}"></script>
 
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
@@ -47,6 +48,8 @@
 
 <body id=body>
 	<script>
+		biographer = "{{ = request.application }}";
+		tools = "{{ = URL(request.application, 'static', 'tools') }}";
 		templates = "{{ = URL(request.application, 'static', 'controls') }}";
 		images = "{{ = URL(request.application, 'static', 'img') }}";
 	</script>
