@@ -2,183 +2,90 @@
 
 <head>
 	<title>biographer</title>
+	<style>
+		body			{
+					color:			#9ec9e2;
+					}
+		.layout			{
+					position:		absolute;
+					left:			0;
+					right:			0;
+					border:			none;
+					width:			100%;
+					margin:			0;
+					padding:		0;
+					}
+		#controls		{
+					top:			0;
+					height:			60px;
+					}
+		#title			{
+					font-size:		26px;
+					font-weight:		bold;
+					}
+		#canvas			{
+					top:			60px;
+					bottom:			0;
+					background-color:	black;
+					color:			#9ec9e2;
+					}
+	</style>
+
+	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
+	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
+	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
+
+	<script type="text/javascript" src="{{ = URL(request.application, 'static/bui/js', 'biographer-ui.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ = URL(request.application, 'static/bui/css', 'visualization-html.css') }}"/>
+
+	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
+
+	<script src="{{ = URL(request.application, 'static', 'controls.js') }}"></script>
 </head>
 
 <body id=body>
-
-<div id="header">
-	<h1>biographer</h1>
-</div>
-
-<style>
-	#menubar			{
-					position:		absolute;
-					left:			20%;
-					height:			30px;
-					top:			1%;
-					}
-	#menubar a			{
-					text-decoration:	none;
-					color:			blue;
-					width:			100%;
-					padding:		3px;
-					margin:			3px;
-					}
-	#menubar a:hover		{
-					text-decoration:	none;
-					background:		#8caed4;
-					}
-
-	div.spacer			{
-					position:		relative;
-					width:			auto;
-					height:			30px;
-					float:			left;
-					}
-	div.dropdown			{
-					border:			1px solid white;
-					position:		absolute;
-					z-index:		+1;
-					width:			auto;
-					height:			18px;
-					overflow:		hidden;
-					padding:		5px;
-					text-align:		left;
-					opacity:		1;
-					float:			left;
-					}
-	div.dropdown:hover		{
-					height:			auto;
-					cursor:			pointer;
-					background:		#eaeaea;
-					border:			1px solid black;
-					opacity:		1;
-					}
-</style>
-
-<div id=menubar>
-	<div class=spacer style="left:110px;">
-		<div class=dropdown>
-			<a href="{{=URL(r=request, c='UI', f='index')}}">UI</a><br/>
-		</div>
+	<div class=layout id=controls>
+		<label id=title>biographer</label>
+		<input type=button value=Layout 		onclick="controls.Layout();"/>
+		<input type=button value="Import JSON"		onclick="controls.importJSON();"/>
+		<input type=button value="Import SBML"		onclick="controls.importSBML();"/>
+		<input type=button value="Export JSON"		onclick="controls.exportJSON();"/>
+		<input type=button value="View SVG source"	onclick="controls.viewSVGsource();"/>
+		<input type=button value="Load Boolean Network"	onclick="controls.loadBooleanNetwork();"/>
 	</div>
 
-	<div class=spacer style="left:220px;">
-		<div class=dropdown>
-			Do layout<br/>
-			<a href="{{=URL(r=request, c='Layout', f='internal')}}">biographer</a><br/>
-			<a href="{{=URL(r=request, c='Layout', f='graphviz')}}">graphviz</a><br/>
-		</div>
+	<div class=layout id=canvas>
 	</div>
 
-	<div class=spacer style="left:330px;">
-		<div class=dropdown>
-			Import<br/>
-			<a href="{{=URL(r=request, c='Import', f='JSON')}}">JSON</a><br/>
-			<a href="{{=URL(r=request, c='Import', f='SBML')}}">SBML</a><br/>
-			<a href="{{=URL(r=request, c='Import', f='BioModels')}}">BioModels.net</a><br/>
-			<a href="{{=URL(r=request, c='Import', f='Reactome')}}">Reactome</a><br/>
-		<!--	<a href="{{=URL(r=request, c='Import', f='ODP')}}">ODP</a><br/>
-			<a href="{{=URL(r=request, c='BioPAX', f='importer')}}">BioPAX</a><br/>
-			<a href="{{=URL(r=request, c='PID', f='importer')}}">PID</a><br/>
-			<a href="{{=URL(r=request, c='BioCarta', f='importer')}}">BioCarta</a><br/>
-			<a href={{=URL(r=request, c='PathVisio', f='importer')}}>PathVision</a><br/>
-			<a href={{=URL(r=request, c='WikiPathways', f='importer')}}>WikiPathways</a><br/>	-->
-		</div>
-	</div>
-
-	<div class=spacer style="left:470px;">
-		<div class=dropdown>
-			Export<br/>
-			<a href="{{=URL(r=request, c='Export', f='JSON')}}">JSON</a><br/>
-			<a href="{{=URL(r=request, c='Export', f='LayouterInput')}}"><nobr>Layouter&nbsp;input</nobr></a><br/>
-			<a href="{{=URL(r=request, c='Export', f='LayouterOutput')}}"><nobr>Layouter&nbsp;output</nobr></a><br/>
-			<a href="{{=URL(r=request, c='Export', f='dot')}}">dot</a><br/>
-
-			<script>
-				function Export(format)  {
-					url = "{{=URL(r=request, c='Export', f='Picture')}}?format=jpeg&svg="
-					svg = graph.rawSVG();
-					document.location.href = url+svg;
+	<script>
+		bui.ready( function()	{
+					graph = new bui.Graph( document.getElementById('canvas') );
 					}
-			</script>
+			);
+	//bui.importFromJSON(graph, network);
+	</script>
 
-			<a href="javascript:Export('jpeg');">JPEG</a><br/>
-			<a href="javascript:Export('png');">PNG</a><br/>
-			<a href="javascript:Export('pdf');">PDF</a><br/>
-			<a href="javascript:Export('svg');">SVG</a><br/>
-			<a href="javascript:Export('tiff');">TIFF</a><br/>
-		</div>
-	</div>
-</div>
+	<script>
+		// settings
+		green = '#10d010';
+		red = '#d01010';
+		yellow = '#f4fd01';
+		black = '#000000';
+		blue = '#7474cf';
+		active = green;
+		inactive = '#ffffff';
+		cyclic_attraktor = '#f9f883';
 
+		// input, provided by the server
+		BooleanNetwork = '';
+		Nodes = [];
+		update_rules = {};
 
-<style>
-	.layout		{
-			position:		absolute;
-			left:			0;
-			right:			0;
-			border:			none;
-			width:			100%;
-			margin:			0;
-			padding:		0;
-			}
-	#controls	{
-			top:			0;
-			height:			10px;
-			}
-	#canvas		{
-			top:			10px;
-			bottom:			0;
-			background-color:	black;
-			color:			#9ec9e2;
-			}
-</style>
-
-<div class=layout id=controls>
-</div>
-
-<div class=layout id=canvas>
-</div>
-
-<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
-<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
-<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
-
-<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/biographer-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/visualization-html.css" />
-
-<script>
-	bui.ready( function()	{
-				graph = new bui.Graph( document.getElementById('canvas') );
-				}
-		);
-//bui.importFromJSON(graph, network);
-</script>
-
-<script id=simulator src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
-<script>
-	// settings
-	green = '#10d010';
-	red = '#d01010';
-	yellow = '#f4fd01';
-	black = '#000000';
-	blue = '#7474cf';
-	active = green;
-	inactive = '#ffffff';
-	cyclic_attraktor = '#f9f883';
-
-	// input, provided by the server
-	BooleanNetwork = '';
-	Nodes = [];
-	update_rules = {};
-
-	// initialize, prepare for simulation
-//	initialize();
-//	openControlsWindow();
-</script>
-
+		// initialize, prepare for simulation
+	//	initialize();
+	//	openControlsWindow();
+	</script>
 </body>
 
 </html>
