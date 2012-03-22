@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
 def SBML():
-	SBML = request.vars.File.file.read()
-
+	SBML = request.vars.SBML
 	graph = Graph()
 	graph.importSBML( SBML )
-	JSON = graph.exportJSON()
-
-	return JSON
+	return graph.exportJSON()
 

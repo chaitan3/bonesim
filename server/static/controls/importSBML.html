@@ -28,10 +28,22 @@
 		document.getElementById('LoadCol').style.display = 'none';
 		document.getElementById('ProgressCol').style.display = 'inline';
 		rotateAroundCenter();
-		document.getElementById('debug').innerHTML = 'Loading SBML ...';
-		alert( GET('{{biographer}}/Translate/SBML?JSON=test') );
-//		window.opener.bui.importFromJSON(JSON);
+		debug('Opening file ...');
+		var reader = new FileReader();
+		reader.readAsText(document.getElementById('File').files[0]);
+		reader.onload = Opened;
 		}
+
+	function Opened(evt) {
+		debug('Opened.');
+		var SBML = evt.target.result;
+//		alert(SBML);
+		debug('Asking server for translation ...');
+		debug( GET('{{biographer}}/Translate/SBML?SBML='+SBML) );
+//		window.opener.bui.importFromJSON(JSON);
+//		debug('Done.');
+		}
+
 </script>
 
 <body>
@@ -60,15 +72,20 @@
 				</script>
 			</td>
 			<td id=LoadCol>
-				<input type=file id=File />
+				<input type=file id=File onchange="Load();" />
 				<br/>
 				<input type=button value=Load onclick="Load();" />
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
 		</tr>
 		<tr>
-			<td colspan3>
+			<td colspan=3>
 				<label id=debug></label>
+				<script>
+					function debug(text) {
+						document.getElementById('debug').innerHTML = text;
+						}
+				</script>
 			</td>
 		</tr>
 	</table>

@@ -10,4 +10,4 @@ cd libsbml-4.3.1
 ./configure --with-python
 make
 make install
-
+ldconfig
