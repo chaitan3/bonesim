@@ -1,0 +1,94 @@
+<html>
+
+<style>
+	body		{
+			background-color:	black;
+			}
+	table		{
+			border:			none;
+			margin:			0;
+			padding:		0;
+			}
+	#Tron		{
+			display:		none;
+			}
+	#ProgressCol	{
+			display:		none;
+			}
+	#debug		{
+			color:			green;
+			font-weight:		bold;
+			}
+</style>
+
+<script src="{{tools}}/tools.js"></script>
+
+<script>
+	function Load() {
+		document.getElementById('LoadCol').style.display = 'none';
+		document.getElementById('ProgressCol').style.display = 'inline';
+		rotateAroundCenter();
+		debug('Opening file ...');
+		var reader = new FileReader();
+		reader.readAsText(document.getElementById('File').files[0]);
+		reader.onload = Opened;
+		}
+
+	function Opened(evt) {
+		debug('Opened.');
+		var SBML = evt.target.result;
+//		alert(SBML);
+		debug('Asking server for translation ...');
+		debug( GET('{{biographer}}/Translate/SBML?SBML='+SBML) );
+//		window.opener.bui.importFromJSON(JSON);
+//		debug('Done.');
+		}
+
+</script>
+
+<body>
+	<table>
+		<tr>
+			<td>
+				<img src="{{images}}/SBML.png" style="vertical-align:middle;"/>
+			</td>
+			<td id=ProgressCol>
+				<img id=Tron src="{{images}}/Progress.svg"/>
+				<canvas id=canvas width=70 height=70></canvas>
+				<script>
+					canvas = document.getElementById('canvas');
+					img = document.getElementById('Tron');
+					function rotateAroundCenter() {
+						alpha = 15;
+						width = 70;
+						height = 70;
+						var context = canvas.getContext('2d');
+						context.translate(width/2, height/2);
+						context.rotate(alpha*Math.PI/180);
+						context.translate(-width/2, -height/2);
+						context.drawImage(img, 0, 0);
+						window.setTimeout('rotateAroundCenter();', 50);
+						}
+				</script>
+			</td>
+			<td id=LoadCol>
+				<input type=file id=File onchange="Load();" />
+				<br/>
+				<input type=button value=Load onclick="Load();" />
+				<input type=button value=Cancel onclick="window.close();" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=3>
+				<label id=debug></label>
+				<script>
+					function debug(text) {
+						document.getElementById('debug').innerHTML = text;
+						}
+				</script>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
