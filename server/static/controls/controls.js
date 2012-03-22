@@ -8,10 +8,10 @@ var Controls = ( function()	{
 				importSBML: function()	{
 						if ( typeof(importSBMLwindow) != 'undefined' )
 							importSBMLwindow.close();
-						importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=150px', templates+'/importSBML.html', {'biographer':biographer, 'images':images, 'tools':tools});
+						importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=165px', templates+'/importSBML.html', {'biographer':biographer, 'images':images, 'tools':tools});
 						},
 				exportJSON: function() {
-						window.open('data:text/html,network = { node: [], edges: [] };', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
+						window.open('data:text/html,network = '+network+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
 						},
 				viewSVGsource: function() {
 						window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
@@ -19,7 +19,7 @@ var Controls = ( function()	{
 				Layout: function()	{
 						if ( typeof(LayoutWindow) != 'undefined' )
 							LayoutWindow.close();
-						LayoutWindow = Template.popup('Layout', 'width=250px,height=200px', templates+'/Layout.html', {'biographer':biographer, 'images':images, 'tools':tools});
+						LayoutWindow = Template.popup('Layout', 'width=250px,height=140px', templates+'/Layout.html', {'biographer':biographer, 'images':images, 'tools':tools});
 						},
 				loadBooleanNetwork: function()	{
 						if ( typeof(loadBooleanNetworkwindow) != 'undefined' )

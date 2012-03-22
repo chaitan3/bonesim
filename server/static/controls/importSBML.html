@@ -60,7 +60,8 @@
 				alert('Server did not send a valid JSON response!');
 				return
 			}
-		debug('Server response successfully parsed. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges. <br>Trying to update UI ...');
+		debug('Translation successfully parsed. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges. <br>Trying to update UI ...');
+		window.opener.network = json;
 		window.setTimeout('UpdateUI();', 100);
 		}
 
