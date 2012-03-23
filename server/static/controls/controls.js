@@ -3,15 +3,15 @@ var Controls = ( function()	{
 				importJSON: function()	{
 						if ( typeof(importJSONwindow) != 'undefined' )
 							importJSONwindow.close();
-						importJSONwindow = Template.popup('Import JSON', 'width=450px,height=150px', templates+'/importJSON.html', {'biographer':biographer, 'images':images, 'tools':tools});
+						importJSONwindow = Template.popup('Import JSON', 'width=450px,height=180px', templates+'/importJSON.html', {'biographer':biographer, 'images':images, 'tools':tools});
 						},
 				importSBML: function()	{
 						if ( typeof(importSBMLwindow) != 'undefined' )
 							importSBMLwindow.close();
-						importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=165px', templates+'/importSBML.html', {'biographer':biographer, 'images':images, 'tools':tools});
+						importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=180px', templates+'/importSBML.html', {'biographer':biographer, 'images':images, 'tools':tools});
 						},
 				exportJSON: function() {
-						window.open('data:text/html,network = '+network+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
+						window.open('data:text/plain,network = '+JSON.stringify(network, null, 4)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
 						},
 				viewSVGsource: function() {
 						window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');

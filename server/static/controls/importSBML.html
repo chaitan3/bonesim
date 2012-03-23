@@ -18,8 +18,11 @@
 			display:		none;
 			text-align:		right;
 			}
+	#DebugCol	{
+			height:			50px;
+			}
 	#debug		{
-			color:			green;
+			color:			#9ec9e2;
 			font-weight:		bold;
 			}
 </style>
@@ -27,6 +30,12 @@
 <script src="{{tools}}/tools.js"></script>
 
 <script>
+	document.onkeyup = function(e) {
+				if (e.keyCode == 27) {
+					window.close();	// Esc
+					}
+				};
+
 	function Load() {
 		document.getElementById('LoadCol').style.display = 'none';
 		document.getElementById('ProgressCol').style.display = 'inline';
@@ -69,8 +78,8 @@
 		bui = window.opener.bui;
 		graph = window.opener.graph;
 		bui.importFromJSON(graph, json);
-		debug('Done.');
-		window.setTimeout('window.close();', 1000);
+		debug('UI updated. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges.');
+		window.close();
 		}
 
 </script>
@@ -107,8 +116,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan=3>
-				<label id=debug></label>
+			<td id=DebugCol colspan=3>
+				<label id=debug>Ready.</label>
 				<script>
 					function debug(text) {
 						document.getElementById('debug').innerHTML = text;
