@@ -4,42 +4,19 @@
 	<title>biographer</title>
 	<style>
 		body			{
+					background-color:	white;
 					color:			#9ec9e2;
-					}
-		input			{
-					background-color:	#9ec9e2;
-					color:			white;
-					}
-		.layout			{
-					position:		absolute;
-					left:			1;
-					right:			1;
-					border:			none;
-					width:			99,99%;
-					margin:			0;
-					padding:		0;
-					}
-		#controls		{
-					background-color:	black;
-					border:			1px dashed #9ec9e2;
-					top:			1;
-					height:			60px;
-					}
-		#title			{
-					font-size:		26px;
-					font-weight:		bold;
 					}
 		#canvas			{
 					top:			60px;
 					bottom:			0;
-/*					background-color:	black;	*/
 					color:			#9ec9e2;
 					}
 	</style>
 
 	<script src="{{ = URL(request.application, 'static/tools', 'tools.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'httplib.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'templates.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/controls', 'controls.js') }}"></script>
 
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
@@ -52,40 +29,25 @@
 	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
 </head>
 
-<body id=body>
+<body>
 	<script>
-		biographer = "/{{ = request.application }}";
-		tools = "{{ = URL(request.application, 'static', 'tools') }}";
-		templates = "{{ = URL(request.application, 'static', 'controls') }}";
-		images = "{{ = URL(request.application, 'static', 'img') }}";
-	</script>
+		env = {}
+		env["biographer"] = "/{{ = request.application }}";
+		env["tools"] = "{{ = URL(request.application, 'static', 'tools') }}";
+		env["templates"] = "{{ = URL(request.application, 'static', 'controls') }}";
+		env["images"] = "{{ = URL(request.application, 'static', 'img') }}";
 
-	<div class=layout id=controls>
-		<label id=title>biographer</label>
-		<input type=button value="Import JSON"		onclick="Controls.importJSON();"/>
-		<input type=button value="Import SBML"		onclick="Controls.importSBML();"/>
-		<input type=button value="Show Network"		onclick="Controls.exportJSON();"/>
-		<input type=button value="Layout" 		onclick="Controls.Layout();"/>
-		<input type=button value="View SVG Source"	onclick="Controls.viewSVGsource();"/>
-		<input type=button value="Load Boolean Network"	onclick="Controls.loadBooleanNetwork();"/>
-	</div>
+		ControlsWindow = Template.popup('Controls', 'width=200px,height=500px', env["templates"]+'/controls.html', env);
 
-	<div class=layout id=canvas>
-	</div>
 
-	<div id='temp'>
-	</div>
-
-	<script>
-		network = {};
+		network = { 'nodes':[], 'edges':[] };
 		bui.ready( function()	{
-					graph = new bui.Graph( document.getElementById('canvas') );
+					graph = new bui.Graph( document.body );
+					bui.importFromJSON(graph, network);
 					}
 			);
-	//bui.importFromJSON(graph, network);
-	</script>
 
-	<script>
+
 		// settings
 		green = '#10d010';
 		red = '#d01010';
@@ -103,7 +65,11 @@
 
 		// initialize, prepare for simulation
 	//	initialize();
-	//	openControlsWindow();
+
+
+		window.onunload = function() {
+					return confirm('Really close and loose unsaved data ?');
+					}
 	</script>
 </body>
 

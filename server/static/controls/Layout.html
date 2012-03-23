@@ -23,7 +23,7 @@
 <script>
 	function Layout() {
 		rotateAroundCenter();
-		debug('Asking server for a layout ...');
+		debug('Asking the server to layout ...');
 //		debug( GET('{{biographer}}/Layout/biographer?JSON=test') );
 //		window.opener.bui.importFromJSON(JSON);
 //		debug('Done.');
@@ -49,7 +49,8 @@
 						context.rotate(alpha*Math.PI/180);
 						context.translate(-width/2, -height/2);
 						context.drawImage(img, 0, 0);
-						window.setTimeout('rotateAroundCenter();', 50);
+						timeout = window.setTimeout('rotateAroundCenter();', 50);
+						window.onunload = function() { window.clearTimeout(timeout); }
 						}
 				</script>
 			</td>

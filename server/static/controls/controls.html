@@ -1,0 +1,54 @@
+<html>
+
+<head>
+	<title>Controls</title>
+	<style>
+		body			{
+					background-color:	black;
+					color:			#9ec9e2;
+					padding:		10px;
+					}
+		label			{
+					font-size:		26px;
+					font-weight:		bold;
+					}
+		input			{
+					background-color:	#9ec9e2;
+					color:			white;
+					width:			100%;
+					}
+	</style>
+
+	<script>
+		env = {}
+		env["biographer"] = "{{biographer}}";
+		env["tools"] = "{{tools}}";
+		env["templates"] = "{{templates}}";
+		env["images"] = "{{images}}";
+	</script>
+
+	<script src="{{tools}}/tools.js"></script>
+	<script src="{{tools}}/httplib.js"></script>
+	<script src="{{tools}}/templates.js"></script>
+	<script src="{{templates}}/controls.js"></script>
+</head>
+
+<body id=body>
+	<label>&nbsp;biographer&nbsp;</label>
+	<br/>
+	<input type=button value="Import JSON"		onclick="Controls.importJSON();"/>
+	<br/>
+	<input type=button value="Import SBML"		onclick="Controls.importSBML();"/>
+	<br/>
+	<input type=button value="Reload UI"		onclick="Controls.reloadUI();" />
+	<br/>
+	<input type=button value="Show Network"		onclick="Controls.exportJSON();"/>
+	<br/>
+	<input type=button value="Layout" 		onclick="Controls.Layout();"/>
+	<br/>
+	<input type=button value="View SVG Source"	onclick="Controls.viewSVGsource();"/>
+	<br/>
+	<input type=button value="Load Boolean Network"	onclick="Controls.loadBooleanNetwork();"/>
+</body>
+
+</html>

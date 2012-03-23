@@ -49,7 +49,7 @@
 	function Opened(evt) {
 		debug('Opened.');
 		SBML = evt.target.result;
-		debug('Asking the server for a translation ...');
+		debug('Asking the server to translate the file ...');
 		window.setTimeout('Translate();', 100);
 		}
 
@@ -105,7 +105,8 @@
 						context.rotate(alpha*Math.PI/180);
 						context.translate(-width/2, -height/2);
 						context.drawImage(img, 0, 0);
-						window.setTimeout('rotateAroundCenter();', 50);
+						timeout = window.setTimeout('rotateAroundCenter();', 50);
+						window.onunload = function() { window.clearTimeout(timeout); }
 						}
 				</script>
 			</td>

@@ -67,7 +67,8 @@
 						context.rotate(alpha*Math.PI/180);
 						context.translate(-width/2, -height/2);
 						context.drawImage(img, 0, 0);
-						window.setTimeout('rotateAroundCenter();', 50);
+						timeout = window.setTimeout('rotateAroundCenter();', 50);
+						window.onunload = function() { window.clearTimeout(timeout); }
 						}
 				</script>
 			</td>
