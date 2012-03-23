@@ -42,6 +42,7 @@
 
 		network = { 'nodes':[], 'edges':[] };
 		bui.ready( function()	{
+					bui.settings.enableModificationSupport = false;
 					graph = new bui.Graph( document.body );
 					bui.importFromJSON(graph, network);
 					}

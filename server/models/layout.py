@@ -7,7 +7,7 @@ def layout(graph, path_to_layout_binary, execution_folder='/tmp'):
 
 	global session
 	import os
-	from subprocess import Popen
+	from subprocess import Popen, PIPE
 	from shlex import split
 	from time import time, sleep
 	from defaults import info, error
@@ -27,8 +27,8 @@ def layout(graph, path_to_layout_binary, execution_folder='/tmp'):
 	graph.log(info, "in "+execution_folder+" ...")
 
 	timeout = 120
-	start = time()									# start a timer
-	process = Popen( split(path_to_layout_binary+' '+infile+' '+outfile) )		# run layout binary
+	start = time()										# start a timer
+	process = Popen( split(path_to_layout_binary+' '+infile+' '+outfile), stdout=PIPE )	# run layout binary
 	graph.log(info, "Executable started. Timeout is set to "+str(timeout)+" seconds. Waiting for process to complete ...")
 	runtime = 0
 	while (process.poll() is None) and (runtime < timeout):				# wait until timeout
@@ -54,5 +54,5 @@ def layout(graph, path_to_layout_binary, execution_folder='/tmp'):
 	os.remove(outfile)
 	os.remove(infile)
 
-	graph.log(info,"Layouting completed successfully.")
+	graph.log(info,"Layouting completed.")
 

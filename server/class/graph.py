@@ -629,6 +629,10 @@ class Graph:
 		self.log(progress, "Importing Layout ...")
 		lines = layout.split('///')[0].split("\n")
 
+		if lines[0] == '0':
+			self.log(error, "Fatal: Layout empty")
+			return False
+
 		updated_nodes = []
 
 		while len(lines) > 8:
