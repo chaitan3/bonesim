@@ -25,11 +25,15 @@
 	function Layout() {
 		rotateAroundCenter();
 		debug('Asking the server to layout ...');
-//		debug( GET('{{biographer}}/Layout/biographer?JSON=test') );
-//		window.opener.bui.importFromJSON(JSON);
-//		debug('Done.');
+		POST('{{biographer}}/Layout/biographer', 'JSON='+window.opener.opener.network, LayoutReceived);
 		}
 
+	function LayoutReceived(data) {
+		alert(data);
+//		window.opener.opener.bui.importFromJSON(data);
+		debug('Done.');
+		window.close();
+		}
 </script>
 
 <body onload="Layout();">

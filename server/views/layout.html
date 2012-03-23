@@ -68,7 +68,10 @@
 
 
 		window.onunload = function() {
-					return confirm('Really close and loose unsaved data ?');
+//					for (w in ControlsWindow.windows)
+//						w.close();
+					ControlsWindow.close();
+					confirm('Really close and loose unsaved data ?');
 					}
 	</script>
 </body>

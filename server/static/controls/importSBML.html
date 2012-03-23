@@ -91,8 +91,8 @@
 		}
 
 	function UpdateUI() {
-		bui = window.opener.bui;
-		graph = window.opener.graph;
+		bui = window.opener.opener.bui;
+		graph = window.opener.opener.graph;
 		bui.importFromJSON(graph, json);
 		debug('UI updated. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges.');
 		window.close();
