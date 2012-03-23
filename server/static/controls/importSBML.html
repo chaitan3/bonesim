@@ -28,6 +28,7 @@
 </style>
 
 <script src="{{tools}}/tools.js"></script>
+<script src="{{tools}}/httplib.js"></script>
 
 <script>
 	document.onkeyup = function(e) {
@@ -54,10 +55,25 @@
 		}
 
 	function Translate() {
-		translated = POST('{{biographer}}/Translate/SBML', 'SBML='+SBML).replace('\n','').replace('\t','');
-		window.open('data:text/html,translated');
-		debug('Translated. Parsing JSON ...');
-		window.setTimeout('Parse();', 100);
+		ServerTimeout = window.setTimeout('ServerTimedOut();', 10);
+		try	{
+			translated = POST('{{biographer}}/Translate/SBML', 'SBML='+SBML).replace('\n','').replace('\t','');
+			}
+		catch(err) {
+			debug(err);
+			alert(err);
+			return
+			}
+		finally {
+			window.clearTimeout(ServerTimeout);
+			window.open('data:text/html,translated');
+			debug('Translated. Parsing JSON ...');
+			window.setTimeout('Parse();', 100);
+			}
+		}
+
+	function ServerTimedOut() {
+		debug('Server timeout :-(');
 		}
 
 	function Parse() {
