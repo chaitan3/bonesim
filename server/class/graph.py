@@ -28,15 +28,17 @@ from randomid import randomID
 ### Graph object definition ###
 
 class Graph:
-	def __init__(self, filename=None, JSON=None, SBML=None, verbosity=debug):
+	def __init__(self, filename=None, JSON=None, SBML=None, BooleanNetwork=None, verbosity=debug):
 		self.reset()
 		self.verbosity = verbosity
 		if filename is not None:
 			self.importfile( filename )
 		if JSON is not None:
 			self.importJSON( JSON )
-		if SBML is not None:
+		elif SBML is not None:
 			self.importSBML( SBML )
+		elif BooleanNetwork is not None:
+			self.importBooleanNetwork( BooleanNetwork )
 
 	def owns(self, key1, key2=None, key3=None):
 		if key2 is None:
@@ -50,11 +52,10 @@ class Graph:
 		self.Edges = []
 		self.abstract_nodes = 0
 		self.Compartments = []
-		self.CenterNode = None
 		self.JSON = None
 		self.SBML = None
-		self.BioPAX = None
-		self.BioLayout = None
+		self.BooleanNetwork = None
+		self.BooleanUpdateRules = None
 		self.MD5 = None
 		if clearDEBUG:
 			self.DEBUG = ""
@@ -333,6 +334,16 @@ class Graph:
 		self.Edges = [Edge(e, defaults=True) for e in JSON["edges"]]
 		self.initialize()
 
+	def exportDICT(self, status=True):					# export current model as python dictionary
+		if status:
+			self.status()
+		self.log(progress, "Exporting dictionary ...")
+		self.exportdict = { "nodes":[n.exportDICT() for n in self.Nodes], "edges":[e.exportDICT() for e in self.Edges] }
+		if self.BooleanNetwork is not None:
+			self.exportdict['BooleanNetwork'] = self.BooleanNetwork
+			self.exportdict['BooleanUpdateRules'] = self.BooleanUpdateRules
+		return self.exportdict
+
 	def exportJSON(self, Indent=DefaultIndent):				# export current model to JSON code
 		try:
 			import simplejson as json
@@ -346,13 +357,6 @@ class Graph:
 		self.JSON = json.dumps( d, indent=Indent )
 		self.status()
 		return self.JSON
-
-	def exportDICT(self, status=True):					# export current model as python dictionary
-		if status:
-			self.status()
-		self.log(progress, "Exporting dictionary ...")
-		self.exportdict = { "nodes":[n.exportDICT() for n in self.Nodes], "edges":[e.exportDICT() for e in self.Edges] }
-		return self.exportdict
 
 	def importSBML(self, SBML):						# import SBML
 		try:
@@ -444,6 +448,7 @@ class Graph:
 	## Boolean Network section
 
 	def importBooleanNetwork(self, network):
+		import re
 		self.reset()
 		self.log(info, 'Importing Boolean Network ...')
 
@@ -470,6 +475,7 @@ class Graph:
 				return True
 			return False
 
+		# nodes & edges
 		for line in network.split('\n'):
 			line = line.strip()
 			if len(line) > 0 and line[0] != '#':
@@ -523,38 +529,25 @@ class Graph:
 									self.Nodes.append(node)
 									node_name_dictionary.append(word)
 		self.BooleanNetwork = network
+
+		# update rules
+		updateRules = {}
+		for line in network.split('\n'):
+				        if line.strip() != '' and line[0] != '#' and line.find('=') > -1 and line[-5:] not in [' True', '=True', 'False']:
+				                s = line.replace('*','=').split('=')
+				                left = s[0].strip()
+				                JavaScript = ''.join(s[1:]).replace(' and ',' && ').replace(' or ',' || ').replace(' not ',' ! ').replace('(not ','(!').replace('*','_new').replace('\t','')
+				                
+				                for node in re.split('\W+', JavaScript):
+				                        if node != '':
+				                                regex = re.compile('\\b'+node+'\\b')
+				                                JavaScript = regex.sub('Statespace["'+node+'"]', JavaScript)
+				                updateRules[left] = JavaScript.strip()
+		self.BooleanUpdateRules = updateRules;
+
 		self.initialize()
 		return self.BooleanNetwork
 
-	def importBooleanNetworkScenarios(self, filename):
-		try:
-			from ConfigParser import RawConfigParser
-		except ImportError:
-			self.log(error, 'Import Error: RawConfigParser')
-			return None
-		self.log(info, 'Loading Boolean Network Scenarios from '+filename+' ...')
-
-		self.BooleanNetworkScenarios = []
-		parser = RawConfigParser()
-		parser.optionxform = str	# don't lower-case statespace node names 
-		parser.read(filename)
-		for section in parser.sections():
-			group = ''
-			title = ''
-			statespace = {}
-			for item in parser.items(section):
-				if item[0].lower() == 'group':
-					group = item[1]
-				elif item[0].lower() == 'title':
-					title = item[1]
-				else:
-					statespace[item[0]] = item[1].lower() == 'true'
-					if not item[1].lower() in ['true', 'false']:
-						self.debug(warning, 'State-Space definition "'+item[0]+'" in Boolean Network Scenario section "'+str(section)+'" is not a Boolean: '+item[1])
-			self.BooleanNetworkScenarios.append({'group':group, 'title':title, 'statespace':statespace})
-
-		self.log(info, str(len(self.BooleanNetworkScenarios))+' scenarios loaded.')
-		return self.BooleanNetworkScenarios
 
 	### main model layouting section
 	### invoking the layout subproject, that is seperately developed
