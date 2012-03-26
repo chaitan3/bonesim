@@ -42,15 +42,20 @@ function ServerTimedOut() {
 	debug('Server timeout :-(');
 	}
 
-function Parse() {
-	try 	{	// json = JSON.parse(translated);
-			eval('json = '+translated+';');	// very dangerous for man-in-the middle code injection !!!
+function parseJSON(string) {
+	try 	{	// var response = JSON.parse(translated);
+			eval('var obj = '+string+';');	// very dangerous for man-in-the middle code injection !!!
 							// but seems to be faster
 		}
 	catch(err) {	debug('Fatal: JSON parsing failed.');
 			alert('Server did not send a valid JSON response!');
-			return
+			return ""
 		}
+	return obj;
+	}
+
+function Parse() {
+	json = parseJSON(translated);
 	s = 'Translation successfully imported: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
 	UI_window.network = json;
 	if ( document.getElementById('layout').checked ) {
@@ -72,9 +77,7 @@ function doLayout() {
 	}
 
 function doneLayouting(response) {
-
-	// work with response ...
-
+	UI_window.network = parseJSON(response);
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);
