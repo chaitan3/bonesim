@@ -1,0 +1,13 @@
+{
+	"in vivo":	{
+			"group": "wild-type yeast",
+			"title": "abundant nutrients",
+			"statespace":	{
+					"dWhi2": false,
+					"Glucose": true,
+					"stress": false,
+					"Rapamycin": false
+					}
+			}
+}
+
