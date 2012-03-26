@@ -16,6 +16,8 @@
 					background-color:	#9ec9e2;
 					color:			white;
 					width:			100%;
+					height:			30px;
+					margin:			2px;
 					}
 	</style>
 
@@ -30,25 +32,73 @@
 	<script src="{{tools}}/tools.js"></script>
 	<script src="{{tools}}/httplib.js"></script>
 	<script src="{{tools}}/templates.js"></script>
-	<script src="{{templates}}/controls.js"></script>
+
+	<script>
+		var Controls = ( function()	{
+					return	{
+						importJSON:	function() {
+									if ( typeof(importJSONwindow) != 'undefined' )
+										importJSONwindow.close();
+									importJSONwindow = Template.popup('Import JSON', 'width=450px,height=180px', env["templates"]+'/importJSON.html', env);
+									},
+
+						importSBML:	function() {
+									if ( typeof(importSBMLwindow) != 'undefined' )
+										importSBMLwindow.close();
+									importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=180px', env["templates"]+'/importSBML.html', env);
+									},
+
+						importBooleanNetwork: function() {
+									if ( typeof(importBooleanNetworkWindow) != 'undefined' )
+										importBooleanNetworkWindow.close();
+									importBooleanNetworkWindow = Template.popup('Import Boolean Network', 'width=450px,height=180px', env["templates"]+'/importBooleanNetwork.html', env);
+									},
+
+						updateUI:  	function() {
+									if ( typeof(updateUIwindow) != 'undefined' )
+										updateUIwindow.close();
+									updateUIwindow = Template.popup('Updating UI ...', 'width=80px,height=120px', env["templates"]+'/wait.html', env);
+									delete graph;
+									graph = new bui.Graph( document.getElementById('canvas') );
+									bui.importFromJSON(graph, network);
+									updateUIwindow.close();
+									},
+
+						exportJSON:	function() {
+									window.open('data:text/html,network = '+JSON.stringify(network)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
+									},
+
+						viewSVGsource:	function() {
+									window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
+									},
+
+						Layout:		function() {
+									if ( typeof(LayoutWindow) != 'undefined' )
+										LayoutWindow.close();
+									LayoutWindow = Template.popup('Layout', 'width=260px,height=150px', env["templates"]+'/Layout.html', env);
+									},
+						};
+					} ) ();
+	</script>
+
 </head>
 
 <body id=body>
 	<label>&nbsp;biographer&nbsp;</label>
 	<br/>
-	<input type=button value="Import JSON"		onclick="Controls.importJSON();"/>
+	<input type=button value="Import JSON"			onclick="Controls.importJSON();"/>
 	<br/>
-	<input type=button value="Import SBML"		onclick="Controls.importSBML();"/>
+	<input type=button value="Import SBML"			onclick="Controls.importSBML();"/>
 	<br/>
-	<input type=button value="Reload UI"		onclick="Controls.reloadUI();" />
+	<input type=button value="Import Boolean Network"	onclick="Controls.importBooleanNetwork();"/>
 	<br/>
-	<input type=button value="Show Network"		onclick="Controls.exportJSON();"/>
+	<input type=button value="Update UI"			onclick="Controls.updateUI();" />
 	<br/>
-	<input type=button value="Layout" 		onclick="Controls.Layout();"/>
+	<input type=button value="Show Network"			onclick="Controls.exportJSON();"/>
 	<br/>
-	<input type=button value="View SVG Source"	onclick="Controls.viewSVGsource();"/>
+	<input type=button value="Layout" 			onclick="Controls.Layout();"/>
 	<br/>
-	<input type=button value="Load Boolean Network"	onclick="Controls.loadBooleanNetwork();"/>
+	<input type=button value="View SVG Source"		onclick="Controls.viewSVGsource();"/>
 </body>
 
 </html>

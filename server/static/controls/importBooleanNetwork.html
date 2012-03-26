@@ -3,29 +3,37 @@
 <style>
 	body		{
 			background-color:	black;
+			color:			#9ec9e2;
 			}
 	table		{
 			border:			none;
 			margin:			0;
 			padding:		0;
+			width:			100%;
+			height:			100%;
 			}
 	#Tron		{
 			display:		none;
 			}
 	#ProgressCol	{
 			display:		none;
+			text-align:		right;
+			}
+	#DebugCol	{
+			height:			50px;
 			}
 	#debug		{
-			color:			green;
+			color:			#9ec9e2;
 			font-weight:		bold;
 			}
 </style>
 
 <script src="{{tools}}/tools.js"></script>
+<script src="{{tools}}/httplib.js"></script>
 
 <script>
 	function Load() {
-		document.getElementById('LoadCol').style.display = 'none';
+		document.getElementById('ButtonCol').style.display = 'none';
 		document.getElementById('ProgressCol').style.display = 'inline';
 		rotateAroundCenter();
 		debug('Opening file ...');
@@ -36,10 +44,10 @@
 
 	function Opened(evt) {
 		debug('Opened.');
-		var SBML = evt.target.result;
-//		alert(SBML);
+		var BooleanNetwork = evt.target.result;
+//		alert(BooleanNetwork);
 		debug('Asking server for translation ...');
-		debug( GET('{{biographer}}/Translate/SBML?SBML='+SBML) );
+		debug( GET('{{biographer}}/Translate/BooleanNetwork?BooleanNetwork='+BooleanNetwork) );
 //		window.opener.bui.importFromJSON(JSON);
 //		debug('Done.');
 		}
@@ -50,7 +58,7 @@
 	<table>
 		<tr>
 			<td>
-				<img src="{{images}}/SBML.png" style="vertical-align:middle;"/>
+				<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
 			</td>
 			<td id=ProgressCol>
 				<img id=Tron src="{{images}}/Progress.svg"/>
@@ -72,10 +80,11 @@
 						}
 				</script>
 			</td>
-			<td id=LoadCol>
+			<td id=ButtonCol>
 				<input type=file id=File onchange="Load();" />
 				<br/>
-				<input type=button value=Load onclick="Load();" />
+				<input type=checkbox id=update checked /> update UI after import
+				<br/>
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
 		</tr>

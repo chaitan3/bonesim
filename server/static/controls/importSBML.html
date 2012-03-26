@@ -3,6 +3,7 @@
 <style>
 	body		{
 			background-color:	black;
+			color:			#9ec9e2;
 			}
 	table		{
 			border:			none;
@@ -38,7 +39,7 @@
 				};
 
 	function Load() {
-		document.getElementById('LoadCol').style.display = 'none';
+		document.getElementById('ButtonCol').style.display = 'none';
 		document.getElementById('ProgressCol').style.display = 'inline';
 		rotateAroundCenter();
 		debug('Opening file ...');
@@ -87,7 +88,10 @@
 			}
 		debug('Translation successfully parsed. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges. <br>Trying to update UI ...');
 		window.opener.network = json;
-		window.setTimeout('UpdateUI();', 100);
+		if ( document.getElementById('update').checked )
+			window.setTimeout('UpdateUI();', 100);
+		else
+			window.close();
 		}
 
 	function UpdateUI() {
@@ -126,8 +130,10 @@
 						}
 				</script>
 			</td>
-			<td id=LoadCol>
+			<td id=ButtonCol>
 				<input type=file id=File onchange="Load();" />
+				<br/>
+				<input type=checkbox id=update checked /> update UI after import
 				<br/>
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
