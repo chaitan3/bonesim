@@ -30,71 +30,10 @@
 
 <script src="{{tools}}/tools.js"></script>
 <script src="{{tools}}/httplib.js"></script>
-
+<script src="{{tools}}/importtools.js"></script>
 <script>
-	function Load() {
-		document.getElementById('ButtonCol').style.display = 'none';
-		document.getElementById('ProgressCol').style.display = 'inline';
-		rotateAroundCenter();
-		debug('Opening file ...');
-		var reader = new FileReader();
-		reader.readAsText(document.getElementById('File').files[0]);
-		reader.onload = Opened;
-		}
-
-	function Opened(evt) {
-		debug('Opened.');
-		BooleanNetwork = evt.target.result;
-		debug('Asking the server to translate the file ...');
-		window.setTimeout('Translate();', 100);
-		}
-
-	function Translate() {
-		ServerTimeout = window.setTimeout('ServerTimedOut();', 10);
-		try	{
-			translated = POST('{{biographer}}/Translate/BooleanNetwork', 'Network='+BooleanNetwork).replace('\n','').replace('\t','');
-			}
-		catch(err) {
-			debug(err);
-			alert(err);
-			return
-			}
-		finally {
-			window.clearTimeout(ServerTimeout);
-			debug('Translated. Parsing JSON ...');
-			window.setTimeout('Parse();', 100);
-			}
-		}
-
-	function ServerTimedOut() {
-		debug('Server timeout :-(');
-		}
-
-	function Parse() {
-		try 	{	// json = JSON.parse(translated);
-				eval('json = '+translated+';');	// very dangerous for man-in-the middle code injection !!!
-								// but seems to be faster
-			}
-		catch(err) {	debug('Fatal: JSON parsing failed.');
-				alert('Server did not send a valid JSON response!');
-				return
-			}
-		debug('Translation successfully parsed. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges. <br>Trying to update UI ...');
-		window.opener.network = json;
-		if ( document.getElementById('update').checked )
-			window.setTimeout('UpdateUI();', 100);
-		else
-			window.close();
-		}
-
-	function UpdateUI() {
-		bui = window.opener.opener.bui;
-		graph = window.opener.opener.graph;
-		bui.importFromJSON(graph, json);
-		debug('UI updated. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges.');
-		window.close();
-		}
-
+	Translator = "{{biographer}}/Translate/BooleanNetwork";
+	UI_window = window.opener.opener;
 </script>
 
 <body>
@@ -124,9 +63,11 @@
 				</script>
 			</td>
 			<td id=ButtonCol>
-				<input type=file id=File onchange="Load();" />
+				<input type=file id=File onchange="ImportFactory();" />
 				<br/>
-				<input type=checkbox id=update checked /> update UI after import
+				After import: 
+				<input type=checkbox id=layout checked /> layout 
+				<input type=checkbox id=update checked /> update UI 
 				<br/>
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>

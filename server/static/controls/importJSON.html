@@ -37,7 +37,7 @@
 					}
 				};
 
-	function Load() {
+	function Import() {
 		document.getElementById('ButtonCol').style.display = 'none';
 		document.getElementById('ProgressCol').style.display = 'inline';
 		rotateAroundCenter();
@@ -107,9 +107,11 @@
 				</script>
 			</td>
 			<td id=ButtonCol>
-				<input type=file id=File onchange="Load();" />
+				<input type=file id=File onchange="Import();" />
 				<br/>
-				<input type=checkbox id=update checked /> update UI after import
+				After import: 
+				<input type=checkbox id=layout checked /> layout 
+				<input type=checkbox id=update checked /> update UI 
 				<br/>
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
