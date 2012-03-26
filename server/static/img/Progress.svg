@@ -69,12 +69,12 @@
      inkscape:pageshadow="2"
      inkscape:zoom="5.8801232"
      inkscape:cx="67.818212"
-     inkscape:cy="22.156719"
+     inkscape:cy="31.672756"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1280"
-     inkscape:window-height="951"
+     inkscape:window-width="1024"
+     inkscape:window-height="695"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1" />
@@ -122,7 +122,7 @@
        transform="matrix(0.1611015,0,0,0.16029053,107.88586,641.77665)" />
     <path
        sodipodi:type="arc"
-       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;opacity:0.5"
        id="path3611-1"
        sodipodi:cx="383.35291"
        sodipodi:cy="586.17676"

@@ -59,7 +59,7 @@ function Parse() {
 	s = 'Translation successfully imported: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
 	UI_window.network = json;
 	if ( document.getElementById('layout').checked ) {
-		debug(s+'<br/>Layouting ...');
+		debug(s+'<br/>Asking the server to make a nice layout ...');
 		window.setTimeout('doLayout();', 100);
 		}
 	else if ( document.getElementById('update').checked ) {
