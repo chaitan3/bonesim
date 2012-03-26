@@ -287,6 +287,6 @@ function ViewPython() {
 	doc.close();
 	}
 
-openControlsWindow() {
-	window.open(
+function openControlsWindow() {
+	window.open('controls.html');
 	}
