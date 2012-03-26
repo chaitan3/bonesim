@@ -20,23 +20,19 @@
 
 <script src="{{tools}}/tools.js"></script>
 <script src="{{tools}}/httplib.js"></script>
-
+<script src="{{tools}}/importtools.js"></script>
 <script>
-	function Layout() {
-		rotateAroundCenter();
-		debug('Asking the server to layout ...');
-		POST('{{biographer}}/Layout/biographer', 'JSON='+window.opener.opener.network, LayoutReceived);
-		}
+	env = {}
+	env["biographer"] = "{{biographer}}";
+	env["tools"] = "{{tools}}";
+	env["templates"] = "{{templates}}";
+	env["images"] = "{{images}}";
 
-	function LayoutReceived(data) {
-		debug(data);
-//		window.opener.opener.bui.importFromJSON(data);
-//		debug('Done.');
-//		window.close();
-		}
+	Translator = null;
+	UI_window = window.opener.opener;
 </script>
 
-<body onload="Layout();">
+<body onload="doLayout();">
 	<table>
 		<tr>
 			<td>
@@ -60,6 +56,7 @@
 				</script>
 			</td>
 			<td>
+				<input type=checkbox id=update style='visibility: hidden;' />
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
 		</tr>

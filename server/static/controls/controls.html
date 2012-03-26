@@ -21,64 +21,78 @@
 					}
 	</style>
 
+	<script src="{{tools}}/tools.js"></script>
+	<script src="{{tools}}/httplib.js"></script>
+	<script src="{{tools}}/templates.js"></script>
+	<script src="{{tools}}/importtools.js"></script>
+
 	<script>
 		env = {}
 		env["biographer"] = "{{biographer}}";
 		env["tools"] = "{{tools}}";
 		env["templates"] = "{{templates}}";
 		env["images"] = "{{images}}";
-	</script>
 
-	<script src="{{tools}}/tools.js"></script>
-	<script src="{{tools}}/httplib.js"></script>
-	<script src="{{tools}}/templates.js"></script>
+		UI_window = this;
 
-	<script>
-		var Controls = ( function()	{
-					return	{
-						importJSON:	function() {
-									if ( typeof(importJSONwindow) != 'undefined' )
-										importJSONwindow.close();
-									importJSONwindow = Template.popup('Import JSON', 'width=450px,height=180px', env["templates"]+'/importJSON.html', env);
-									},
+		openPopups = {}
 
-						importSBML:	function() {
-									if ( typeof(importSBMLwindow) != 'undefined' )
-										importSBMLwindow.close();
-									importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=180px', env["templates"]+'/importSBML.html', env);
-									},
+		Controls = ( function()	{
+				return	{
+					importJSON:	function() {
+								if ( typeof(importJSONwindow) != 'undefined' )
+									importJSONwindow.close();
+								importJSONwindow = Template.popup('Import JSON', 'width=450px,height=180px', env["templates"]+'/importJSON.html', env);
+								},
 
-						importBooleanNetwork: function() {
-									if ( typeof(importBooleanNetworkWindow) != 'undefined' )
-										importBooleanNetworkWindow.close();
-									importBooleanNetworkWindow = Template.popup('Import Boolean Network', 'width=580px,height=250px', env["templates"]+'/importBooleanNetwork.html', env);
-									},
+					importSBML:	function() {
+								if ( typeof(importSBMLwindow) != 'undefined' )
+									importSBMLwindow.close();
+								importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=180px', env["templates"]+'/importSBML.html', env);
+								},
 
-						doLayout:		function() {
-									if ( typeof(doLayoutWindow) != 'undefined' )
-										doLayoutWindow.close();
-									doLayoutWindow = Template.popup('Layout', 'width=260px,height=150px', env["templates"]+'/doLayout.html', env);
-									},
+					importBooleanNetwork: function() {
+								if ( typeof(importBooleanNetworkWindow) != 'undefined' )
+									importBooleanNetworkWindow.close();
+								importBooleanNetworkWindow = Template.popup('Import Boolean Network', 'width=580px,height=260px', env["templates"]+'/importBooleanNetwork.html', env);
+								},
 
-						updateUI:  	function() {
-									if ( typeof(updateUIwindow) != 'undefined' )
-										updateUIwindow.close();
-									updateUIwindow = Template.popup('Updating UI ...', 'width=80px,height=120px', env["templates"]+'/wait.html', env);
-									delete graph;
-									graph = new bui.Graph( document.getElementById('canvas') );
-									bui.importFromJSON(graph, network);
+					doLayout:		function() {
+								if ( typeof(doLayoutWindow) != 'undefined' )
+									doLayoutWindow.close();
+								doLayoutWindow = Template.popup('Layout', 'width=260px,height=150px', env["templates"]+'/doLayout.html', env);
+								},
+
+					updateUI:  	function() {
+								if ( typeof(updateUIwindow) != 'undefined' )
 									updateUIwindow.close();
-									},
+								updateUIwindow = Template.popup('Updating UI ...', 'width=80px,height=120px', env["templates"]+'/wait.html', env);
+								updateUI();
+								updateUIwindow.close();
+								},
 
-						showJSON:	function() {
-									window.open('data:text/html,network = '+JSON.stringify(network)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
-									},
+					showJSON:	function() {
+								window.open('data:text/html,network = '+JSON.stringify(network)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
+								},
 
-						showSVG:	function() {
-									window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
-									},
-						};
-					} ) ();
+					showSVG:	function() {
+								window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
+								},
+					};
+				} ) ();
+
+		window.onunload = function() {
+					if ( typeof(importJSONwindow) != 'undefined' )
+						importJSONwindow.close();
+					if ( typeof(importSBMLwindow) != 'undefined' )
+						importSBMLwindow.close();
+					if ( typeof(importBooleanNetworkWindow) != 'undefined' )
+						importBooleanNetworkWindow.close();
+					if ( typeof(doLayoutWindow) != 'undefined' )
+						doLayoutWindow.close();
+					if ( typeof(updateUIwindow) != 'undefined' )
+						updateUIwindow.close();
+					}
 	</script>
 
 </head>
@@ -99,6 +113,8 @@
 	<input type=button value="Show Network"			onclick="Controls.showJSON();"/>
 	<br/>
 	<input type=button value="Show SVG Source"		onclick="Controls.showSVG();"/>
+	<br/>
+	Ctrl+Click to select nodes
 </body>
 
 </html>

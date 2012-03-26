@@ -29,16 +29,24 @@
 </style>
 
 <script src="{{tools}}/tools.js"></script>
+<script src="{{tools}}/templates.js"></script>
 <script src="{{tools}}/httplib.js"></script>
 <script src="{{tools}}/importtools.js"></script>
+
 <script>
+	env = {}
+	env["biographer"] = "{{biographer}}";
+	env["tools"] = "{{tools}}";
+	env["templates"] = "{{templates}}";
+	env["images"] = "{{images}}";
+
 	Translator = "{{biographer}}/Translate/BooleanNetwork";
 	UI_window = window.opener.opener;
 </script>
 
 <body>
 	<table>
-		<tr>
+		<tr style='height:75px;'>
 			<td>
 				<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
 			</td>
@@ -63,7 +71,7 @@
 				</script>
 			</td>
 			<td id=ButtonCol>
-				<input type=file id=File onchange="ImportFactory();" />
+				<input type=file id=File onchange="ImportChain();" />
 				<br/>
 				After import: 
 				<input type=checkbox id=layout checked /> layout 

@@ -37,16 +37,9 @@
 		env["templates"] = "{{ = URL(request.application, 'static', 'controls') }}";
 		env["images"] = "{{ = URL(request.application, 'static', 'img') }}";
 
-		ControlsWindow = Template.popup('Controls', 'width=220px,height=350px', env["templates"]+'/controls.html', env);
-
+		ControlsWindow = Template.popup('Controls', 'width=220px,height=360px', env["templates"]+'/controls.html', env);
 
 		network = { 'nodes':[], 'edges':[] };
-		bui.ready( function()	{
-					graph = new bui.Graph( document.body );
-					bui.importFromJSON(graph, network);
-					}
-			);
-
 
 		// settings
 		green = '#10d010';
@@ -68,8 +61,6 @@
 
 
 		window.onunload = function() {
-//					for (w in ControlsWindow.windows)
-//						w.close();
 					ControlsWindow.close();
 //					confirm('Really close and loose unsaved data ?');
 					}

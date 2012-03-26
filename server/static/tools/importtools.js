@@ -5,7 +5,7 @@ document.onkeyup = function(e) {
 				}
 			};
 
-function ImportFactory() {
+function ImportChain() {
 	document.getElementById('ButtonCol').style.display = 'none';
 	document.getElementById('ProgressCol').style.display = 'inline';
 	rotateAroundCenter();
@@ -51,27 +51,41 @@ function Parse() {
 			alert('Server did not send a valid JSON response!');
 			return
 		}
-	debug('Translation successfully imported: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges');
+	s = 'Translation successfully imported: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
 	UI_window.network = json;
-	if ( document.getElementById('layout').checked )
+	if ( document.getElementById('layout').checked ) {
+		debug(s+'<br/>Layouting ...');
 		window.setTimeout('doLayout();', 100);
-	else if ( document.getElementById('update').checked )
+		}
+	else if ( document.getElementById('update').checked ) {
+		debug(s+'<br/>Updating UI ...');
 		window.setTimeout('updateUI();', 100);
+		}
 	else
 		window.close();
 	}
 
 function doLayout() {
-	// ...
-	if ( document.getElementById('update').checked )
+	POST(env['biographer']+'/Layout/biographer', 'JSON='+UI_window.network, doneLayouting);
+	}
+
+function doneLayouting(response) {
+
+	// work with response ...
+
+	if ( document.getElementById('update').checked ) {
+		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);
+		}
 	else
 		window.close();
 	}
 
 function updateUI() {
+	delete UI_window.graph;
+	UI_window.graph = new UI_window.bui.Graph( UI_window.document.body );
 	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
 	debug('UI updated. '+UI_window.network['nodes'].length+' nodes, '+UI_window.network['edges'].length+' edges.');
-	window.close();
+	window.setTimeout('window.close();', 100);
 	}
 
