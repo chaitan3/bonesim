@@ -66,7 +66,9 @@ function Parse() {
 	}
 
 function doLayout() {
-	POST(env['biographer']+'/Layout/biographer', 'JSON='+UI_window.network, doneLayouting);
+	var network = { 'nodes': UI_window.network['nodes'], 'edges': UI_window.network['edges'] }; // no Boolean Network
+	var json = JSON.stringify(network);
+	POST(env['biographer']+'/Layout/biographer', 'JSON='+json, doneLayouting);
 	}
 
 function doneLayouting(response) {
@@ -86,6 +88,7 @@ function updateUI() {
 	UI_window.graph = new UI_window.bui.Graph( UI_window.document.body );
 	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
 	debug('UI updated. '+UI_window.network['nodes'].length+' nodes, '+UI_window.network['edges'].length+' edges.');
+	UI_window.focus();
 	window.setTimeout('window.close();', 100);
 	}
 
