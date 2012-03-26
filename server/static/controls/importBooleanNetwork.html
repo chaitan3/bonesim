@@ -44,10 +44,14 @@
 
 	function Opened(evt) {
 		debug('Opened.');
-		var BooleanNetwork = evt.target.result;
-//		alert(BooleanNetwork);
-		debug('Asking server for translation ...');
-		debug( GET('{{biographer}}/Translate/BooleanNetwork?BooleanNetwork='+BooleanNetwork) );
+		BooleanNetwork = evt.target.result;
+		debug('Asking the server to translate the file ...');
+		window.setTimeout('Translate();', 100);
+		}
+
+	function Translate() {
+		translated = POST('{{biographer}}/Translate/BooleanNetwork', 'Network='+BooleanNetwork).replace('\n','').replace('\t','');
+		debug( translated );
 //		window.opener.bui.importFromJSON(JSON);
 //		debug('Done.');
 		}
