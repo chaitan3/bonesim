@@ -29,55 +29,19 @@
 </style>
 
 <script src="{{tools}}/tools.js"></script>
+<script src="{{tools}}/templates.js"></script>
+<script src="{{tools}}/httplib.js"></script>
+<script src="{{tools}}/importtools.js"></script>
 
 <script>
-	document.onkeyup = function(e) {
-				if (e.keyCode == 27) {
-					window.close();	// Esc
-					}
-				};
+	env = {}
+	env["biographer"] = "{{biographer}}";
+	env["tools"] = "{{tools}}";
+	env["templates"] = "{{templates}}";
+	env["images"] = "{{images}}";
 
-	function Import() {
-		document.getElementById('ButtonCol').style.display = 'none';
-		document.getElementById('ProgressCol').style.display = 'inline';
-		rotateAroundCenter();
-		debug('Opening file ...');
-		var reader = new FileReader();
-		reader.readAsText(document.getElementById('File').files[0]);
-		reader.onload = Opened;
-		}
-
-	function Opened(evt) {
-		debug('Opened. Parsing JSON ...');
-		file = evt.target.result;
-		window.setTimeout('Parse();', 100);
-		}
-
-	function Parse() {
-		try 	{	// json = JSON.parse(translated);
-				eval('json = '+file+';');	// very dangerous for man-in-the middle code injection !!!
-								// but seems to be faster
-			}
-		catch(err) {	debug('Fatal: JSON parsing failed.');
-				alert('Fatal: JSON parsing failed');
-				return
-			}
-		debug('Input successfully parsed. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges. <br>Trying to update UI ...');
-		window.opener.network = json;
-		if ( document.getElementById('update').checked )
-			window.setTimeout('UpdateUI();', 100);
-		else
-			window.close();
-		}
-
-	function UpdateUI() {
-		bui = window.opener.bui;
-		graph = window.opener.graph;
-		bui.importFromJSON(graph, json);
-		debug('UI updated. '+json['nodes'].length+' nodes, '+json['edges'].length+' edges.');
-		window.close();
-		}
-
+	Translator = null;
+	UI_window = window.opener.opener;
 </script>
 
 <body>

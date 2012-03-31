@@ -22,20 +22,24 @@ function Opened(evt) {
 	}
 
 function Translate() {
-	ServerTimeout = window.setTimeout('ServerTimedOut();', 10);
-	try	{
-		translated = POST(Translator, 'data='+data).replace('\n','').replace('\t','');
+	if ( Translator != null ) {
+		ServerTimeout = window.setTimeout('ServerTimedOut();', 10);
+		try	{
+			translated = POST(Translator, 'data='+data).replace('\n','').replace('\t','');
+			}
+		catch(err) {
+			debug(err);
+			alert(err);
+			return
+			}
+		finally {
+			window.clearTimeout(ServerTimeout);
+			debug('Translated. Parsing JSON ...');
+			window.setTimeout('Parse();', 100);
+			}
 		}
-	catch(err) {
-		debug(err);
-		alert(err);
-		return
-		}
-	finally {
-		window.clearTimeout(ServerTimeout);
-		debug('Translated. Parsing JSON ...');
-		window.setTimeout('Parse();', 100);
-		}
+	else
+		Parse();
 	}
 
 function ServerTimedOut() {
@@ -56,7 +60,7 @@ function parseJSON(string) {
 
 function Parse() {
 	json = parseJSON(translated);
-	s = 'Translation successfully imported: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
+	s = 'Import successfull: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
 	UI_window.network = json;
 	if ( document.getElementById('layout').checked ) {
 		debug(s+'<br/>Asking the server to make a nice layout ...');
