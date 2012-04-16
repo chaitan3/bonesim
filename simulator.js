@@ -38,19 +38,22 @@ Simulator = {
 
 				for (n in this.jSBGN['nodes']) {
 					jSBGN_node = this.jSBGN['nodes'][n];
-					rule = this.jSBGN['BooleanUpdateRules'][jSBGN_node.id];	// jSBGN node id corresponds to SVG node title
-					if ( rule != 'undefined' ) {
-						SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
-						Node = {
-							myElement: SVG_node,
-							myState: false,
-							getState: this.getState,
-							update: true,
-							updateRule: rule,
-							};
-						jSBGN_node['simulation'] = Node;
-						this.Nodes.push(Node);			// append reference to array
+					try {
+						rule = this.jSBGN['BooleanUpdateRules'][jSBGN_node.id];	// jSBGN node id corresponds to SVG node title
 						}
+					catch(err) {
+						rule = '';
+						}
+					SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
+					Node = {
+						myElement: SVG_node,
+						myState: false,
+						getState: this.getState,
+						update: true,
+						updateRule: rule,
+						};
+					jSBGN_node['simulation'] = Node;
+					this.Nodes.push(Node);			// append reference to array
 					}
 				this.installSVGonClickListeners();
 				},
@@ -73,22 +76,23 @@ Simulator = {
 				debug('Node clicked. Refreshing graph ...');
 
 				SVG_node = event.srcElement;
-				jSBGN_node = Simulator.getNodeById(SVG_node.id.replace('_', ' '));
+				jSBGN_node = Simulator.getNodeById(SVG_node.id);
 
-				if (event.ctrlKey)
+				alert(jSBGN_node.myState);
+				if (!event.ctrlKey)
 					jSBGN_node.myState = ! jSBGN_node.myState	// change node state
 				else
 					jSBGN_node.update = ! jSBGN_node.update;	// enable/disable updating of this node
+				alert(jSBGN_node.myState);
 
-				if ( Simulator.updateSVG_Timeout == null )		// refresh SVG
+				if ( Simulator.updateSVG_Timeout == null ) {		// refresh SVG
 					Simulator.updateSVG();
+					}
 
 				if ( ! Simulator.running ) {				// start Simulation
 					document.getElementById('Steps').innerHTML = 0; // (but only if it's not running already)
 					Simulator.Iterate();
 					}
-
-				debug('Graph refreshed.');
 				},
 
 		installSVGonClickListeners: function() {
@@ -99,13 +103,17 @@ Simulator = {
 				},
 
 		updateSVG: function() {
+			if ( Simulator.updateSVG_Timeout != null ) {						// stop other updateSVG timeouts
+				window.clearTimeout(Simulator.updateSVG_Timeout);
+				Simulator.updateSVG_Timeout = null;
+				}
 			graph_refresh_required = false;
-			for (n in this.Nodes) {			// update color and dashing of all Nodes
-				jSBGN_node = this.Nodes[n];
+			for (n in Simulator.Nodes) {			// update color and dashing of all Nodes
+				jSBGN_node = Simulator.Nodes[n];
 
 				// which color is this node currently fading to ?
-				desired = this.settings.colors.inactive;
-				undesired = this.settings.colors.active;
+				desired = Simulator.settings.colors.inactive;
+				undesired = Simulator.settings.colors.active;
 				if ( jSBGN_node.myState ) {
 					temp = desired;
 					desired = undesired;
@@ -113,7 +121,7 @@ Simulator = {
 					}
 
 				// continue fading
-				current = jSBGN_node.getAttribute('fill');
+				current = jSBGN_node.myElement.getAttribute('fill');
 				if ( current.toLowerCase() != desired.toLowerCase() ) {
 					graph_refresh_required = true;
 					jSBGN_node.myElement.setAttribute('fill', FadeColor(undesired, current, desired));
@@ -127,21 +135,18 @@ Simulator = {
 					desired = undesired;
 					undesired = temp;
 					}
-				current = JSBGN_node.myElement.getAttribute('stroke-dasharray');
+				current = jSBGN_node.myElement.getAttribute('stroke-dasharray');
 				if ( current != desired ) {
 //					graph_refresh_required = true;
-					JSBGN_node.myElement.style['stroke-dasharray'] = desired;
+					jSBGN_node.myElement.style['stroke-dasharray'] = desired;
 					}
 				}
-			if ( this.updateSVG_Timeout != null ) {					// stop other updateSVG timeouts
-				window.clearTimeout(this.updateSVG_Timeout);
-				this.updateSVG_Timeout = null;
-				}
-			this.updateSVG_Timeout = window.setTimeout('updateSVG();', 20);		// update again in 20ms
+			if ( graph_refresh_required )
+				Simulator.updateSVG_Timeout = window.setTimeout('Simulator.updateSVG();', 20);	// update again in 20ms
 			},
 
 		Iterate: function() {
-			this.running = true;
+			Simulator.running = true;
 
 			// messages
 			e = document.getElementById('Progress');
@@ -153,29 +158,30 @@ Simulator = {
 
 			// calculation
 			changes = false;
-			for (n in this.Nodes) {
-				jSBGN_node = this.Nodes[n];
+			for (n in Simulator.Nodes) {
+				jSBGN_node = Simulator.Nodes[n];
 				if ( jSBGN_node.update ) {
-					jSBGN_node.myNextState = eval(jSBGN_node.updateRule);
+					jSBGN_node.myNextState = Boolean(eval(jSBGN_node.updateRule));
 					changes = changes || (jSBGN_node.myNextState != jSBGN_node.myState);
 					}
 				}
 
 			// steady state ?
-			if ( changes ) {	// network updated -> steady state not reached
-				for (n in this.Nodes) {
-					jSBGN_node = this.Nodes[n];				// State = NextState
+			if ( changes ) {			// network updated -> steady state not reached
+				for (n in Simulator.Nodes) {
+					jSBGN_node = Simulator.Nodes[n];					// State = NextState
 					jSBGN_node.myState = jSBGN_node.myNextState;
 					}
 				try { delay=parseInt(document.getElementById('Delay').value);	}
 				catch(err) { delay=120;	}
-				if ( this.updateSVG_Timeout == null ) updateSVG();
-				window.setTimeout('Iterate();', delay);				// iterate again after delay
+				if ( Simulator.updateSVG_Timeout == null ) Simulator.updateSVG();
+				window.setTimeout('Simulator.Iterate();', delay);			// iterate again after delay
 				}
 			else 	{		// no changes -> steady state
-				updateSVG();
+				alert('no changes');
+				Simulator.updateSVG();
 				debug('Boolean network reached steady state.');
-				this.running = false;
+				Simulator.running = false;
 				}
 			},
 
