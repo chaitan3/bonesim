@@ -108,14 +108,6 @@ function doneGraphviz(response) {
 		var xmlRoot = xmlDoc.documentElement; 
 		var adopted = document.importNode(xmlRoot, true); 
 		elt.appendChild(adopted); 
-
-		edges = xmlRoot.getElementsByClassName('edge');
-		for (i in edges) {
-			edge = edges[i];
-			arrow = edge.getElementsByTagName('polygon');
-			delete arrow;
-//			arrow.style.visibility = 'hidden';
-			}
 		}
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
@@ -130,7 +122,7 @@ function updateUI() {
 //	UI_window.graph = new UI_window.bui.Graph( UI_window.document.body );
 //	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
 	debug('UI updated. '+UI_window.network['nodes'].length+' nodes, '+UI_window.network['edges'].length+' edges.');
-	UI_window.focus();
+	UI_window.StartSimulation();
 	window.setTimeout('window.close();', 500);
 	window.setTimeout('window.close();', 1000);
 	window.close();

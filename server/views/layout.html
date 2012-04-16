@@ -30,7 +30,11 @@
 					bottom:			0;
 					color:			#9ec9e2;
 					}
-		#statusbar		{
+		#Progress		{
+					color:			blue;
+					font-weight:		bold;
+					}
+		#Statusbar		{
 					position:		absolute;
 					left:			10px;
 					bottom:			10px;
@@ -40,7 +44,7 @@
 	</style>
 
 	<!-- our own scripts -->
-	<script src="{{ = URL(request.application, 'static/tools', 'tools.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'replace_all.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'httplib.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'templates.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'visibility.js') }}"></script>
@@ -54,6 +58,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ = URL(request.application, 'static/bui/css', 'visualization-html.css') }}"/>
 
 	<!-- linked in from simulator repo -->
+	<script src="{{ = URL(request.application, 'static/simulator', 'deepcopy.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/simulator', 'fader.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
 </head>
 
@@ -104,10 +110,19 @@
 //					confirm('Really close and loose unsaved data ?');
 					}
 
+		function StartSimulation() {
+			graph = document.getElementById('graph1');
+			installSVGonClickListeners();
+			ResetState();
+			Iterate();
+			}
+
 	</script>
 
 	<input type=button value=graphviz onClick="show('graphviz'); hide('bui');"/>
 	<input type=button value=bui onClick="show('bui'); hide('graphviz');"/>
+	<input type=button value=Start onClick="StartSimulation();"/>
+	<label id=Progress></label>
 
 	<div class=tab id=bui>
 		no bui SVG
@@ -122,7 +137,7 @@
 		hide('bui');
 	</script>
 
-	<div id=statusbar>
+	<div id=Statusbar>
 		press C for controls
 	</div>
 </body>

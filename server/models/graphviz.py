@@ -47,10 +47,7 @@ def prepareSVG(f):
 				inside_node = True
 				replacement = line+'\n'
 			elif '<polygon ' in line:
-				print line
-				fixed = WorkaroundChromiumIssue123607(line)
-				print fixed
-				outfile.write(fixed+'\n')
+				outfile.write(WorkaroundChromiumIssue123607(line)+'\n')
 			else:
 				outfile.write(line+'\n')
 

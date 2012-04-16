@@ -4,3 +4,5 @@ function replace_all(haystack, needle, replacement) {
 		}
 	return haystack;
 	}
+
+
