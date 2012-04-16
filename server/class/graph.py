@@ -541,7 +541,7 @@ class Graph:
 				                for node in re.split('\W+', JavaScript):
 				                        if node != '':
 				                                regex = re.compile('\\b'+node+'\\b')
-				                                JavaScript = regex.sub('this.getState("'+node+'")', JavaScript)
+				                                JavaScript = regex.sub('Simulator.getState("'+node+'")', JavaScript)
 				                updateRules[left] = JavaScript.strip()
 		self.BooleanUpdateRules = updateRules;
 

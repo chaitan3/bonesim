@@ -86,28 +86,22 @@
 
 		network = { 'nodes':[], 'edges':[] };
 
-		// initialize, prepare for simulation
-	//	initialize();
-
-
 		window.onunload = function() {
 					ControlsWindow.close();
 //					confirm('Really close and loose unsaved data ?');
 					}
 
 		function StartSimulation() {
-//			alert(JSON.stringify(network['BooleanUpdateRules']));
 			Simulator.Initialize(network, document.getElementById('graph1'));
-//			Simulator.Iterate();
+			Simulator.Iterate();
 			}
 
 	</script>
 
 	<input type=button value=graphviz onClick="show('graphviz'); hide('bui');"/>
 	<input type=button value=bui onClick="show('bui'); hide('graphviz');"/>
-	<input type=button value=Start onClick="StartSimulation();"/>
 	<label id=Progress></label>
-	<label id=Steps></label>
+	<label id=Steps>0</label>
 
 	<div class=tab id=bui>
 		no bui SVG
