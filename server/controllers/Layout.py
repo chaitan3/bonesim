@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 def biographer():
-	graph = Graph()
-	graph.importJSON( request.vars.network )
+	graph = Graph(JSON=request.vars.network)
 
 	execution_folder = '/tmp'
 	path_to_layout_binary = '/home/code/biographer/layout/build/layout'
