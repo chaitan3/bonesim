@@ -2,7 +2,7 @@
 
 def biographer():
 	graph = Graph()
-	graph.importJSON( request.vars.JSON )
+	graph.importJSON( request.vars.network )
 
 	execution_folder = '/tmp'
 	path_to_layout_binary = '/home/code/biographer/layout/build/layout'

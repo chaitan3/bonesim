@@ -51,10 +51,10 @@
 								importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=180px', env["templates"]+'/importSBML.html', env);
 								},
 
-					importBooleanNetwork: function() {
-								if ( typeof(importBooleanNetworkWindow) != 'undefined' )
-									importBooleanNetworkWindow.close();
-								importBooleanNetworkWindow = Template.popup('Import Boolean Network', 'width=580px,height=230px', env["templates"]+'/importBooleanNetwork.html', env);
+					importBooleNet: function() {
+								if ( typeof(importBooleNetWindow) != 'undefined' )
+									importBooleNetWindow.close();
+								importBooleNetWindow = Template.popup('Import Boolean Network', 'width=580px,height=230px', env["templates"]+'/importBooleNet.html', env);
 								},
 
 					doLayout:		function() {
@@ -86,8 +86,8 @@
 						importJSONwindow.close();
 					if ( typeof(importSBMLwindow) != 'undefined' )
 						importSBMLwindow.close();
-					if ( typeof(importBooleanNetworkWindow) != 'undefined' )
-						importBooleanNetworkWindow.close();
+					if ( typeof(importBooleNetWindow) != 'undefined' )
+						importBooleNetWindow.close();
 					if ( typeof(doLayoutWindow) != 'undefined' )
 						doLayoutWindow.close();
 					if ( typeof(updateUIwindow) != 'undefined' )
@@ -98,13 +98,13 @@
 </head>
 
 <body id=body>
-	<label>&nbsp;biographer&nbsp;</label>
+	<label>&nbsp;Controls&nbsp;</label>
 	<br/>
 	<input type=button value="Import JSON"			onclick="Controls.importJSON();"/>
 	<br/>
 	<input type=button value="Import SBML"			onclick="Controls.importSBML();"/>
 	<br/>
-	<input type=button value="Import Boolean Network"	onclick="Controls.importBooleanNetwork();"/>
+	<input type=button value="Import Boolean Network"	onclick="Controls.importBooleNet();"/>
 	<br/>
 	<input type=button value="Layout" 			onclick="Controls.doLayout();"/>
 	<br/>

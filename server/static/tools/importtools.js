@@ -66,22 +66,34 @@ function Parse() {
 		debug(s+'<br/>Asking the server to make a nice layout ...');
 		window.setTimeout('doLayout();', 100);
 		}
-	else if ( document.getElementById('update').checked ) {
-		debug(s+'<br/>Updating UI ...');
-		window.setTimeout('updateUI();', 100);
-		}
-	else
-		window.close();
+	else	doneLayouting(null);
 	}
 
 function doLayout() {
 	var network = { 'nodes': UI_window.network['nodes'], 'edges': UI_window.network['edges'] }; // no Boolean Network
 	var json = JSON.stringify(network);
-	POST(env['biographer']+'/Layout/biographer', 'JSON='+json, doneLayouting);
+	POST(env['biographer']+'/Layout/biographer', 'network='+json, doneLayouting);
 	}
 
 function doneLayouting(response) {
-	UI_window.network = parseJSON(response);
+	if ( response != null )
+		UI_window.network = parseJSON(response);
+	if ( document.getElementById('graphviz').checked ) {
+		debug('Plotting using Graphviz ...');
+		window.setTimeout('doGraphviz();', 100);
+		}
+	else	doneGraphviz(null);
+	}
+
+function doGraphviz() {
+	var network = { 'nodes': UI_window.network['nodes'], 'edges': UI_window.network['edges'] };
+	var json = JSON.stringify(network);
+	POST(env['biographer']+'/Plot/graphviz', 'network='+json, doneGraphviz);
+	}
+
+function doneGraphviz(response) {
+	if ( response != null )
+		UI_window.getElementById('graphviz').innerHTML = '<svg src="'+response+'"></svg>'; //   <- develop here
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);
