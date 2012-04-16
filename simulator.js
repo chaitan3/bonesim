@@ -1,81 +1,42 @@
-function deepcopy(obj) {
-	var copy = {};
-	for (key in obj)
-		copy[key] = obj[key];
-	return copy;
-	}
+Simulator = {
+		jSBGN: null,			// a reference to the network
+		SVG: null,			// a reference to the inline SVG
 
-function initialize() {
-	SimulationRunning = false;
-	reset_Statespace = {};
-	Nodes_getting_updated = {};
-	for (n in Nodes) {
-		reset_Statespace[Nodes[n]] = true;
-		Nodes_getting_updated[Nodes[n]] = true;
-		}
-	Statespace = deepcopy(reset_Statespace);
-	updateUI_process = null;
-	}
+		initialize: function () {
+				SimulationRunning = false;
+				reset_Statespace = {};
+				Nodes_getting_updated = {};
+				for (n in this.getNodes) {
+					reset_Statespace[this.getNodes[n]] = true;
+					Nodes_getting_updated[this.getNodes[n]] = true;
+					}
+				Statespace = deepcopy(reset_Statespace);
+				updateUI_process = null;
+				}
 
-function SVGonClick(event) {
-	node = event.srcElement.id;
-	if (event.ctrlKey)
-		Nodes_getting_updated[node] = ! Nodes_getting_updated[node];
-	else
-		Statespace[node] = ! Statespace[node];
-	RefreshGraph();
-	};
+		SVGonClick: function(event) {
+				node = event.srcElement.id;
+				if (event.ctrlKey)
+					Nodes_getting_updated[node] = ! Nodes_getting_updated[node];
+				else
+					Statespace[node] = ! Statespace[node];
+				RefreshGraph();
+				};
 
-function installSVGonClickListeners() {
-	for (n in Nodes)
-		svg.getElementById(Nodes[n]).onclick = SVGonClick;
-	}
-
-function FadeColor(begin, current, end) {
-	newcolor = '#';
-	for (i=1; i<=5; i+=2) {	// R,B,G
-		a = parseInt(begin.substr(i, 2), 16);
-		if ( isNaN(a) )
-			a = 0;
-		x = parseInt(current.substr(i, 2), 16);
-		if ( isNaN(x) )
-			x = 0;
-		b = parseInt(end.substr(i, 2), 16);
-		if ( isNaN(b) )
-			b = 0;
-		if (b > a) {	// increase
-			if (x < a || x > b)
-				x = a;
-			p = (x-a)/(b-a);
-			y = Math.ceil(x + (b-a)*0.03);
-			if (y > b)
-				y = b;
-			}
-		else if (b < a) { // decrease
-			if (x < b || x > a)
-				x = a;
-			p = (a-x)/(a-b);
-			y = Math.ceil(x - (a-b)*0.03);
-			if (y < b)
-				y = b;
-			}
-		else	y = b;
-		if (x == y)
-			y = b;
-		newcolor += y.toString(16);
-		}
-	return newcolor;
-	}
+		installSVGonClickListeners: function() {
+				for (n in this.getNodes())
+					svg.getElementById(this.getNodes[n]).onclick = SVGonClick;
+				}
 
 function updateUI() {
 	graph_refresh_required = false;
 //		document.getElementById('debug').innerHTML += '.';
-	for (n in Nodes) {
-		node = svg.getElementById(Nodes[n]);
+	for (n in this.getNodes) {
+		node = svg.getElementById(this.getNodes[n]);
 
 		desired = inactive;
 		undesired = active;
-		if ( Statespace[Nodes[n]] ) {
+		if ( Statespace[this.getNodes[n]] ) {
 			temp = desired;
 			desired = undesired;
 			undesired = temp;
@@ -90,7 +51,7 @@ function updateUI() {
 
 		desired = 'none';
 		undesired = '3,3';
-		if ( ! Nodes_getting_updated[Nodes[n]] ) {
+		if ( ! Nodes_getting_updated[this.getNodes[n]] ) {
 			temp = desired;
 			desired = undesired;
 			undesired = temp;
@@ -261,11 +222,11 @@ function EditNetwork() {
 	doc.writeln('	<td><input type=button value="Save"/><input type=button value="Cancel" onClick="window.close();"/></td>');
 	doc.writeln('	<td>JavaScript syntax: || = OR, && = AND, ! = NOT</td>');
 	doc.writeln('</tr>');
-	for (n in Nodes) {
+	for (n in this.getNodes) {
 		doc.writeln('<tr>');
-		doc.writeln('	<td><input type=checkbox checked>'+Nodes[n]+'</td>');
+		doc.writeln('	<td><input type=checkbox checked>'+this.getNodes[n]+'</td>');
 //			rule = '\b\r\b'.exec()
-		rule = update_rules[Nodes[n]];
+		rule = update_rules[this.getNodes[n]];
 		if ( rule == undefined )
 			rule = '';
 		else
