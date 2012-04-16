@@ -12,6 +12,18 @@ def mkdir_and_parents( path ):
 		if (len(fullpath) > 1) and (not os.path.exists(fullpath)):
 			os.mkdir(fullpath)
 
+def WorkaroundChromiumIssue123607(line):
+	import re
+	key = 'points="'
+	p = line.find(key)+len(key)
+	q = line.find('"', p)
+	points = line[p:q]
+	numbers = re.findall('[0-9]*\.[0-9]*', points)
+	for number in numbers:
+		points = points.replace(number, str(int(float(number))))
+	line = line[:p]+points+line[q:]
+	return line
+
 def prepareSVG(f):
 	infile = open(f).read().split('\n')
 	outfile = open(f, 'w')
@@ -25,8 +37,7 @@ def prepareSVG(f):
 				q = replacement.find('</text>', p)
 				label = replacement[p:q]
 				name = label.replace(' ','_')
-#				replacement = replacement.replace('class="node"', 'class="node" onclick="if (! event.ctrlKey) { parent.'+name+' = ! parent.'+name+'; } else { parent.update_'+name+' = ! parent.update_'+name+'; }; parent.NodeClicked();"')
-				replacement = replacement.replace('fill="none"', 'id="'+name+'" fill="white" style="cursor:pointer"') # onclick="parent.'+name+' = ! parent.'+name+'; parent.NodeClick(\''+name+'\');"')
+				replacement = replacement.replace('fill="none"', 'id="'+name+'" fill="white" style="cursor:pointer"')
 				outfile.write(replacement+line+'\n')
 				inside_node = False
 			else:
@@ -35,6 +46,11 @@ def prepareSVG(f):
 			if 'class="node"' in line:
 				inside_node = True
 				replacement = line+'\n'
+			elif '<polygon ' in line:
+				print line
+				fixed = WorkaroundChromiumIssue123607(line)
+				print fixed
+				outfile.write(fixed+'\n')
 			else:
 				outfile.write(line+'\n')
 
