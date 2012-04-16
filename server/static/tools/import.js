@@ -93,7 +93,7 @@ function doGraphviz() {
 
 function doneGraphviz(response) {
 	if ( response != null )
-		UI_window.getElementById('graphviz').innerHTML = '<svg src="'+response+'"></svg>'; //   <- develop here
+		UI_window.document.getElementById('graphviz').innerHTML = '<img type="image/svg+xml" id=graphvizSVG src="'+response+'"/>';
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);
@@ -103,11 +103,13 @@ function doneGraphviz(response) {
 	}
 
 function updateUI() {
-	delete UI_window.graph;
-	UI_window.graph = new UI_window.bui.Graph( UI_window.document.body );
-	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
+//	delete UI_window.graph;
+//	UI_window.graph = new UI_window.bui.Graph( UI_window.document.body );
+//	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
 	debug('UI updated. '+UI_window.network['nodes'].length+' nodes, '+UI_window.network['edges'].length+' edges.');
 	UI_window.focus();
-	window.setTimeout('window.close();', 100);
+	window.setTimeout('window.close();', 500);
+	window.setTimeout('window.close();', 1000);
+	window.close();
 	}
 

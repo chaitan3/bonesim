@@ -28,7 +28,7 @@ from randomid import randomID
 ### Graph object definition ###
 
 class Graph:
-	def __init__(self, filename=None, JSON=None, SBML=None, BooleanNetwork=None, verbosity=debug):
+	def __init__(self, filename=None, JSON=None, SBML=None, BooleNet=None, verbosity=debug):
 		self.reset()
 		self.verbosity = verbosity
 		if filename is not None:
@@ -37,8 +37,8 @@ class Graph:
 			self.importJSON( JSON )
 		elif SBML is not None:
 			self.importSBML( SBML )
-		elif BooleanNetwork is not None:
-			self.importBooleanNetwork( BooleanNetwork )
+		elif BooleNet is not None:
+			self.importBooleNet( BooleNet )
 
 	def owns(self, key1, key2=None, key3=None):
 		if key2 is None:
@@ -54,7 +54,7 @@ class Graph:
 		self.Compartments = []
 		self.JSON = None
 		self.SBML = None
-		self.BooleanNetwork = None
+		self.BooleNet = None
 		self.BooleanUpdateRules = None
 		self.MD5 = None
 		if clearDEBUG:
@@ -341,8 +341,8 @@ class Graph:
 			self.status()
 		self.log(progress, "Exporting dictionary ...")
 		self.exportdict = { "nodes":[n.exportDICT() for n in self.Nodes], "edges":[e.exportDICT() for e in self.Edges] }
-		if self.BooleanNetwork is not None:
-			self.exportdict['BooleanNetwork'] = self.BooleanNetwork
+		if self.BooleNet is not None:
+			self.exportdict['BooleNet'] = self.BooleNet
 			self.exportdict['BooleanUpdateRules'] = self.BooleanUpdateRules
 		return self.exportdict
 
@@ -449,7 +449,7 @@ class Graph:
 
 	## Boolean Network section
 
-	def importBooleanNetwork(self, network):
+	def importBooleNet(self, network):
 		import re
 		self.reset()
 		self.log(info, 'Importing Boolean Network ...')
@@ -530,7 +530,7 @@ class Graph:
 									node.sbo = getSBO(node.type)
 									self.Nodes.append(node)
 									node_name_dictionary.append(word)
-		self.BooleanNetwork = network
+		self.BooleNet = network
 
 		# update rules
 		updateRules = {}
@@ -548,7 +548,7 @@ class Graph:
 		self.BooleanUpdateRules = updateRules;
 
 		self.initialize()
-		return self.BooleanNetwork
+		return self.BooleNet
 
 
 	### main model layouting section

@@ -24,7 +24,7 @@
 	<script src="{{tools}}/tools.js"></script>
 	<script src="{{tools}}/httplib.js"></script>
 	<script src="{{tools}}/templates.js"></script>
-	<script src="{{tools}}/importtools.js"></script>
+	<script src="{{tools}}/import.js"></script>
 
 	<script>
 		env = {}
@@ -54,7 +54,7 @@
 					importBooleNet: function() {
 								if ( typeof(importBooleNetWindow) != 'undefined' )
 									importBooleNetWindow.close();
-								importBooleNetWindow = Template.popup('Import Boolean Network', 'width=580px,height=230px', env["templates"]+'/importBooleNet.html', env);
+								importBooleNetWindow = Template.popup('Import Boolean Network', 'width=650px,height=230px', env["templates"]+'/importBooleNet.html', env);
 								},
 
 					doLayout:		function() {
@@ -100,21 +100,24 @@
 <body id=body>
 	<label>&nbsp;Controls&nbsp;</label>
 	<br/>
-	<input type=button value="Import JSON"			onclick="Controls.importJSON();"/>
+<!--	<input type=button value="Import JSON"			onclick="Controls.importJSON();"/>
 	<br/>
 	<input type=button value="Import SBML"			onclick="Controls.importSBML();"/>
 	<br/>
-	<input type=button value="Import Boolean Network"	onclick="Controls.importBooleNet();"/>
+-->
+	<input type=button value="Import BooleNet"		onclick="Controls.importBooleNet();"/>
 	<br/>
-	<input type=button value="Layout" 			onclick="Controls.doLayout();"/>
+<!--	<input type=button value="Layout (bui)"			onclick="Controls.doLayout();"/>
 	<br/>
-	<input type=button value="Update UI"			onclick="Controls.updateUI();" />
+	<input type=button value="Update bUI"			onclick="Controls.updateUI();" />
 	<br/>
 	<input type=button value="Show Network"			onclick="Controls.showJSON();"/>
 	<br/>
 	<input type=button value="Show SVG Source"		onclick="Controls.showSVG();"/>
 	<br/>
 	Ctrl+Click to select nodes
+-->
+	press ESC to close
 </body>
 
 </html>

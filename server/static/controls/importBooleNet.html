@@ -31,7 +31,7 @@
 <script src="{{tools}}/tools.js"></script>
 <script src="{{tools}}/templates.js"></script>
 <script src="{{tools}}/httplib.js"></script>
-<script src="{{tools}}/importtools.js"></script>
+<script src="{{tools}}/import.js"></script>
 
 <script>
 	env = {}
@@ -74,7 +74,8 @@
 				<input type=file id=File onchange="ImportChain();" />
 				<br/>
 				After import: 
-				<input type=checkbox id=layout checked /> layout 
+				<input type=checkbox id=layout /> layout 
+				<input type=checkbox id=graphviz checked /> graphviz
 				<input type=checkbox id=update checked /> update UI 
 				<br/>
 				<input type=button value=Cancel onclick="window.close();" />
