@@ -321,8 +321,6 @@ class Graph:
 			self.log(error, 'Import error: JSON library')
 			return
 
-		print JSON
-
 		self.reset()
 		self.log(progress, "Importing JSON ...")
 

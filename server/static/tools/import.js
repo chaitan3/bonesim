@@ -92,8 +92,31 @@ function doGraphviz() {
 	}
 
 function doneGraphviz(response) {
-	if ( response != null )
-		UI_window.document.getElementById('graphviz').innerHTML = '<img type="image/svg+xml" id=graphvizSVG src="'+response+'"/>';
+	if ( response != null ) {
+		var parser = new DOMParser(); 
+		var xmlDoc = parser.parseFromString(response, "text/xml"); 
+		elt = UI_window.document.getElementById('graphviz');
+
+		// eliminate any children 
+		var child = elt.firstChild; 
+		while (child!=null) 
+		{ 
+		elt.removeChild(child); 
+		child = elt.firstChild; 
+		} 
+
+		var xmlRoot = xmlDoc.documentElement; 
+		var adopted = document.importNode(xmlRoot, true); 
+		elt.appendChild(adopted); 
+
+		edges = xmlRoot.getElementsByClassName('edge');
+		for (i in edges) {
+			edge = edges[i];
+			arrow = edge.getElementsByTagName('polygon');
+			delete arrow;
+//			arrow.style.visibility = 'hidden';
+			}
+		}
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);

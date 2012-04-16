@@ -66,10 +66,10 @@ def layout_using_graphviz(graph, execution_folder="/tmp", image_output_folder="/
 	graphviz_model.draw( out )
 	prepareSVG( out )
 
-	graph.graphviz_layout = graphviz_model.string()
+#	graph.graphviz_layout = graphviz_model.string()		# discard for now
 	graph.log(info, "graphviz completed.")
 
-	graph.import_from_graphviz( graph.graphviz_layout )
+#	graph.import_from_graphviz( graph.graphviz_layout )	# discard for now
 
 	return out_filename
 
