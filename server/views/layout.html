@@ -86,21 +86,6 @@
 
 		network = { 'nodes':[], 'edges':[] };
 
-		// settings
-		green = '#10d010';
-		red = '#d01010';
-		yellow = '#f4fd01';
-		black = '#000000';
-		blue = '#7474cf';
-		active = green;
-		inactive = '#ffffff';
-		cyclic_attraktor = '#f9f883';
-
-		// input, provided by the server
-		BooleanNetwork = '';
-		Nodes = [];
-		update_rules = {};
-
 		// initialize, prepare for simulation
 	//	initialize();
 
@@ -111,10 +96,13 @@
 					}
 
 		function StartSimulation() {
-			graph = document.getElementById('graph1');
-			installSVGonClickListeners();
-			ResetState();
-			Iterate();
+			Simulator.initialize();
+			Simulator.jSBGN = network;
+			Simulator.extractNetworkUpdateRules();
+			Simulator.SVG = document.getElementById('graph1');
+			Simulator.installSVGonClickListeners();
+			Simulator.ResetState();
+			Simulator.Iterate();
 			}
 
 	</script>
