@@ -31,23 +31,23 @@ def prepareSVG(f):
 	inside_node = False
 	replacement = ''
 	for line in infile:
+		if '<polygon ' in line:
+			line = WorkaroundChromiumIssue123607(line)
 		if inside_node:
-			if '</g>' in line:
-				p = replacement.find('>', replacement.find('<text '))+1
+			if '</g>' in line:		# node ends
+				p = replacement.find('>', replacement.find('<text '))+1		# set ellipse id according to text label
 				q = replacement.find('</text>', p)
 				label = replacement[p:q]
 				name = label.replace(' ','_')
 				replacement = replacement.replace('fill="none"', 'id="'+name+'" fill="white" style="cursor:pointer"')
-				outfile.write(replacement+line+'\n')
+				outfile.write(replacement+'</g>\n')
 				inside_node = False
 			else:
 				replacement += line+'\n'
 		else:
-			if 'class="node"' in line:
+			if 'class="node"' in line:	# node begins
 				inside_node = True
 				replacement = line+'\n'
-			elif '<polygon ' in line:
-				outfile.write(WorkaroundChromiumIssue123607(line)+'\n')
 			else:
 				outfile.write(line+'\n')
 

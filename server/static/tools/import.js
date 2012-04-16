@@ -18,10 +18,10 @@ function ImportChain() {
 function Opened(evt) {
 	data = evt.target.result;
 	debug('Opened. Asking the server to translate the file ...');
-	window.setTimeout('Translate();', 100);
+	window.setTimeout('Translate('+data+');', 100);
 	}
 
-function Translate() {
+function Translate(data) {
 	if ( Translator != null ) {
 		ServerTimeout = window.setTimeout('ServerTimedOut();', 10);
 		try	{

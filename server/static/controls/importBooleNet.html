@@ -68,10 +68,17 @@
 						timeout = window.setTimeout('rotateAroundCenter();', 50);
 						window.onunload = function() { window.clearTimeout(timeout); }
 						}
+					function LoadWhi2p() {
+						data = GET(env['biographer']+'/Get/Whi2p');
+						debug('Opened. Asking the server to translate the file ...');
+						Translate(data);
+						}
 				</script>
 			</td>
 			<td id=ButtonCol>
 				<input type=file id=File onchange="ImportChain();" />
+				<br/>
+				<input type=button value="Load Whi2p model" onclick="LoadWhi2p();" />
 				<br/>
 				After import: 
 				<input type=checkbox id=layout /> layout 
