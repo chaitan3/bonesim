@@ -7,6 +7,14 @@
 					background-color:	white;
 					color:			#9ec9e2;
 					}
+		div.tab			{
+					border:			1px dashed blue;
+					position:		absolute;
+					left:			1px;
+					right:			1px;
+					top:			30px;
+					bottom:			30px;
+					}
 		#canvas			{
 					top:			60px;
 					bottom:			0;
@@ -21,18 +29,21 @@
 					}
 	</style>
 
+	<!-- our own scripts -->
 	<script src="{{ = URL(request.application, 'static/tools', 'tools.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'httplib.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'templates.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'visibility.js') }}"></script>
 
+	<!-- linked in from visualization (bui) repo -->
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
-
 	<script type="text/javascript" src="{{ = URL(request.application, 'static/bui/js', 'biographer-ui.js') }}"></script>
 	<link rel="stylesheet" type="text/css" href="{{ = URL(request.application, 'static/bui/css', 'visualization-html.css') }}"/>
 
+	<!-- linked in from simulator repo -->
 	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
 </head>
 
@@ -85,8 +96,24 @@
 
 	</script>
 
+	<input type=button value=graphviz onClick="show('graphviz'); hide('bui');"/>
+	<input type=button value=bui onClick="show('bui'); hide('graphviz');"/>
+
+	<div class=tab id=bui>
+		no bui SVG
+	</div>
+
+	<div class=tab id=graphviz>
+		no graphviz SVG
+	</div>
+
+	<script>
+		show('graphviz');
+		hide('bui');
+	</script>
+
 	<div id=statusbar>
-	press C for controls
+		press C for controls
 	</div>
 </body>
 
