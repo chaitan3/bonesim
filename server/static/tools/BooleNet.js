@@ -84,7 +84,7 @@ BooleNet = {
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;
-								var b = setup.indexOf('"', a);
+								var b = setup.lastIndexOf('"', a);
 								var annotation = line.substring(a, b);
 								if (typeof(Node.simulation) === 'undefined')
 									Node.simulation = {};

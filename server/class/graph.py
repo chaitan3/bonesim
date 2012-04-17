@@ -246,6 +246,7 @@ class Graph:
 	### functions for Graph creation: import / export ###
 
 	def checkJSON(self, JSON):
+		print JSON
 		pre = "JSON checker: "
 		if len(JSON) > 0:
 			if JSON.find("'") > -1:
@@ -276,12 +277,12 @@ class Graph:
 			if json.find('edges:') == -1 and json.find('"edges":') == -1 and json.find("'edges':") == -1:
 				self.log(warning, pre+'"nodes:" statement not found')
 
-"""			while JSON.find("//") > -1:				# remove commentary
-				p = JSON.find("//")
-				q = JSON.find("\n", p)
-				self.log(warning, pre+"Removed commentary '"+JSON[p:q]+"'")
-				JSON = JSON[:p] + JSON[q+1:]
-"""
+#			while JSON.find("//") > -1:				# remove commentary
+#				p = JSON.find("//")
+#				q = JSON.find("\n", p)
+#				self.log(warning, pre+"Removed commentary '"+JSON[p:q]+"'")
+#				JSON = JSON[:p] + JSON[q+1:]
+
 			alphabet = range(ord("a"), ord("z")+1)+range(ord("A"), ord("Z")+1)
 			space = ""
 			for i in range(0,15):
@@ -329,6 +330,7 @@ class Graph:
 			JSON = json.loads(JSON)
 		except Exception, err:
 			self.log(error, "Fatal: JSON parser raised an exception: %s"%err)
+			print JSON
 			return
 		self.Nodes = [Node(n, defaults=True) for n in JSON["nodes"]]
 		self.Edges = [Edge(e, defaults=True) for e in JSON["edges"]]
