@@ -1,5 +1,5 @@
 
-protein_name_regex = /[A-Za-z0-9_]+?/g;
+protein_name_regex = /[A-Za-z0-9_]+/g;
 
 BooleNet = {
 	Import: function(input) {
@@ -17,23 +17,37 @@ BooleNet = {
 							if (leftside.indexOf('*') == -1)
 								console.warn('Warning in BooleNet, line '+index+': Left side of update rule lacks obligatory asterisk');
 							targetNodeId = leftside.replace('*','').trim();
-							if (! network.hasNode(targetNodeId) ) {		// create Node if it doesn't exist
-								Node = newNode();
-								Node.id = targetNodeId;
-								Node.data.label = targetNodeId;
-								network.appendNode(Node);
+							targetNode = network.getNodeById(targetNodeId);
+							if (targetNode == null) {			// create target Node if it doesn't exist
+								targetNode = newNode();
+								targetNode.id = targetNodeId;
+								targetNode.data.label = targetNodeId;
+								network.appendNode(targetNode);
 								}
 							
-							rightside = s[1].replace(/^[A-Za-z0-9]and^[A-Za-z0-9]/g, ' && ').replace(/^[A-Za-z0-9]or^[A-Za-z0-9]/g, ' || ');
-							alert(rightside);
+							rightside = s[1].replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ');
 							sourceNodeIds = rightside.match(protein_name_regex);
 							for (index in sourceNodeIds) {
 								sourceNodeId = sourceNodeIds[index];
 								if (sourceNodeId != "True" && sourceNodeId != "False") {
-									alert(sourceNodeId);
-									// add Node if it doesn't exist
+									sourceNode = network.getNodeById(sourceNodeId);
+									if (sourceNode == null) {			// create Node if it doesn't exist
+										sourceNode = newNode();
+										sourceNode.id = targetNodeId;
+										sourceNode.data.label = targetNodeId;
+										network.appendNode(sourceNode);
+										}
 								
-									// add Edge from source to target Node
+									// create Edge from source to target Node
+									Edge = network.getEdgeBySourceAndTarget(sourceNodeId, targetNodeId);
+									if (Edge == null) {
+										Edge = newEdge();
+										Edge.id = sourceNodeId+' -> '+targetNodeId;
+										Edge.source = sourceNodeId;
+										Edge.target = targetNodeId;
+										Edge.sourceNode = sourceNode;
+										Edge.targetNode = targetNode;
+										}
 									}
 								}
 							}

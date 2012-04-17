@@ -1,6 +1,10 @@
 
 newNode = function() {
-		return { id: '', data: {} };
+		return { id: '', data: {}, edges: [] };
+		}
+
+newEdge = function() {
+		return { id: '', source: '', target: '', sourceNode: null, targetNode: null };
 		}
 
 jSBGN = {
