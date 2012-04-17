@@ -230,7 +230,7 @@ Atg32_active*			= Whi2p_Psrp_complex and not (PKA_active or TORC1_active)
 Atg11_present			= True
 
 autophagy_machinery		= False
-autophagy_machinery*		= general_stress_response
+autophagy_machinery*		= STRE
 
 
 #

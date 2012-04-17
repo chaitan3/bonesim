@@ -1,6 +1,6 @@
 {
-	"Glucose":	"test annotation",
-	"Cdc28p":	"http://en.wikipedia.org/wiki/Cdc28<br/>http://en.wikipedia.org/wiki/G1_and_G1/S_cyclins-_budding_yeast<br/>via CDC28->CDK->G1 cyclin (CLN1,CLN2) ?",
-	"Spc98p":	"microtubule nucleation"
-
+	"Whi2p active":	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>",
+	"Ras":		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>",
+	"Ras1p":	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>",
+	"Ras2p":	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
 }
