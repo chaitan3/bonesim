@@ -68,7 +68,7 @@ jSBGN = {
 				if (typeof(edge.targetNode) != undefined)
 					delete edge.targetNode;
 				}
-			return { nodes: _nodes, edges: _edges };
+			return { nodes: _nodes }; //, edges: _edges };
 			}
 	}
 
