@@ -3,7 +3,7 @@ var Template = ( function()	{
 				popup: function(title, attr, URL, dict) {
 						page = GET(URL);
 						for (key in dict)
-							page = replace_all(page, '{{'+key+'}}', dict[key]);
+							page = String(page).replace_all('{{'+key+'}}', dict[key]);
 						win = window.open('', title, 'location=no,directories=no,status=no,menubar=no,copyhistory=no,scrollbars=no,'+attr);
 						doc = win.document;
 						doc.write(page);

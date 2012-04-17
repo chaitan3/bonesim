@@ -1,4 +1,4 @@
-String.prototype.trim = function(needle, replacement)
+String.prototype.replace_all = function(needle, replacement)
 				{
 					var haystack = String(this);
 					while ( haystack.indexOf(needle) > -1 ) {

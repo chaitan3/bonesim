@@ -3,10 +3,10 @@ jSBGN = {
 	nodes:	[],
 	edges:	[],
 
-	appendNode: function() {
+	appendNode: function(Node) {
 			},
 
-	removeNode: function() {
+	removeNode: function(Node) {
 			},
 
 	getNodeById: function(id) {

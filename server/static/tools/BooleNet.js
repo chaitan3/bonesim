@@ -11,11 +11,18 @@ BooleNet = {
 						if (s.length != 2)
 							console.error('Error in BooleNet, line '+index+': Broken update rule')
 						else	{
-							leftside = line[0];
-							rightside = line[1];
+							leftside = s[0];
 							if (leftside.indexOf('*') == -1)
 								console.warn('Warning in BooleNet, line '+index+': Left side of update rule lacks obligatory asterisk');
-							leftside
+							targetNodeId = leftside.replace('*','').trim();
+							// create Node if it doesn't exist
+							
+							rightside = s[1];
+							sourceNodeIds = ... regulärer Ausdruck
+							for (index in sourceNodeIds) {
+								// add Node if it doesn't exist
+								// add Edge from source to target Node
+								}
 							}
 						}
 					else	{				// comment or instruction
