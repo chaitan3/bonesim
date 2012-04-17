@@ -78,12 +78,25 @@ Simulator = {
 				SVG_node = event.srcElement;
 				jSBGN_node = Simulator.getNodeById(SVG_node.id);
 
-				alert(jSBGN_node.myState);
-				if (!event.ctrlKey)
-					jSBGN_node.myState = ! jSBGN_node.myState	// change node state
-				else
+//				alert(jSBGN_node.myState);
+				if (!event.ctrlKey) {
+//					jSBGN_node.myState = ! jSBGN_node.myState	// change node state
+
+					try {
+						alert(JSON.stringify(network.annotations));
+						a = network.annotations[SVG_node.id];
+						alert(a);
+						document.getElementById('annotation').innerHTML = a;
+						show('annotation');
+						hide('graphviz');
+					    }
+					catch(err) {}
+
+					}
+				else	{
 					jSBGN_node.update = ! jSBGN_node.update;	// enable/disable updating of this node
-				alert(jSBGN_node.myState);
+					}
+//				alert(jSBGN_node.myState);
 
 				if ( Simulator.updateSVG_Timeout == null ) {		// refresh SVG
 					Simulator.updateSVG();
@@ -178,7 +191,7 @@ Simulator = {
 				window.setTimeout('Simulator.Iterate();', delay);			// iterate again after delay
 				}
 			else 	{		// no changes -> steady state
-				alert('no changes');
+//				alert('no changes');
 				Simulator.updateSVG();
 				debug('Boolean network reached steady state.');
 				Simulator.running = false;
