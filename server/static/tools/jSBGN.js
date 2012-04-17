@@ -25,11 +25,24 @@ jSBGN = {
 				}
 			},
 
+	appendEdge: function(Edge) {
+			this.edges.push(Edge);
+			},
+
 	getNodeById: function(id) {
 			for (index in this.nodes) {
 				node = this.nodes[index];
 				if (node.id == id)
 					return node;
+				}
+			return null;
+			},
+
+	getEdgeBySourceAndTargetId: function(sourceId, targetId) {
+			for (index in this.edges) {
+				edge = this.edges[index];
+				if (edge.source == sourceId && edge.target == targetId)
+					return edge;
 				}
 			return null;
 			},

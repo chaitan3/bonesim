@@ -11,11 +11,11 @@ BooleNet = {
 					if (line[0] != '#') {			// update rule
 						s = line.split('=');
 						if (s.length != 2)
-							console.error('Error in BooleNet, line '+index+': Broken update rule')
+							console.error('Error in BooleNet input file, line '+index+': Broken update rule')
 						else	{
 							leftside = s[0];
 							if (leftside.indexOf('*') == -1)
-								console.warn('Warning in BooleNet, line '+index+': Left side of update rule lacks obligatory asterisk');
+								console.warn('Warning in BooleNet input file, line '+index+': Left side of update rule lacks obligatory asterisk');
 							targetNodeId = leftside.replace('*','').trim();
 							targetNode = network.getNodeById(targetNodeId);
 							if (targetNode == null) {			// create target Node if it doesn't exist
@@ -39,7 +39,7 @@ BooleNet = {
 										}
 								
 									// create Edge from source to target Node
-									Edge = network.getEdgeBySourceAndTarget(sourceNodeId, targetNodeId);
+									Edge = network.getEdgeBySourceAndTargetId(sourceNodeId, targetNodeId);
 									if (Edge == null) {
 										Edge = newEdge();
 										Edge.id = sourceNodeId+' -> '+targetNodeId;
@@ -47,6 +47,9 @@ BooleNet = {
 										Edge.target = targetNodeId;
 										Edge.sourceNode = sourceNode;
 										Edge.targetNode = targetNode;
+										sourceNode.edges.push(Edge);
+										targetNode.edges.push(Edge);
+										network.appendEdge(Edge);
 										}
 									}
 								}
@@ -58,7 +61,7 @@ BooleNet = {
 							var node = line.substring(12, colon);
 							var Node = network.getNodeById(node);
 							if (Node == null)
-								console.error('Error in BooleNet, line '+index+': No such node: "'+node+'"')
+								console.error('Error in BooleNet input file, line '+index+': No such node: "'+node+'"')
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;
@@ -77,7 +80,7 @@ BooleNet = {
 							var node = line.substring(16, colon);
 							var Node = network.getNodeById(node);
 							if (Node == null)
-								console.error('Error in BooleNet, line '+index+': No such node: "'+node+'"')
+								console.error('Error in BooleNet input file, line '+index+': No such node: "'+node+'"')
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;
@@ -91,7 +94,6 @@ BooleNet = {
 						}
 					}
 				}
-			alert( JSON.stringify(network) );
 			return network;
 			}
 	}
