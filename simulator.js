@@ -36,8 +36,8 @@ Simulator = {
 				this.initializeNodeIdDict();
 				this.Nodes = [];
 
-				for (n in this.jSBGN['nodes']) {
-					jSBGN_node = this.jSBGN['nodes'][n];
+				for (n in this.jSBGN.nodes) {
+					jSBGN_node = this.jSBGN.nodes[n];
 					try {
 						rule = this.jSBGN['BooleanUpdateRules'][jSBGN_node.id];	// jSBGN node id corresponds to SVG node title
 						}
