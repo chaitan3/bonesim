@@ -49,6 +49,25 @@ jSBGN = {
 
 	hasNode: function(id) {
 			return this.getNodeById(id) != null;
+			},
+
+	exportJSON: function() {
+			// remove node.edges, edge.sourceNode, edge.targetNode for export
+			var _nodes = deepcopy(this.nodes);
+			var _edges = deepcopy(this.edges);
+			for (index in _nodes) {
+				node = _nodes[index];
+				if (typeof(node.edges) != undefined)
+					delete node.edges;
+				}
+			for (index in _edges) {
+				edge = _edges[index];
+				if (typeof(edge.sourceNode) != undefined)
+					delete edge.sourceNode;
+				if (typeof(edge.targetNode) != undefined)
+					delete edge.targetNode;
+				}
+			return { nodes: _nodes, edges: _edges };
 			}
 	}
 

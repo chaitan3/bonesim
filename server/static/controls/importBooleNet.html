@@ -31,7 +31,7 @@
 <script src="{{tools}}/string.js"></script>
 <script src="{{tools}}/templates.js"></script>
 <script src="{{tools}}/httplib.js"></script>
-<!--script src="{{tools}}/import.js"></script-->
+<script src="{{tools}}/import.js"></script>
 <script src="{{tools}}/jSBGN.js"></script>
 <script src="{{tools}}/BooleNet.js"></script>
 
@@ -79,7 +79,9 @@
 						data = GET(env['biographer']+'/Get/Whi2p_boolenet');
 						debug('Importing ...');
 						UI_window.network = BooleNet.Import(data);
-//						window.close();
+						debug('Graphviz ...');
+						doGraphviz();
+						window.close();
 						}
 				</script>
 			</td>
