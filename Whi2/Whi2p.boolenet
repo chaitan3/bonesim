@@ -94,7 +94,7 @@ Rim15p_active*			= Sch9_active
 #
 
 GPR1*				= True
-# States of GPR1: True="transcribed & translated", False="not present"
+# States of GPR1: True="transcribed and translated", False="not present"
 
 Gpr1p*				= GPR1 and Glucose
 # States of Gpr1p: True="receptor firing", False="receptor silent"
