@@ -82,15 +82,11 @@ Simulator = {
 				if (!event.ctrlKey) {
 //					jSBGN_node.myState = ! jSBGN_node.myState	// change node state
 
-					try {
-						alert(JSON.stringify(network.annotations));
-						a = network.annotations[SVG_node.id];
-						alert(a);
-						document.getElementById('annotation').innerHTML = a;
-						show('annotation');
-						hide('graphviz');
+					try {	// if an annotation is available for this node, show it
+						document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+network.annotations[SVG_node.id.replace('_',' ')];
+						showTab('annotation');
 					    }
-					catch(err) {}
+					catch(err) {} // no annotation available
 
 					}
 				else	{
@@ -111,7 +107,8 @@ Simulator = {
 		installSVGonClickListeners: function() {
 				for (n in this.Nodes) {
 					node = this.Nodes[n];
-					node.myElement.onclick = this.SVGonClick;
+					if (node != null && node.myElement != null)
+						node.myElement.onclick = this.SVGonClick;
 					}
 				},
 
@@ -124,34 +121,36 @@ Simulator = {
 			for (n in Simulator.Nodes) {			// update color and dashing of all Nodes
 				jSBGN_node = Simulator.Nodes[n];
 
-				// which color is this node currently fading to ?
-				desired = Simulator.settings.colors.inactive;
-				undesired = Simulator.settings.colors.active;
-				if ( jSBGN_node.myState ) {
-					temp = desired;
-					desired = undesired;
-					undesired = temp;
-					}
+				if (jSBGN_node != null && jSBGN_node.myElement != null) {
+					// which color is this node currently fading to ?
+					desired = Simulator.settings.colors.inactive;
+					undesired = Simulator.settings.colors.active;
+					if ( jSBGN_node.myState ) {
+						temp = desired;
+						desired = undesired;
+						undesired = temp;
+						}
 
-				// continue fading
-				current = jSBGN_node.myElement.getAttribute('fill');
-				if ( current.toLowerCase() != desired.toLowerCase() ) {
-					graph_refresh_required = true;
-					jSBGN_node.myElement.setAttribute('fill', FadeColor(undesired, current, desired));
-					}
+					// continue fading
+					current = jSBGN_node.myElement.getAttribute('fill');
+					if ( current.toLowerCase() != desired.toLowerCase() ) {
+						graph_refresh_required = true;
+						jSBGN_node.myElement.setAttribute('fill', FadeColor(undesired, current, desired));
+						}
 
-				// is this node updated or not? -> dashing?
-				desired = 'none';
-				undesired = '3,3';
-				if ( ! jSBGN_node.update ) {
-					temp = desired;
-					desired = undesired;
-					undesired = temp;
-					}
-				current = jSBGN_node.myElement.getAttribute('stroke-dasharray');
-				if ( current != desired ) {
-//					graph_refresh_required = true;
-					jSBGN_node.myElement.style['stroke-dasharray'] = desired;
+					// is this node updated or not? -> dashing?
+					desired = 'none';
+					undesired = '3,3';
+					if ( ! jSBGN_node.update ) {
+						temp = desired;
+						desired = undesired;
+						undesired = temp;
+						}
+					current = jSBGN_node.myElement.getAttribute('stroke-dasharray');
+					if ( current != desired ) {
+	//					graph_refresh_required = true;
+						jSBGN_node.myElement.style['stroke-dasharray'] = desired;
+						}
 					}
 				}
 			if ( graph_refresh_required )
