@@ -114,7 +114,8 @@ function doneGraphviz(response) {
 		var adopted = document.importNode(xmlRoot, true); 
 		elt.appendChild(adopted); 
 
-		UI_window.setupHandlers(xmlDoc.documentElement);
+//		UI_window.document.getElementById('viewport').setAttribute('transform', 'scale(0.4 0.4)');
+//		UI_window.setupHandlers(xmlDoc.documentElement);
 		}
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
