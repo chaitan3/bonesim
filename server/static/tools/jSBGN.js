@@ -1,4 +1,8 @@
 
+newNode = function() {
+		return { id: '', data: {} };
+		}
+
 jSBGN = {
 	nodes:	[],
 	edges:	[],
@@ -16,6 +20,10 @@ jSBGN = {
 					return node;
 				}
 			return null;
+			},
+
+	hasNode: function(id) {
+			return this.getNodeById(id) != null;
 			}
 	}
 

@@ -16,6 +16,12 @@ BooleNet = {
 								console.warn('Warning in BooleNet, line '+index+': Left side of update rule lacks obligatory asterisk');
 							targetNodeId = leftside.replace('*','').trim();
 							// create Node if it doesn't exist
+							if (! network.hasNode(targetNodeId) ) {
+								Node = newNode();
+								Node.id = targetNodeId;
+								Node.data.label = targetNodeId;
+								network.appendNode(Node);
+								}
 							
 							rightside = s[1];
 							sourceNodeIds = ... regulärer Ausdruck
