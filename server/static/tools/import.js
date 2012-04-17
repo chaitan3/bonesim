@@ -120,8 +120,8 @@ function doneGraphviz(response) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);
 		}
-	else
-		window.close();
+//	else
+//		window.close();
 	}
 
 function updateUI() {
@@ -130,8 +130,8 @@ function updateUI() {
 //	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
 	debug('UI updated. '+UI_window.network.nodes.length+' nodes, '+UI_window.network.edges.length+' edges.');
 	UI_window.StartSimulation();
-	window.setTimeout('window.close();', 500);
-	window.setTimeout('window.close();', 1000);
-	window.close();
+//	window.setTimeout('window.close();', 500);
+//	window.setTimeout('window.close();', 1000);
+//	window.close();
 	}
 
