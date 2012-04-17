@@ -15,7 +15,7 @@ jSBGN = {
 			for (index in this.nodes) {
 				node = this.nodes[index];
 				if (node == Node) {
-					this.nodes.remove(index);	// requires array.js
+					this.nodes.drop(index);		// requires array.js
 					break;
 					}
 				}

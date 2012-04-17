@@ -26,10 +26,12 @@ onTabSelectorClick = function(event) {
 			}
 
 tabSelectors = Array.prototype.slice.call(document.getElementsByClassName('tabselector'), 0);
+alert(tabSelectors.length);
 
 for (index in tabSelectors) {
 	tabSelectors[index].onclick = onTabSelectorClick;
 	}
 
 tabDivs = Array.prototype.slice.call(document.getElementsByClassName('tab'), 0);
+alert(tabSelectors.length);
 
