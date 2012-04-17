@@ -246,7 +246,6 @@ class Graph:
 	### functions for Graph creation: import / export ###
 
 	def checkJSON(self, JSON):
-		print JSON
 		pre = "JSON checker: "
 		if len(JSON) > 0:
 			if JSON.find("'") > -1:
