@@ -31,16 +31,21 @@
 <script src="{{tools}}/replace_all.js"></script>
 <script src="{{tools}}/templates.js"></script>
 <script src="{{tools}}/httplib.js"></script>
-<script src="{{tools}}/import.js"></script>
+<!--script src="{{tools}}/import.js"></script-->
+<script src="{{tools}}/BooleNet.js"></script>
 
 <script>
+	function debug(text) {
+		document.getElementById('debug').innerHTML = text;
+		}
+
 	env = {}
 	env["biographer"] = "{{biographer}}";
 	env["tools"] = "{{tools}}";
 	env["templates"] = "{{templates}}";
 	env["images"] = "{{images}}";
 
-	Translator = "{{biographer}}/Translate/BooleNet";
+//	Translator = "{{biographer}}/Translate/BooleNet";
 	UI_window = window.opener.opener;
 </script>
 
@@ -69,9 +74,11 @@
 						window.onunload = function() { window.clearTimeout(timeout); }
 						}
 					function LoadWhi2p() {
+						debug('Downloading ...');
 						data = GET(env['biographer']+'/Get/Whi2p_boolenet');
-						debug('Opened. Asking the server to translate the file ...');
-						Translate(data);
+						debug('Importing ...');
+						UI_window.network = BooleNet.Import(data);
+						window.close();
 						}
 				</script>
 			</td>
@@ -92,9 +99,6 @@
 			<td colspan=3>
 				<label id=debug></label>
 				<script>
-					function debug(text) {
-						document.getElementById('debug').innerHTML = text;
-						}
 				</script>
 			</td>
 		</tr>
