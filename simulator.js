@@ -84,7 +84,7 @@ Simulator = {
 
 					try {		// if an annotation is available for this node, show it
 						annotation = network.annotations[SVG_node.id.replace('_',' ')];
-						if (annotation == undefined or annotation == 'undefined')
+						if (annotation == undefined || annotation == 'undefined')
 							alert('not annotated')
 						else	{
 							document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+annotation;
