@@ -95,7 +95,7 @@ function doneGraphviz(response) {
 	if ( response != null ) {
 		var parser = new DOMParser(); 
 		var xmlDoc = parser.parseFromString(response, "text/xml"); 
-		elt = UI_window.document.getElementById('graphviz');
+		elt = UI_window.document.getElementById('graphviz_tab');
 
 		// eliminate any children 
 		var child = elt.firstChild; 
@@ -106,8 +106,15 @@ function doneGraphviz(response) {
 		} 
 
 		var xmlRoot = xmlDoc.documentElement; 
+
+//		var script = document.createElementNS("http://www.w3.org/2000/svg", "script");
+//		script.setAttribute("src", "/biographer/static/tools/SVGPan.js");
+//		xmlRoot.insertBefore(script, xmlRoot.firstChild);
+
 		var adopted = document.importNode(xmlRoot, true); 
 		elt.appendChild(adopted); 
+
+		UI_window.setupHandlers(xmlDoc.documentElement);
 		}
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');

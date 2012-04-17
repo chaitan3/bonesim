@@ -10,6 +10,7 @@
 					}
 		div.tab			{
 					border:			1px dashed blue;
+					color:			blue;
 					position:		absolute;
 					left:			1px;
 					right:			1px;
@@ -98,26 +99,26 @@
 
 	</script>
 
-	<input type=button value=graphviz onClick="show('graphviz'); hide('bui'); hide('annotation');"/>
-	<input type=button value=bui onClick="show('bui'); hide('graphviz'); hide('annotation');"/>
-	<input type=button value=annotation onClick="show('annotation'); hide('graphviz'); hide('bui');"/>
+	<input class=tabselector id=graphviz	type=button value=graphviz />
+	<input class=tabselector id=bui		type=button value=bui />
+	<input class=tabselector id=annotation	type=button value=annotation />
 	<label id=Progress></label>
 	<label id=Steps>0</label>
 
-	<div class=tab id=bui>
-		no bui SVG
+	<div class=tab id=bui_tab>
+		no bui SVG loaded
 	</div>
-	<div class=tab id=graphviz>
-		no graphviz SVG
+	<div class=tab id=graphviz_tab>
+		no graphviz SVG loaded
 	</div>
-	<div class=tab id=annotation>
-		no annotation
+	<div class=tab id=annotation_tab>
+		no annotation loaded
 	</div>
+	<script src="{{ = URL(request.application, 'static/tools', 'tabs.js') }}"></script>
+	<script src="/biographer/static/tools/SVGPan.js"></script>
 
 	<script>
-		show('graphviz');
-		hide('bui');
-		hide('annotation');
+		showTab('graphviz');
 	</script>
 
 	<div id=Statusbar>

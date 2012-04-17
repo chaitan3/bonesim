@@ -33,6 +33,8 @@ def prepareSVG(f):
 	for line in infile:
 		if '<polygon ' in line:
 			line = WorkaroundChromiumIssue123607(line)
+		if '"graph1"' in line:		# required for SVGPan.js
+			line = line.replace('"graph1"', '"viewport"')
 		if inside_node:
 			if '</g>' in line:		# node ends
 				p = replacement.find('>', replacement.find('<text '))+1		# set ellipse id according to text label
