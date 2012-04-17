@@ -98,22 +98,26 @@
 
 	</script>
 
-	<input type=button value=graphviz onClick="show('graphviz'); hide('bui');"/>
-	<input type=button value=bui onClick="show('bui'); hide('graphviz');"/>
+	<input type=button value=graphviz onClick="show('graphviz'); hide('bui'); hide('annotation');"/>
+	<input type=button value=bui onClick="show('bui'); hide('graphviz'); hide('annotation');"/>
+	<input type=button value=annotation onClick="show('annotation'); hide('graphviz'); hide('bui');"/>
 	<label id=Progress></label>
 	<label id=Steps>0</label>
 
 	<div class=tab id=bui>
 		no bui SVG
 	</div>
-
 	<div class=tab id=graphviz>
 		no graphviz SVG
+	</div>
+	<div class=tab id=annotation>
+		no annotation
 	</div>
 
 	<script>
 		show('graphviz');
 		hide('bui');
+		hide('annotation');
 	</script>
 
 	<div id=Statusbar>

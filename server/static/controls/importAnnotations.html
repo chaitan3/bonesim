@@ -40,15 +40,40 @@
 	env["templates"] = "{{templates}}";
 	env["images"] = "{{images}}";
 
-	Translator = "{{biographer}}/Translate/BooleNet";
+	Translator = null;
 	UI_window = window.opener.opener;
+
+	importAnnotations = function() {
+				var reader = new FileReader();
+				reader.readAsText(document.getElementById('File').files[0]);
+				reader.onload = AnnotationsOpened;
+				}
+
+	AnnotationsOpened = function(evt) {
+				debug('Opened.');
+				Annotate(evt.target.result);
+				}
+
+	Annotate = function(data) {
+			debug('Annotating ...');
+			try 	{
+				UI_window.network.annotations = JSON.parse(data);
+				}
+			catch(err) {
+				alert('Sorry, failed: Annotations input file is broken. See Chromium console for details.');
+				}
+			window.close();
+			window.setTimeout('window.close();', 1000);
+			}
+
 </script>
 
-<body>
+<body onLoad="importAnnotations();">
 	<table>
 		<tr style='height:75px;'>
 			<td>
-				<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
+				<b>Annotate Your Model</b>&nbsp;&nbsp;
+				<img src="{{images}}/AnnotateYourModel.png" style="vertical-align:middle;"/>
 			</td>
 			<td id=ProgressCol>
 				<img id=Tron src="{{images}}/Progress.svg"/>
@@ -69,21 +94,14 @@
 						window.onunload = function() { window.clearTimeout(timeout); }
 						}
 					function LoadWhi2p() {
-						data = GET(env['biographer']+'/Get/Whi2p_boolenet');
-						debug('Opened. Asking the server to translate the file ...');
-						Translate(data);
+						Annotate( GET(env['biographer']+'/Get/Whi2p_annotations') );
 						}
 				</script>
 			</td>
 			<td id=ButtonCol>
-				<input type=file id=File onchange="ImportChain();" />
+				<input type=file id=File onchange="importAnnotations();" />
 				<br/>
 				<input type=button value="Whi2p" onclick="LoadWhi2p();" />
-				<br/>
-				After import: 
-				<input type=checkbox id=layout /> layout 
-				<input type=checkbox id=graphviz checked /> graphviz
-				<input type=checkbox id=update checked /> update UI 
 				<br/>
 				<input type=button value=Cancel onclick="window.close();" />
 			</td>
