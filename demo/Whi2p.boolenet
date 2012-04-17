@@ -11,9 +11,16 @@
 ##
 
 Glucose				= True
+# States of Glucose: True="present", False="absent"
+
 Pyruvat				= True
+# States of Pyruvat: True="present", False="absent"
+
 Nitrogen			= True
-Rapamycin			= True
+# States of Nitrogen: True="present", False="absent"
+
+Rapamycin			= False
+# States of Rapamycin: True="present", False="absent"
 
 
 ##
@@ -41,39 +48,44 @@ Rapamycin			= True
 #
 
 starvation*			= not ((Glucose or Pyruvat) and Nitrogen)
+# States of starvation: True="starving", False="satisfied"
 
 anaerob_fermentation*		= Glucose
 oxidative_phosphorylation*	= Pyruvat and not Glucose
 
 energy*				= anaerob_fermentation or oxidative_phosphorylation or vacuolar_degradation
+# States of energy: True="available", False="lacking"
 
 
 #
 # PKA pathway
 #
 
-Ras*				= Ras1p or Ras2p
+GTP*				= Glucose
+# States of GTP: True="GTP", False="GDP"
 
-# Ras detects glucose
-# Ras is down-regulated by the PKA
-Ras_GTP*			= Ras and Glucose
+Ras*				= (Ras1p or Ras2p) and GTP
+# Annotation of Ras: "<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
 
-Ras_GTP_palmitoylation*		= Ras_GTP
-Ras_GTP_farnesylation*		= Ras_GTP
+Ras_palmitoylation*		= Ras
+# States of Ras_palmitoylation: True="active Ras was subsequentially palmitoylated", False="Ras not palmitoylated"
+Ras_farnesylation*		= Ras
+# States of Ras_farnesylation: True="active Ras was subsequentially farnesylated", False="Ras not farnesylated"
 
 # Cyr1p: adenylate cyclase
-Cyr1p_active*	= Ras_GTP_palmitoylation and Ras_GTP_farnesylation
+Cyr1p_active*	= Ras_palmitoylation and Ras_farnesylation
 
-cAMP_present*			= Cyr1p_active
+cAMP*				= Cyr1p_active
+# States of cAMP: True="present", False="absent"
 
-PKA_active*			= cAMP_present
+PKA*				= cAMP
 
 
 #
 # Sch9 pathway
 #
 
-Sch9_active*			= Ras_GTP
+Sch9_active*			= Ras
 Rim15p_active*			= Sch9_active
 
 
@@ -103,16 +115,17 @@ TORC2_active*			= ( not starvation)
 # Whi2p pathway
 #
 
-Whi2p_active*			= not Ras_GTP
+Whi2p*				= not Ras
+# Annotation of Whi2p: "<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
 
-Whi2p_Psrp_complex*		= Whi2p_active and (Psr1p_present or Psr2p_present)
+Whi2p_Psrp_complex*		= Whi2p and (Psr1p_present or Psr2p_present)
 
 
 #
 # actin organization
 #
 
-App1p_active*			= Whi2p_active
+App1p_active*			= Whi2p
 
 actin_organization*		= App1p_active or TORC2_active
 
@@ -121,7 +134,7 @@ actin_organization*		= App1p_active or TORC2_active
 # cell cycle
 #
 
-Cdc28p_active*			= not Whi2p_active and not Whi3p_present and not Whi4p_present
+Cdc28p_active*			= not Whi2p and not Whi3p_present and not Whi4p_present
 
 Cln2p_present*			= not Whi3p_present
 # Whi1p is another name for Cln3p
@@ -139,7 +152,7 @@ G1_arrest*			= Whi5p_repressor
 # unknown function
 #
 
-Lsm2p_active*			= Whi2p_active
+Lsm2p_active*			= Whi2p
 
 RNA_processing*			= Lsm2p_active
 
@@ -151,7 +164,7 @@ downregulation_of_ribosome_biogenesis* = RNA_processing or mRNA_decay
 # microtubule nucleation
 #
 
-Spc98p_active*			= Whi2p_active
+Spc98p_active*			= Whi2p
 
 microtubule_nucleation*		= Spc98p_active
 
@@ -174,7 +187,7 @@ microtubule_nucleation*		= Spc98p_active
 # Whi2p dephosphorylates Msn2 when complexed
 
 Msn2p_dephosphorylation*	= Whi2p_Psrp_complex
-#and (PKA_active or TORC1_active)
+#and (PKA or TORC1_active)
 
 Msn2p_nuclear_localized*	= Msn2p_dephosphorylation
 
@@ -222,7 +235,7 @@ Atg29_active			= True
 Atg30_active			= False
 Atg31_active			= True
 Atg32_active			= False
-Atg32_active*			= Whi2p_Psrp_complex and not (PKA_active or TORC1_active)
+Atg32_active*			= Whi2p_Psrp_complex and not (PKA or TORC1_active)
 
 
 # Atg11 is essential for selective autophagy
@@ -275,11 +288,11 @@ Atg9p_on_mitochondria*		= Atg9p_in_PAS and Atg2p_present
 
 # Atg1 is necessary for any autophagic type vesicle formation
 # gets phosphorylated by PKA
-Atg1p_active*			= PKA_active or Rim15p_active
+Atg1p_active*			= PKA or Rim15p_active
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13p_hypoP*			= ( not PKA_active) and ( not TORC1_active)
+Atg13p_hypoP*			= ( not PKA) and ( not TORC1_active)
 
 Atg17p_present			= True
 

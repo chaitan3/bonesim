@@ -82,11 +82,18 @@ Simulator = {
 				if (!event.ctrlKey) {
 //					jSBGN_node.myState = ! jSBGN_node.myState	// change node state
 
-					try {	// if an annotation is available for this node, show it
-						document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+network.annotations[SVG_node.id.replace('_',' ')];
-						showTab('annotation');
+					try {		// if an annotation is available for this node, show it
+						annotation = network.annotations[SVG_node.id.replace('_',' ')];
+						if (annotation == undefined or annotation == 'undefined')
+							alert('not annotated')
+						else	{
+							document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+annotation;
+							showTab('annotation');
+							}
 					    }
-					catch(err) {} // no annotation available
+					catch(err) {	// no annotation available
+						alert('not annotated');
+						}
 
 					}
 				else	{
