@@ -331,6 +331,7 @@ class Graph:
 			self.log(error, "Fatal: JSON parser raised an exception: %s"%err)
 			print JSON
 			return
+		print JSON
 		self.Nodes = [Node(n, defaults=True) for n in JSON["nodes"]]
 		self.Edges = [Edge(e, defaults=True) for e in JSON["edges"]]
 		self.initialize()
