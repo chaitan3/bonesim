@@ -73,9 +73,9 @@ Ras_farnesylation*		= Ras
 # States of Ras_farnesylation: True="active Ras was subsequentially farnesylated", False="Ras not farnesylated"
 
 # Cyr1p: adenylate cyclase
-Cyr1p_active*	= Ras_palmitoylation and Ras_farnesylation
+Cyr1p*				= Ras_palmitoylation and Ras_farnesylation
 
-cAMP*				= Cyr1p_active
+cAMP*				= Cyr1p or Gpa2p
 # States of cAMP: True="present", False="absent"
 
 PKA*				= cAMP
@@ -93,8 +93,14 @@ Rim15p_active*			= Sch9_active
 # Gpr1 pathway
 #
 
-Gpr1p_receptor_firing*		= Gpr1p_receptor_present and Glucose
-Gpa2p_active*			= Gpr1p_receptor_firing
+GPR1*				= True
+# States of GPR1: True="transcribed & translated", False="not present"
+
+Gpr1p*				= GPR1 and Glucose
+# States of Gpr1p: True="receptor firing", False="receptor silent"
+
+# presumably an adenylate cyclase
+Gpa2p*				= Gpr1p
 
 
 #
@@ -118,7 +124,8 @@ TORC2_active*			= ( not starvation)
 Whi2p*				= not Ras
 # Annotation of Whi2p: "<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
 
-Whi2p_Psrp_complex*		= Whi2p and (Psr1p_present or Psr2p_present)
+Whi2p_Psr12p*			= Whi2p and (Psr1p_present or Psr2p_present)
+# States of Whi2p_Psr12p: True="complexed", False="dissociated"
 
 
 #
@@ -186,7 +193,7 @@ microtubule_nucleation*		= Spc98p_active
 # No! also directly: has been found complexed with Whi2p and Psr1/2 !
 # Whi2p dephosphorylates Msn2 when complexed
 
-Msn2p_dephosphorylation*	= Whi2p_Psrp_complex
+Msn2p_dephosphorylation*	= Whi2p_Psr12p
 #and (PKA or TORC1_active)
 
 Msn2p_nuclear_localized*	= Msn2p_dephosphorylation
@@ -235,7 +242,7 @@ Atg29_active			= True
 Atg30_active			= False
 Atg31_active			= True
 Atg32_active			= False
-Atg32_active*			= Whi2p_Psrp_complex and not (PKA or TORC1_active)
+Atg32_active*			= Whi2p_Psr12p and not (PKA or TORC1_active)
 
 
 # Atg11 is essential for selective autophagy
