@@ -8,6 +8,3 @@
 def Whi2p_boolenet():
 	return open('/home/code/biosimulator/demo/Whi2p.boolenet').read()
 
-def Whi2p_annotations():
-	return open('/home/code/biosimulator/demo/Whi2p.annotations').read()
-

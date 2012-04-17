@@ -57,12 +57,6 @@
 								importBooleNetWindow = Template.popup('Import Boolean Network', 'width=650px,height=230px', env["templates"]+'/importBooleNet.html', env);
 								},
 
-					importAnnotations: function() {
-								if ( typeof(importAnnotationsWindow) != 'undefined' )
-									importAnnotationsWindow.close();
-								importAnnotationsWindow = Template.popup('Import Annotation', 'width=650px,height=230px', env["templates"]+'/importAnnotations.html', env);
-								},
-
 					doLayout:		function() {
 								if ( typeof(doLayoutWindow) != 'undefined' )
 									doLayoutWindow.close();
@@ -94,8 +88,6 @@
 						importSBMLwindow.close();
 					if ( typeof(importBooleNetWindow) != 'undefined' )
 						importBooleNetWindow.close();
-					if ( typeof(importAnnotationsWindow) != 'undefined' )
-						importAnnotationsWindow.close();
 					if ( typeof(doLayoutWindow) != 'undefined' )
 						doLayoutWindow.close();
 					if ( typeof(updateUIwindow) != 'undefined' )
@@ -114,8 +106,6 @@
 	<br/>
 -->
 	<input type=button value="Import BooleNet"		onclick="Controls.importBooleNet();"/>
-	<br/>
-	<input type=button value="Import Annotations"		onclick="Controls.importAnnotations();"/>
 	<br/>
 <!--	<input type=button value="Layout (bui)"			onclick="Controls.doLayout();"/>
 	<br/>
