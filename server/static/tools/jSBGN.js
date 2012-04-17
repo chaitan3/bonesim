@@ -53,9 +53,10 @@ jSBGN = {
 
 	exportJSON: function() {
 			// remove node.edges, edge.sourceNode, edge.targetNode for export
-			var _nodes = deepCopy(this.nodes);			// requires deepcopy.js
+			alert(this.nodes);
+			var _nodes = deepCopy(this.nodes).values();			// requires deepcopy.js
 			alert(_nodes);
-			var _edges = deepCopy(this.edges);
+			var _edges = deepCopy(this.edges).values();
 			for (index in _nodes) {
 				node = _nodes[index];
 				if (typeof(node.edges) != undefined)

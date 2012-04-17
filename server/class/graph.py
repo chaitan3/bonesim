@@ -332,8 +332,12 @@ class Graph:
 			print JSON
 			return
 		print JSON
-		self.Nodes = [Node(n, defaults=True) for n in JSON["nodes"]]
-		self.Edges = [Edge(e, defaults=True) for e in JSON["edges"]]
+		self.Nodes = []
+		if 'nodes' in JSON.keys():
+			self.Nodes = [Node(n, defaults=True) for n in JSON["nodes"]]
+		self.Edges = []
+		if 'edges' in JSON.keys():
+			self.Edges = [Edge(e, defaults=True) for e in JSON["edges"]]
 		self.initialize()
 
 	def exportDICT(self, status=True):					# export current model as python dictionary
