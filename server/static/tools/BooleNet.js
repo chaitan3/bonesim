@@ -1,4 +1,6 @@
 
+protein_name_regex = /[A-Za-z0-9_]+?/g;
+
 BooleNet = {
 	Import: function(input) {
 			input = input.split('\n');
@@ -15,19 +17,24 @@ BooleNet = {
 							if (leftside.indexOf('*') == -1)
 								console.warn('Warning in BooleNet, line '+index+': Left side of update rule lacks obligatory asterisk');
 							targetNodeId = leftside.replace('*','').trim();
-							// create Node if it doesn't exist
-							if (! network.hasNode(targetNodeId) ) {
+							if (! network.hasNode(targetNodeId) ) {		// create Node if it doesn't exist
 								Node = newNode();
 								Node.id = targetNodeId;
 								Node.data.label = targetNodeId;
 								network.appendNode(Node);
 								}
 							
-							rightside = s[1];
-							sourceNodeIds = ... regulärer Ausdruck
+							rightside = s[1].replace(/^[A-Za-z0-9]and^[A-Za-z0-9]/g, ' && ').replace(/^[A-Za-z0-9]or^[A-Za-z0-9]/g, ' || ');
+							alert(rightside);
+							sourceNodeIds = rightside.match(protein_name_regex);
 							for (index in sourceNodeIds) {
-								// add Node if it doesn't exist
-								// add Edge from source to target Node
+								sourceNodeId = sourceNodeIds[index];
+								if (sourceNodeId != "True" && sourceNodeId != "False") {
+									alert(sourceNodeId);
+									// add Node if it doesn't exist
+								
+									// add Edge from source to target Node
+									}
 								}
 							}
 						}
