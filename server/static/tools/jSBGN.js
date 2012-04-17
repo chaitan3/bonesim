@@ -8,9 +8,17 @@ jSBGN = {
 	edges:	[],
 
 	appendNode: function(Node) {
+			this.nodes.push(Node);
 			},
 
 	removeNode: function(Node) {
+			for (index in this.nodes) {
+				node = this.nodes[index];
+				if (node == Node) {
+					this.nodes.remove(index);	// requires array.js
+					break;
+					}
+				}
 			},
 
 	getNodeById: function(id) {

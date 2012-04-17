@@ -70,6 +70,7 @@ BooleNet = {
 						}
 					}
 				}
+			alert( JSON.stringify(network) );
 			return network;
 			}
 	}
