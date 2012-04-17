@@ -250,7 +250,7 @@ class Graph:
 		if len(JSON) > 0:
 			if JSON.find("'") > -1:
 				JSON = JSON.replace("'",'"')			# JSON parser expects " quotes, ' quotes are not understood !
-				self.log(warning, pre+"' quotations are not understood and have been replaced. Please only use \" quotes in the future.")
+				self.log(warning, pre+"Quotations with ' are not understood and have been replaced. Please only use \" quotes in the future.")
 
 			if JSON.lstrip()[0] != "{":				# JSON needs to start with "{"
 				JSON = "{\n"+JSON+"\n}"
@@ -276,12 +276,12 @@ class Graph:
 			if json.find('edges:') == -1 and json.find('"edges":') == -1 and json.find("'edges':") == -1:
 				self.log(warning, pre+'"nodes:" statement not found')
 
-			while JSON.find("//") > -1:				# remove commentary
+"""			while JSON.find("//") > -1:				# remove commentary
 				p = JSON.find("//")
 				q = JSON.find("\n", p)
 				self.log(warning, pre+"Removed commentary '"+JSON[p:q]+"'")
 				JSON = JSON[:p] + JSON[q+1:]
-
+"""
 			alphabet = range(ord("a"), ord("z")+1)+range(ord("A"), ord("Z")+1)
 			space = ""
 			for i in range(0,15):
