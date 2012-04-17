@@ -325,8 +325,8 @@ cvt_vesicle_assembly*		= PAS_assembly and cvt_complex
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8p_membrane_bound
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
-Tub1p_present			= True
-Tub2p_present			= True
+Tub1p_present*			= True
+Tub2p_present*			= True
 microtubule*			= Tub1p_present and Tub2p_present and microtubule_nucleation
 # Aut2 is Atg4
 # Aut7 is Atg8
