@@ -42,8 +42,10 @@ jSBGN.prototype.getNodeById = function(id) {
 jSBGN.prototype.getEdgeBySourceAndTargetId = function(sourceId, targetId) {
 						for (index in this.edges) {
 							var edge = this.edges[index];
-							if (edge.source == sourceId && edge.target == targetId)
+							if (edge.source == sourceId && edge.target == targetId) {
 								return edge;
+								break;
+								}
 							}
 						return null;
 						}

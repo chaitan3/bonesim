@@ -36,18 +36,19 @@ BooleNet = {
 							else	console.log('exists, not adding: '+targetNodeId);
 							
 							var sourceNodeIds = rightside.match(protein_name_regex);
+							console.log(rightside+' splits into '+rightside.match(protein_name_regex));
 							for (idx in sourceNodeIds) {
 								var sourceNodeId = sourceNodeIds[idx];
 								if (sourceNodeId != "True" && sourceNodeId != "False") {
 									var sourceNode = network.getNodeById(sourceNodeId);
 									if (sourceNode == null) {			// create Node if it doesn't exist
 										var sourceNode = {};
-										sourceNode.id = targetNodeId;
+										sourceNode.id = sourceNodeId;
 										sourceNode.data = {};
 										sourceNode.data.label = targetNodeId;
 										sourceNode.edges = [];
 										network.appendNode(sourceNode);
-										console.log('+ source node '+network.nodes.length+': '+sourceNode.id);
+										console.log('+ source node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 										}
 									else	console.log('exists, not adding: '+sourceNodeId);
 								

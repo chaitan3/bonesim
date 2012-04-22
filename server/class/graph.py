@@ -747,6 +747,8 @@ class Graph:
 
 		counter = 0
 		for edge in self.Edges:
+			print edge.source
+			print edge.target
 			self.log(debug, 'Adding edge from '+str(edge.source.id)+' to '+str(edge.target.id))
 
 			try:
