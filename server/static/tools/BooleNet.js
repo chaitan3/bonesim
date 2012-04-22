@@ -7,54 +7,65 @@ BooleNet2BooleNetJS = function(data) {
 
 BooleNet = {
 	Import: function(input) {
-			input = input.split('\n');
+			var input = input.split('\n');
 			var network = new jSBGN();
 			for (index in input) {
 				var line = input[index];
 				if (line.length > 0 && line[0] != ' ') {	// non-empty line
 					if (line[0] != '#') {			// update rule
-						s = line.split('=');
+						var s = line.split('=');
 						if (s.length != 2)
 							console.error('Error in BooleNet input file, line '+index+': Broken update rule')
 						else	{
-							leftside = s[0];
-							if (leftside.indexOf('*') == -1)
+							var leftside = s[0];
+							var rightside = BooleNet2BooleNetJS(s[1]).trim();
+
+							if (leftside.indexOf('*') == -1 && (rightside != 'True' && rightside != 'False'))
 								console.warn('Warning in BooleNet input file, line '+index+': Left side of update rule lacks obligatory asterisk');
-							targetNodeId = leftside.replace('*','').trim();
-							targetNode = network.getNodeById(targetNodeId);
+							var targetNodeId = leftside.replace('*','').trim();
+							var targetNode = network.getNodeById(targetNodeId);
 							if (targetNode == null) {			// create target Node if it doesn't exist
-								targetNode = newNode();
+								var targetNode = {};
 								targetNode.id = targetNodeId;
+								targetNode.data = {};
 								targetNode.data.label = targetNodeId;
+								targetNode.edges = [];
 								network.appendNode(targetNode);
+								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 								}
+							else	console.log('exists, not adding: '+targetNodeId);
 							
-							rightside = BooleNet2BooleNetJS(s[1]);
-							sourceNodeIds = rightside.match(protein_name_regex);
-							for (index in sourceNodeIds) {
-								sourceNodeId = sourceNodeIds[index];
+							var sourceNodeIds = rightside.match(protein_name_regex);
+							for (idx in sourceNodeIds) {
+								var sourceNodeId = sourceNodeIds[idx];
 								if (sourceNodeId != "True" && sourceNodeId != "False") {
-									sourceNode = network.getNodeById(sourceNodeId);
+									var sourceNode = network.getNodeById(sourceNodeId);
 									if (sourceNode == null) {			// create Node if it doesn't exist
-										sourceNode = newNode();
+										var sourceNode = {};
 										sourceNode.id = targetNodeId;
+										sourceNode.data = {};
 										sourceNode.data.label = targetNodeId;
+										sourceNode.edges = [];
 										network.appendNode(sourceNode);
+										console.log('+ source node '+network.nodes.length+': '+sourceNode.id);
 										}
+									else	console.log('exists, not adding: '+sourceNodeId);
 								
-									// create Edge from source to target Node
-									Edge = network.getEdgeBySourceAndTargetId(sourceNodeId, targetNodeId);
-									if (Edge == null) {
-										Edge = newEdge();
-										Edge.id = sourceNodeId+' -> '+targetNodeId;
-										Edge.source = sourceNodeId;
-										Edge.target = targetNodeId;
-										Edge.sourceNode = sourceNode;
-										Edge.targetNode = targetNode;
-										sourceNode.edges.push(Edge);
-										targetNode.edges.push(Edge);
-										network.appendEdge(Edge);
+									// create edge from source to target Node
+									var edge = network.getEdgeBySourceAndTargetId(sourceNodeId, targetNodeId);
+									if (edge == null) {
+										var edge = {};
+										edge.id = sourceNodeId+' -> '+targetNodeId;
+										edge.source = sourceNodeId;
+										edge.target = targetNodeId;
+										edge.sourceNode = sourceNode;
+										edge.targetNode = targetNode;
+										sourceNode.edges.push(edge);
+										targetNode.edges.push(edge);
+										network.appendEdge(edge);
+										console.log('+ edge '+network.edges.length+': '+edge.id);
 										}
+									else	console.log('exists, not adding: '+sourceNodeId+' -> '+targetNodeId);
 									}
 								}
 							}
@@ -62,10 +73,14 @@ BooleNet = {
 					else	{				// comment or instruction
 						if (line.indexOf('# States of ') == 0) {		// state description
 							var colon = line.indexOf(':');
-							var node = line.substring(12, colon);
-							var Node = network.getNodeById(node);
-							if (Node == null)
-								console.error('Error in BooleNet input file, line '+index+': No such node: "'+node+'"')
+							var nodeId = line.substring(12, colon);
+							var node = network.getNodeById(nodeId);
+							if (node == null) {
+								console.error('Error in BooleNet input file, line '+index+': Failed to define states. No such node: "'+nodeId+'"');
+								for (idx in network.nodes) {	
+									console.log(network.nodes[idx]);
+									}
+								}
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;
@@ -74,31 +89,31 @@ BooleNet = {
 								var d = setup.indexOf('"', c);
 								var True = setup.substring(a, b);
 								var False = setup.substring(c, d);
-								if (typeof(Node.simulation) === 'undefined')
-									Node.simulation = {};
-								Node.simulation.states = [True, False];
+								if (typeof(node.simulation) === 'undefined')
+									node.simulation = {};
+								node.simulation.states = [True, False];
 								}
 							}
 						else if (line.indexOf('# Annotation of ') == 0) {	// annotation
 							var colon = line.indexOf(':');
-							var node = line.substring(16, colon);
-							var Node = network.getNodeById(node);
-							if (Node == null)
-								console.error('Error in BooleNet input file, line '+index+': No such node: "'+node+'"')
+							var nodeId = line.substring(16, colon);
+							var node = network.getNodeById(nodeId);
+							if (node == null)
+								console.error('Error in BooleNet input file, line '+index+': Failed to annotate. No such node: "'+nodeId+'"')
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;
 								var b = setup.lastIndexOf('"', a);
 								var annotation = line.substring(a, b);
-								if (typeof(Node.simulation) === 'undefined')
-									Node.simulation = {};
-								Node.simulation.annotation = annotation;
+								if (typeof(node.simulation) === 'undefined')
+									node.simulation = {};
+								node.simulation.annotation = annotation;
 								}
 							}
 						}
 					}
 				}
-			alert(network.nodes.length+' nodes');
+			console.log('imported '+network.nodes.length+' nodes and '+network.edges.length+' edges.');
 			return network;
 			}
 	}

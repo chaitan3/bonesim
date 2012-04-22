@@ -1,12 +1,4 @@
 
-newNode = function() {
-		return { id: '', data: {}, edges: [] };
-		}
-
-newEdge = function() {
-		return { id: '', source: '', target: '', sourceNode: null, targetNode: null };
-		}
-
 jSBGN = function(nodes, edges) { // constructor
 		this.nodes = [];
 		if (nodes) this.nodes = nodes;
@@ -16,13 +8,14 @@ jSBGN = function(nodes, edges) { // constructor
 
 // http://www.javascriptkit.com/javatutors/oopjs2.shtml
 
-jSBGN.prototype.appendNode = function(Node) {
-				this.nodes.push(Node);
+jSBGN.prototype.appendNode = function(node) {
+				//this.nodes.push(Node); 		this doesn't work !!!
+				this.nodes = this.nodes.concat([node]);
 				}
 
-jSBGN.prototype.removeNode = function(Node) {
+jSBGN.prototype.removeNode = function(node) {
 				for (index in this.nodes) {
-					node = this.nodes[index];
+					var node = this.nodes[index];
 					if (node == Node) {
 						this.nodes.drop(index);		// requires array.js
 						break;
@@ -30,22 +23,25 @@ jSBGN.prototype.removeNode = function(Node) {
 					}
 				}
 
-jSBGN.prototype.appendEdge = function(Edge) {
-				this.edges.push(Edge);
+jSBGN.prototype.appendEdge = function(edge) {
+				//this.edges.push(edge);		this doesn't work!!!
+				this.edges = this.edges.concat([edge]);
 				}
 
 jSBGN.prototype.getNodeById = function(id) {
 				for (index in this.nodes) {
-					node = this.nodes[index];
-					if (node.id == id)
+					var node = this.nodes[index];
+					if (node.id == id) {
 						return node;
+						break;
+						}
 					}
 				return null;
 				}
 
 jSBGN.prototype.getEdgeBySourceAndTargetId = function(sourceId, targetId) {
 						for (index in this.edges) {
-							edge = this.edges[index];
+							var edge = this.edges[index];
 							if (edge.source == sourceId && edge.target == targetId)
 								return edge;
 							}
@@ -57,22 +53,33 @@ jSBGN.prototype.hasNode = function(id) {
 				}
 
 jSBGN.prototype.exportJSON = function() {
-				// remove node.edges, edge.sourceNode, edge.targetNode for export
-				var _nodes = this.nodes;			// requires object.js
-	//			alert(_nodes);
-				var _edges = this.edges;
-				for (index in _nodes) {
-					node = _nodes[index];
-					if (typeof(node.edges) != undefined)
-						delete node.edges;
+				// export network with object links
+
+				// without node.edges
+				var _nodes = [];
+				for (index in this.nodes) {
+					var node = this.nodes[index];
+					var newnode = {};
+					newnode.id = node.id;
+					newnode.data = node.data;
+					_nodes = _nodes.concat([newnode]);
 					}
-				for (index in _edges) {
-					edge = _edges[index];
-					if (typeof(edge.sourceNode) != undefined)
-						delete edge.sourceNode;
-					if (typeof(edge.targetNode) != undefined)
-						delete edge.targetNode;
+
+				// without edge.sourceNode & edge.targetNode
+				var _edges = [];
+				for (index in this.edges) {
+					var edge = this.edges[index];
+					var newedge = {};
+					newedge.id = edge.id;
+					newedge.source = edge.source;
+					newedge.target = edge.target;
+					_edges = _edges.concat([newedge]);
 					}
-				return { nodes: _nodes }; //, edges: _edges };
+
+				return { nodes: _nodes, edges: _edges };
 				}
+
+jSBGN.prototype.exportJSONstring = function() {
+					return JSON.stringify( this.exportJSON() );
+					}
 

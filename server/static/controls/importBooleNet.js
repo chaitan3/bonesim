@@ -23,7 +23,7 @@ function LoadWhi2p() {
 	BooleNetDebug('Downloading ...');
 	data = GET(env['biographer']+'/Get/Whi2p_boolenet');
 	BooleNetDebug('Importing ...');
-	network = new BooleNet.Import(data);
+	network = BooleNet.Import(data);
 	BooleNetDebug('Graphviz ...');
 	doGraphviz();
 	importBooleNetWindow.close();

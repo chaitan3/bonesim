@@ -1,10 +1,4 @@
 
-document.onkeyup = function(e) {
-			if (e.keyCode == 27) {
-				window.close();	// Esc
-				}
-			};
-
 function ImportChain() {
 	document.getElementById('ButtonCol').style.display = 'none';
 	document.getElementById('ProgressCol').style.display = 'inline';
@@ -19,31 +13,6 @@ function Opened(evt) {
 	data = evt.target.result;
 	debug('Opened. Asking the server to translate the file ...');
 	window.setTimeout('Translate('+data+');', 100);
-	}
-
-function Translate(data) {
-	if ( Translator != null ) {
-		ServerTimeout = window.setTimeout('ServerTimedOut();', 10);
-		try	{
-			translated = POST(Translator, 'data='+data).replace('\n','').replace('\t','');
-			}
-		catch(err) {
-			debug(err);
-			alert(err);
-			return
-			}
-		finally {
-			window.clearTimeout(ServerTimeout);
-			debug('Translated. Parsing JSON ...');
-			window.setTimeout('Parse();', 100);
-			}
-		}
-	else
-		Parse();
-	}
-
-function ServerTimedOut() {
-	debug('Server timeout :-(');
 	}
 
 function parseJSON(string) {
@@ -70,9 +39,7 @@ function Parse() {
 	}
 
 function doLayout() {
-	var network = { nodes: network.nodes, edges: network.edges }; // no Boolean Network
-	var json = JSON.stringify(network);
-	POST(env['biographer']+'/Layout/biographer', 'network='+json, doneLayouting);
+	POST(env['biographer']+'/Layout/biographer', 'network='+network.exportJSONstring(), doneLayouting);
 	}
 
 function doneLayouting(response) {
@@ -86,9 +53,7 @@ function doneLayouting(response) {
 	}
 
 function doGraphviz() {
-	var json = JSON.stringify( network.exportJSON() );
-	alert(json);
-	POST(env['biographer']+'/Plot/graphviz', 'orphans=yes&network='+json, doneGraphviz);
+	POST(env['biographer']+'/Plot/graphviz', 'orphans=yes&network='+network.exportJSONstring(), doneGraphviz);
 	}
 
 function doneGraphviz(response) {
