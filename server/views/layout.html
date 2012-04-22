@@ -15,7 +15,7 @@
 					left:			1px;
 					right:			1px;
 					top:			30px;
-					bottom:			30px;
+					bottom:			38px;
 					overflow:		scroll;
 					}
 		#graphvizSVG		{
@@ -73,19 +73,6 @@
 		env["templates"] = "{{ = URL(request.application, 'static', 'controls') }}";
 		env["images"] = "{{ = URL(request.application, 'static', 'img') }}";
 
-		function showControls() {
-			if ( typeof(ControlsWindow) != "undefined" )
-				ControlsWindow.close();
-			ControlsWindow = Template.popup('Controls', 'width=220px,height=360px', env["templates"]+'/controls.html', env);
-			}
-		showControls();
-
-		document.onkeyup = function(e) {
-					if (e.keyCode == 67) {
-						showControls();
-						}
-					};
-
 		network = { 'nodes':[], 'edges':[] };
 
 		window.onunload = function() {
@@ -123,7 +110,20 @@
 	</script>
 
 	<div id=Statusbar>
-		press C for controls
+		<script>
+			function showControls() {
+				if ( typeof(ControlsWindow) != "undefined" )
+					ControlsWindow.close();
+				ControlsWindow = Template.popup('Controls', 'width=220px,height=360px', env["templates"]+'/controls.html', env);
+				}
+			document.onkeyup = function(e) {
+						if (e.keyCode == 67) {
+							showControls();
+							}
+						};
+			showControls();
+		</script>
+		<input type=button value="press C for controls" onclick="showControls();"/>
 	</div>
 </body>
 
