@@ -1,102 +1,54 @@
-<html>
-
-<style>
-	body		{
-			background-color:	black;
-			color:			#9ec9e2;
-			}
-	table		{
-			border:			none;
-			margin:			0;
-			padding:		0;
-			width:			100%;
-			height:			100%;
-			}
-	#Tron		{
-			display:		none;
-			}
-	#ProgressCol	{
-			display:		none;
-			text-align:		right;
-			}
-	#DebugCol	{
-			height:			50px;
-			}
-	#debug		{
-			color:			#9ec9e2;
-			font-weight:		bold;
-			}
-</style>
-
-<script>
-	function debug(text) {
-		document.getElementById('debug').innerHTML = text;
-		}
-
-	env = {}
-	env["biographer"] = "{{biographer}}";
-	env["tools"] = "{{tools}}";
-	env["templates"] = "{{templates}}";
-	env["images"] = "{{images}}";
-
-//	Translator = "{{biographer}}/Translate/BooleNet";
-	UI_window = window.opener.opener;
-</script>
-
-<body>
-	<table>
-		<tr style='height:75px;'>
-			<td>
-				<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
-			</td>
-			<td id=ProgressCol>
-				<img id=Tron src="{{images}}/Progress.svg"/>
-				<canvas id=canvas width=70 height=70></canvas>
-				<script>
-					canvas = document.getElementById('canvas');
-					img = document.getElementById('Tron');
-					function rotateAroundCenter() {
-						alpha = 15;
-						width = 70;
-						height = 70;
-						var context = canvas.getContext('2d');
-						context.translate(width/2, height/2);
-						context.rotate(alpha*Math.PI/180);
-						context.translate(-width/2, -height/2);
-						context.drawImage(img, 0, 0);
-						timeout = window.setTimeout('rotateAroundCenter();', 50);
-						window.onunload = function() { window.clearTimeout(timeout); }
-						}
-					function LoadWhi2p() {
-						debug('Downloading ...');
-						data = GET(env['biographer']+'/Get/Whi2p_boolenet');
-						debug('Importing ...');
-						UI_window.network = BooleNet.Import(data);
-						debug('Graphviz ...');
-						doGraphviz();
+<table>
+	<tr style='height:75px;'>
+		<td>
+			<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
+		</td>
+		<td id=ProgressCol>
+			<img id=Tron src="{{images}}/Progress.svg"/>
+			<canvas id=canvas width=70 height=70></canvas>
+			<script>
+				canvas = document.getElementById('canvas');
+				img = document.getElementById('Tron');
+				function rotateAroundCenter() {
+					alpha = 15;
+					width = 70;
+					height = 70;
+					var context = canvas.getContext('2d');
+					context.translate(width/2, height/2);
+					context.rotate(alpha*Math.PI/180);
+					context.translate(-width/2, -height/2);
+					context.drawImage(img, 0, 0);
+					timeout = window.setTimeout('rotateAroundCenter();', 50);
+					window.onunload = function() { window.clearTimeout(timeout); }
+					}
+				function LoadWhi2p() {
+					debug('Downloading ...');
+					data = GET(env['biographer']+'/Get/Whi2p_boolenet');
+					debug('Importing ...');
+					network = BooleNet.Import(data);
+					debug('Graphviz ...');
+					doGraphviz();
 //						window.close();
-						}
-				</script>
-			</td>
-			<td id=ButtonCol>
-				<input type=file id=File onchange="ImportChain();" />
-				<br/>
-				<input type=button value="Whi2p" onclick="LoadWhi2p();" />
-				<br/>
-				After import: 
-				<input type=checkbox id=layout /> layout 
-				<input type=checkbox id=graphviz checked /> graphviz
-				<input type=checkbox id=update checked /> update UI 
-				<br/>
-				<input type=button value=Cancel onclick="window.close();" />
-			</td>
-		</tr>
-		<tr>
-			<td colspan=3>
-				<label id=debug></label>
-			</td>
-		</tr>
-	</table>
-</body>
+					}
+			</script>
+		</td>
+		<td id=ButtonCol>
+			<input type=file id=File onchange="ImportChain();" />
+			<br/>
+			<input type=button value="Whi2p" onclick="LoadWhi2p();" />
+			<br/>
+			After import: 
+			<input type=checkbox id=layout /> layout 
+			<input type=checkbox id=graphviz checked /> graphviz
+			<input type=checkbox id=update checked /> update UI 
+			<br/>
+			<input type=button value=Cancel onclick="window.close();" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=3>
+			<label id=debug></label>
+		</td>
+	</tr>
+</table>
 
-</html>

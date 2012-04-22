@@ -20,7 +20,7 @@ Popup = {
 					style['background-color'] = 'grey';
 					style.opacity = 0;
 				this.background.id = Math.random();
-				new OpacityFader.setup(this.background, start=0, stop=0.7, duration=3000, delayStart=0);
+				new OpacityFader.setup(this.background, start=0, stop=0.7, duration=300, delayStart=0);
 
 				this.div = document.createElement('div');
 				document.body.appendChild(this.div);
@@ -47,7 +47,7 @@ Popup = {
 					style.padding = '10px';
 
 				this.div.id = Math.random();
-				new OpacityFader.setup(this.div, start=0, stop=0.7, duration=300, delayStart=300);
+				new OpacityFader.setup(this.div, start=0, stop=1, duration=375, delayStart=300);
 
 				this.write = Popup.write;
 				this.close = Popup.close;
@@ -60,14 +60,14 @@ Popup = {
 		close : function() {
 				if (this.div) {
 					new OpacityFader.setup(this.div, start=0.7, stop=0, duration=300, delayStart=0);
-					window.setTimeout('document.body.removeChild('+this.div+');', 300);
+					window.setTimeout('document.body.removeChild(document.getElementById("'+this.div.id+'"));', 300);
 					}
 				if (this.background) {
 					new OpacityFader.setup(this.background, start=0.7, stop=0, duration=300, delayStart=300);
-					window.setTimeout('document.body.removeChild('+this.background+');', 600);
+					window.setTimeout('document.body.removeChild(document.getElementById("'+this.background.id+'"));', 600);
 					}
 				if (this) {
-					window.setTimeout('delete '+this, 1000);
+					delete this;
 					}
 				}
 	 };
