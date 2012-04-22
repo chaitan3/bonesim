@@ -1,5 +1,9 @@
 // from https://github.com/matthiasbock/javascript-website-effects/blob/master/fader.js
 
+get = function(id) {
+	return document.getElementById(id);
+	}
+
 function setOpacity(id, opacity) {
         get(id).style.opacity = opacity;
         }
@@ -8,7 +12,7 @@ function FadeIn(id, time) {
         e = get(id);
         e.style.opacity = 0;
         e.style.visibility = 'visible';
-        steps = time/20;
+        steps = time/30;
         delay = time/steps;
         for (i=1; i<=steps; i++) {
                 window.setTimeout("setOpacity('"+id+"', "+i/steps+");", i*delay);

@@ -20,7 +20,11 @@ DOMinsert = function(HTML, parent) {
 
 		var parser = new DOMParser(); 
 		scripts = parser.parseFromString(HTML, "text/xml").documentElement.getElementsByTagName('script');
-		alert(Array.prototype.slice.call(scripts));
+		for (index in Array.prototype.slice.call(scripts)) {
+			script = scripts[index].text;
+			alert(script);
+			eval(script);
+			}
 		}
 
 Template = {
@@ -65,12 +69,10 @@ TemplatePopup = {
 				},
 
 		close : function() {
-				if (this.popup) {
-					this.popup.close();
-					delete this.template;
-					delete this.popup;
-					delete this;
-					}
+				this.popup.close();
+				delete this.template;
+				delete this.popup;
+				delete this;
 				}
 	    };
 

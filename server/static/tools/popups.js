@@ -7,6 +7,7 @@ Popup = {
 				this.height = height;
 
 				this.background = document.createElement('div');
+				document.body.appendChild(this.background);
 //				this.maximizeBackground();
 					style = this.background.style;
 					style.border = 0;
@@ -17,9 +18,11 @@ Popup = {
 					style.height = "100%";
 					style['background-color'] = 'grey';
 					style.opacity = 0.7;
-				document.body.appendChild(this.background);
+				this.background.id = 'backgroundid';
+				FadeIn('backgroundid', 300);
 
 				this.div = document.createElement('div');
+				document.body.appendChild(this.div);
 //				this.centerDiv();
 					style = this.div.style;
 
@@ -39,10 +42,11 @@ Popup = {
 					style.border = '1px dotted black';
 					style.color = '#9ec9e2';
 					style['background-color'] = 'black';
-					style.opacity = 1;
+					style.opacity = 0;
 					style.padding = '10px';
 
-				document.body.appendChild(this.div);
+				this.div.id = 'divid';
+				window.setTimeout("FadeIn('divid', 300);", 300);
 
 				this.write = Popup.write;
 				this.close = Popup.close;
@@ -53,14 +57,17 @@ Popup = {
 				},
 
 		close : function() {
-				if (this.background)
-					document.body.removeChild(this.background);
 				if (this.div) {
-					this.div.innerHTML = '';
-					document.body.removeChild(this.div);
+					FadeOut('divid', 300);
+					window.setTimeout('document.body.removeChild('+this.div+');', 600);
 					}
-				if (this)
-					delete this;
+				if (this.background) {
+					window.setTimeout("FadeOut('backgroundid', 300);", 300);
+					window.setTimeout('document.body.removeChild('+this.background+');', 1000);
+					}
+				if (this) {
+					window.setTimeout('delete '+this, 1000);
+					}
 				}
 	 };
 
