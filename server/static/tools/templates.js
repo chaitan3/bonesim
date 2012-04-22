@@ -1,15 +1,17 @@
 Window = {
 		div : null,
 		iframe : null,
-		parentDocument : document,
+		document : document,
 
 		open : function(title, width, height, parent) {
 				this.width = width;
 				this.height = height;
+				if (parent)
+					this.document = parent;
 
 				this.background = document.createElement('div');
 				this.maximizeBackground();
-				document.body.appendChild(this.background);
+				this.document.body.appendChild(this.background);
 
 				this.div = document.createElement('div');
 				this.centerDiv();
@@ -18,7 +20,7 @@ Window = {
 				this.iframe = document.createElement('iframe');
 				this.maximizeIFrame();
 
-				document.body.appendChild(this.div);
+				this.document.body.appendChild(this.div);
 				this.div.appendChild(this.iframe);
 
 				return this;
@@ -90,6 +92,22 @@ Window = {
 Template = {
 		window : null,
 
+		popup : function(URL, title, width, height, dict) {
+
+				this.getTemplate(URL);
+
+				if (!dict)
+					dict = env;
+				this.renderTemplate(dict);
+
+				this.window = Window;
+				this.window.open(title, width, height);
+				this.window.write(this.innerHTML);
+				this.hookParent();
+
+				return this;
+				},
+
 		getTemplate : function(URL) {
 				if (URL.indexOf('http') != 0)
 					URL = env["templates"]+URL;
@@ -105,19 +123,10 @@ Template = {
 					return this.innerHTML;
 					},
 
-		popup : function(URL, title, width, height, dict) {
-
-				this.getTemplate(URL);
-
-				if (!dict)
-					dict = env;
-				this.renderTemplate(dict);
-
-				this.window = Window;
-				this.window.open(title, width, height);
-				this.window.write(this.innerHTML);
-
-				return this;
+		hookParent : function() {
+				ifrm = this.window.iframe;
+				ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+				ifrm.document.parentWindow = window;
 				},
 
 		close : function() {

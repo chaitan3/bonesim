@@ -99,7 +99,7 @@
 </head>
 
 <body id=body>
-	<label>&nbsp;Controls&nbsp;</label>
+	<label id='label'>&nbsp;Controls&nbsp;</label>
 	<br/>
 <!--	<input type=button value="Import JSON"			onclick="Controls.importJSON();"/>
 	<br/>
@@ -117,7 +117,7 @@
 	<br/>
 	Ctrl+Click to select nodes
 -->
-	<input type=button value="press ESC to close" onclick="thisWindow.close();"/>
+	<input type=button value="press ESC to close" onclick="parentWindow.document.popupControls.close();"/>
 </body>
 
 </html>
