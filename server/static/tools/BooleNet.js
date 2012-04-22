@@ -1,6 +1,10 @@
 
 protein_name_regex = /[A-Za-z0-9_]+/g;
 
+BooleNet2BooleNetJS = function(data) {
+			return data.replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ');
+			}
+
 BooleNet = {
 	Import: function(input) {
 			input = input.split('\n');
@@ -25,7 +29,7 @@ BooleNet = {
 								network.appendNode(targetNode);
 								}
 							
-							rightside = s[1].replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ');
+							rightside = BooleNet2BooleNetJS(s[1]);
 							sourceNodeIds = rightside.match(protein_name_regex);
 							for (index in sourceNodeIds) {
 								sourceNodeId = sourceNodeIds[index];

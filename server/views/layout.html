@@ -2,6 +2,7 @@
 
 <head>
 	<title>biographer</title>
+
 	<style>
 		body			{
 					background-color:	white;
@@ -44,6 +45,14 @@
 					}
 	</style>
 
+	<script>
+		env = {}
+		env["biographer"] = "/{{ = request.application }}";
+		env["tools"] = "{{ = URL(request.application, 'static', 'tools') }}";
+		env["templates"] = "{{ = URL(request.application, 'static', 'controls') }}";
+		env["images"] = "{{ = URL(request.application, 'static', 'img') }}";
+	</script>
+
 	<!-- our own scripts -->
 	<script src="{{ = URL(request.application, 'static/tools', 'string.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'array.js') }}"></script>
@@ -67,13 +76,7 @@
 
 <body>
 	<script>
-		env = {}
-		env["biographer"] = "/{{ = request.application }}";
-		env["tools"] = "{{ = URL(request.application, 'static', 'tools') }}";
-		env["templates"] = "{{ = URL(request.application, 'static', 'controls') }}";
-		env["images"] = "{{ = URL(request.application, 'static', 'img') }}";
-
-		network = { 'nodes':[], 'edges':[] };
+		network = jSBGN( { 'nodes':[], 'edges':[] } );
 
 		window.onunload = function() {
 					ControlsWindow.close();
@@ -90,6 +93,7 @@
 	<input class=tabselector id=graphviz	type=button value=graphviz />
 	<input class=tabselector id=bui		type=button value=bui />
 	<input class=tabselector id=annotation	type=button value=annotation />
+
 	<label id=Progress></label>
 	<label id=Steps>0</label>
 
