@@ -118,7 +118,7 @@
 			function showControls() {
 				if ( typeof(ControlsWindow) != "undefined" )
 					ControlsWindow.close();
-				ControlsWindow = Template.popup('Controls', 'width=220px,height=360px', env["templates"]+'/controls.html', env);
+				ControlsWindow = Template.popup('/controls.html', 'Controls', 220, 360);
 				}
 			document.onkeyup = function(e) {
 						if (e.keyCode == 67) {
