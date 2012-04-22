@@ -28,9 +28,10 @@ from randomid import randomID
 ### Graph object definition ###
 
 class Graph:
-	def __init__(self, filename=None, JSON=None, SBML=None, BooleNet=None, verbosity=debug):
+	def __init__(self, filename=None, JSON=None, SBML=None, BooleNet=None, KeepOrphans=False, verbosity=debug):
 		self.reset()
 		self.verbosity = verbosity
+		self.KeepOrphans = KeepOrphans
 		if filename is not None:
 			self.importfile( filename )
 		if JSON is not None:
@@ -143,11 +144,11 @@ class Graph:
 					except:
 						pass
 
-	def initialize(self, removeOrphans=False):				# initialize the network
+	def initialize(self):							# initialize the network
 		self.mapped = False
 		self.log(progress, "Initializing Graph ...")
 		self.status()
-		self.selfcheck( removeOrphanEdges=removeOrphans )
+		self.selfcheck()
 		self.make_object_links()
 		self.refresh_node_connected_edges()
 		self.refresh_node_connections()
@@ -220,7 +221,7 @@ class Graph:
 						self.log(warning, "Warning: Resizing subnode "+str(subnode.id)+" of "+str(node.id)+", which is higher than parent")
 						node.data.height = subnode.data.height+20
 
-	def selfcheck(self, removeOrphanEdges=True):
+	def selfcheck(self):
 
 		self.log(progress, "Performing Selfcheck ...")
 
@@ -232,7 +233,7 @@ class Graph:
 		self.enumerate_IDs()
 		self.enumerate_compartments()
 		self.check_node_compartments()
-		self.check_edge_connections( removeOrphanEdges )
+		self.check_edge_connections( removeOrphanEdges=True )
 		self.check_node_sizes()
 
 
@@ -717,8 +718,8 @@ class Graph:
 			self.log(debug, "recursing "+str(compartment_ID))
 			for node in self.Nodes:
 				if node.is_abstract:
-					self.log(debug, 'Not adding abstract node '+str(node.id))
-				elif len(node.edges) == 0 and getNodeType(node.type) != getNodeType('Compartment'):
+					self.log(debug, 'Not adding abstract node '+str(node.id)+' to graph')
+				elif (len(node.edges) == 0) and (getNodeType(node.type) != getNodeType('Compartment')) and (not self.KeepOrphans):
 					self.log(warning, 'Warning: Not adding orphaned node '+str(node.id))
 				else:
 					if (node.data.owns('compartment') and str(node.data.compartment.id) == str(compartment_ID)) or ((not node.data.owns('compartment')) and (compartment_ID == TopCompartmentID)):
@@ -923,5 +924,5 @@ class Graph:
 							print "gibt es nicht: ", neighbour
 
 		self.Nodes = Besucht.keys()
-		self.initialize( removeOrphans=True )
+		self.initialize()
 

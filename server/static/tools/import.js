@@ -88,13 +88,13 @@ function doneLayouting(response) {
 function doGraphviz() {
 	var json = JSON.stringify( network.exportJSON() );
 	alert(json);
-	POST(env['biographer']+'/Plot/graphviz', 'network='+json, doneGraphviz);
+	POST(env['biographer']+'/Plot/graphviz', 'orphans=yes&network='+json, doneGraphviz);
 	}
 
 function doneGraphviz(response) {
 	if ( response != null ) {
 //		DOMinsert(response, document.getElementById('graphviz_tab'));
-/*
+
 		var parser = new DOMParser(); 
                 var xmlDoc = parser.parseFromString(response, "text/xml"); 
                 elt = document.getElementById('graphviz_tab');
@@ -111,9 +111,6 @@ function doneGraphviz(response) {
 
                 var adopted = document.importNode(xmlRoot, true); 
                 elt.appendChild(adopted);
-*/
-		alert(response);
-		document.getElementById('graphviz_tab').innerHTML = response;
  		}
 /*	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
