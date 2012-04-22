@@ -8,7 +8,7 @@ BooleNet2BooleNetJS = function(data) {
 BooleNet = {
 	Import: function(input) {
 			input = input.split('\n');
-			var network = jSBGN;
+			var network = new jSBGN.create();
 			for (index in input) {
 				var line = input[index];
 				if (line.length > 0 && line[0] != ' ') {	// non-empty line
@@ -98,6 +98,7 @@ BooleNet = {
 						}
 					}
 				}
+			alert(network.nodes.length+' nodes');
 			return network;
 			}
 	}

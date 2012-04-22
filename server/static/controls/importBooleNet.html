@@ -6,20 +6,6 @@
 			width:			100%;
 			height:			100%;
 			}
-	#Tron		{
-			visibility:		hidden;
-			}
-	#ProgressCol	{
-			visibility:		hidden;
-			text-align:		right;
-			}
-	#DebugCol	{
-			height:			50px;
-			}
-	#debug		{
-			color:			#9ec9e2;
-			font-weight:		bold;
-			}
 </style>
 
 <table class=BooleNetTable>
@@ -27,34 +13,9 @@
 		<td>
 			<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
 		</td>
-		<td id=ProgressCol>
-			<img id=Tron src="{{images}}/Progress.svg"/>
+		<td id=ProgressCol style="visibility: hidden; text-align: right;">
+			<img id=Tron src="{{images}}/Progress.svg" style="visibility: hidden;"/>
 			<canvas id=canvas width=70 height=70></canvas>
-			<script>
-				canvas = document.getElementById('canvas');
-				img = document.getElementById('Tron');
-				function rotateAroundCenter() {
-					alpha = 15;
-					width = 70;
-					height = 70;
-					var context = canvas.getContext('2d');
-					context.translate(width/2, height/2);
-					context.rotate(alpha*Math.PI/180);
-					context.translate(-width/2, -height/2);
-					context.drawImage(img, 0, 0);
-					timeout = window.setTimeout('rotateAroundCenter();', 50);
-					window.onunload = function() { window.clearTimeout(timeout); }
-					}
-				function LoadWhi2p() {
-					BooleNetDebug('Downloading ...');
-					data = GET(env['biographer']+'/Get/Whi2p_boolenet');
-					BooleNetDebug('Importing ...');
-					network = BooleNet.Import(data);
-					BooleNetDebug('Graphviz ...');
-					doGraphviz();
-//						window.close();
-					}
-			</script>
 		</td>
 		<td id=ButtonCol>
 			<input type=file id=File onchange="ImportChain();" />
@@ -71,7 +32,7 @@
 	</tr>
 	<tr>
 		<td colspan=3>
-			<label id=BooleNetDebug></label>
+			<label id="BooleNetDebug" style="color: #9ec9e2; font-weight: bold;">test</label>
 		</td>
 	</tr>
 </table>

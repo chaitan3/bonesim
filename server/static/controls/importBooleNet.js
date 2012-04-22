@@ -1,7 +1,6 @@
 BooleNetDebug = function(msg) {
 			document.getElementById('BooleNetDebug').innerHTML = msg;
 			}
-debug = BooleNetDebug;
 
 canvas = document.getElementById('canvas');
 img = document.getElementById('Tron');
@@ -20,11 +19,12 @@ function rotateAroundCenter() {
 	}
 
 function LoadWhi2p() {
-	debug('Downloading ...');
+	delete network;
+	BooleNetDebug('Downloading ...');
 	data = GET(env['biographer']+'/Get/Whi2p_boolenet');
-	debug('Importing ...');
-	network = BooleNet.Import(data);
-	debug('Graphviz ...');
+	BooleNetDebug('Importing ...');
+	network = new BooleNet.Import(data);
+	BooleNetDebug('Graphviz ...');
 	doGraphviz();
 	importBooleNetWindow.close();
 	window.setTimeout('popupControls.close();', 300);

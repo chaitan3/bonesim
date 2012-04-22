@@ -87,6 +87,7 @@ function doneLayouting(response) {
 
 function doGraphviz() {
 	var json = JSON.stringify( network.exportJSON() );
+	alert(json);
 	POST(env['biographer']+'/Plot/graphviz', 'network='+json, doneGraphviz);
 	}
 
@@ -111,6 +112,7 @@ function doneGraphviz(response) {
                 var adopted = document.importNode(xmlRoot, true); 
                 elt.appendChild(adopted);
 */
+		alert(response);
 		document.getElementById('graphviz_tab').innerHTML = response;
  		}
 /*	if ( document.getElementById('update').checked ) {
