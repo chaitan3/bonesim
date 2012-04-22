@@ -57,9 +57,10 @@
 	<script src="{{ = URL(request.application, 'static/tools', 'string.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'array.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'httplib.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'popups.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'templates.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'fader.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'visibility.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'fader.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'jSBGN.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'import.js') }}"></script>
 
@@ -73,13 +74,12 @@
 
 	<!-- linked in from simulator repo -->
 	<script src="{{ = URL(request.application, 'static/simulator', 'deepcopy.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/simulator', 'fader.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
 </head>
 
 <body>
 	<script>
-		network = jSBGN( { 'nodes':[], 'edges':[] } );
+		network = jSBGN.load( nodes=[], edges=[] );
 
 		window.onunload = function() {
 					popupControls.close();
@@ -121,11 +121,15 @@
 			function showControls() {
 				if ( typeof(popupControls) != "undefined" )
 					popupControls.close();
-				popupControls = Template.popup('/controls.html', 'Controls', 220, 360);
+				popupControls = TemplatePopup;
+				popupControls.open('/controls.html', 'Controls', 220, 360);
 				}
 			document.onkeyup = function(e) {
-						if (e.keyCode == 67) {
+						if (e.keyCode == 67) { // "C"
 							showControls();
+							}
+						else if (e.keyCode == 27) { // escape
+							popupControls.close();
 							}
 						};
 			showControls();

@@ -11,6 +11,12 @@ jSBGN = {
 	nodes:	[],
 	edges:	[],
 
+	load: function(nodes, edges) {
+		this.nodes = nodes;
+		this.edges = edges;
+		return this;
+		},
+
 	appendNode: function(Node) {
 			this.nodes.push(Node);
 			},
