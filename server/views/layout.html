@@ -62,7 +62,9 @@
 	<script src="{{ = URL(request.application, 'static/tools', 'visibility.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'fader.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'jSBGN.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'BooleNet.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'import.js') }}"></script>
+	<script src="{{ = URL(request.application, 'static/tools', 'controls.js') }}"></script>
 
 	<!-- linked in from visualization (bui) repo -->
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
@@ -121,17 +123,20 @@
 			function showControls() {
 				if ( typeof(popupControls) != "undefined" )
 					popupControls.close();
-				popupControls = TemplatePopup;
-				popupControls.open('/controls.html', 'Controls', 220, 360);
+				popupControls = new TemplatePopup.open('/controls.html', 'Controls', 220, 360);
 				}
+
 			document.onkeyup = function(e) {
 						if (e.keyCode == 67) { // "C"
 							showControls();
 							}
 						else if (e.keyCode == 27) { // escape
-							popupControls.close();
+							if ( typeof(importBooleNetWindow) != 'undefined' )
+								importBooleNetWindow.close();
+							else 	popupControls.close();
 							}
 						};
+
 			showControls();
 		</script>
 		<input type=button value="press C for controls" onclick="showControls();"/>

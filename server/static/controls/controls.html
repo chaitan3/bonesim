@@ -1,53 +1,3 @@
-<body>
-<script>
-openPopups = {}
-
-Controls = ( function()	{
-		return	{
-			importJSON:	function() {
-						if ( typeof(importJSONwindow) != 'undefined' )
-							importJSONwindow.close();
-						importJSONwindow = Template.popup('Import JSON', 'width=450px,height=180px', env["templates"]+'/importJSON.html', env);
-						},
-
-			importSBML:	function() {
-						if ( typeof(importSBMLwindow) != 'undefined' )
-							importSBMLwindow.close();
-						importSBMLwindow = Template.popup('Import SBML', 'width=450px,height=180px', env["templates"]+'/importSBML.html', env);
-						},
-
-			importBooleNet: function() {
-						if ( typeof(importBooleNetWindow) != 'undefined' )
-							importBooleNetWindow.close();
-						importBooleNetWindow = TemplatePopup;
-						importBooleNetWindow.open('/importBooleNet.html', 'Import Boolean Network', 650, 230);
-						},
-
-			doLayout:		function() {
-						if ( typeof(doLayoutWindow) != 'undefined' )
-							doLayoutWindow.close();
-						doLayoutWindow = Template.popup('Layout', 'width=260px,height=150px', env["templates"]+'/doLayout.html', env);
-						},
-
-			updateUI:  	function() {
-						if ( typeof(updateUIwindow) != 'undefined' )
-							updateUIwindow.close();
-						updateUIwindow = Template.popup('Updating UI ...', 'width=80px,height=120px', env["templates"]+'/wait.html', env);
-						updateUI();
-						updateUIwindow.close();
-						},
-
-			showJSON:	function() {
-						window.open('data:text/html,network = '+JSON.stringify(network)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
-						},
-
-			showSVG:	function() {
-						window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
-						},
-			};
-		} ) ();
-</script>
-
 <style>
 	.controlBtn		{
 				color:			white;
@@ -64,7 +14,7 @@ Controls = ( function()	{
 <br/>
 <input type=button class=controlBtn value="Import SBML"			onclick="Controls.importSBML();"/>
 <br/-->
-<input type=button class=controlBtn value="Import BooleNet"		onclick="Controls.importBooleNet();"/>
+<input type=button class=controlBtn value="Import BooleNet"		onclick="importBooleNet();"/>
 <br/>
 <!--	<input type=button class=controlBtn value="Layout (bui)"			onclick="Controls.doLayout();"/>
 <br/>
@@ -78,4 +28,3 @@ Ctrl+Click to select nodes
 -->
 <input type=button class=controlBtn value="press ESC to close" onclick="popupControls.close();"/>
 
-</body>

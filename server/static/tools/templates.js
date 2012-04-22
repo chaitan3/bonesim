@@ -15,6 +15,12 @@ DOMinsert = function(HTML, parent) {
 		parent.appendChild(adopted); 
 */
 		parent.innerHTML = HTML;
+
+		// scripts are not evaluated if innerHTML is set
+
+		var parser = new DOMParser(); 
+		scripts = parser.parseFromString(HTML, "text/xml").documentElement.getElementsByTagName('script');
+		alert(Array.prototype.slice.call(scripts));
 		}
 
 Template = {
@@ -27,7 +33,8 @@ Template = {
 				URL = env["templates"]+URL;
 			this.URL = URL;
 			this.plain = GET(URL); // requires libhttp.js
-			return this;
+
+			this.render = Template.render;
 			},
 
 		render : function(dict) {
@@ -44,19 +51,17 @@ TemplatePopup = {
 		template : undefined,
 		popup : undefined,
 
-		open : function(URL, title, width, height, dict) {
+		open : function(URL, title, width, height, dict) {	// constructor
 
-				this.template = Template;
-				this.template.get(URL);
+				this.template = new Template.get(URL);
 
 				if (!dict)
 					dict = env;
 
-				this.popup = Popup;
-				this.popup.open(title, width, height);
+				this.popup = new Popup.open(title, width, height);
 				this.popup.write(this.template.render(dict));
 
-				return this;
+				this.close = TemplatePopup.close;
 				},
 
 		close : function() {
