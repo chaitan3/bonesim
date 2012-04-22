@@ -3,17 +3,20 @@ Window = {
 		iframe : null,
 
 		open : function(title, width, height) {
-				this.div = document.createElement('div');
-
 				this.width = width;
 				this.height = height;
+
+				this.div = document.createElement('div');
 				this.center();
 				this.putDecorations();
 
-				this.div.innerHTML = "Hello world!";
+				this.iframe = document.createElement('iframe');
+				this.maximizeIFrame();
 
 				document.body.appendChild(this.div);
-				return this.div;
+				this.div.appendChild(this.iframe);
+
+				return this;
 				},
 
 		center : function() {
@@ -24,11 +27,12 @@ Window = {
 				left = (windowWidth-this.width)/2;
 				top = (windowHeight-this.height)/2;
 
-				this.div.style.position = "absolute";
-				this.div.style.left = left;
-				this.div.style.top = top;
-				this.div.style.width = this.width;
-				this.div.style.height = this.height;
+				style = this.div.style;
+				style.position = "absolute";
+				style.left = left;
+				style.top = top;
+				style.width = this.width;
+				style.height = this.height;
 				},
 
 		putDecorations : function() {
@@ -38,21 +42,34 @@ Window = {
 					style.opacity = 1;
 					},
 
+		maximizeIFrame : function() {
+					style = this.iframe.style;
+					style.border = '0px solid white';
+					style.position = 'absolute';
+					style.left = 0;
+					style.top = 0;
+					style.width = this.width;
+					style.height = this.height;
+					},
+
 		write : function(HTML) {
 				ifrm = this.iframe;
 				ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
 				doc = ifrm.document;
-				doc.write(page);
+				doc.write(HTML);
 				doc.close();
 				},
 
 		close : function() {
-				// destroy
-				document.body.removeChild(this.iframe);
+				document.removeChild(this.iframe);
+				document.removeChild(this.div);
+				delete this;
 				}
 	 };
 
 Template = {
+		window : null,
+
 		getTemplate : function(URL) {
 				if (URL.indexOf('http') != 0)
 					URL = env["templates"]+URL;
@@ -76,9 +93,11 @@ Template = {
 					dict = env;
 				this.renderTemplate(dict);
 
-				win = Window.open(title, width, height);
-				win.write(this.innerHTML);
+				this.window = Window;
+				this.window.open(title, width, height);
+				this.window.write(this.innerHTML);
 
-				return win;
+				return this.window;
 				}
 	    };
+
