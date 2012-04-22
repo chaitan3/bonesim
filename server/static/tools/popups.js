@@ -17,9 +17,8 @@ Popup = {
 					style.width = "100%";
 					style.height = "100%";
 					style['background-color'] = 'grey';
-					style.opacity = 0.7;
-				this.background.id = 'backgroundid';
-				FadeIn('backgroundid', 300);
+					style.opacity = 0;
+				this.backgroundFader = new OpacityFader.setup(this.background, start=0, stop=0.7, duration=300, delayStart=0);
 
 				this.div = document.createElement('div');
 				document.body.appendChild(this.div);
@@ -45,8 +44,7 @@ Popup = {
 					style.opacity = 0;
 					style.padding = '10px';
 
-				this.div.id = 'divid';
-				window.setTimeout("FadeIn('divid', 300);", 300);
+				this.backgroundFader = new OpacityFader.setup(this.div, start=0, stop=0.7, duration=300, delayStart=300);
 
 				this.write = Popup.write;
 				this.close = Popup.close;
@@ -58,11 +56,11 @@ Popup = {
 
 		close : function() {
 				if (this.div) {
-					FadeOut('divid', 300);
+//					FadeOut('divid', 300);
 					window.setTimeout('document.body.removeChild('+this.div+');', 600);
 					}
 				if (this.background) {
-					window.setTimeout("FadeOut('backgroundid', 300);", 300);
+//					window.setTimeout("FadeOut('backgroundid', 300);", 300);
 					window.setTimeout('document.body.removeChild('+this.background+');', 1000);
 					}
 				if (this) {

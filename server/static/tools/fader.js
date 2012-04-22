@@ -1,35 +1,39 @@
 // from https://github.com/matthiasbock/javascript-website-effects/blob/master/fader.js
 
-get = function(id) {
-	return document.getElementById(id);
-	}
+setVisible = function() {
+		this.element.style.visibility = 'visible';
+		}
 
-function setOpacity(id, opacity) {
-        get(id).style.opacity = opacity;
-        }
+setInvisible = function() {
+		this.element.style.visibility = 'hidden';
+		}
 
-function FadeIn(id, time) {
-        e = get(id);
-        e.style.opacity = 0;
-        e.style.visibility = 'visible';
-        steps = time/30;
-        delay = time/steps;
-        for (i=1; i<=steps; i++) {
-                window.setTimeout("setOpacity('"+id+"', "+i/steps+");", i*delay);
-                }
-        }
+setOpacity = function(opacity) {
+		this.element.style.opacity = opacity;
+		}
 
-function FadeOut(id, time) {
-        e = get(id);
-        e.style.visibility = 'visible';
-        e.style.opacity = 1;
-        steps = time/20;
-        delay = time/steps;
-        for (i=1; i<=steps; i++) {
-                window.setTimeout("setOpacity('"+id+"', "+(1-i/steps)+");", i*delay);
-                }
-        window.setTimeout("get('"+id+"').style.visibility = 'hidden';", time);
-        }
+OpacityFader = {
+		setup : function(element, start, stop, duration, delayStart) {
+				this.element = element;
+
+				onestep = 6; // ms
+				steps = duration/onestep;
+				opacityStep = (stop-start)/steps;
+
+				this.setVisible = setVisible;
+				this.setInvisible = setInvisible;
+				this.setOpacity = setOpacity;
+
+				if ( start == 0 )	// become visible
+					window.setTimeout(this.setVisible(), delayStart);
+				for (i=0; i<=steps; i++) {
+					window.setTimeout(this.setOpacity(start+i*opacityStep), delayStart+i*onestep);
+//					alert(element+".style.opacity = "+()+";");
+					}
+				if ( stop == 0 )	// become invisible
+					window.setTimeout(this.setInvisible(), delayStart+duration);
+				}
+		}
 
 function FadeColor(begin, current, end) {
         newcolor = '#';
