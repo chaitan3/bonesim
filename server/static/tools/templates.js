@@ -22,7 +22,7 @@ DOMinsert = function(HTML, parent) {
 		scripts = parser.parseFromString(HTML, "text/xml").documentElement.getElementsByTagName('script');
 		for (index in Array.prototype.slice.call(scripts)) {
 			script = scripts[index].text;
-			alert(script);
+//			alert(script);
 			eval(script);
 			}
 		}
