@@ -1,4 +1,4 @@
-
+<body>
 <script>
 openPopups = {}
 
@@ -19,7 +19,8 @@ Controls = ( function()	{
 			importBooleNet: function() {
 						if ( typeof(importBooleNetWindow) != 'undefined' )
 							importBooleNetWindow.close();
-						importBooleNetWindow = Template.popup('Import Boolean Network', 'width=650px,height=230px', env["templates"]+'/importBooleNet.html', env);
+						importBooleNetWindow = TemplatePopup;
+						importBooleNetWindow.open('/importBooleNet.html', 'Import Boolean Network', 650, 230);
 						},
 
 			doLayout:		function() {
@@ -77,3 +78,4 @@ Ctrl+Click to select nodes
 -->
 <input type=button class=controlBtn value="press ESC to close" onclick="popupControls.close();"/>
 
+</body>

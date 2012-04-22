@@ -1,3 +1,22 @@
+
+DOMinsert = function(HTML, parent) {
+/*		var parser = new DOMParser(); 
+		var xmlDoc = parser.parseFromString(HTML, "text/xml"); 
+
+		// eliminate any children 
+		var child = parent.firstChild; 
+		while (child!=null) { 
+			parent.removeChild(child); 
+			child = parent.firstChild; 
+			}
+
+		var xmlRoot = xmlDoc.documentElement; 
+		var adopted = document.importNode(xmlRoot, true); 
+		parent.appendChild(adopted); 
+*/
+		parent.innerHTML = HTML;
+		}
+
 Template = {
 		URL : undefined,
 		plain : undefined,

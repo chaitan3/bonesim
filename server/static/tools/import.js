@@ -91,31 +91,8 @@ function doGraphviz() {
 	}
 
 function doneGraphviz(response) {
-	if ( response != null ) {
-		var parser = new DOMParser(); 
-		var xmlDoc = parser.parseFromString(response, "text/xml"); 
-		elt = UI_window.document.getElementById('graphviz_tab');
-
-		// eliminate any children 
-		var child = elt.firstChild; 
-		while (child!=null) 
-		{ 
-		elt.removeChild(child); 
-		child = elt.firstChild; 
-		} 
-
-		var xmlRoot = xmlDoc.documentElement; 
-
-//		var script = document.createElementNS("http://www.w3.org/2000/svg", "script");
-//		script.setAttribute("src", "/biographer/static/tools/SVGPan.js");
-//		xmlRoot.insertBefore(script, xmlRoot.firstChild);
-
-		var adopted = document.importNode(xmlRoot, true); 
-		elt.appendChild(adopted); 
-
-//		UI_window.document.getElementById('viewport').setAttribute('transform', 'scale(0.4 0.4)');
-//		UI_window.setupHandlers(xmlDoc.documentElement);
-		}
+	if ( response != null )
+		DOMinsert(response, document.getElementById('graphviz_tab'));
 	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);

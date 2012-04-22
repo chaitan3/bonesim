@@ -56,7 +56,8 @@ Popup = {
 					},
 
 		write : function(HTML) {
-				this.div.innerHTML = HTML;
+				DOMinsert(HTML, this.div); // requires templates.js
+//				this.div.innerHTML = HTML;
 				},
 
 		close : function() {
