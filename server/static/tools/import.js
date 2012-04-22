@@ -61,7 +61,7 @@ function parseJSON(string) {
 function Parse() {
 	json = parseJSON(translated);
 	s = 'Import successfull: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
-	UI_window.network = json;
+	network = json;
 	if ( document.getElementById('layout').checked ) {
 		debug(s+'<br/>Asking the server to make a nice layout ...');
 		window.setTimeout('doLayout();', 100);
@@ -70,14 +70,14 @@ function Parse() {
 	}
 
 function doLayout() {
-	var network = { nodes: UI_window.network.nodes, edges: UI_window.network.edges }; // no Boolean Network
+	var network = { nodes: network.nodes, edges: network.edges }; // no Boolean Network
 	var json = JSON.stringify(network);
 	POST(env['biographer']+'/Layout/biographer', 'network='+json, doneLayouting);
 	}
 
 function doneLayouting(response) {
 	if ( response != null )
-		UI_window.network = parseJSON(response);
+		network = parseJSON(response);
 	if ( document.getElementById('graphviz').checked ) {
 		debug('Plotting using Graphviz ...');
 		window.setTimeout('doGraphviz();', 100);
@@ -86,27 +86,48 @@ function doneLayouting(response) {
 	}
 
 function doGraphviz() {
-	var json = JSON.stringify( UI_window.network.exportJSON() );
+	var json = JSON.stringify( network.exportJSON() );
 	POST(env['biographer']+'/Plot/graphviz', 'network='+json, doneGraphviz);
 	}
 
 function doneGraphviz(response) {
-	if ( response != null )
-		DOMinsert(response, document.getElementById('graphviz_tab'));
-	if ( document.getElementById('update').checked ) {
+	if ( response != null ) {
+//		DOMinsert(response, document.getElementById('graphviz_tab'));
+/*
+		var parser = new DOMParser(); 
+                var xmlDoc = parser.parseFromString(response, "text/xml"); 
+                elt = document.getElementById('graphviz_tab');
+
+                // eliminate any children 
+                var child = elt.firstChild; 
+                while (child!=null) 
+                { 
+                elt.removeChild(child); 
+                child = elt.firstChild; 
+                } 
+
+                var xmlRoot = xmlDoc.documentElement; 
+
+                var adopted = document.importNode(xmlRoot, true); 
+                elt.appendChild(adopted);
+*/
+		document.getElementById('graphviz_tab').innerHTML = response;
+ 		}
+/*	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);
 		}
-//	else
-//		window.close();
+	else
+		window.close();
+*/
 	}
 
 function updateUI() {
-//	delete UI_window.graph;
-//	UI_window.graph = new UI_window.bui.Graph( UI_window.document.body );
-//	UI_window.bui.importFromJSON(UI_window.graph, UI_window.network);
-	debug('UI updated. '+UI_window.network.nodes.length+' nodes, '+UI_window.network.edges.length+' edges.');
-	UI_window.StartSimulation();
+//	delete graph;
+//	graph = new bui.Graph( document.body );
+//	bui.importFromJSON(graph, network);
+	debug('UI updated. '+network.nodes.length+' nodes, '+network.edges.length+' edges.');
+	StartSimulation();
 //	window.setTimeout('window.close();', 500);
 //	window.setTimeout('window.close();', 1000);
 //	window.close();

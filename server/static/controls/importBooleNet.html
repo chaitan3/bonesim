@@ -1,4 +1,28 @@
-<table>
+<style>
+	.BooleNetTable	{
+			border:			none;
+			margin:			0;
+			padding:		0;
+			width:			100%;
+			height:			100%;
+			}
+	#Tron		{
+			visibility:		hidden;
+			}
+	#ProgressCol	{
+			visibility:		hidden;
+			text-align:		right;
+			}
+	#DebugCol	{
+			height:			50px;
+			}
+	#debug		{
+			color:			#9ec9e2;
+			font-weight:		bold;
+			}
+</style>
+
+<table class=BooleNetTable>
 	<tr style='height:75px;'>
 		<td>
 			<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
@@ -22,11 +46,11 @@
 					window.onunload = function() { window.clearTimeout(timeout); }
 					}
 				function LoadWhi2p() {
-					debug('Downloading ...');
+					BooleNetDebug('Downloading ...');
 					data = GET(env['biographer']+'/Get/Whi2p_boolenet');
-					debug('Importing ...');
+					BooleNetDebug('Importing ...');
 					network = BooleNet.Import(data);
-					debug('Graphviz ...');
+					BooleNetDebug('Graphviz ...');
 					doGraphviz();
 //						window.close();
 					}
@@ -42,12 +66,12 @@
 			<input type=checkbox id=graphviz checked /> graphviz
 			<input type=checkbox id=update checked /> update UI 
 			<br/>
-			<input type=button value=Cancel onclick="window.close();" />
+			<input type=button value=Cancel onclick="importBooleNetWindow.close();" />
 		</td>
 	</tr>
 	<tr>
 		<td colspan=3>
-			<label id=debug></label>
+			<label id=BooleNetDebug></label>
 		</td>
 	</tr>
 </table>
