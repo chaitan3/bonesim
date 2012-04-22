@@ -1,40 +1,59 @@
 Window = {
-		iframe = null,
+		div : null,
+		iframe : null,
 
-		open = function() {
-				document.createElement('div');
+		open : function(title, width, height) {
+				this.div = document.createElement('div');
 
-		// create iframe
+				this.width = width;
+				this.height = height;
+				this.center();
+				this.putDecorations();
 
-				newdiv.setAttribute('id', id);
-				if (width) { newdiv.style.width = 300; }
-				if (height) { newdiv.style.height = 300; }
-				if ((left || top) || (left && top))
-				{ newdiv.style.position = "absolute";
-				if (left) { newdiv.style.left = left; }
-				if (top) { newdiv.style.top = top; } }
-				newdiv.style.background = "#00C";
-				newdiv.style.border = "4px solid #000";
-				if (html) { newdiv.innerHTML = html; } else { newdiv.innerHTML = "nothing"; }
+				this.div.innerHTML = "Hello world!";
 
-	//populate iframe
-            var ifrm = document.getElementById('myIframe');
-            ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
-            ifrm.document.open();
-            ifrm.document.write('Hello World!');
-            ifrm.document.close();
-
-				document.body.appendChild(newdiv);
-				return iframe;
+				document.body.appendChild(this.div);
+				return this.div;
 				},
-		close = function() {
+
+		center : function() {
+				style = this.div.style;
+
+				windowWidth = 1024;
+				windowHeight = 768;
+				left = (windowWidth-this.width)/2;
+				top = (windowHeight-this.height)/2;
+
+				this.div.style.position = "absolute";
+				this.div.style.left = left;
+				this.div.style.top = top;
+				this.div.style.width = this.width;
+				this.div.style.height = this.height;
+				},
+
+		putDecorations : function() {
+					style = this.div.style;
+					style.border = '1px solid black';
+					style['background-color'] = 'white';
+					style.opacity = 1;
+					},
+
+		write : function(HTML) {
+				ifrm = this.iframe;
+				ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+				doc = ifrm.document;
+				doc.write(page);
+				doc.close();
+				},
+
+		close : function() {
 				// destroy
 				document.body.removeChild(this.iframe);
 				}
 	 };
 
 Template = {
-		getTemplate = function(URL) {
+		getTemplate : function(URL) {
 				if (URL.indexOf('http') != 0)
 					URL = env["templates"]+URL;
 				this.URL = URL;
@@ -42,14 +61,14 @@ Template = {
 				return this.templateHTML;
 				},
 
-		renderTemplate = function(dict) {
+		renderTemplate : function(dict) {
 					this.innerHTML = this.templateHTML;
 					for (key in dict)
 						this.innerHTML = this.innerHTML.replace_all('{{'+key+'}}', dict[key]); // requires string.js
 					return this.innerHTML;
 					},
 
-		popup = function(URL, title, width, height, dict) {
+		popup : function(URL, title, width, height, dict) {
 
 				this.getTemplate(URL);
 
@@ -58,9 +77,7 @@ Template = {
 				this.renderTemplate(dict);
 
 				win = Window.open(title, width, height);
-				doc = win.document;
-				doc.write(page);
-				doc.close();
+				win.write(this.innerHTML);
 
 				return win;
 				}
