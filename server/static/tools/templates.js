@@ -1,14 +1,19 @@
 Window = {
 		div : null,
 		iframe : null,
+		parentDocument : document,
 
-		open : function(title, width, height) {
+		open : function(title, width, height, parent) {
 				this.width = width;
 				this.height = height;
 
+				this.background = document.createElement('div');
+				this.maximizeBackground();
+				document.body.appendChild(this.background);
+
 				this.div = document.createElement('div');
-				this.center();
-				this.putDecorations();
+				this.centerDiv();
+				this.putDivDecorations();
 
 				this.iframe = document.createElement('iframe');
 				this.maximizeIFrame();
@@ -19,7 +24,19 @@ Window = {
 				return this;
 				},
 
-		center : function() {
+		maximizeBackground : function() {
+					style = this.background.style;
+					style.border = 0;
+					style.position = 'absolute';
+					style.left = 0;
+					style.top = 0;
+					style.width = "100%";
+					style.height = "100%";
+					style['background-color'] = 'grey';
+					style.opacity = 0.7;
+					},
+
+		centerDiv : function() {
 				style = this.div.style;
 
 				windowWidth = 1024;
@@ -35,7 +52,7 @@ Window = {
 				style.height = this.height;
 				},
 
-		putDecorations : function() {
+		putDivDecorations : function() {
 					style = this.div.style;
 					style.border = '1px solid black';
 					style['background-color'] = 'white';
@@ -61,9 +78,12 @@ Window = {
 				},
 
 		close : function() {
-				document.removeChild(this.iframe);
-				document.removeChild(this.div);
-				delete this;
+				if (this.iframe)
+					document.removeChild(this.iframe);
+				if (this.div)
+					document.removeChild(this.div);
+				if (this)
+					delete this;
 				}
 	 };
 
@@ -97,7 +117,14 @@ Template = {
 				this.window.open(title, width, height);
 				this.window.write(this.innerHTML);
 
-				return this.window;
+				return this;
+				},
+
+		close : function() {
+				if (this.window) {
+					this.window.close();
+					delete this;
+					}
 				}
 	    };
 

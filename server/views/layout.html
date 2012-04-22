@@ -79,7 +79,7 @@
 		network = jSBGN( { 'nodes':[], 'edges':[] } );
 
 		window.onunload = function() {
-					ControlsWindow.close();
+					popupControls.close();
 //					confirm('Really close and loose unsaved data ?');
 					}
 
@@ -116,9 +116,9 @@
 	<div id=Statusbar>
 		<script>
 			function showControls() {
-				if ( typeof(ControlsWindow) != "undefined" )
-					ControlsWindow.close();
-				ControlsWindow = Template.popup('/controls.html', 'Controls', 220, 360);
+				if ( typeof(popupControls) != "undefined" )
+					popupControls.close();
+				popupControls = Template.popup('/controls.html', 'Controls', 220, 360);
 				}
 			document.onkeyup = function(e) {
 						if (e.keyCode == 67) {
