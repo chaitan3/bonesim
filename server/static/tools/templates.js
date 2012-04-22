@@ -1,26 +1,20 @@
 Window = {
-		div : null,
-		iframe : null,
-		document : document,
+		background : undefined,
+		div : undefined,
 
-		open : function(title, width, height, parent) {
+		open : function(title, width, height) {
 				this.width = width;
 				this.height = height;
-				if (parent)
-					this.document = parent;
 
 				this.background = document.createElement('div');
 				this.maximizeBackground();
-				this.document.body.appendChild(this.background);
+				document.body.appendChild(this.background);
 
 				this.div = document.createElement('div');
 				this.centerDiv();
 				this.putDivDecorations();
 
-				this.iframe = document.createElement('iframe');
-				this.maximizeIFrame();
-
-				this.document.body.appendChild(this.div);
+				document.body.appendChild(this.div);
 				this.div.appendChild(this.iframe);
 
 				return this;
@@ -56,41 +50,31 @@ Window = {
 
 		putDivDecorations : function() {
 					style = this.div.style;
-					style.border = '1px solid black';
-					style['background-color'] = 'white';
+					style.border = '1px dotted black';
+					style.color = '#9ec9e2';
+					style['background-color'] = 'black';
 					style.opacity = 1;
-					},
-
-		maximizeIFrame : function() {
-					style = this.iframe.style;
-					style.border = '0px solid white';
-					style.position = 'absolute';
-					style.left = 0;
-					style.top = 0;
-					style.width = this.width;
-					style.height = this.height;
+					style.padding = '10px';
 					},
 
 		write : function(HTML) {
-				ifrm = this.iframe;
-				ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
-				doc = ifrm.document;
-				doc.write(HTML);
-				doc.close();
+				this.div.innerHTML = HTML;
 				},
 
 		close : function() {
-				if (this.iframe)
-					document.removeChild(this.iframe);
-				if (this.div)
+				if (this.background)
+					document.removeChild(this.background);
+				if (this.div) {
+					this.div.innerHTML = '';
 					document.removeChild(this.div);
+					}
 				if (this)
 					delete this;
 				}
 	 };
 
 Template = {
-		window : null,
+		window : undefined,
 
 		popup : function(URL, title, width, height, dict) {
 
@@ -103,7 +87,6 @@ Template = {
 				this.window = Window;
 				this.window.open(title, width, height);
 				this.window.write(this.innerHTML);
-				this.hookParent();
 
 				return this;
 				},
@@ -122,12 +105,6 @@ Template = {
 						this.innerHTML = this.innerHTML.replace_all('{{'+key+'}}', dict[key]); // requires string.js
 					return this.innerHTML;
 					},
-
-		hookParent : function() {
-				ifrm = this.window.iframe;
-				ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
-				ifrm.document.parentWindow = window;
-				},
 
 		close : function() {
 				if (this.window) {
