@@ -160,33 +160,33 @@ Cln3*				= not Whi3
 G1_cyclins*			= Cln1 and Cln2 and Cln3
 # States of G1_cyclins:		True="present", False="absent"
 
-# States of Cln1p:		True="present", False="absent"
-# States of Cln2p:		True="present", False="absent"
-# States of Cln3p:		True="present", False="absent"
+# States of Cln1:		True="present", False="absent"
+# States of Cln2:		True="present", False="absent"
+# States of Cln3:		True="present", False="absent"
 
 # Whi5p is a transcriptional repressor for SCB-binding factor SBF and MCB-binding factor MBF,
 # required for G1/S phase transcription (yeastgenome.org)
-Whi5p*				= not (Cdc28p and Cln3p)
-# States of Whi5p:		True="repressing", False="inactive"
+Whi5*				= not (Cdc28 and Cln3)
+# States of Whi5:		True="repressing", False="inactive"
 
-G1_arrest*			= Whi5p
+G1_arrest*			= Whi5
 
 
 #
 # unknown function
 #
 
-Lsm2p*				= Whi2p
+Lsm2*				= Whi2
 
-RNA_processing*			= Lsm2p
-mRNA_decay*			= Lsm2p
+RNA_processing*			= Lsm2
+mRNA_decay*			= Lsm2
 
 
 #
 # microtubule nucleation
 #
 
-Spc98p*				= Whi2p
+Spc98*				= Whi2
 
 
 #
@@ -206,18 +206,18 @@ Spc98p*				= Whi2p
 # No! also directly: has been found complexed with Whi2p and Psr1/2 !
 # Whi2p dephosphorylates Msn2 when complexed
 
-Msn2p*				= Whi2p_Psr12p
-# States of Msn2p:		True="dephosphorylated = active, False="phosphorylated = inactive"
+Msn2*				= Whi2_Psr1_2
+# States of Msn2:		True="dephosphorylated = active, False="phosphorylated = inactive"
 
-Msn2pn*				= Msn2p
-# States of Msn2pn:		True="nuclear import", False="inactive"
+Msn2_n*				= Msn2
+# States of Msn2_n:		True="nuclear import", False="inactive"
 
-Rdp3p				= True
-Hda3p				= True
-chromatin*			= Rdp3p and Hda3p
+Rdp3				= True
+Hda3				= True
+chromatin*			= Rdp3 and Hda3
 # States of chromatin:		True="remodeling", False="normal"
 
-STRE*				= Msn2pn and chromatin
+STRE*				= Msn2_n and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
@@ -260,7 +260,7 @@ Atg29				= True
 Atg30				= False
 Atg31				= True
 Atg32				= False
-Atg32*				= Whi2p_Psr12p and not (PKA or TORC1)
+Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
 
 
 # Atg11 is essential for selective autophagy
@@ -276,29 +276,29 @@ autophagy_machinery*		= STRE
 # cvt pathway
 #
 # Atg19: brings Lap4 and Ams1 to PAS
-Lap4p				= True
-Ams1p				= True
-Lap4p_PAS*			= PAS and Lap4p and Atg11 and Atg19
-# States of Lap4p_PAS:		True="transported", False="free"
+Lap4				= True
+Ams1				= True
+Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19
+# States of Lap4_PAS:		True="transported", False="free"
 
 # States of Atg19:		True="present", False="absent"
 
-Ams1p_PAS*			= PAS and Ams1p and Atg11 and (Atg19 or Atg34)
-# States of Ams1p_PAS:		True="transported", False="free"
+Ams1_PAS*			= PAS and Ams1 and Atg11 and (Atg19 or Atg34)
+# States of Ams1_PAS:		True="transported", False="free"
 
 preApe1				= True
 # States of preApe1:		True="dodecamer", False="dissociated"
-Ape1p*				= preApe1
-# States of Ape1p:		True="complexed", False="dissociated"
+Ape1*				= preApe1
+# States of Ape1:		True="complexed", False="dissociated"
 
-CVT*				= PAS and Ape1p and (Lap4p_PAS or Ams1p_PAS)
+CVT*				= PAS and Ape1 and (Lap4_PAS or Ams1_PAS)
 # States of CVT:		True="complex assembled", False="absent"
 
-Lap4p_Vac*			= CVT and Lap4p_PAS
-Ams1p_Vac*			= CVT and Ams1p_PAS
+Lap4_Vac*			= CVT and Lap4_PAS
+Ams1_Vac*			= CVT and Ams1_PAS
 
-# States of Lap4p_Vac:		True="vacuolar", False="absent"
-# States of Ams1p_Vac:		True="vacuolar", False="absent"
+# States of Lap4_Vac:		True="vacuolar", False="absent"
+# States of Ams1_Vac:		True="vacuolar", False="absent"
 
 
 mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and autophagic_vacuole_expansion
@@ -310,14 +310,9 @@ mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and autophagic_vacuole_
 # Annotation of PAS:		"pre-autophagosomal structure"
 
 
-
-# ...
-
-
-
 MVB				= True
-Atg15_from_ER_to_vacuole*	= MVB
-Atg15*				= Atg15_from_ER_to_vacuole
+Atg15_ER*			= MVB
+Atg15_vacuole*			= Atg15_vacuole
 
 Atg9_PAS			= True
 Atg2				= True
@@ -343,13 +338,13 @@ aggrephagy*			= UPR and autophagic_vacuole_expansion
 
 # Atg1 is necessary for any autophagic type vesicle formation
 # gets phosphorylated by PKA
-Atg1p*				= PKA or Rim15p
+Atg1*				= PKA or Rim15
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13p_hypoP*			= ( not PKA) and ( not TORC1)
+Atg13_hypoP*			= ( not PKA) and ( not TORC1)
 
-Atg17p_present			= True
+Atg17				= True
 
 Atg1p_kinase_complex*		= Atg1p and Atg13p_hypoP and Atg17p_present
 
