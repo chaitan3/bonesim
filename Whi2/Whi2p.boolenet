@@ -156,12 +156,12 @@ Cln2p*				= not Whi3p
 # Whi1p is another name for Cln3p
 Cln3p*				= not Whi3p
 
+G1_cyclins*			= Cln1p and Cln2p and Cln3p
+# States of G1_cyclins:		True="present", False="absent"
+
 # States of Cln1p:		True="present", False="absent"
 # States of Cln2p:		True="present", False="absent"
 # States of Cln3p:		True="present", False="absent"
-
-G1_cyclins*			= Cln1p and Cln2p and Cln3p
-# States of G1_cyclins:		True="present", False="absent"
 
 # Whi5p is a transcriptional repressor for SCB-binding factor SBF and MCB-binding factor MBF,
 # required for G1/S phase transcription (yeastgenome.org)
@@ -240,10 +240,10 @@ increased_trehalose_and_glycogen_levels* = carbohydrate_storage
 # ER stress pathway
 #
 
-protein_misfolding		= False
+misfolding			= False
 # States of misfolding:		True="misfold accumulation", False="native folding"
 
-ER_stress*			= protein_misfolding
+ER_stress*			= misfolding
 
 # unfolded protein response
 UPR*				= ER_stress
@@ -303,7 +303,7 @@ Ams1p_Vac*			= CVT_ass
 mitophagy*			= Atg32 and Atg11 and Atg8_mtub and PAS and Atg9_mt
 
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
-# States of Atg9_mt		True="localized to mitochondria", False="free"
+# States of Atg9_mt:		True="localized to mitochondria", False="free"
 
 # States of PAS:		True="assembly", False="absent"
 # Annotation of PAS:		"pre-autophagosomal structure"
@@ -371,7 +371,7 @@ Atg8p_released_from_the_autophagosome* = Atg8_m and Atg4
 # autophagic vacuole assembly (GO:0000045)
 autophagic_vacuole_assembly*	= PAS
 
-CVT_ass*		= PAS and CVT
+CVT_ass*			= PAS and CVT
 
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8_m
 
