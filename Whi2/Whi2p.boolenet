@@ -55,7 +55,7 @@ fermentation*				= Glucose
 oxidative_phosphorylation*		= ( not fermentation) and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
-energy*				= anaerob_fermentation or oxidative_phosphorylation or vacuolar_degradation
+energy*				= fermentation or oxidative_phosphorylation or vacuolar_degradation
 # States of energy:		True="available", False="lacking"
 
 
