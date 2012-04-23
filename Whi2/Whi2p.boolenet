@@ -66,18 +66,18 @@ energy*				= fermentation or oxidative_phosphorylation or vacuolar_degradation
 GTP*				= Glucose
 # States of GTP:		True="GTP", False="GDP"
 
-Ras*				= (Ras1p or Ras2p) and GTP
+Ras*				= (Ras1 or Ras2) and GTP
 # Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
 
-Ras_palm*		= Ras
-# States of Ras_palm:	True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
-Ras_farn*		= Ras
-# States of Ras_farn:	True="active Ras was subsequentially farnesylated", False="Ras is not farnesylated"
+Ras_palm*			= Ras
+# States of Ras_palm:		True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
+Ras_farn*			= Ras
+# States of Ras_farn:		True="active Ras was subsequentially farnesylated", False="Ras is not farnesylated"
 
 # Cyr1p: adenylate cyclase
-Cyr1p*				= Ras_palm and Ras_farn
+Cyr1*				= Ras_palm and Ras_farn
 
-cAMP*				= Cyr1p or Gpa2p
+cAMP*				= Cyr1 or Gpa2
 # States of cAMP:		True="present", False="absent"
 
 PKA*				= cAMP
@@ -87,8 +87,8 @@ PKA*				= cAMP
 # Sch9 pathway
 #
 
-Sch9p*				= Ras
-Rim15p*				= Sch9p
+Sch9*				= Ras
+Rim15*				= Sch9
 
 
 #
@@ -98,25 +98,25 @@ Rim15p*				= Sch9p
 GPR1*				= True
 # States of GPR1:		True="gene is transcribed and translated", False="gene is silent"
 
-Gpr1p*				= GPR1 and Glucose
-# States of Gpr1p:		True="receptor firing", False="receptor silent"
+Gpr1*				= GPR1 and Glucose
+# States of Gpr1:		True="receptor firing", False="receptor silent"
 
 # presumably an adenylate cyclase
-Gpa2p*				= Gpr1p
+Gpa2*				= Gpr1
 
 
 #
 # TOR kinase pathway
 #
 
-# Rapamycin forms a complex with Fpr1p and this way inhibits TORC1 (but not TORC2 !) complex activity
-Rapamycin_Fpr1p*		= Rapamycin and Fpr1p
-# States of Rapamycin_Fpr1p:	True="complexed",	False="dissociated"
-# States of Fpr1p:		True="present",		False="absent"
+# Rapamycin forms a complex with Fpr1 and this way inhibits TORC1 (but not TORC2 !) complex activity
+Rapa_Fpr1*			= Rapamycin and Fpr1
+# States of Rapa_Fpr1:		True="complexed",	False="dissociated"
+# States of Fpr1:		True="present",		False="absent"
 
 # TORC1 is active under nutrient rich conditions
 # Rapamycin "simulates" starvation
-TORC1*				= ( not starvation) and ( not Rapamycin_Fpr1p)
+TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
 # States of TORC1:		True="complex active", False="complex inactive"
 
 TORC2*				= ( not starvation)
@@ -127,21 +127,21 @@ TORC2*				= ( not starvation)
 # Whi2p pathway
 #
 
-Whi2p*				= not Ras
-# Annotation of Whi2p:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
+Whi2*				= not Ras
+# Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
 
-Whi2p_Psr12p*			= Whi2p and (Psr1p or Psr2p)
-# States of Whi2p_Psr12p:	True="complexed", False="dissociated"
-# States of Psr1p:		True="present", False="absent"
-# States of Psr2p:		True="present", False="absent"
+Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
+# States of Whi2p_Psr1_2:	True="complexed", False="dissociated"
+# States of Psr1:		True="present", False="absent"
+# States of Psr2:		True="present", False="absent"
 
 #
 # actin organization
 #
 
-App1p*				= Whi2p
+App1*				= Whi2
 
-actin*				= App1p or TORC2
+actin*				= App1 or TORC2
 # States of actin:		True="wt", False="disorganized"
 
 
@@ -149,15 +149,15 @@ actin*				= App1p or TORC2
 # cell cycle
 #
 
-Cdc28p*				= ( not Whi2p) and ( not Whi3p) and ( not Whi4p)
-# States of Whi3p:		True="present", False="absent"
-# States of Whi4p:		True="present", False="absent"
+Cdc28*				= ( not Whi2) and ( not Whi3) and ( not Whi4)
+# States of Whi3:		True="present", False="absent"
+# States of Whi4:		True="present", False="absent"
 
-Cln2p*				= not Whi3p
-# Whi1p is another name for Cln3p
-Cln3p*				= not Whi3p
+Cln2*				= not Whi3
+# Whi1 is another name for Cln3
+Cln3*				= not Whi3
 
-G1_cyclins*			= Cln1p and Cln2p and Cln3p
+G1_cyclins*			= Cln1 and Cln2 and Cln3
 # States of G1_cyclins:		True="present", False="absent"
 
 # States of Cln1p:		True="present", False="absent"
