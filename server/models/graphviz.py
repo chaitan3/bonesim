@@ -18,7 +18,7 @@ def WorkaroundChromiumIssue123607(line):
 	p = line.find(key)+len(key)
 	q = line.find('"', p)
 	points = line[p:q]
-	numbers = re.findall('[0-9]+\.[0-9]+', points)
+	numbers = re.findall('[0-9]*\.[0-9]*', points)
 	for number in numbers:
 		points = points.replace(number, str(int(float(number))))
 	line = line[:p]+points+line[q:]
