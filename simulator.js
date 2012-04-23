@@ -57,17 +57,29 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 			if (mouseClick == 'simulation') {
 				if (jSBGN_node.simulation.update) // change node state
 					jSBGN_node.simulation.myState = ! jSBGN_node.simulation.myState;
+
+				if ( ! mySimulator.running ) {    // evtl. start simulation
+					document.getElementById('Steps').innerHTML = 0;
+					Iterate(mySimulator.SVG.id);
+					}
 				}
 			else if (mouseClick == 'annotation') {
 				var annotation = jSBGN_node.simulation.annotation;
-				if (annotation == undefined || annotation == 'undefined' || annotation == null || annotation == '')
+				if (annotation == undefined || annotation == 'undefined' || annotation == null || annotation == '') {
 					if (confirm(jSBGN_node.id+' is not annotated. Annotate now?')) {
 						text = prompt('Please enter annotation for '+jSBGN_node.id+':');
-						if (text)
+						if (text) {
 							jSBGN_node.simulation.annotation = text;
+							}
 						}
+					}
 				else	{
-					document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+annotation;
+					page = '<h1>'+SVG_node.id+'</h1>';
+					page += '<div style="position:absolute; top: 10px; left: 50%; border: 1px dotted blue; background-color:'+mySimulator.colors.active+';">'+jSBGN_node.simulation.states[0]+'</p>';
+					page += '<div style="position:absolute; top: 30px; left: 50%; border: 1px dotted blue; background-color:'+mySimulator.colors.inactive+';">'+jSBGN_node.simulation.states[1]+'</p>';
+					page += '<br/>';
+					page += annotation;
+					document.getElementById('annotation_tab').innerHTML = page;
 					showTab('annotation');
 					}
 				}
@@ -79,11 +91,6 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 		if ( mySimulator.updateSVG_Timeout == null ) {		// refresh SVG
 			updateSVG(mySimulator.SVG.id);
-			}
-
-		if ( ! mySimulator.running ) {				// start Simulation
-			document.getElementById('Steps').innerHTML = 0; // (but only if it's not running already)
-			Iterate(mySimulator.SVG.id);
 			}
 		}
 
