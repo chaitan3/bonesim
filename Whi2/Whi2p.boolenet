@@ -289,15 +289,14 @@ preApe1				= True
 Ape1p*				= preApe1
 # States of Ape1p:		True="complexed", False="dissociated"
 
-CVT*				= Ape1p and Lap4p_PAS and Ams1p_PAS
-# States of CVT:		True="complex transported", False="absent"
+CVT*				= PAS and Ape1p and Lap4p_PAS and Ams1p_PAS
+# States of CVT:		True="complex assembled", False="absent"
 
-Lap4p_Vac*			= CVT_ass
-Ams1p_Vac*			= CVT_ass
+Lap4p_Vac*			= CVT
+Ams1p_Vac*			= CVT
 
 # States of Lap4p_Vac:		True="vacuolar", False="absent"
 # States of Ams1p_Vac:		True="vacuolar", False="absent"
-# States of CVT_ass:		True="assembly", False="absent"
 
 
 mitophagy*			= Atg32 and Atg11 and Atg8_mtub and PAS and Atg9_mt
@@ -370,8 +369,6 @@ Atg8p_released_from_the_autophagosome* = Atg8_m and Atg4
 
 # autophagic vacuole assembly (GO:0000045)
 autophagic_vacuole_assembly*	= PAS
-
-CVT_ass*			= PAS and CVT
 
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8_m
 
