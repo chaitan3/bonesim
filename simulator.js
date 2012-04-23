@@ -149,7 +149,8 @@ updateSVG = function(id) {
 				var current = jSBGN_node.simulation.myElement.getAttribute('fill');
 				if ( current.toLowerCase() != desired.toLowerCase() ) {
 					var graph_refresh_required = true;
-					jSBGN_node.simulation.myElement.setAttribute('fill', NextColor(undesired, current, desired));
+					jSBGN_node.simulation.myElement.setAttribute('fill', NextColor(undesired, current, desired)); // Fading
+//					jSBGN_node.simulation.myElement.setAttribute('fill', desired);
 					}
 
 				// is this node updated or not? -> dashing?
