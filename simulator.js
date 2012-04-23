@@ -168,7 +168,7 @@ updateSVG = function(id) {
 				}
 			}
 		if (graph_refresh_required)
-			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 20); // update again in 20ms
+			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 15); // update again in 20ms
 		}
 
 Iterate = function(id) {
