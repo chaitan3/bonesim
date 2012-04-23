@@ -351,21 +351,29 @@ Atg1p_kinase_complex*		= Atg1p_active and Atg13p_hypoP and Atg17p_present
 induction_of_autophagy*		= Atg1p_kinase_complex
 
 # pre-autophagosomal structure
-PAS*			= induction_of_autophagy or ER_stress
+PAS*				= induction_of_autophagy or ER_stress
 
-Atg8p_present*			= induction_of_autophagy
-PE_present			= True
-Atg4p_present = True
-Atg8p_PE*			= Atg8p_present and PE_present
-Atg8p_membrane_bound*		= Atg8p_PE
-Atg8p_released_from_the_autophagosome* = Atg8p_membrane_bound and Atg4p_present
+Atg8*				= induction_of_autophagy
+# States of Atg8:		True="present", False="absent"
+
+PE				= True
+# States of PE:		True="present", False="absent"
+
+Atg4				= True
+# States of Atg4:		True="present", False="absent"
+
+Atg8_PE*			= Atg8 and PE
+Atg8_m*				= Atg8_PE
+# States of Atg8_m:		True="Atg8 membrane bound", False="Atg8 free"
+
+Atg8p_released_from_the_autophagosome* = Atg8_m and Atg4
 
 # autophagic vacuole assembly (GO:0000045)
 autophagic_vacuole_assembly*	= PAS
 
 CVT_ass*		= PAS and CVT
 
-autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8p_membrane_bound
+autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8_m
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 Tub1p*				= True
@@ -378,7 +386,7 @@ microtubule*			= Tub1p and Tub2p and Spc98p
 
 # Aut2 is Atg4
 # Aut7 is Atg8
-Atg8_mtub*	= Atg8p_present and microtubule and Atg4p_present
+Atg8_mtub*			= Atg8 and microtubule and Atg4
 
 autophagic_vacuole_transported_to_vacuole* = autophagic_vacuole_expansion and Atg8_mtub
 
