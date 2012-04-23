@@ -279,15 +279,20 @@ autophagy_machinery*		= STRE
 # Atg19: brings Lap4 and Ams1 to PAS
 Lap4p				= True
 Ams1				= True
-Lap4p_to_PAS*			= Lap4p and Atg11 and Atg19
+Lap4p_PAS*			= Lap4p and Atg11 and Atg19
+# States of Lap4p_PAS:		True="transported", False="free"
 
 # States of Atg19:		True="present", False="absent"
 
-Ams1p_to_PAS*			= Ams1p_present and Atg11 and (Atg19 or Atg34p_present)
-preApe1_dodecamer		= True
-Ape1p_complex*			= preApe1_dodecamer
+Ams1p_PAS*			= Ams1p_present and Atg11 and (Atg19 or Atg34p_present)
+# States of Ams1p_PAS:		True="transported", False="free"
 
-CVT*				= Ape1p_complex and Lap4p_to_PAS and Ams1p_to_PAS
+preApe1				= True
+# States of preApe1:		True="dodecamer", False="dissociated"
+Ape1p*				= preApe1
+# States of Ape1p:		True="complexed", False="dissociated"
+
+CVT*				= Ape1p and Lap4p_PAS and Ams1p_PAS
 # States of CVT:		True="complex transported", False="absent"
 
 Lap4p_to_vacuole*		= cvt_vesicle_assembly
