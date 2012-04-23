@@ -43,16 +43,16 @@ BooleNet = {
 								targetNode.data = {};
 								targetNode.data.label = targetNodeId;
 								targetNode.edges = [];
-								targetNode.simulation = {
-											myState: true,
-											update: true,
-											updateRule: makeRule(rightside)
-											};
 								network.appendNode(targetNode);
 //								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 								}
 //							else	console.log('exists, not adding: '+targetNodeId);
-							
+							targetNode.simulation = {
+										myState: true,
+										update: true,
+										updateRule: makeRule(rightside)
+										};
+
 							var sourceNodeIds = rightside.match(protein_name_regex);
 //							console.log(rightside+' splits into '+rightside.match(protein_name_regex));
 							for (idx in sourceNodeIds) {
@@ -68,7 +68,7 @@ BooleNet = {
 										sourceNode.simulation = {
 													myState: true,
 													update: true,
-													updateRule: makeRule(rightside)
+													updateRule: ''
 													};
 										network.appendNode(sourceNode);
 //										console.log('+ source node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
@@ -136,6 +136,7 @@ BooleNet = {
 					}
 				}
 			console.log('imported '+network.nodes.length+' nodes and '+network.edges.length+' edges.');
+//			console.log((network.getNodeById('Whi3p').simulation.updateRule);
 			return network;
 			}
 	}
