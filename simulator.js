@@ -194,6 +194,8 @@ Iterate = function(id) {
 		for (idx in mySimulator.jSBGN.nodes) {
 			var jSBGN_node = mySimulator.jSBGN.nodes[idx];
 			if ( jSBGN_node.simulation.update && jSBGN_node.simulation.updateRule.trim() != '') {
+//				if (jSBGN_node.id == "Whi3p")	// bug
+//					console.log(jSBGN_node.simulation.updateRule);
 				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
 				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
 				if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
@@ -220,6 +222,8 @@ Iterate = function(id) {
 			console.log('Boolean network reached steady state.');
 			mySimulator.running = false;
 			}
+
+//		console.log(mySimulator.jSBGN.getNodeById('Whi3p').simulation.myState); // bug
 		}
 
 Simulator.prototype.Iterate = function() {
