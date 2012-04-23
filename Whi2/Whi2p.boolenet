@@ -221,10 +221,11 @@ STRE*				= Msn2pn and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
-bulk_autophagy*			= STRE1
-Atg1*				= bulk_autophagy
-Atg13*				= bulk_autophagy
-Atg17*				= bulk_autophagy
+bulk_autophagy*			= Atg1_13_17 and autophagic_vacuole_expansion
+Atg1*				= STRE1
+Atg13*				= STRE1
+Atg17*				= STRE1
+Atg1_13_17*			= Atg1 and Atg13 and Atg17
 
 selective_autophagy*		= STRE2
 Atg11*				= selective_autophagy
@@ -386,7 +387,7 @@ microtubule*			= Tub1p and Tub2p and Spc98p
 # Aut7 is Atg8
 Atg8_mtub*			= Atg8 and microtubule and Atg4
 
-autophagic_vacuole_transported_to_vacuole* = Atg8_mtub and (mitophagy or bulk_autophagy or pexophagy ro ribophagy or aggrephagy)
+autophagic_vacuole_transported_to_vacuole* = Atg8_mtub and (mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy)
 
 # autophagic vacuole docking (GO:0016240)
 autophagic_vacuole_docking*	= autophagic_vacuole_transported_to_vacuole
