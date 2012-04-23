@@ -148,7 +148,7 @@ actin*				= App1p or TORC2
 # cell cycle
 #
 
-Cdc28p_active*			= ( not Whi2p) and ( not Whi3p) and ( not Whi4p)
+Cdc28p*				= ( not Whi2p) and ( not Whi3p) and ( not Whi4p)
 # States of Whi3p:		True="present", False="absent"
 # States of Whi4p:		True="present", False="absent"
 
@@ -165,7 +165,7 @@ G1_cyclins*			= Cln1p and Cln2p and Cln3p
 
 # Whi5p is a transcriptional repressor for SCB-binding factor SBF and MCB-binding factor MBF,
 # required for G1/S phase transcription (yeastgenome.org)
-Whi5p*				= not (Cdc28p_active and Cln3p)
+Whi5p*				= not (Cdc28p and Cln3p)
 # States of Whi5p:		True="repressing", False="inactive"
 
 G1_arrest*			= Whi5p
@@ -277,13 +277,19 @@ autophagy_machinery*		= STRE
 # cvt pathway
 #
 # Atg19: brings Lap4 and Ams1 to PAS
-Lap4p_present			= True
-Ams1_present			= True
-Lap4p_to_PAS*			= Lap4p_present and Atg11 and Atg19p_present
-Ams1p_to_PAS*			= Ams1p_present and Atg11 and (Atg19p_present or Atg34p_present)
+Lap4p				= True
+Ams1				= True
+Lap4p_to_PAS*			= Lap4p and Atg11 and Atg19
+
+# States of Atg19:		True="present", False="absent"
+
+Ams1p_to_PAS*			= Ams1p_present and Atg11 and (Atg19 or Atg34p_present)
 preApe1_dodecamer		= True
 Ape1p_complex*			= preApe1_dodecamer
-cvt_complex*			= Ape1p_complex and Lap4p_to_PAS and Ams1p_to_PAS
+
+CVT*				= Ape1p_complex and Lap4p_to_PAS and Ams1p_to_PAS
+# States of CVT:		True="complex transported", False="absent"
+
 Lap4p_to_vacuole*		= cvt_vesicle_assembly
 Ams1p_to_vacuole*		= cvt_vesicle_assembly
 
@@ -294,6 +300,7 @@ mitophagy*			= Atg32 and Atg11 and Atg8_mtub and PAS and Atg9_mt
 # States of Atg9_mt		True="localized to mitochondria", False="free"
 
 # States of PAS:		True="assembly", False="absent"
+# Annotation of PAS:		"pre-autophagosomal structure"
 
 
 MVB_pathway			= True
@@ -345,7 +352,7 @@ Atg8p_released_from_the_autophagosome* = Atg8p_membrane_bound and Atg4p_present
 # autophagic vacuole assembly (GO:0000045)
 autophagic_vacuole_assembly*	= PAS
 
-cvt_vesicle_assembly*		= PAS and cvt_complex
+cvt_vesicle_assembly*		= PAS and CVT
 
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8p_membrane_bound
 
