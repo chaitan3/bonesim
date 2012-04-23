@@ -5,3 +5,7 @@ Array.drop = function(from, to) {
 		  this.length = from < 0 ? this.length + from : from;
 		  return this.push.apply(this, rest);
 		};
+
+Array.push = function(el) {				// kind of a bugfix, because arr.push doesn't work (in Chromium)
+		this = this.concat([el]);
+		}

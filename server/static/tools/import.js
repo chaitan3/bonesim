@@ -77,6 +77,13 @@ function doneGraphviz(response) {
                 var adopted = document.importNode(xmlRoot, true); 
                 elt.appendChild(adopted);
  		}
+
+	if (simulator)
+		delete simulator;
+	simulator = new Simulator();
+	simulator.Initialize(network, document.getElementById('viewport'));
+	simulator.Iterate();
+
 /*	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');
 		window.setTimeout('updateUI();', 100);

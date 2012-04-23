@@ -31,12 +31,12 @@ BooleNet = {
 								targetNode.data.label = targetNodeId;
 								targetNode.edges = [];
 								network.appendNode(targetNode);
-								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
+//								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 								}
-							else	console.log('exists, not adding: '+targetNodeId);
+//							else	console.log('exists, not adding: '+targetNodeId);
 							
 							var sourceNodeIds = rightside.match(protein_name_regex);
-							console.log(rightside+' splits into '+rightside.match(protein_name_regex));
+//							console.log(rightside+' splits into '+rightside.match(protein_name_regex));
 							for (idx in sourceNodeIds) {
 								var sourceNodeId = sourceNodeIds[idx];
 								if (sourceNodeId != "True" && sourceNodeId != "False") {
@@ -45,12 +45,12 @@ BooleNet = {
 										var sourceNode = {};
 										sourceNode.id = sourceNodeId;
 										sourceNode.data = {};
-										sourceNode.data.label = targetNodeId;
+										sourceNode.data.label = sourceNodeId;
 										sourceNode.edges = [];
 										network.appendNode(sourceNode);
-										console.log('+ source node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
+//										console.log('+ source node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 										}
-									else	console.log('exists, not adding: '+sourceNodeId);
+//									else	console.log('exists, not adding: '+sourceNodeId);
 								
 									// create edge from source to target Node
 									var edge = network.getEdgeBySourceAndTargetId(sourceNodeId, targetNodeId);
@@ -64,9 +64,9 @@ BooleNet = {
 										sourceNode.edges.push(edge);
 										targetNode.edges.push(edge);
 										network.appendEdge(edge);
-										console.log('+ edge '+network.edges.length+': '+edge.id);
+//										console.log('+ edge '+network.edges.length+': '+edge.id);
 										}
-									else	console.log('exists, not adding: '+sourceNodeId+' -> '+targetNodeId);
+//									else	console.log('exists, not adding: '+sourceNodeId+' -> '+targetNodeId);
 									}
 								}
 							}
