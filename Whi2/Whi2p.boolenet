@@ -148,18 +148,27 @@ actin*				= App1p or TORC2
 # cell cycle
 #
 
-Cdc28p_active*			= not Whi2p and not Whi3p_present and not Whi4p_present
+Cdc28p_active*			= ( not Whi2p) and ( not Whi3p) and ( not Whi4p)
+# States of Whi3p:		True="present", False="absent"
+# States of Whi4p:		True="present", False="absent"
 
-Cln2p_present*			= not Whi3p_present
+Cln2p*				= not Whi3p
 # Whi1p is another name for Cln3p
-Cln3p_present*			= not Whi3p_present
-G1_cyclins_present*		= Cln1p_present and Cln2p_present and Cln3p_present
+Cln3p*				= not Whi3p
+
+# States of Cln1p:		True="present", False="absent"
+# States of Cln2p:		True="present", False="absent"
+# States of Cln3p:		True="present", False="absent"
+
+G1_cyclins*			= Cln1p and Cln2p and Cln3p
+# States of G1_cyclins:		True="present", False="absent"
 
 # Whi5p is a transcriptional repressor for SCB-binding factor SBF and MCB-binding factor MBF,
 # required for G1/S phase transcription (yeastgenome.org)
-Whi5p_repressor*		= not (Cdc28p_active and Cln3p_present)
+Whi5p*				= not (Cdc28p_active and Cln3p)
+# States of Whi5p:		True="repressing", False="inactive"
 
-G1_arrest*			= Whi5p_repressor
+G1_arrest*			= Whi5p
 
 
 #

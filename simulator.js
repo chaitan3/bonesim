@@ -168,7 +168,7 @@ updateSVG = function(id) {
 				}
 			}
 		if (graph_refresh_required)
-			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 15); // update again in 20ms
+			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 50); // update again in 20ms
 		}
 
 Iterate = function(id) {
@@ -201,7 +201,7 @@ Iterate = function(id) {
 				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
 				}
 			try { delay=parseInt(document.getElementById('Delay').value); }
-			catch(err) { delay=10;	}
+			catch(err) { delay=100;	}
 			if ( mySimulator.updateSVG_Timeout == null )
 				updateSVG();
 			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again
