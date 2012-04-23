@@ -5,6 +5,16 @@ BooleNet2BooleNetJS = function(data) {
 			return data.replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ');
 			}
 
+getMyState = function(jSBGN, id) {
+		return jSBGN.getNodeById(id).simulation.myState;
+		}
+
+makeRule = function(rule) {
+		if (rule.trim() == 'True' || rule.trim() == 'False')
+			return '';
+		return rule.replace(protein_name_regex, function(text) { return "getMyState('"+text+"')"; });
+		}
+
 BooleNet = {
 	Import: function(input) {
 			var input = input.split('\n');
@@ -33,7 +43,7 @@ BooleNet = {
 								targetNode.simulation = {
 											myState: true,
 											update: true,
-											updateRule: rightside
+											updateRule: makeRule(rightside)
 											};
 								network.appendNode(targetNode);
 //								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
@@ -55,7 +65,7 @@ BooleNet = {
 										sourceNode.simulation = {
 													myState: true,
 													update: true,
-													updateRule: rightside
+													updateRule: makeRule(rightside)
 													};
 										network.appendNode(sourceNode);
 //										console.log('+ source node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
