@@ -344,24 +344,6 @@ Atg1*				= PKA or Rim15
 # Atg13 becomes active, when hypophosphorylated (building complexes)
 Atg13_hypoP*			= ( not PKA) and ( not TORC1)
 
-Atg17				= True
-
-Atg1p_kinase_complex*		= Atg1p and Atg13p_hypoP and Atg17p_present
-
-induction_of_autophagy*		= Atg1p_kinase_complex
-
-# pre-autophagosomal structure
-PAS*				= induction_of_autophagy or ER_stress
-
-Atg8*				= induction_of_autophagy
-# States of Atg8:		True="present", False="absent"
-
-PE				= True
-# States of PE:		True="present", False="absent"
-
-Atg4				= True
-# States of Atg4:		True="present", False="absent"
-
 Atg8_PE*			= Atg8 and PE
 Atg8_m*				= Atg8_PE
 # States of Atg8_m:		True="Atg8 membrane bound", False="Atg8 free"
@@ -375,17 +357,14 @@ autophagic_vacuole_assembly*	= PAS
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8_m
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
-Tub1p*				= True
-Tub2p*				= True
-microtubule*			= Tub1p and Tub2p and Spc98p
+microtubule*			= Tub1 and Tub2 and Spc98
 # States of microtubule:	True="microtubule nucleation", False="absent"
-
-# States of Tub1p:		True="present", False="absent"
-# States of Tub2p:		True="present", False="absent"
+# States of Tub1:		True="present", False="absent"
+# States of Tub2:		True="present", False="absent"
 
 # Aut2 is Atg4
 # Aut7 is Atg8
-Atg8_mtub*			= Atg8 and microtubule and Atg4
+Atg8_mtub*			= Atg8_m and microtubule and Atg4
 
 autophagic_vacuole_transported_to_vacuole* = Atg8_mtub and (mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy)
 
@@ -398,5 +377,5 @@ autophagic_vacuole_fusion*	= autophagic_vacuole_docking and Ccz1 and Vam3
 # autophagic membrane disassembly (GO:0030399)
 autophagic_membrane_disassembly* = autophagic_vacuole_fusion and Atg15
 
-vacuolar_degradation*		= autophagic_membrane_disassembly and Lap4p_Vac and Ams1p_Vac
+vacuolar_degradation*		= autophagic_membrane_disassembly and Lap4_Vac and Ams1_Vac
 
