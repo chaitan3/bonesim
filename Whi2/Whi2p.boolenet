@@ -366,7 +366,7 @@ autophagic_vacuole*		= mitophagy or bulk_autophagy or pexophagy or ribophagy or 
 transport_to_vacuole*		= autophagic_vacuole and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
-docking*			= autophagic_vacuole_transported_to_vacuole
+docking*			= transport_to_vacuole
 
 # autophagic vacuole fusion (GO:0000046)
 fusion*				= docking and Ccz1 and Vam3
