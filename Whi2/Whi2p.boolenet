@@ -320,8 +320,8 @@ Atg15_from_ER_to_vacuole*	= MVB
 Atg15*				= Atg15_from_ER_to_vacuole
 
 Atg9p_in_PAS			= True
-Atg2p_present			= True
-Atg9_mt*			= Atg9p_in_PAS and Atg2p_present
+Atg2				= True
+Atg9_mt*			= Atg9p_in_PAS and Atg2
 
 
 #
@@ -336,6 +336,10 @@ Atg9_mt*			= Atg9p_in_PAS and Atg2p_present
 # ribophagy
 # aggrephagy
 
+pexophagy*			= autophagic_vacuole_expansion
+ribophagy*			= autophagic_vacuole_expansion
+aggrephagy*			= UPR and autophagic_vacuole_expansion
+# Annotation of UPR:		"unfolded protein response pathway"
 
 # Atg1 is necessary for any autophagic type vesicle formation
 # gets phosphorylated by PKA
@@ -367,7 +371,8 @@ Atg8_PE*			= Atg8 and PE
 Atg8_m*				= Atg8_PE
 # States of Atg8_m:		True="Atg8 membrane bound", False="Atg8 free"
 
-Atg8p_released_from_the_autophagosome* = Atg8_m and Atg4
+Atg8_r* 			= Atg8_m and Atg4
+# States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 in or on autophagosome"
 
 # autophagic vacuole assembly (GO:0000045)
 autophagic_vacuole_assembly*	= PAS
