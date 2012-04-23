@@ -120,39 +120,40 @@ updateSVG = function(id) {
 			window.clearTimeout(mySimulator.updateSVG_Timeout);
 			mySimulator.updateSVG_Timeout = null;
 			}
-		var graph_refresh_required = false;
-		for (n in mySimulator.nodes) {			// update color and dashing of all Nodes
-			var jSBGN_node = mySimulator.nodes[n];
 
-			if (jSBGN_node != null && jSBGN_node.myElement != null) {
+		var graph_refresh_required = false;
+		for (n in mySimulator.jSBGN.nodes) {			// update color and dashing of all Nodes
+			var jSBGN_node = mySimulator.jSBGN.nodes[n];
+
+			if (jSBGN_node != null && jSBGN_node.simulation.myElement != null) {
 				// which color is this node currently fading to ?
 				var desired = mySimulator.colors.inactive;
 				var undesired = mySimulator.colors.active;
-				if ( jSBGN_node.myState ) {
+				if ( jSBGN_node.simulation.myState ) {
 					var temp = desired;
 					var desired = undesired;
 					var undesired = temp;
 					}
 
 				// continue fading
-				var current = jSBGN_node.myElement.getAttribute('fill');
+				var current = jSBGN_node.simulation.myElement.getAttribute('fill');
 				if ( current.toLowerCase() != desired.toLowerCase() ) {
 					var graph_refresh_required = true;
-					jSBGN_node.myElement.setAttribute('fill', NextColor(undesired, current, desired));
+					jSBGN_node.simulation.myElement.setAttribute('fill', NextColor(undesired, current, desired));
 					}
 
 				// is this node updated or not? -> dashing?
 				var desired = 'none';
 				var undesired = '3,3';
-				if ( ! jSBGN_node.update ) {
+				if ( ! jSBGN_node.simulation.update ) {
 					var temp = desired;
 					var desired = undesired;
 					var undesired = temp;
 					}
-				var current = jSBGN_node.myElement.getAttribute('stroke-dasharray');
+				var current = jSBGN_node.simulation.myElement.getAttribute('stroke-dasharray');
 				if ( current != desired ) {
 //					graph_refresh_required = true;
-					jSBGN_node.myElement.style['stroke-dasharray'] = desired;
+					jSBGN_node.simulation.myElement.style['stroke-dasharray'] = desired;
 					}
 				}
 			}
@@ -175,25 +176,25 @@ Iterate = function(id) {
 
 		// calculation
 		var changes = false;
-		for (n in mySimulator.nodes) {
-			var jSBGN_node = mySimulator.nodes[n];
-			if ( jSBGN_node.update ) {
-				jSBGN_node.myNextState = Boolean(eval(jSBGN_node.updateRule));
-				var changes = changes || (jSBGN_node.myNextState != jSBGN_node.myState);
+		for (n in mySimulator.jSBGN.nodes) {
+			var jSBGN_node = mySimulator.jSBGN.nodes[n];
+			if ( jSBGN_node.simulation.update ) {
+				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
 				}
 			}
 
 		// steady state ?
 		if ( changes ) {			// network updated -> steady state not reached
-			for (n in mySimulator.nodes) {
-				var jSBGN_node = mySimulator.nodes[n];					// State = NextState
-				jSBGN_node.myState = jSBGN_node.myNextState;
+			for (n in mySimulator.jSBGN.nodes) {
+				var jSBGN_node = mySimulator.jSBGN.nodes[n];			// State = NextState
+				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
 				}
-			try { delay=parseInt(document.getElementById('Delay').value);	}
+			try { delay=parseInt(document.getElementById('Delay').value); }
 			catch(err) { delay=120;	}
 			if ( mySimulator.updateSVG_Timeout == null )
 				updateSVG();
-			window.setTimeout('Simulator.Iterate("'+id+'");', delay);			// iterate again after delay
+			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again
 			}
 		else 	{		// no changes -> steady state
 			updateSVG(id);
