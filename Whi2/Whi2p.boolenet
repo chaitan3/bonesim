@@ -130,9 +130,10 @@ TORC2*				= ( not starvation)
 Whi2p*				= not Ras
 # Annotation of Whi2p:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
 
-Whi2p_Psr12p*			= Whi2p and (Psr1p_present or Psr2p_present)
+Whi2p_Psr12p*			= Whi2p and (Psr1p or Psr2p)
 # States of Whi2p_Psr12p:	True="complexed", False="dissociated"
-
+# States of Psr1p:		True="present", False="absent"
+# States of Psr2p:		True="present", False="absent"
 
 #
 # actin organization
@@ -281,7 +282,7 @@ Lap4p_PAS*			= Lap4p and Atg11 and Atg19
 
 # States of Atg19:		True="present", False="absent"
 
-Ams1p_PAS*			= Ams1p and Atg11 and (Atg19 or Atg34p_present)
+Ams1p_PAS*			= Ams1p and Atg11 and (Atg19 or Atg34)
 # States of Ams1p_PAS:		True="transported", False="free"
 
 preApe1				= True
