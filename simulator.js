@@ -79,12 +79,12 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 		if (!event.ctrlKey) {
 			if (mouseClick == 'simulation') {
-				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState);
+//				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState); // vorher
 
 				if (jSBGN_node.simulation.update) // change node state
 					jSBGN_node.simulation.myState = ! jSBGN_node.simulation.myState;
 
-				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState);
+//				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState); // nachher
 
 				if ( ! mySimulator.running ) {    // evtl. start simulation
 					document.getElementById('Steps').innerHTML = 0;
@@ -190,19 +190,23 @@ Iterate = function(id) {
 		steps.innerHTML = parseInt(steps.innerHTML)+1;
 
 		// calculation
-		var changes = false;
-		for (n in mySimulator.jSBGN.nodes) {
-			var jSBGN_node = mySimulator.jSBGN.nodes[n];
+		var changed = [];
+		for (idx in mySimulator.jSBGN.nodes) {
+			var jSBGN_node = mySimulator.jSBGN.nodes[idx];
 			if ( jSBGN_node.simulation.update && jSBGN_node.simulation.updateRule.trim() != '') {
 				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
 				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
+				if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
+					changed = changed.concat([jSBGN_node]);
+//					console.log('iterate '+jSBGN_node.id+': '+jSBGN_node.simulation.myState+' -> '+jSBGN_node.simulation.myNextState);
+					}
 				}
 			}
 
 		// steady state ?
-		if ( changes ) {			// network updated -> steady state not reached
-			for (n in mySimulator.jSBGN.nodes) {
-				var jSBGN_node = mySimulator.jSBGN.nodes[n];			// State = NextState
+		if ( changed.length > 0 ) {   // network updated -> steady state not reached
+			for (idx in changed) {
+				var jSBGN_node = changed[idx];			// State = NextState
 				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
 				}
 			try { delay=parseInt(document.getElementById('Delay').value); }
