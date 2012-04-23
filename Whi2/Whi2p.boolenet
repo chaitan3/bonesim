@@ -55,7 +55,7 @@ fermentation*				= Glucose
 oxidative_phosphorylation*		= ( not fermentation) and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
-energy*				= fermentation or oxidative_phosphorylation or vacuolar_degradation
+energy*				= fermentation or oxidative_phosphorylation or degradation
 # States of energy:		True="available", False="lacking"
 
 
@@ -362,16 +362,17 @@ microtubule*			= Tub1 and Tub2 and Spc98
 # Aut7 is Atg8
 Atg8_mtub*			= Atg8_m and microtubule and Atg4
 
-autophagic_vacuole_transported_to_vacuole* = Atg8_mtub and (mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy)
+autophagic_vacuole*		= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
+transport_to_vacuole*		= autophagic_vacuole and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
-autophagic_vacuole_docking*	= autophagic_vacuole_transported_to_vacuole
+docking*			= autophagic_vacuole_transported_to_vacuole
 
 # autophagic vacuole fusion (GO:0000046)
-autophagic_vacuole_fusion*	= autophagic_vacuole_docking and Ccz1 and Vam3
+fusion*				= docking and Ccz1 and Vam3
 
 # autophagic membrane disassembly (GO:0030399)
-autophagic_membrane_disassembly* = autophagic_vacuole_fusion and Atg15
+lysis* = fusion and Atg15_Vac
 
-vacuolar_degradation*		= autophagic_membrane_disassembly and (Lap4_Vac or Ams1_Vac or Atg15_Vac)
+degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
 
