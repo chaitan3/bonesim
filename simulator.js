@@ -10,7 +10,7 @@ Simulator = function() {
 
 		this.SVG = null;			// a reference to our SVG
 
-		this.Nodes = [];			// references to the "simulator" dicts in every node of our jSBGN network
+		this.nodes = [];			// references to the "simulator" dicts in every node of our jSBGN network
 
 		this.running = false;
 		this.updateSVG_Timeout = null;		// not null in case the Simulator is running
@@ -26,11 +26,13 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 					this.jSBGN = jSBGN;
 					this.SVG = SVG;
 
+					this.SVG.myJSBGN = jSBGN; // ref for SVGonClick->myJSBGN association
+
 					this.running = false;
 					this.updateSVG_Timeout = null;
 
 					this.initializeNodeIdDict();
-					this.Nodes = [];
+					this.nodes = [];
 
 					for (n in this.jSBGN.nodes) {
 						jSBGN_node = this.jSBGN.nodes[n];
@@ -49,7 +51,7 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 							updateRule: rule,
 							};
 						jSBGN_node['simulation'] = Node;
-						this.Nodes = this.Nodes.concat([Node]); // append reference to array
+						this.nodes = this.nodes.concat([Node]); // append reference to array
 						}
 					this.installSVGonClickListeners();
 					}
@@ -65,19 +67,13 @@ Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGelli
 
 					SVG_node = event.srcElement;
 
+					myJSBGN = document.getElementById('viewport').myJSBGN;
+//					this wird hier nicht funktionieren, weil das event asynchron kommt
+					jSBGN_node = myJSBGN.getNodeById(SVG_node.id);
+					alert(jSBGN_node.myState);
 
-					this wird hier nicht funktionieren, weil das event asynchron kommt
-
-
-					jSBGN_node = this.jSBGN.getNodeById(SVG_node.id);
-
-					...
-
-
-
-	//				alert(jSBGN_node.myState);
 					if (!event.ctrlKey) {
-	//					jSBGN_node.myState = ! jSBGN_node.myState	// change node state
+						jSBGN_node.myState = ! jSBGN_node.myState;	// change node state
 
 						try {		// if an annotation is available for this node, show it
 							annotation = network.annotations[SVG_node.id.replace('_',' ')];
@@ -109,8 +105,8 @@ Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGelli
 					}
 
 Simulator.prototype.installSVGonClickListeners = function() {
-							for (n in this.Nodes) {
-								node = this.Nodes[n];
+							for (n in this.nodes) {
+								node = this.nodes[n];
 								if (node != null && node.myElement != null)
 									node.myElement.onclick = this.SVGonClick;
 								}
@@ -122,8 +118,8 @@ Simulator.prototype.updateSVG = function() {
 					Simulator.updateSVG_Timeout = null;
 					}
 				graph_refresh_required = false;
-				for (n in Simulator.Nodes) {			// update color and dashing of all Nodes
-					jSBGN_node = Simulator.Nodes[n];
+				for (n in Simulator.nodes) {			// update color and dashing of all Nodes
+					jSBGN_node = Simulator.nodes[n];
 
 					if (jSBGN_node != null && jSBGN_node.myElement != null) {
 						// which color is this node currently fading to ?
@@ -174,8 +170,8 @@ Simulator.prototype.Iterate = function() {
 
 				// calculation
 				changes = false;
-				for (n in Simulator.Nodes) {
-					jSBGN_node = Simulator.Nodes[n];
+				for (n in Simulator.nodes) {
+					jSBGN_node = Simulator.nodes[n];
 					if ( jSBGN_node.update ) {
 						jSBGN_node.myNextState = Boolean(eval(jSBGN_node.updateRule));
 						changes = changes || (jSBGN_node.myNextState != jSBGN_node.myState);
@@ -184,8 +180,8 @@ Simulator.prototype.Iterate = function() {
 
 				// steady state ?
 				if ( changes ) {			// network updated -> steady state not reached
-					for (n in Simulator.Nodes) {
-						jSBGN_node = Simulator.Nodes[n];					// State = NextState
+					for (n in Simulator.nodes) {
+						jSBGN_node = Simulator.nodes[n];					// State = NextState
 						jSBGN_node.myState = jSBGN_node.myNextState;
 						}
 					try { delay=parseInt(document.getElementById('Delay').value);	}
