@@ -277,12 +277,12 @@ autophagy_machinery*		= STRE
 # Atg19: brings Lap4 and Ams1 to PAS
 Lap4p				= True
 Ams1p				= True
-Lap4p_PAS*			= Lap4p and Atg11 and Atg19
+Lap4p_PAS*			= PAS and Lap4p and Atg11 and Atg19
 # States of Lap4p_PAS:		True="transported", False="free"
 
 # States of Atg19:		True="present", False="absent"
 
-Ams1p_PAS*			= Ams1p and Atg11 and (Atg19 or Atg34)
+Ams1p_PAS*			= PAS and Ams1p and Atg11 and (Atg19 or Atg34)
 # States of Ams1p_PAS:		True="transported", False="free"
 
 preApe1				= True
@@ -316,7 +316,7 @@ mitophagy*			= Atg32 and Atg11 and Atg8_mtub and PAS and Atg9_mt
 
 MVB				= True
 Atg15_from_ER_to_vacuole*	= MVB
-Atg15_present*			= Atg15_from_ER_to_vacuole
+Atg15*				= Atg15_from_ER_to_vacuole
 
 Atg9p_in_PAS			= True
 Atg2p_present			= True
@@ -395,7 +395,7 @@ autophagic_vacuole_docking*	= autophagic_vacuole_transported_to_vacuole
 autophagic_vacuole_fusion*	= autophagic_vacuole_docking and Ccz1 and Vam3
 
 # autophagic membrane disassembly (GO:0030399)
-autophagic_membrane_disassembly* = autophagic_vacuole_fusion and Atg15_present
+autophagic_membrane_disassembly* = autophagic_vacuole_fusion and Atg15
 
 vacuolar_degradation*		= autophagic_membrane_disassembly and Lap4p_Vac and Ams1p_Vac
 
