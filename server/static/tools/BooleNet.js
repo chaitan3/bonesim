@@ -48,7 +48,7 @@ BooleNet = {
 								}
 //							else	console.log('exists, not adding: '+targetNodeId);
 							targetNode.simulation = {
-										myState: true,
+										myState: ! s[1].trim() == 'False', // initial state
 										update: true,
 										updateRule: makeRule(rightside),
 										updateRulePy: s[0]+' = '+s[1].trim()
