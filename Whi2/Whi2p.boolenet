@@ -51,7 +51,7 @@ starvation*			= not ((Glucose or Pyruvat) and Nitrogen)
 # States of starvation:		True="starving", False="well-fed"
 
 fermentation*				= Glucose
-# States of fermentation:		True="anaerob metabolism", False="no anaerob metabolism"
+# States of fermentation:		True="anaerob metabolism", False="anaerob metabolism not possible"
 oxidative_phosphorylation*		= ( not fermentation) and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
@@ -175,11 +175,11 @@ G1_arrest*			= Whi5p
 # unknown function
 #
 
-Lsm2p_active*			= Whi2p
+Lsm2p*				= Whi2p
 
-RNA_processing*			= Lsm2p_active
+RNA_processing*			= Lsm2p
 
-mRNA_decay*			= Lsm2p_active
+mRNA_decay*			= Lsm2p
 
 downregulation_of_ribosome_biogenesis* = RNA_processing or mRNA_decay
 
