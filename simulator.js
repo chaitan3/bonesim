@@ -41,7 +41,6 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 						var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
 						jSBGN_node.simulation.myElement = SVG_node;
 						jSBGN_node.simulation.myJSBGN = this.jSBGN;
-						console.log(jSBGN_node.id+' update rule: '+jSBGN_node.simulation.updateRule);
 						}
 					this.installSVGonClickListeners();
 					}
@@ -52,29 +51,29 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 		var SVG_node = event.srcElement;
 		var mySimulator = getMySimulator(SVG_node);
 		var jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
-		console.log('click. my state is '+jSBGN_node.myState);
+		console.log('click. my state is '+jSBGN_node.simulation.myState);
 
 		if (!event.ctrlKey) {
-			jSBGN_node.myState = ! jSBGN_node.myState;	// change node state
-			if (jSBGN_node.myState == jSBGN_node.myState)
-				jSBGN_node.myState = true;
-
-			try {		// if an annotation is available for this node, show it
-				var annotation = network.annotations[SVG_node.id.replace('_',' ')];
-				if (annotation == undefined || annotation == 'undefined')
-					alert('not annotated')
+			if (mouseClick == 'simulation') {
+				if (jSBGN_node.simulation.update) // change node state
+					jSBGN_node.simulation.myState = ! jSBGN_node.simulation.myState;
+				}
+			else if (mouseClick == 'annotation') {
+				var annotation = jSBGN_node.simulation.annotation;
+				if (annotation == undefined || annotation == 'undefined' || annotation == null || annotation == '')
+					if (confirm(jSBGN_node.id+' is not annotated. Annotate now?')) {
+						text = prompt('Please enter annotation for '+jSBGN_node.id+':');
+						if (text)
+							jSBGN_node.simulation.annotation = text;
+						}
 				else	{
 					document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+annotation;
 					showTab('annotation');
 					}
-			    }
-			catch(err) {	// no annotation available
-				alert('not annotated');
 				}
-
 			}
 		else	{
-			jSBGN_node.update = ! jSBGN_node.update;	// enable/disable updating of this node
+			jSBGN_node.simulation.update = ! jSBGN_node.simulation.update;	// enable/disable updating of this node
 			}
 //				alert(jSBGN_node.myState);
 
@@ -89,11 +88,10 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 		}
 
 Simulator.prototype.installSVGonClickListeners = function() {
-							var mySimulator = this;
-							for (n in this.nodes) {
-								var node = this.nodes[n];
-								if (node != null && node.myElement != null)
-									node.myElement.onclick = SVGonClick;
+							for (n in this.jSBGN.nodes) {
+								var node = this.jSBGN.nodes[n];
+								if (node != null && node.simulation.myElement != null)
+									node.simulation.myElement.onclick = SVGonClick;
 								}
 							}
 
