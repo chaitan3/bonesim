@@ -113,6 +113,7 @@ BooleNet = {
 								if (typeof(node.simulation) === 'undefined')
 									node.simulation = {};
 								node.simulation.states = [True, False];
+//								console.log(node.id+' states: '+[True, False]);
 								}
 							}
 						else if (line.indexOf('# Annotation of ') == 0) {	// annotation
@@ -124,11 +125,12 @@ BooleNet = {
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;
-								var b = setup.lastIndexOf('"', a);
-								var annotation = line.substring(a, b);
+								var b = setup.lastIndexOf('"');
+								var annotation = setup.substring(a, b);
 								if (typeof(node.simulation) === 'undefined')
 									node.simulation = {};
 								node.simulation.annotation = annotation;
+//								console.log(node.id+' annotation: '+a+'-'+b+'-'+annotation);
 								}
 							}
 						}

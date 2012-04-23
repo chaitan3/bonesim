@@ -107,11 +107,30 @@
 		no annotation loaded
 	</div>
 	<script src="{{ = URL(request.application, 'static/tools', 'tabs.js') }}"></script>
-	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
-
 	<script>
 		showTab('graphviz');
 	</script>
+
+
+	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
+
+	mouse click:
+	<input type=button id='btnSimulation' value='simulation' onclick='setMouseClickSimulation();'/>
+	<input type=button id='btnAnnotation' value='annotation' onclick='setMouseClickAnnotation();'/>
+	<script>
+		setMouseClickSimulation = function() {
+			mouseClick = 'simulation';
+			document.getElementById('btnSimulation').style['background-color'] = 'green';
+			document.getElementById('btnAnnotation').style['background-color'] = '#DDD';
+			}
+		setMouseClickAnnotation = function() {
+			mouseClick = 'annotation';
+			document.getElementById('btnSimulation').style['background-color'] = '#DDD';
+			document.getElementById('btnAnnotation').style['background-color'] = 'green';
+			}
+		setMouseClickAnnotation();
+	</script>
+
 
 	<div id=Statusbar>
 		<script>
