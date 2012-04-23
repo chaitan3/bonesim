@@ -221,11 +221,21 @@ STRE*				= Msn2_n and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
-bulk_autophagy*			= Atg1_13_17 and autophagic_vacuole_expansion
-Atg1*				= STRE1
+bulk_autophagy*			= Atg1_13_17 and AV_expansion
+
+# Atg1 is necessary for any autophagic type vesicle formation
+# gets phosphorylated by PKA
+Atg1*				= STRE1 and (PKA or Rim15)
+
+# Atg13 is phosphorylated by PKA and TORC1
+# Atg13 becomes active, when hypophosphorylated (building complexes)
 Atg13*				= STRE1
+Atg13_hypoP*			= Atg13 and ( not PKA) and ( not TORC1)
+
 Atg17*				= STRE1
-Atg1_13_17*			= Atg1 and Atg13 and Atg17
+
+Atg1_13_17*			= Atg1 and Atg13_hypoP and Atg17
+
 
 selective_autophagy*		= STRE2
 Atg11*				= selective_autophagy
@@ -298,7 +308,7 @@ Ams1_Vac*			= CVT and Ams1_PAS
 # States of Ams1_Vac:		True="vacuolar", False="absent"
 
 
-mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and autophagic_vacuole_expansion
+mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and AV_expansion
 
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 # States of Atg9_mt:		True="localized to mitochondria", False="free"
@@ -327,18 +337,10 @@ Atg9_mt*			= Atg9_PAS and Atg2
 # ribophagy
 # aggrephagy
 
-pexophagy*			= autophagic_vacuole_expansion
-ribophagy*			= autophagic_vacuole_expansion
-aggrephagy*			= UPR and autophagic_vacuole_expansion
+pexophagy*			= AV_expansion
+ribophagy*			= AV_expansion
+aggrephagy*			= UPR and AV_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
-
-# Atg1 is necessary for any autophagic type vesicle formation
-# gets phosphorylated by PKA
-Atg1*				= PKA or Rim15
-
-# Atg13 is phosphorylated by PKA and TORC1
-# Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13_hypoP*			= ( not PKA) and ( not TORC1)
 
 Atg8_PE*			= Atg8 and PE
 Atg8_m*				= Atg8_PE
@@ -348,9 +350,9 @@ Atg8_r* 			= Atg8_m and Atg4
 # States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 in or on autophagosome"
 
 # autophagic vacuole assembly (GO:0000045)
-autophagic_vacuole_assembly*	= PAS
+AV_assembly*			= PAS
 
-autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8_m
+AV_expansion*			= AV_assembly and Atg8_m
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 microtubule*			= Tub1 and Tub2 and Spc98
@@ -362,8 +364,8 @@ microtubule*			= Tub1 and Tub2 and Spc98
 # Aut7 is Atg8
 Atg8_mtub*			= Atg8_m and microtubule and Atg4
 
-autophagic_vacuole*		= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
-transport_to_vacuole*		= autophagic_vacuole and Atg8_mtub
+mature_AV*			= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
+transport_to_vacuole*		= mature_AV and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
 docking*			= transport_to_vacuole
