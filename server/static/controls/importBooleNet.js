@@ -1,5 +1,7 @@
 BooleNetDebug = function(msg) {
-			document.getElementById('BooleNetDebug').innerHTML = msg;
+			e = document.getElementById('BooleNetDebug');
+			if (e)
+				e.innerHTML = msg;
 			}
 
 canvas = document.getElementById('canvas');
@@ -26,7 +28,8 @@ function LoadWhi2p() {
 	network = BooleNet.Import(data);
 	BooleNetDebug('Graphviz ...');
 	doGraphviz();
-	importBooleNetWindow.close();
+	if (importBooleNetWindow)
+		importBooleNetWindow.close();
 	window.setTimeout('popupControls.close();', 300);
 	}
 

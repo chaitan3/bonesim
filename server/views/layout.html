@@ -118,8 +118,10 @@
 
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
 
-	mouse click:
+	<input type=button value=half onclick='document.getElementById("viewport").setAttribute("transform", "scale(300 300) rotate(0) transform(4 1448)");'/>
+
 	<div style="border: none; float:right;">
+		mouse click:
 		<input type=button id='btnSimulation' value='simulation' onclick='setMouseClickSimulation();'/>
 		<input type=button id='btnAnnotation' value='annotation' onclick='setMouseClickAnnotation();'/>
 	</div>
@@ -161,7 +163,8 @@
 							}
 						};
 
-			showControls();
+//			showControls();
+			window.setTimeout('LoadWhi2p();', 500);
 		</script>
 		<input type=button value="press C for controls" onclick="showControls();"/>
 	</div>
