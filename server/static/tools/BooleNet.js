@@ -50,7 +50,8 @@ BooleNet = {
 							targetNode.simulation = {
 										myState: true,
 										update: true,
-										updateRule: makeRule(rightside)
+										updateRule: makeRule(rightside),
+										updateRulePy: s[0]+' = '+s[1].trim()
 										};
 
 							var sourceNodeIds = rightside.match(protein_name_regex);
