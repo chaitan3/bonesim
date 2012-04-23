@@ -187,9 +187,6 @@ mRNA_decay*			= Lsm2p
 
 Spc98p*				= Whi2p
 
-microtubule*			= Spc98p
-# States of microtubule:	True="microtubule nucleation", False="absent"
-
 
 #
 # general stress response
@@ -371,9 +368,14 @@ CVT_ass*		= PAS and CVT
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8p_membrane_bound
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
-Tub1p_present*			= True
-Tub2p_present*			= True
-microtubule*			= Tub1p_present and Tub2p_present and microtubule_nucleation
+Tub1p*				= True
+Tub2p*				= True
+microtubule*			= Tub1p and Tub2p and Spc98p
+# States of microtubule:	True="microtubule nucleation", False="absent"
+
+# States of Tub1p:		True="present", False="absent"
+# States of Tub2p:		True="present", False="absent"
+
 # Aut2 is Atg4
 # Aut7 is Atg8
 Atg8_mtub*	= Atg8p_present and microtubule and Atg4p_present
