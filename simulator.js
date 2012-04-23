@@ -38,21 +38,9 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 
 					for (n in this.jSBGN.nodes) {
 						var jSBGN_node = this.jSBGN.nodes[n];
-						try {
-							rule = this.jSBGN['BooleanUpdateRules'][jSBGN_node.id];	// jSBGN node id corresponds to SVG node title
-							}
-						catch(err) {
-							rule = '';
-							}
 						var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
-						var simulation = {
-							myElement: SVG_node,
-							myState: false,
-							myJSBGN: this.jSBGN, // a reference to it's parent
-							update: true,
-							updateRule: rule,
-							};
-						jSBGN_node.simulation = simulation;
+						jSBGN_node.simulation.myElement = SVG_node;
+						jSBGN_node.simulation.myJSBGN = this.jSBGN;
 						console.log(jSBGN_node.id+' update rule: '+jSBGN_node.simulation.updateRule);
 						}
 					this.installSVGonClickListeners();
