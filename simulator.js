@@ -47,13 +47,34 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 					this.installSVGonClickListeners();
 					}
 
+showAnnotation = function(id) {
+			// temporary workaround
+			var mySimulator = simulator;
+
+			var jSBGN_node = mySimulator.jSBGN.getNodeById(id);
+			var page = '<label style="font-size: 30; font-weight: bold;">'+jSBGN_node.id+'</label>';
+			var active = 'active';
+			var inactive = 'inactive';
+			if (jSBGN_node.simulation.states != undefined) {
+				var active = jSBGN_node.simulation.states[0];
+				var inactive = jSBGN_node.simulation.states[1];
+				}
+			page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.active+';">'+active+'</div>';
+			page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.inactive+';">'+inactive+'</div>';
+			page += '<br/><br/>';
+			page += jSBGN_node.simulation.annotation;
+			document.getElementById('annotation_tab').innerHTML = page;
+
+			showTab('annotation');
+			}
+
 SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 		var SVG_node = event.srcElement;
 		var mySimulator = getMySimulator(SVG_node);
 		var jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
 
-		console.log('Node clicked: '+jSBGN_node.id);
+//		console.log('Node clicked: '+jSBGN_node.id);
 
 		if (!event.ctrlKey) {
 			if (mouseClick == 'simulation') {
@@ -68,33 +89,19 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 				}
 			else if (mouseClick == 'annotation') {
 				var annotation = jSBGN_node.simulation.annotation;
-				console.log('annotation of '+jSBGN_node.id+': '+annotation);
+//				console.log('annotation of '+jSBGN_node.id+': '+annotation);
 
-				showAnnotationTab = function() {
-					page = '<label style="font-size: 30; font-weight: bold;">'+SVG_node.id+'</label>';
-					active = 'active';
-					inactive = 'inactive';
-					if (jSBGN_node.simulation.states != undefined) {
-						active = jSBGN_node.simulation.states[0];
-						inactive = jSBGN_node.simulation.states[1];
-						}
-					page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.active+';">'+active+'</div>';
-					page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.inactive+';">'+inactive+'</div>';
-					page += '<br/><br/>';
-					page += annotation;
-					document.getElementById('annotation_tab').innerHTML = page;
-					showTab('annotation');
-					}
-
-				showAnnotationTab();
+				showAnnotation(jSBGN_node.id);
 				if (annotation == undefined || annotation == 'undefined' || annotation == null || annotation.trim() == '') {
-					if (confirm(jSBGN_node.id+' is not annotated. Annotate now?')) {
+/*					if (confirm(jSBGN_node.id+' is not annotated. Annotate now?')) {
 						text = prompt('Please enter annotation for '+jSBGN_node.id+':');
 						if (text) {
 							jSBGN_node.simulation.annotation = text;
 							showAnnotationTab();
 							}
-						}
+						}	*/
+					jSBGN_node.simulation.annotation = '<input type=button value="Annotate now" onclick="text = prompt(\'Please enter annotation for '+jSBGN_node.id+':\'); if (text) { jSBGN_node.simulation.annotation = text; showAnnotation('+jSBGN_node.id+'); }" />';
+					showAnnotation(jSBGN_node.id);
 					}
 				}
 			}
