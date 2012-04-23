@@ -53,6 +53,7 @@ function doneLayouting(response) {
 	}
 
 function doGraphviz() {
+	document.getElementById('graphviz_tab').style.visibility = 'hidden';
 	POST(env['biographer']+'/Plot/graphviz', 'orphans=yes&network='+network.exportJSONstring(), doneGraphviz);
 	}
 
@@ -62,26 +63,26 @@ function doneGraphviz(response) {
 
 		var parser = new DOMParser(); 
                 var xmlDoc = parser.parseFromString(response, "text/xml"); 
-                elt = document.getElementById('graphviz_tab');
+                parent = document.getElementById('graphviz_tab');
 
                 // eliminate any children 
-                var child = elt.firstChild; 
+                var child = parent.firstChild; 
                 while (child!=null) 
                 { 
-                elt.removeChild(child); 
-                child = elt.firstChild; 
+                parent.removeChild(child); 
+                child = parent.firstChild; 
                 } 
 
                 var xmlRoot = xmlDoc.documentElement; 
 
                 var adopted = document.importNode(xmlRoot, true); 
-                elt.appendChild(adopted);
+                parent.appendChild(adopted);
+
+		new OpacityFader(document.getElementById('graphviz_tab'), start=0, stop=1, duration=300, delayStart=600);
  		}
 
-	if (simulator)
-		delete simulator;
 	simulator = new Simulator();
-	simulator.Initialize(network, document.getElementById('viewport'));
+	simulator.Initialize(network, document.getElementById('viewport')); // <g>, not <svg>
 	simulator.Iterate();
 
 /*	if ( document.getElementById('update').checked ) {

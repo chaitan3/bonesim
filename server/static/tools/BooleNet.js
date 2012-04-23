@@ -30,6 +30,11 @@ BooleNet = {
 								targetNode.data = {};
 								targetNode.data.label = targetNodeId;
 								targetNode.edges = [];
+								targetNode.simulation = {
+											myState: true,
+											update: true,
+											updateRule: rightside
+											};
 								network.appendNode(targetNode);
 //								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 								}
@@ -47,6 +52,11 @@ BooleNet = {
 										sourceNode.data = {};
 										sourceNode.data.label = sourceNodeId;
 										sourceNode.edges = [];
+										sourceNode.simulation = {
+													myState: true,
+													update: true,
+													updateRule: rightside
+													};
 										network.appendNode(sourceNode);
 //										console.log('+ source node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 										}

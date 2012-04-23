@@ -1,20 +1,18 @@
 // from https://github.com/matthiasbock/javascript-website-effects/blob/master/fader.js
 
-OpacityFader = {
-		setup : function(element, start, stop, duration, delayStart) {
-				var onestep = 6; // ms
-				var steps = duration/onestep;
-				var opacityStep = (stop-start)/steps;
+OpacityFader = function(element, start, stop, duration, delayStart) {
+			var onestep = 6; // ms
+			var steps = duration/onestep;
+			var opacityStep = (stop-start)/steps;
 
-				if ( start == 0 )	// become visible
-					window.setTimeout("document.getElementById('"+element.id+"').style.visibility = 'visible';", delayStart);
-				for (i=0; i<steps; i++) {
-					window.setTimeout("document.getElementById('"+element.id+"').style.opacity = "+(start+i*opacityStep)+";", delayStart+i*onestep);
-					}
-				if ( stop == 0 )	// become invisible
-					window.setTimeout("document.getElementById('"+element.id+"').style.visibility = 'hidden';", delayStart+duration);
+			if ( start == 0 )	// become visible
+				window.setTimeout("document.getElementById('"+element.id+"').style.visibility = 'visible';", delayStart);
+			for (i=0; i<steps; i++) {
+				window.setTimeout("document.getElementById('"+element.id+"').style.opacity = "+(start+i*opacityStep)+";", delayStart+i*onestep);
 				}
-		}
+			if ( stop == 0 )	// become invisible
+				window.setTimeout("document.getElementById('"+element.id+"').style.visibility = 'hidden';", delayStart+duration);
+			}
 
 function NextColor(begin, current, end) {
         var newcolor = '#';
