@@ -203,7 +203,7 @@ Iterate = function(id) {
 				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
 				}
 			try { delay=parseInt(document.getElementById('Delay').value); }
-			catch(err) { delay=10;	}
+			catch(err) { delay=500;	}
 			if ( mySimulator.updateSVG_Timeout == null )
 				updateSVG();
 			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again
