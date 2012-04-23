@@ -79,8 +79,11 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 		if (!event.ctrlKey) {
 			if (mouseClick == 'simulation') {
+				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState);
+
 				if (jSBGN_node.simulation.update) // change node state
 					jSBGN_node.simulation.myState = ! jSBGN_node.simulation.myState;
+
 				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState);
 
 				if ( ! mySimulator.running ) {    // evtl. start simulation
