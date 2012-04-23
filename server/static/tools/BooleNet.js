@@ -99,12 +99,8 @@ BooleNet = {
 							var colon = line.indexOf(':');
 							var nodeId = line.substring(12, colon);
 							var node = network.getNodeById(nodeId);
-							if (node == null) {
+							if (node == null)
 								console.error('Error in BooleNet input file, line '+index+': Failed to define states. No such node: "'+nodeId+'"');
-								for (idx in network.nodes) {	
-									console.log(network.nodes[idx]);
-									}
-								}
 							else	{
 								var setup = line.substring(colon+1);
 								var a = setup.indexOf('"')+1;

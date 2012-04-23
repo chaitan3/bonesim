@@ -4,6 +4,11 @@ OpacityFader = function(element, start, stop, duration, delayStart) {
 			var onestep = 6; // ms
 			var steps = duration/onestep;
 			var opacityStep = (stop-start)/steps;
+			if (!delayStart)
+				delayStart = 0;
+
+			if (element.id === 'undefined' || element.id =='')
+				element.id = Math.random();
 
 			if ( start == 0 )	// become visible
 				window.setTimeout("document.getElementById('"+element.id+"').style.visibility = 'visible';", delayStart);
@@ -16,6 +21,7 @@ OpacityFader = function(element, start, stop, duration, delayStart) {
 
 function NextColor(begin, current, end) {
         var newcolor = '#';
+	var change_percent = 0.08;
 	for (i=1; i<=5; i+=2) {	// R,B,G
 		var a = parseInt(begin.substr(i, 2), 16);
 		if ( isNaN(a) )
@@ -30,7 +36,7 @@ function NextColor(begin, current, end) {
 			if (x < a || x > b)
 				x = a;
 			var p = (x-a)/(b-a);
-			var y = Math.ceil(x + (b-a)*0.03);
+			var y = Math.ceil(x + (b-a)*change_percent);
 			if (y > b)
 				var y = b;
 			}
@@ -38,7 +44,7 @@ function NextColor(begin, current, end) {
 			if (x < b || x > a)
 				var x = a;
 			var p = (a-x)/(a-b);
-			var y = Math.ceil(x - (a-b)*0.03);
+			var y = Math.ceil(x - (a-b)*change_percent);
 			if (y < b)
 				var y = b;
 			}

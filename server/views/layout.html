@@ -92,6 +92,7 @@
 
 	<input class=tabselector id=graphviz	type=button value=graphviz />
 	<input class=tabselector id=bui		type=button value=bui />
+	<input class=tabselector id=editor	type=button value=editor />
 	<input class=tabselector id=annotation	type=button value=annotation />
 
 	<label id=Progress></label>
@@ -100,10 +101,13 @@
 	<div class=tab id="bui_tab">
 		no bui SVG loaded
 	</div>
+	<div class=tab id="editor_tab">
+		editor not installed
+	</div>
 	<div class=tab id="graphviz_tab">
 		no graphviz SVG loaded
 	</div>
-	<div class=tab id="annotation_tab">
+	<div class=tab id="annotation_tab" style="padding: 20px;">
 		no annotation loaded
 	</div>
 	<script src="{{ = URL(request.application, 'static/tools', 'tabs.js') }}"></script>
@@ -115,18 +119,24 @@
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
 
 	mouse click:
-	<input type=button id='btnSimulation' value='simulation' onclick='setMouseClickSimulation();'/>
-	<input type=button id='btnAnnotation' value='annotation' onclick='setMouseClickAnnotation();'/>
+	<div style="border: none; float:right;">
+		<input type=button id='btnSimulation' value='simulation' onclick='setMouseClickSimulation();'/>
+		<input type=button id='btnAnnotation' value='annotation' onclick='setMouseClickAnnotation();'/>
+	</div>
 	<script>
 		setMouseClickSimulation = function() {
 			mouseClick = 'simulation';
-			document.getElementById('btnSimulation').style['background-color'] = 'green';
+			document.getElementById('btnSimulation').style['background-color'] = 'blue';
+			document.getElementById('btnSimulation').style.color = 'white';
 			document.getElementById('btnAnnotation').style['background-color'] = '#DDD';
+			document.getElementById('btnAnnotation').style.color = 'black';
 			}
 		setMouseClickAnnotation = function() {
 			mouseClick = 'annotation';
 			document.getElementById('btnSimulation').style['background-color'] = '#DDD';
-			document.getElementById('btnAnnotation').style['background-color'] = 'green';
+			document.getElementById('btnSimulation').style.color = 'black';
+			document.getElementById('btnAnnotation').style['background-color'] = 'blue';
+			document.getElementById('btnAnnotation').style.color = 'white';
 			}
 		setMouseClickAnnotation();
 	</script>

@@ -78,12 +78,12 @@ function doneGraphviz(response) {
                 var adopted = document.importNode(xmlRoot, true); 
                 parent.appendChild(adopted);
 
-		new OpacityFader(document.getElementById('graphviz_tab'), start=0, stop=1, duration=300, delayStart=600);
+		new OpacityFader(document.getElementById('graphviz_tab'), start=0, stop=1, duration=600, delayStart=500);
  		}
 
 	simulator = new Simulator();
 	simulator.Initialize(network, document.getElementById('viewport')); // <g>, not <svg>
-	simulator.Iterate();
+	window.setTimeout('simulator.Iterate();', 1000);
 
 /*	if ( document.getElementById('update').checked ) {
 		debug('Updating UI ...');

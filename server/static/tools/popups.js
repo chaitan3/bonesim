@@ -19,7 +19,6 @@ Popup = {
 					style.height = "100%";
 					style['background-color'] = 'grey';
 					style.opacity = 0;
-				this.background.id = Math.random();
 				new OpacityFader(this.background, start=0, stop=0.7, duration=300, delayStart=0);
 
 				this.div = document.createElement('div');
@@ -27,10 +26,8 @@ Popup = {
 //				this.centerDiv();
 					style = this.div.style;
 
-					windowWidth = 1024;
-					windowHeight = 768;
-					left = (windowWidth-this.width)/2;
-					top = (windowHeight-this.height)/2;
+					left = (window.innerWidth-this.width)/2;
+					top = (window.innerHeight-this.height)/2;
 
 					style = this.div.style;
 					style.position = "absolute";
@@ -46,7 +43,6 @@ Popup = {
 					style.opacity = 0;
 					style.padding = '10px';
 
-				this.div.id = Math.random();
 				new OpacityFader(this.div, start=0, stop=1, duration=375, delayStart=300);
 
 				this.write = Popup.write;
