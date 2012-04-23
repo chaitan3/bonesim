@@ -1,3 +1,4 @@
+
 green = '#10d010';
 red = '#d01010';
 yellow = '#f4fd01';
@@ -43,7 +44,7 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 						Node = {
 							myElement: SVG_node,
 							myState: false,
-							getState: this.getNodeState,
+							myJSBGN: this.jSBGN, // a reference to it's parent
 							update: true,
 							updateRule: rule,
 							};
@@ -59,15 +60,20 @@ Simulator.prototype.initializeNodeIdDict = function() {
 							this.nodeid_dict[this.jSBGN['nodes'][n].id] = this.jSBGN['nodes'][n];
 						}
 
-Simulator.prototype.getNodeState = function(nodeid) {
-				return this.jSBGN.getNodeById(nodeid).simulation.myState;
-				},
-
 Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGellipseElement
 					debug('Node clicked. Refreshing graph ...');
 
 					SVG_node = event.srcElement;
-					jSBGN_node = Simulator.getNodeById(SVG_node.id);
+
+
+					this wird hier nicht funktionieren, weil das event asynchron kommt
+
+
+					jSBGN_node = this.jSBGN.getNodeById(SVG_node.id);
+
+					...
+
+
 
 	//				alert(jSBGN_node.myState);
 					if (!event.ctrlKey) {
