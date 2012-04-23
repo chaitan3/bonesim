@@ -5,8 +5,11 @@ BooleNet2BooleNetJS = function(data) {
 			return data.replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ');
 			}
 
-getMyState = function(jSBGN, id) {
-		return jSBGN.getNodeById(id).simulation.myState;
+getMyState = function(id) {
+		// temporary workaround
+		mySimulator = simulator;
+
+		return mySimulator.jSBGN.getNodeById(id).simulation.myState;
 		}
 
 makeRule = function(rule) {
