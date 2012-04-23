@@ -5,6 +5,13 @@ yellow = '#f4fd01';
 black = '#000000';
 blue = '#7474cf';
 
+getMySimulator = function(DOMelement) {
+//			zu welchem SVG gehörst du?
+//			im globalen object nachschauen
+//			zugehörigen Simulator zurückgeben
+			return simulator;
+			}
+
 Simulator = function() {
 		this.jSBGN = null;			// a reference to our network
 
@@ -62,17 +69,11 @@ Simulator.prototype.initializeNodeIdDict = function() {
 							this.nodeid_dict[this.jSBGN['nodes'][n].id] = this.jSBGN['nodes'][n];
 						}
 
-SVGonClick = function(mySimulator, event) { // beware: this = SVGellipseElement
-		console.log('this = '+this);
-		console.log('mySimulator = '+mySimulator);
-
+SVGonClick = function(event) { // beware: this = SVGellipseElement
 		console.log('Node clicked. Refreshing graph ...');
 
 		var SVG_node = event.srcElement;
-
-//					mySimulator = document.getElementById('viewport').mySimulator;
-		var mySimulator = simulator;
-//					this wird hier nicht funktionieren, weil das event asynchron kommt
+		var mySimulator = getMySimulator(SVG_node);
 		var jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
 		alert(jSBGN_node.myState);
 
@@ -113,7 +114,7 @@ Simulator.prototype.installSVGonClickListeners = function() {
 							for (n in this.nodes) {
 								var node = this.nodes[n];
 								if (node != null && node.myElement != null)
-									node.myElement.onclick = SVGonClick(event, mySimulator);
+									node.myElement.onclick = SVGonClick;
 								}
 							}
 
