@@ -11,16 +11,16 @@
 ##
 
 Glucose				= True
-# States of Glucose: True="present", False="absent"
+# States of Glucose:		True="present", False="absent"
 
 Pyruvat				= True
-# States of Pyruvat: True="present", False="absent"
+# States of Pyruvat:		True="present", False="absent"
 
 Nitrogen			= True
-# States of Nitrogen: True="present", False="absent"
+# States of Nitrogen:		True="present", False="absent"
 
 Rapamycin			= False
-# States of Rapamycin: True="present", False="absent"
+# States of Rapamycin:		True="present", False="absent"
 
 
 ##
@@ -48,13 +48,15 @@ Rapamycin			= False
 #
 
 starvation*			= not ((Glucose or Pyruvat) and Nitrogen)
-# States of starvation: True="starving", False="satisfied"
+# States of starvation:		True="starving", False="well-fed"
 
-anaerob_fermentation*		= Glucose
-oxidative_phosphorylation*	= Pyruvat and not Glucose
+fermentation*				= Glucose
+# States of fermentation:		True="anaerob metabolism", False="no anaerob metabolism"
+oxidative_phosphorylation*		= ( not fermentation) and Pyruvat
+# States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
 energy*				= anaerob_fermentation or oxidative_phosphorylation or vacuolar_degradation
-# States of energy: True="available", False="lacking"
+# States of energy:		True="available", False="lacking"
 
 
 #
@@ -62,21 +64,21 @@ energy*				= anaerob_fermentation or oxidative_phosphorylation or vacuolar_degra
 #
 
 GTP*				= Glucose
-# States of GTP: True="GTP", False="GDP"
+# States of GTP:		True="GTP", False="GDP"
 
 Ras*				= (Ras1p or Ras2p) and GTP
-# Annotation of Ras: "<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
+# Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
 
 Ras_palmitoylation*		= Ras
-# States of Ras_palmitoylation: True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
+# States of Ras_palmitoylation:	True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
 Ras_farnesylation*		= Ras
-# States of Ras_farnesylation: True="active Ras was subsequentially farnesylated", False="Ras is not farnesylated"
+# States of Ras_farnesylation:	True="active Ras was subsequentially farnesylated", False="Ras is not farnesylated"
 
 # Cyr1p: adenylate cyclase
 Cyr1p*				= Ras_palmitoylation and Ras_farnesylation
 
 cAMP*				= Cyr1p or Gpa2p
-# States of cAMP: True="present", False="absent"
+# States of cAMP:		True="present", False="absent"
 
 PKA*				= cAMP
 
@@ -85,8 +87,8 @@ PKA*				= cAMP
 # Sch9 pathway
 #
 
-Sch9_active*			= Ras
-Rim15p_active*			= Sch9_active
+Sch9p*				= Ras
+Rim15p*				= Sch9p
 
 
 #
@@ -94,10 +96,10 @@ Rim15p_active*			= Sch9_active
 #
 
 GPR1*				= True
-# States of GPR1: True="transcribed and translated", False="not present"
+# States of GPR1:		True="gene is transcribed and translated", False="gene is silent"
 
 Gpr1p*				= GPR1 and Glucose
-# States of Gpr1p: True="receptor firing", False="receptor silent"
+# States of Gpr1p:		True="receptor firing", False="receptor silent"
 
 # presumably an adenylate cyclase
 Gpa2p*				= Gpr1p
@@ -108,13 +110,17 @@ Gpa2p*				= Gpr1p
 #
 
 # Rapamycin forms a complex with Fpr1p and this way inhibits TORC1 (but not TORC2 !) complex activity
-Rapamycin_Fpr1p_complex*	= Rapamycin and Fpr1p_present
+Rapamycin_Fpr1p*		= Rapamycin and Fpr1p
+# States of Rapamycin_Fpr1p:	True="complexed",	False="dissociated"
+# States of Fpr1p:		True="present",		False="absent"
 
 # TORC1 is active under nutrient rich conditions
 # Rapamycin "simulates" starvation
-TORC1_active*			= ( not starvation) and ( not Rapamycin_Fpr1p_complex)
+TORC1*				= ( not starvation) and ( not Rapamycin_Fpr1p)
+# States of TORC1:		True="complex active", False="complex inactive"
 
-TORC2_active*			= ( not starvation)
+TORC2*				= ( not starvation)
+# States of TORC1:		True="complex active", False="complex inactive"
 
 
 #
@@ -122,19 +128,20 @@ TORC2_active*			= ( not starvation)
 #
 
 Whi2p*				= not Ras
-# Annotation of Whi2p: "<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
+# Annotation of Whi2p:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
 
 Whi2p_Psr12p*			= Whi2p and (Psr1p_present or Psr2p_present)
-# States of Whi2p_Psr12p: True="complexed", False="dissociated"
+# States of Whi2p_Psr12p:	True="complexed", False="dissociated"
 
 
 #
 # actin organization
 #
 
-App1p_active*			= Whi2p
+App1p*				= Whi2p
 
-actin_organization*		= App1p_active or TORC2_active
+actin*				= App1p or TORC2
+# States of actin:		True="wt", False="disorganized"
 
 
 #
@@ -194,7 +201,7 @@ microtubule_nucleation*		= Spc98p_active
 # Whi2p dephosphorylates Msn2 when complexed
 
 Msn2p_dephosphorylation*	= Whi2p_Psr12p
-#and (PKA or TORC1_active)
+#and (PKA or TORC1)
 
 Msn2p_nuclear_localized*	= Msn2p_dephosphorylation
 
@@ -242,7 +249,7 @@ Atg29_active			= True
 Atg30_active			= False
 Atg31_active			= True
 Atg32_active			= False
-Atg32_active*			= Whi2p_Psr12p and not (PKA or TORC1_active)
+Atg32_active*			= Whi2p_Psr12p and not (PKA or TORC1)
 
 
 # Atg11 is essential for selective autophagy
@@ -299,7 +306,7 @@ Atg1p_active*			= PKA or Rim15p_active
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13p_hypoP*			= ( not PKA) and ( not TORC1_active)
+Atg13p_hypoP*			= ( not PKA) and ( not TORC1)
 
 Atg17p_present			= True
 
