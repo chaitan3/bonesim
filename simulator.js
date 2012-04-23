@@ -24,9 +24,9 @@ Simulator = function() {
 
 Simulator.prototype.Initialize = function(jSBGN, SVG) {
 					this.jSBGN = jSBGN;
+//					this.jSBGN.mySimulator = this;
 					this.SVG = SVG;
-
-					this.SVG.myJSBGN = jSBGN; // ref for SVGonClick->myJSBGN association
+					this.SVG.mySimulator = this; // a ref for asynchronous calls
 
 					this.running = false;
 					this.updateSVG_Timeout = null;
@@ -63,13 +63,13 @@ Simulator.prototype.initializeNodeIdDict = function() {
 						}
 
 Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGellipseElement
-					debug('Node clicked. Refreshing graph ...');
+					console.log('Node clicked. Refreshing graph ...');
 
 					SVG_node = event.srcElement;
 
-					myJSBGN = document.getElementById('viewport').myJSBGN;
+					mySimulator = document.getElementById('viewport').mySimulator;
 //					this wird hier nicht funktionieren, weil das event asynchron kommt
-					jSBGN_node = myJSBGN.getNodeById(SVG_node.id);
+					jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
 					alert(jSBGN_node.myState);
 
 					if (!event.ctrlKey) {
@@ -94,13 +94,13 @@ Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGelli
 						}
 	//				alert(jSBGN_node.myState);
 
-					if ( Simulator.updateSVG_Timeout == null ) {		// refresh SVG
-						Simulator.updateSVG();
+					if ( mySimulator.updateSVG_Timeout == null ) {		// refresh SVG
+						mySimulator.updateSVG();
 						}
 
-					if ( ! Simulator.running ) {				// start Simulation
+					if ( ! mySimulator.running ) {				// start Simulation
 						document.getElementById('Steps').innerHTML = 0; // (but only if it's not running already)
-						Simulator.Iterate();
+						mySimulator.Iterate();
 						}
 					}
 
@@ -112,19 +112,23 @@ Simulator.prototype.installSVGonClickListeners = function() {
 								}
 							}
 
-Simulator.prototype.updateSVG = function() {
-				if ( Simulator.updateSVG_Timeout != null ) {						// stop other updateSVG timeouts
-					window.clearTimeout(Simulator.updateSVG_Timeout);
-					Simulator.updateSVG_Timeout = null;
+Simulator.prototype.updateSVG = function(id) {
+				mySimulator = this;
+				if (id)
+					mySimulator = document.getElementById(id).mySimulator;
+
+				if ( mySimulator.updateSVG_Timeout != null ) {						// stop other updateSVG timeouts
+					window.clearTimeout(mySimulator.updateSVG_Timeout);
+					mySimulator.updateSVG_Timeout = null;
 					}
 				graph_refresh_required = false;
-				for (n in Simulator.nodes) {			// update color and dashing of all Nodes
-					jSBGN_node = Simulator.nodes[n];
+				for (n in mySimulator.nodes) {			// update color and dashing of all Nodes
+					jSBGN_node = mySimulator.nodes[n];
 
 					if (jSBGN_node != null && jSBGN_node.myElement != null) {
 						// which color is this node currently fading to ?
-						desired = Simulator.settings.colors.inactive;
-						undesired = Simulator.settings.colors.active;
+						desired = mySimulator.settings.colors.inactive;
+						undesired = mySimulator.settings.colors.active;
 						if ( jSBGN_node.myState ) {
 							temp = desired;
 							desired = undesired;
@@ -154,11 +158,15 @@ Simulator.prototype.updateSVG = function() {
 						}
 					}
 				if (graph_refresh_required)
-					Simulator.updateSVG_Timeout = window.setTimeout('Simulator.updateSVG();', 20);	// update again in 20ms
+					mySimulator.updateSVG_Timeout = window.setTimeout('Simulator.updateSVG("viewport");', 20); // update again in 20ms
 				}
 
-Simulator.prototype.Iterate = function() {
-				Simulator.running = true;
+Simulator.prototype.Iterate = function(id) {
+				mySimulator = this;
+				if (id)
+					mySimulator = document.getElementById(id).mySimulator;
+
+				mySimulator.running = true;
 
 				// messages
 				e = document.getElementById('Progress');
@@ -170,8 +178,8 @@ Simulator.prototype.Iterate = function() {
 
 				// calculation
 				changes = false;
-				for (n in Simulator.nodes) {
-					jSBGN_node = Simulator.nodes[n];
+				for (n in mySimulator.nodes) {
+					jSBGN_node = mySimulator.nodes[n];
 					if ( jSBGN_node.update ) {
 						jSBGN_node.myNextState = Boolean(eval(jSBGN_node.updateRule));
 						changes = changes || (jSBGN_node.myNextState != jSBGN_node.myState);
@@ -180,20 +188,20 @@ Simulator.prototype.Iterate = function() {
 
 				// steady state ?
 				if ( changes ) {			// network updated -> steady state not reached
-					for (n in Simulator.nodes) {
-						jSBGN_node = Simulator.nodes[n];					// State = NextState
+					for (n in mySimulator.nodes) {
+						jSBGN_node = mySimulator.nodes[n];					// State = NextState
 						jSBGN_node.myState = jSBGN_node.myNextState;
 						}
 					try { delay=parseInt(document.getElementById('Delay').value);	}
 					catch(err) { delay=120;	}
-					if ( Simulator.updateSVG_Timeout == null ) Simulator.updateSVG();
-					window.setTimeout('Simulator.Iterate();', delay);			// iterate again after delay
+					if ( mySimulator.updateSVG_Timeout == null ) mySimulator.updateSVG();
+					window.setTimeout('Simulator.Iterate("'+id+'");', delay);			// iterate again after delay
 					}
 				else 	{		// no changes -> steady state
 	//				alert('no changes');
-					Simulator.updateSVG();
-					debug('Boolean network reached steady state.');
-					Simulator.running = false;
+					mySimulator.updateSVG();
+					console.log('Boolean network reached steady state.');
+					mySimulator.running = false;
 					}
 				}
 
