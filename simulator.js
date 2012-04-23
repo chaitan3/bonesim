@@ -181,14 +181,9 @@ Iterate = function(id) {
 		var changes = false;
 		for (n in mySimulator.jSBGN.nodes) {
 			var jSBGN_node = mySimulator.jSBGN.nodes[n];
-			if ( jSBGN_node.simulation.update ) {
-				if (jSBGN_node.simulation.updateRule.trim() == '')
-					jSBGN_node.simulation.update = false		// don't update without update rule
-				else	{
-					jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
-//					console.log(jSBGN_node.id+': '+jSBGN_node.simulation.updateRule+' = '+jSBGN_node.simulation.myNextState);
-					var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
-					}
+			if ( jSBGN_node.simulation.update && jSBGN_node.simulation.updateRule.trim() != '') {
+				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
 				}
 			}
 
