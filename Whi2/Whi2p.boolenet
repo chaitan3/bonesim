@@ -98,11 +98,11 @@ Rim15*				= Sch9
 GPR1*				= True
 # States of GPR1:		True="gene is transcribed and translated", False="gene is silent"
 
-Gpr1*				= GPR1 and Glucose
-# States of Gpr1:		True="receptor firing", False="receptor silent"
+Gpr1p*				= GPR1 and Glucose
+# States of Gpr1p:		True="receptor firing", False="receptor silent"
 
 # presumably an adenylate cyclase
-Gpa2*				= Gpr1
+Gpa2*				= Gpr1p
 
 
 #
