@@ -51,7 +51,7 @@ starvation*			= not ((Glucose or Pyruvat) and Nitrogen)
 # States of starvation:		True="starving", False="well-fed"
 
 fermentation*				= Glucose
-# States of fermentation:		True="anaerob metabolism", False="anaerob metabolism not possible"
+# States of fermentation:		True="anaerob metabolism", False="anaerob metabolism absent"
 oxidative_phosphorylation*		= ( not fermentation) and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
@@ -142,7 +142,7 @@ Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
 App1*				= Whi2
 
 actin*				= App1 or TORC2
-# States of actin:		True="wt", False="disorganized"
+# States of actin:		True="wild-type", False="disorganized"
 
 
 #
@@ -235,7 +235,7 @@ Atg24*				= selective_autophagy
 G1_arrest*			= STRE
 heatshock_resistance*		= STRE
 carbohydrate_storage*		= STRE
-increased_trehalose_and_glycogen_levels* = carbohydrate_storage
+# States of carbohydrate_storage: True="increased trehalose and glycogen levels", False="wild-type"
 
 
 #
@@ -306,7 +306,7 @@ mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and autophagic_vacuole_
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 # States of Atg9_mt:		True="localized to mitochondria", False="free"
 
-# States of PAS:		True="assembly", False="absent"
+# States of PAS:		True="assembled", False="absent"
 # Annotation of PAS:		"pre-autophagosomal structure"
 
 
