@@ -319,9 +319,9 @@ MVB				= True
 Atg15_from_ER_to_vacuole*	= MVB
 Atg15*				= Atg15_from_ER_to_vacuole
 
-Atg9p_in_PAS			= True
+Atg9_PAS			= True
 Atg2				= True
-Atg9_mt*			= Atg9p_in_PAS and Atg2
+Atg9_mt*			= Atg9_PAS and Atg2
 
 
 #
@@ -343,7 +343,7 @@ aggrephagy*			= UPR and autophagic_vacuole_expansion
 
 # Atg1 is necessary for any autophagic type vesicle formation
 # gets phosphorylated by PKA
-Atg1p_active*			= PKA or Rim15p_active
+Atg1p*				= PKA or Rim15p
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
@@ -351,7 +351,7 @@ Atg13p_hypoP*			= ( not PKA) and ( not TORC1)
 
 Atg17p_present			= True
 
-Atg1p_kinase_complex*		= Atg1p_active and Atg13p_hypoP and Atg17p_present
+Atg1p_kinase_complex*		= Atg1p and Atg13p_hypoP and Atg17p_present
 
 induction_of_autophagy*		= Atg1p_kinase_complex
 
