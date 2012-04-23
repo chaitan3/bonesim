@@ -67,7 +67,8 @@ Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGelli
 
 					SVG_node = event.srcElement;
 
-					mySimulator = document.getElementById('viewport').mySimulator;
+//					mySimulator = document.getElementById('viewport').mySimulator;
+					mySimulator = simulator;
 //					this wird hier nicht funktionieren, weil das event asynchron kommt
 					jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
 					alert(jSBGN_node.myState);
@@ -113,9 +114,10 @@ Simulator.prototype.installSVGonClickListeners = function() {
 							}
 
 Simulator.prototype.updateSVG = function(id) {
-				mySimulator = this;
-				if (id)
-					mySimulator = document.getElementById(id).mySimulator;
+				mySimulator = simulator;
+				id = 0;
+//				if (id)
+//					mySimulator = document.getElementById(id).mySimulator;
 
 				if ( mySimulator.updateSVG_Timeout != null ) {						// stop other updateSVG timeouts
 					window.clearTimeout(mySimulator.updateSVG_Timeout);
@@ -127,8 +129,8 @@ Simulator.prototype.updateSVG = function(id) {
 
 					if (jSBGN_node != null && jSBGN_node.myElement != null) {
 						// which color is this node currently fading to ?
-						desired = mySimulator.settings.colors.inactive;
-						undesired = mySimulator.settings.colors.active;
+						desired = mySimulator.colors.inactive;
+						undesired = mySimulator.colors.active;
 						if ( jSBGN_node.myState ) {
 							temp = desired;
 							desired = undesired;
@@ -139,7 +141,7 @@ Simulator.prototype.updateSVG = function(id) {
 						current = jSBGN_node.myElement.getAttribute('fill');
 						if ( current.toLowerCase() != desired.toLowerCase() ) {
 							graph_refresh_required = true;
-							jSBGN_node.myElement.setAttribute('fill', FadeColor(undesired, current, desired));
+							jSBGN_node.myElement.setAttribute('fill', NextColor(undesired, current, desired));
 							}
 
 						// is this node updated or not? -> dashing?
@@ -162,9 +164,11 @@ Simulator.prototype.updateSVG = function(id) {
 				}
 
 Simulator.prototype.Iterate = function(id) {
-				mySimulator = this;
-				if (id)
-					mySimulator = document.getElementById(id).mySimulator;
+//				mySimulator = this;
+				mySimulator = simulator;
+				id = 0;
+//				if (id)
+//					mySimulator = document.getElementById(id).mySimulator;
 
 				mySimulator.running = true;
 
