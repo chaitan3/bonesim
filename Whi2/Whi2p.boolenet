@@ -268,20 +268,17 @@ Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
 Atg11				= True
 # States of Atg11:		True="present", False="absent"
 
-autophagy_machinery		= False
-autophagy_machinery*		= STRE
-
 
 #
 # cvt pathway
 #
-# Atg19: brings Lap4 and Ams1 to PAS
 Lap4				= True
 Ams1				= True
 Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19
 # States of Lap4_PAS:		True="transported", False="free"
 
 # States of Atg19:		True="present", False="absent"
+# Annotation of Atg19:		"Atg19: brings Lap4 and Ams1 to PAS"
 
 Ams1_PAS*			= PAS and Ams1 and Atg11 and (Atg19 or Atg34)
 # States of Ams1_PAS:		True="transported", False="free"
@@ -312,10 +309,9 @@ mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and autophagic_vacuole_
 
 MVB				= True
 Atg15_ER*			= MVB
-Atg15_vacuole*			= Atg15_vacuole
+Atg15_Vac*			= Atg15_ER
 
-Atg9_PAS			= True
-Atg2				= True
+Atg9_PAS*			= Atg9 and PAS
 Atg9_mt*			= Atg9_PAS and Atg2
 
 
@@ -377,5 +373,5 @@ autophagic_vacuole_fusion*	= autophagic_vacuole_docking and Ccz1 and Vam3
 # autophagic membrane disassembly (GO:0030399)
 autophagic_membrane_disassembly* = autophagic_vacuole_fusion and Atg15
 
-vacuolar_degradation*		= autophagic_membrane_disassembly and Lap4_Vac and Ams1_Vac
+vacuolar_degradation*		= autophagic_membrane_disassembly and (Lap4_Vac or Ams1_Vac or Atg15_Vac)
 
