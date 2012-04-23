@@ -44,15 +44,21 @@ BooleNet = {
 								targetNode.data.label = targetNodeId;
 								targetNode.edges = [];
 								network.appendNode(targetNode);
+								targetNode.simulation = {
+											myState : true, // default initial state
+											update : true,
+											updateRule : '',
+											updateRulePy : ''
+											};
 //								console.log('+ target node '+network.nodes.length+': '+network.nodes[network.nodes.length-1].id);
 								}
 //							else	console.log('exists, not adding: '+targetNodeId);
-							targetNode.simulation = {
-										myState: ! s[1].trim() == 'False', // initial state
-										update: true,
-										updateRule: makeRule(rightside),
-										updateRulePy: s[0]+' = '+s[1].trim()
-										};
+							if (s[1].trim() == 'False')
+								targetNode.simulation.myState = false; // initial state set explicitly
+							else if (s[1].trim() != 'True')	{ // 'True' and 'False' are not update rules
+								targetNode.simulation.updateRule = makeRule(rightside);
+								targetNode.simulation.updateRulePy = s[0]+' = '+s[1].trim();
+								}
 
 							var sourceNodeIds = rightside.match(protein_name_regex);
 //							console.log(rightside+' splits into '+rightside.match(protein_name_regex));
