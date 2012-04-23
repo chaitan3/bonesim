@@ -291,11 +291,11 @@ preApe1				= True
 Ape1p*				= preApe1
 # States of Ape1p:		True="complexed", False="dissociated"
 
-CVT*				= PAS and Ape1p and Lap4p_PAS and Ams1p_PAS
+CVT*				= PAS and Ape1p and (Lap4p_PAS or Ams1p_PAS)
 # States of CVT:		True="complex assembled", False="absent"
 
-Lap4p_Vac*			= CVT
-Ams1p_Vac*			= CVT
+Lap4p_Vac*			= CVT and Lap4p_PAS
+Ams1p_Vac*			= CVT and Ams1p_PAS
 
 # States of Lap4p_Vac:		True="vacuolar", False="absent"
 # States of Ams1p_Vac:		True="vacuolar", False="absent"
