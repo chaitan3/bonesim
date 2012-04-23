@@ -178,18 +178,17 @@ G1_arrest*			= Whi5p
 Lsm2p*				= Whi2p
 
 RNA_processing*			= Lsm2p
-
 mRNA_decay*			= Lsm2p
 
-downregulation_of_ribosome_biogenesis* = RNA_processing or mRNA_decay
 
 #
 # microtubule nucleation
 #
 
-Spc98p_active*			= Whi2p
+Spc98p*				= Whi2p
 
-microtubule_nucleation*		= Spc98p_active
+microtubule*			= Spc98p
+# States of microtubule:	True="microtubule nucleation", False="absent"
 
 
 #
@@ -209,16 +208,18 @@ microtubule_nucleation*		= Spc98p_active
 # No! also directly: has been found complexed with Whi2p and Psr1/2 !
 # Whi2p dephosphorylates Msn2 when complexed
 
-Msn2p_dephosphorylation*	= Whi2p_Psr12p
-#and (PKA or TORC1)
+Msn2p*				= Whi2p_Psr12p
+# States of Msn2p:		True="dephosphorylated = active, False="phosphorylated = inactive"
 
-Msn2p_nuclear_localized*	= Msn2p_dephosphorylation
+Msn2pn*				= Msn2p
+# States of Msn2pn:		True="nuclear import", False="inactive"
 
 Rdp3p				= True
 Hda3p				= True
-chromatin_remodeling*		= Rdp3p and Hda3p
+chromatin*			= Rdp3p and Hda3p
+# States of chromatin:		True="remodeling", False="normal"
 
-STRE*				= Msn2p_nuclear_localized and chromatin_remodeling
+STRE*				= Msn2pn and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
@@ -242,8 +243,10 @@ increased_trehalose_and_glycogen_levels* = carbohydrate_storage
 # ER stress pathway
 #
 
-misfolded_protein_accumulation	= False
-ER_stress*			= misfolded_protein_accumulation
+protein_misfolding		= False
+# States of misfolding:		True="misfold accumulation", False="native folding"
+
+ER_stress*			= protein_misfolding
 
 # unfolded protein response
 UPR*				= ER_stress
@@ -254,16 +257,17 @@ UPR*				= ER_stress
 #
 
 
-Atg29_active			= True
-Atg30_active			= False
-Atg31_active			= True
-Atg32_active			= False
-Atg32_active*			= Whi2p_Psr12p and not (PKA or TORC1)
+Atg29				= True
+Atg30				= False
+Atg31				= True
+Atg32				= False
+Atg32*				= Whi2p_Psr12p and not (PKA or TORC1)
 
 
 # Atg11 is essential for selective autophagy
 # Atg11 = adaptor protein for selective types of autophagy
-Atg11_present			= True
+Atg11				= True
+# States of Atg11:		True="present", False="absent"
 
 autophagy_machinery		= False
 autophagy_machinery*		= STRE
@@ -275,8 +279,8 @@ autophagy_machinery*		= STRE
 # Atg19: brings Lap4 and Ams1 to PAS
 Lap4p_present			= True
 Ams1_present			= True
-Lap4p_to_PAS*			= Lap4p_present and Atg11p_present and Atg19p_present
-Ams1p_to_PAS*			= Ams1p_present and Atg11p_present and (Atg19p_present or Atg34p_present)
+Lap4p_to_PAS*			= Lap4p_present and Atg11 and Atg19p_present
+Ams1p_to_PAS*			= Ams1p_present and Atg11 and (Atg19p_present or Atg34p_present)
 preApe1_dodecamer		= True
 Ape1p_complex*			= preApe1_dodecamer
 cvt_complex*			= Ape1p_complex and Lap4p_to_PAS and Ams1p_to_PAS
@@ -284,7 +288,12 @@ Lap4p_to_vacuole*		= cvt_vesicle_assembly
 Ams1p_to_vacuole*		= cvt_vesicle_assembly
 
 
-mitophagy*			= Atg32_active and Atg11p_present and Atg8p_binds_microtubule and PAS_assembly and Atg9p_on_mitochondria
+mitophagy*			= Atg32 and Atg11 and Atg8_mtub and PAS and Atg9_mt
+
+# States of Atg8_mtub:		True="bound to microtubule", False="free"
+# States of Atg9_mt		True="localized to mitochondria", False="free"
+
+# States of PAS:		True="assembly", False="absent"
 
 
 MVB_pathway			= True
@@ -293,7 +302,7 @@ Atg15_present*			= Atg15_from_ER_to_vacuole
 
 Atg9p_in_PAS			= True
 Atg2p_present			= True
-Atg9p_on_mitochondria*		= Atg9p_in_PAS and Atg2p_present
+Atg9_mt*			= Atg9p_in_PAS and Atg2p_present
 
 
 #
@@ -324,7 +333,7 @@ Atg1p_kinase_complex*		= Atg1p_active and Atg13p_hypoP and Atg17p_present
 induction_of_autophagy*		= Atg1p_kinase_complex
 
 # pre-autophagosomal structure
-PAS_assembly*			= induction_of_autophagy or ER_stress
+PAS*			= induction_of_autophagy or ER_stress
 
 Atg8p_present*			= induction_of_autophagy
 PE_present			= True
@@ -334,9 +343,9 @@ Atg8p_membrane_bound*		= Atg8p_PE
 Atg8p_released_from_the_autophagosome* = Atg8p_membrane_bound and Atg4p_present
 
 # autophagic vacuole assembly (GO:0000045)
-autophagic_vacuole_assembly*	= PAS_assembly
+autophagic_vacuole_assembly*	= PAS
 
-cvt_vesicle_assembly*		= PAS_assembly and cvt_complex
+cvt_vesicle_assembly*		= PAS and cvt_complex
 
 autophagic_vacuole_expansion*	= autophagic_vacuole_assembly and Atg8p_membrane_bound
 
@@ -346,9 +355,9 @@ Tub2p_present*			= True
 microtubule*			= Tub1p_present and Tub2p_present and microtubule_nucleation
 # Aut2 is Atg4
 # Aut7 is Atg8
-Atg8p_binds_microtubule*	= Atg8p_present and microtubule and Atg4p_present
+Atg8_mtub*	= Atg8p_present and microtubule and Atg4p_present
 
-autophagic_vacuole_transported_to_vacuole* = autophagic_vacuole_expansion and Atg8p_binds_microtubule
+autophagic_vacuole_transported_to_vacuole* = autophagic_vacuole_expansion and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
 autophagic_vacuole_docking*	= autophagic_vacuole_transported_to_vacuole
