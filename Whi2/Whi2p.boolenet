@@ -300,7 +300,7 @@ Ams1p_Vac*			= CVT
 # States of Ams1p_Vac:		True="vacuolar", False="absent"
 
 
-mitophagy*			= Atg32 and Atg11 and Atg8_mtub and PAS and Atg9_mt
+mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and autophagic_vacuole_expansion
 
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 # States of Atg9_mt:		True="localized to mitochondria", False="free"
@@ -386,7 +386,7 @@ microtubule*			= Tub1p and Tub2p and Spc98p
 # Aut7 is Atg8
 Atg8_mtub*			= Atg8 and microtubule and Atg4
 
-autophagic_vacuole_transported_to_vacuole* = autophagic_vacuole_expansion and Atg8_mtub
+autophagic_vacuole_transported_to_vacuole* = Atg8_mtub and (mitophagy or bulk_autophagy or pexophagy ro ribophagy or aggrephagy)
 
 # autophagic vacuole docking (GO:0016240)
 autophagic_vacuole_docking*	= autophagic_vacuole_transported_to_vacuole
