@@ -77,7 +77,7 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 						}
 					page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.active+';">'+active+'</div>';
 					page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.inactive+';">'+inactive+'</div>';
-					page += '<br/>';
+					page += '<br/><br/>';
 					page += annotation;
 					document.getElementById('annotation_tab').innerHTML = page;
 					showTab('annotation');

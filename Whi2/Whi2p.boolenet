@@ -68,9 +68,9 @@ Ras*				= (Ras1p or Ras2p) and GTP
 # Annotation of Ras: "<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
 
 Ras_palmitoylation*		= Ras
-# States of Ras_palmitoylation: True="active Ras was subsequentially palmitoylated", False="Ras not palmitoylated"
+# States of Ras_palmitoylation: True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
 Ras_farnesylation*		= Ras
-# States of Ras_farnesylation: True="active Ras was subsequentially farnesylated", False="Ras not farnesylated"
+# States of Ras_farnesylation: True="active Ras was subsequentially farnesylated", False="Ras is not farnesylated"
 
 # Cyr1p: adenylate cyclase
 Cyr1p*				= Ras_palmitoylation and Ras_farnesylation
