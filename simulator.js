@@ -35,15 +35,15 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 					this.nodes = [];
 
 					for (n in this.jSBGN.nodes) {
-						jSBGN_node = this.jSBGN.nodes[n];
+						var jSBGN_node = this.jSBGN.nodes[n];
 						try {
 							rule = this.jSBGN['BooleanUpdateRules'][jSBGN_node.id];	// jSBGN node id corresponds to SVG node title
 							}
 						catch(err) {
 							rule = '';
 							}
-						SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
-						Node = {
+						var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
+						var Node = {
 							myElement: SVG_node,
 							myState: false,
 							myJSBGN: this.jSBGN, // a reference to it's parent
@@ -62,60 +62,64 @@ Simulator.prototype.initializeNodeIdDict = function() {
 							this.nodeid_dict[this.jSBGN['nodes'][n].id] = this.jSBGN['nodes'][n];
 						}
 
-Simulator.prototype.SVGonClick = function(event) {					// beware: this = SVGellipseElement
-					console.log('Node clicked. Refreshing graph ...');
+SVGonClick = function(mySimulator, event) { // beware: this = SVGellipseElement
+		console.log('this = '+this);
+		console.log('mySimulator = '+mySimulator);
 
-					SVG_node = event.srcElement;
+		console.log('Node clicked. Refreshing graph ...');
+
+		var SVG_node = event.srcElement;
 
 //					mySimulator = document.getElementById('viewport').mySimulator;
-					mySimulator = simulator;
+		var mySimulator = simulator;
 //					this wird hier nicht funktionieren, weil das event asynchron kommt
-					jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
-					alert(jSBGN_node.myState);
+		var jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
+		alert(jSBGN_node.myState);
 
-					if (!event.ctrlKey) {
-						jSBGN_node.myState = ! jSBGN_node.myState;	// change node state
+		if (!event.ctrlKey) {
+			jSBGN_node.myState = ! jSBGN_node.myState;	// change node state
 
-						try {		// if an annotation is available for this node, show it
-							annotation = network.annotations[SVG_node.id.replace('_',' ')];
-							if (annotation == undefined || annotation == 'undefined')
-								alert('not annotated')
-							else	{
-								document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+annotation;
-								showTab('annotation');
-								}
-						    }
-						catch(err) {	// no annotation available
-							alert('not annotated');
-							}
-
-						}
-					else	{
-						jSBGN_node.update = ! jSBGN_node.update;	// enable/disable updating of this node
-						}
-	//				alert(jSBGN_node.myState);
-
-					if ( mySimulator.updateSVG_Timeout == null ) {		// refresh SVG
-						mySimulator.updateSVG();
-						}
-
-					if ( ! mySimulator.running ) {				// start Simulation
-						document.getElementById('Steps').innerHTML = 0; // (but only if it's not running already)
-						mySimulator.Iterate();
-						}
+			try {		// if an annotation is available for this node, show it
+				var annotation = network.annotations[SVG_node.id.replace('_',' ')];
+				if (annotation == undefined || annotation == 'undefined')
+					alert('not annotated')
+				else	{
+					document.getElementById('annotation_tab').innerHTML = '<h1>'+SVG_node.id+'</h1>'+annotation;
+					showTab('annotation');
 					}
+			    }
+			catch(err) {	// no annotation available
+				alert('not annotated');
+				}
+
+			}
+		else	{
+			jSBGN_node.update = ! jSBGN_node.update;	// enable/disable updating of this node
+			}
+//				alert(jSBGN_node.myState);
+
+		if ( mySimulator.updateSVG_Timeout == null ) {		// refresh SVG
+			mySimulator.updateSVG();
+			}
+
+		if ( ! mySimulator.running ) {				// start Simulation
+			document.getElementById('Steps').innerHTML = 0; // (but only if it's not running already)
+			mySimulator.Iterate();
+			}
+		}
 
 Simulator.prototype.installSVGonClickListeners = function() {
+							var mySimulator = this;
 							for (n in this.nodes) {
-								node = this.nodes[n];
+								var node = this.nodes[n];
 								if (node != null && node.myElement != null)
-									node.myElement.onclick = this.SVGonClick;
+									node.myElement.onclick = SVGonClick(event, mySimulator);
 								}
 							}
 
 Simulator.prototype.updateSVG = function(id) {
-				mySimulator = simulator;
-				id = 0;
+				var mySimulator = simulator;
+				var id = 0;
 //				if (id)
 //					mySimulator = document.getElementById(id).mySimulator;
 
@@ -123,36 +127,36 @@ Simulator.prototype.updateSVG = function(id) {
 					window.clearTimeout(mySimulator.updateSVG_Timeout);
 					mySimulator.updateSVG_Timeout = null;
 					}
-				graph_refresh_required = false;
+				var graph_refresh_required = false;
 				for (n in mySimulator.nodes) {			// update color and dashing of all Nodes
-					jSBGN_node = mySimulator.nodes[n];
+					var jSBGN_node = mySimulator.nodes[n];
 
 					if (jSBGN_node != null && jSBGN_node.myElement != null) {
 						// which color is this node currently fading to ?
-						desired = mySimulator.colors.inactive;
-						undesired = mySimulator.colors.active;
+						var desired = mySimulator.colors.inactive;
+						var undesired = mySimulator.colors.active;
 						if ( jSBGN_node.myState ) {
-							temp = desired;
-							desired = undesired;
-							undesired = temp;
+							var temp = desired;
+							var desired = undesired;
+							var undesired = temp;
 							}
 
 						// continue fading
-						current = jSBGN_node.myElement.getAttribute('fill');
+						var current = jSBGN_node.myElement.getAttribute('fill');
 						if ( current.toLowerCase() != desired.toLowerCase() ) {
-							graph_refresh_required = true;
+							var graph_refresh_required = true;
 							jSBGN_node.myElement.setAttribute('fill', NextColor(undesired, current, desired));
 							}
 
 						// is this node updated or not? -> dashing?
-						desired = 'none';
-						undesired = '3,3';
+						var desired = 'none';
+						var undesired = '3,3';
 						if ( ! jSBGN_node.update ) {
-							temp = desired;
-							desired = undesired;
-							undesired = temp;
+							var temp = desired;
+							var desired = undesired;
+							var undesired = temp;
 							}
-						current = jSBGN_node.myElement.getAttribute('stroke-dasharray');
+						var current = jSBGN_node.myElement.getAttribute('stroke-dasharray');
 						if ( current != desired ) {
 		//					graph_refresh_required = true;
 							jSBGN_node.myElement.style['stroke-dasharray'] = desired;
@@ -165,35 +169,35 @@ Simulator.prototype.updateSVG = function(id) {
 
 Simulator.prototype.Iterate = function(id) {
 //				mySimulator = this;
-				mySimulator = simulator;
-				id = 0;
+				var mySimulator = simulator;
+				var id = 0;
 //				if (id)
 //					mySimulator = document.getElementById(id).mySimulator;
 
 				mySimulator.running = true;
 
 				// messages
-				e = document.getElementById('Progress');
+				var e = document.getElementById('Progress');
 				if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )
 					e.innerHTML = 'Iterating ...'
 				else	e.innerHTML = e.innerHTML+'.';
-				steps = document.getElementById('Steps');
+				var steps = document.getElementById('Steps');
 				steps.innerHTML = parseInt(steps.innerHTML)+1;
 
 				// calculation
-				changes = false;
+				var changes = false;
 				for (n in mySimulator.nodes) {
-					jSBGN_node = mySimulator.nodes[n];
+					var jSBGN_node = mySimulator.nodes[n];
 					if ( jSBGN_node.update ) {
 						jSBGN_node.myNextState = Boolean(eval(jSBGN_node.updateRule));
-						changes = changes || (jSBGN_node.myNextState != jSBGN_node.myState);
+						var changes = changes || (jSBGN_node.myNextState != jSBGN_node.myState);
 						}
 					}
 
 				// steady state ?
 				if ( changes ) {			// network updated -> steady state not reached
 					for (n in mySimulator.nodes) {
-						jSBGN_node = mySimulator.nodes[n];					// State = NextState
+						var jSBGN_node = mySimulator.nodes[n];					// State = NextState
 						jSBGN_node.myState = jSBGN_node.myNextState;
 						}
 					try { delay=parseInt(document.getElementById('Delay').value);	}
