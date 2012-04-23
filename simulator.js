@@ -9,6 +9,8 @@ getMySimulator = function(DOMelement) {
 //			zu welchem SVG gehörst du?
 //			im globalen object nachschauen
 //			zugehörigen Simulator zurückgeben
+
+			// temporary workaround
 			return simulator;
 			}
 
@@ -57,6 +59,7 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 			if (mouseClick == 'simulation') {
 				if (jSBGN_node.simulation.update) // change node state
 					jSBGN_node.simulation.myState = ! jSBGN_node.simulation.myState;
+				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState);
 
 				if ( ! mySimulator.running ) {    // evtl. start simulation
 					document.getElementById('Steps').innerHTML = 0;
@@ -179,8 +182,13 @@ Iterate = function(id) {
 		for (n in mySimulator.jSBGN.nodes) {
 			var jSBGN_node = mySimulator.jSBGN.nodes[n];
 			if ( jSBGN_node.simulation.update ) {
-				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
-				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
+				if (jSBGN_node.simulation.updateRule.trim() == '')
+					jSBGN_node.simulation.update = false		// don't update without update rule
+				else	{
+					jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+//					console.log(jSBGN_node.id+': '+jSBGN_node.simulation.updateRule+' = '+jSBGN_node.simulation.myNextState);
+					var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
+					}
 				}
 			}
 
@@ -191,7 +199,7 @@ Iterate = function(id) {
 				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
 				}
 			try { delay=parseInt(document.getElementById('Delay').value); }
-			catch(err) { delay=120;	}
+			catch(err) { delay=10;	}
 			if ( mySimulator.updateSVG_Timeout == null )
 				updateSVG();
 			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again
