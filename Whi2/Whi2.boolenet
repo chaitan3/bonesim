@@ -48,10 +48,7 @@ energy*				= nutrient_fermentation or oxidative_phosphorylation or degradation
 # PKA pathway
 #
 
-GTP*				= Glucose
-# States of GTP:		True="GTP", False="GDP"
-
-Ras*				= (Ras1 or Ras2) and GTP
+Ras*				= (Ras1 or Ras2) and Gpa2
 # Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
 # Annotation of Ras1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
 # Annotation of Ras2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
@@ -64,7 +61,7 @@ Ras_farn*			= Ras
 # Cyr1p: adenylate cyclase
 Cyr1*				= Ras_palm and Ras_farn
 
-cAMP*				= Cyr1 or Gpa2
+cAMP*				= Cyr1
 # States of cAMP:		True="present", False="absent"
 
 PKA*				= cAMP
