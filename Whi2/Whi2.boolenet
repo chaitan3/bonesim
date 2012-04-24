@@ -309,7 +309,8 @@ microtubule*			= Tub1 and Tub2 and Spc98
 Atg8_mtub*			= Atg8_PE and microtubule and Atg4
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 
-mature_AP*			= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
+selective_autophagy*		= mitophagy or pexophagy or ribophagy or aggrephagy or CVT
+mature_AP*			=  bulk_autophagy or selective_autophagy
 transport_to_vacuole*		= mature_AP and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
