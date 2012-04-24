@@ -342,11 +342,13 @@ ribophagy*			= AV_expansion
 aggrephagy*			= UPR and AV_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
 
-Atg8_PE*			= Atg8 and PE and starvation
-Atg8_r* 			= Atg8_PE and Atg4
+Atg8_cleaved*			= Atg8 and Atg4
+Atg8_PE*			= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
 # States of Atg8_PE:		True="Atg8 membrane bound", False="Atg8 free"
 # Annotation of PE:		"<iframe src='http://en.wikipedia.org/wiki/Phosphatidylethanolamine'></iframe>"
-# States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 membrane bound"
+
+Atg5_12*			= Atg12 and Atg5 and Atg10 and Atg7
+
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 microtubule*			= Tub1 and Tub2 and Spc98
