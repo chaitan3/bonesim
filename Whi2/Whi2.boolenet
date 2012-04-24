@@ -189,10 +189,11 @@ Spc98*				= Whi2
 # TORC1 activity deactivates Msn2_4 activity
 # 
 
-Msn2_4*				= Whi2_Psr1_2
+Msn2_4_P*			= Whi2_Psr1_2
+Msn2_4*				= Msn2_4_P and (PKA or TORC1)
 # States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
 
-Msn2_4_n*			= Msn2_4
+Msn2_4_n*			= Msn2_4_P
 # States of Msn2_4_n:		True="nuclear import", False="inactive"
 
 Rdp3				= True
