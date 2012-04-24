@@ -24,22 +24,6 @@ Rapamycin			= False
 
 
 ##
-## desired output values
-##
-
-#bulk_autophagy			= False
-#mitophagy			= False
-#cvt				= False
-
-#general_stress_response	= False
-#G1_arrest			= False
-#heatshock_resistance		= False
-#carbohydrate_storage		= False
-#mitochondrial_fragmentation	= False
-#apoptosis			= False
-
-
-##
 ## logic
 ##
 
@@ -123,9 +107,6 @@ Rapa_Fpr1*			= Rapamycin and Fpr1
 TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
 # States of TORC1:		True="complex active", False="complex inactive"
 
-TORC2*				= ( not starvation)
-# States of TORC1:		True="complex active", False="complex inactive"
-
 
 #
 # Whi2p pathway
@@ -145,7 +126,7 @@ Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
 
 App1*				= Whi2
 
-actin*				= App1 or TORC2
+actin*				= App1
 # States of actin:		True="wild-type", False="disorganized"
 
 
@@ -174,6 +155,7 @@ Whi5*				= not (Cdc28 and Cln3)
 # States of Whi5:		True="repressing", False="inactive"
 
 G1_arrest*			= Whi5
+# States of G1_arrest:		True="cell arresting in G1", False="cell fails to arrest in G1"
 
 
 #
