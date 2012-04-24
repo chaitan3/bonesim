@@ -67,7 +67,7 @@ GTP*				= Glucose
 # States of GTP:		True="GTP", False="GDP"
 
 Ras*				= (Ras1 or Ras2) and GTP
-# Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2p' width='99%' height='85%'></iframe>"
+# Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2' width='99%' height='85%'></iframe>"
 
 Ras_palm*			= Ras
 # States of Ras_palm:		True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
@@ -128,7 +128,7 @@ TORC2*				= ( not starvation)
 #
 
 Whi2*				= not Ras
-# Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2p' width='99%' height='85%'></iframe>"
+# Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2' width='99%' height='85%'></iframe>"
 
 Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
 # States of Whi2p_Psr1_2:	True="complexed", False="dissociated"
@@ -377,4 +377,6 @@ fusion*				= docking and Ccz1 and Vam3
 lysis* = fusion and Atg15_Vac
 
 degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
+
+# Annotation of Atg1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
 
