@@ -267,14 +267,6 @@ UPR*				= ER_stress
 #
 
 
-Atg29				= True
-Atg30				= False
-Atg31				= True
-Atg32				= False
-Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
-Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
-
-
 # Atg11 is essential for selective autophagy
 # Atg11 = adaptor protein for selective types of autophagy
 Atg11				= True
@@ -308,11 +300,6 @@ Ams1_Vac*			= CVT and Ams1_PAS
 # States of Lap4_Vac:		True="vacuolar", False="absent"
 # States of Ams1_Vac:		True="vacuolar", False="absent"
 
-mitochondria			= True
-Atg33				= True
-Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
-
 MVB				= True
 Atg15_ER*			= MVB
 Atg15_Vac*			= Atg15_ER
@@ -342,7 +329,15 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 AV_assembly*			= PAS
 AV_expansion*			= AV_assembly and Atg8_m
 
-pexophagy*			= AV_expansion
+Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
+Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
+Atg33_mito*			= Atg33 and mitochondria
+mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
+
+Atg30_poxi*			= Atg30 and peroxisome
+Atg11_30_poxi*			= Atg11 and Atg30_poxi
+pexophagy*			= AV_expansion and Atg11_30_poxi
+
 ribophagy*			= AV_expansion
 aggrephagy*			= UPR and AV_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
