@@ -198,7 +198,7 @@ Atg1*				= ( not TORC1) or (( not PKA) and ( not Rim15))
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13*				= not (STRE1 and (( not TORC1) or ( not PKA)))
+Atg13*				= STRE1 and ( not (TORC1 or (TORC1 and PKA)))
 
 Atg17*				= STRE1
 
