@@ -68,6 +68,7 @@ cAMP*				= Cyr1 or Gpa2
 # States of cAMP:		True="present", False="absent"
 
 PKA*				= cAMP
+# Annotation of PKA:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
 
 
 #
@@ -105,6 +106,7 @@ Rapa_Fpr1*			= Rapamycin and Fpr1
 # Rapamycin "simulates" starvation
 TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
 # States of TORC1:		True="complex active", False="complex inactive"
+# Annotation of TORC1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
 
 
 #
