@@ -240,7 +240,6 @@ Atg1_13_17*			= Atg1 and Atg13_hypoP and Atg17
 
 selective_autophagy*		= STRE2
 Atg11*				= selective_autophagy
-Atg20*				= selective_autophagy
 Atg24*				= selective_autophagy
 
 G1_arrest*			= STRE
@@ -278,7 +277,7 @@ Atg11				= True
 #
 Lap4				= True
 Ams1				= True
-Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19
+Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19 and Atg20
 # States of Lap4_PAS:		True="transported", False="free"
 
 # States of Atg19:		True="present", False="absent"
