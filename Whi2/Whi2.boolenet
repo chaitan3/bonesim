@@ -107,12 +107,10 @@ TORC1*				= Nitrogen and ( not Rapa_Fpr1)
 
 # Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
-Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2) and ROS
+Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2) and ( not Glucose and not Nitrogen)
 # States of Whi2_Psr1_2:	True="complexed", False="dissociated"
 # States of Psr1:		True="present", False="absent"
 # States of Psr2:		True="present", False="absent"
-
-ROS*				= not Nitrogen
 
 #
 # actin organization
