@@ -77,6 +77,13 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 //		console.log('Node clicked: '+jSBGN_node.id);
 
+		Simulate = function() {
+				if ( ! mySimulator.running ) {
+					document.getElementById('Steps').innerHTML = 0;
+					Iterate(mySimulator.SVG.id);
+					}
+				}
+
 		if (!event.ctrlKey) {
 			if (mouseClick == 'simulation') {
 //				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState); // vorher
@@ -85,10 +92,7 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 //				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState); // nachher
 
-				if ( ! mySimulator.running ) {    // evtl. start simulation
-					document.getElementById('Steps').innerHTML = 0;
-					Iterate(mySimulator.SVG.id);
-					}
+				Simulate();
 				}
 			else if (mouseClick == 'annotation') {
 				var annotation = jSBGN_node.simulation.annotation;
@@ -110,6 +114,7 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 			}
 		else	{
 			jSBGN_node.simulation.update = ! jSBGN_node.simulation.update;	// enable/disable updating of this node
+			Simulate();
 			}
 //				alert(jSBGN_node.myState);
 
