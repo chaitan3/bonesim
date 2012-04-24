@@ -327,7 +327,7 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 
 # autophagic vacuole assembly (GO:0000045)
 AV_assembly*			= PAS
-AV_expansion*			= AV_assembly and Atg8_m
+AV_expansion*			= AV_assembly and Atg8_PE
 
 Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
@@ -342,13 +342,11 @@ ribophagy*			= AV_expansion
 aggrephagy*			= UPR and AV_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
 
-Atg8_PE*			= Atg8 and PE
-Atg8_m*				= Atg8_PE and starvation
-# States of Atg8_m:		True="Atg8 membrane bound", False="Atg8 free"
+Atg8_PE*			= Atg8 and PE and starvation
+Atg8_r* 			= Atg8_PE and Atg4
+# States of Atg8_PE:		True="Atg8 membrane bound", False="Atg8 free"
 # Annotation of PE:		"<iframe src='http://en.wikipedia.org/wiki/Phosphatidylethanolamine'></iframe>"
-
-Atg8_r* 			= Atg8_m and Atg4
-# States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 in or on autophagosome"
+# States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 membrane bound"
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 microtubule*			= Tub1 and Tub2 and Spc98
@@ -358,7 +356,7 @@ microtubule*			= Tub1 and Tub2 and Spc98
 
 # Aut2 is Atg4
 # Aut7 is Atg8
-Atg8_mtub*			= Atg8_m and microtubule and Atg4
+Atg8_mtub*			= Atg8_PE and microtubule and Atg4
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 
 mature_AV*			= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
@@ -368,7 +366,7 @@ transport_to_vacuole*		= mature_AV and Atg8_mtub
 docking*			= transport_to_vacuole
 
 # autophagic vacuole fusion (GO:0000046)
-fusion*				= docking and Ccz1 and Vam3
+fusion*				= docking and Ccz1 and Vam3 and Atg8_PE
 
 # autophagic membrane disassembly (GO:0030399)
 lysis* = fusion and Atg15_Vac
