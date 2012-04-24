@@ -71,7 +71,8 @@ PKA*				= cAMP
 #
 
 Sch9*				= TORC1
-Rim15*				= not Sch9
+Rim15*				= ( not PKA) and ( not Sch9) and ( not TORC1)
+#Rim15_n*			= Rim15 and (not TORC1)
 
 
 #
