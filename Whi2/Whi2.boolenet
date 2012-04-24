@@ -70,8 +70,8 @@ PKA*				= cAMP
 # Sch9 pathway
 #
 
-Sch9*				= Ras
-Rim15*				= Sch9
+Sch9*				= TORC1
+Rim15*				= not Sch9
 
 
 #
@@ -182,7 +182,7 @@ Spc98*				= Whi2
 # TORC1 activity deactivates Msn2_4 activity
 # 
 
-Msn2_4*				= Whi2_Psr1_2 and not (PKA and TORC1)
+Msn2_4*				= Whi2_Psr1_2 and not (PKA and Rim15)
 # States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
 
 Rdp3				= True
@@ -194,7 +194,7 @@ STRE*				= Msn2_4 and chromatin
 
 bulk_autophagy*			= AP_expansion
 
-Atg1*				= ( not TORC1) or (( not PKA) and ( not Rim15))
+Atg1*				= ( not PKA) and ( not TORC1)
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
