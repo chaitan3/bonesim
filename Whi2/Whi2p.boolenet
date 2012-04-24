@@ -67,7 +67,7 @@ GTP*				= Glucose
 # States of GTP:		True="GTP", False="GDP"
 
 Ras*				= (Ras1 or Ras2) and GTP
-# Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2' width='99%' height='85%'></iframe>"
+# Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
 
 Ras_palm*			= Ras
 # States of Ras_palm:		True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
@@ -128,7 +128,7 @@ TORC2*				= ( not starvation)
 #
 
 Whi2*				= not Ras
-# Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2' width='99%' height='85%'></iframe>"
+# Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
 Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
 # States of Whi2p_Psr1_2:	True="complexed", False="dissociated"
@@ -288,7 +288,6 @@ Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19
 # States of Lap4_PAS:		True="transported", False="free"
 
 # States of Atg19:		True="present", False="absent"
-# Annotation of Atg19:		"Atg19: brings Lap4 and Ams1 to PAS"
 
 Ams1_PAS*			= PAS and Ams1 and Atg11 and (Atg19 or Atg34)
 # States of Ams1_PAS:		True="transported", False="free"
@@ -345,6 +344,7 @@ aggrephagy*			= UPR and AV_expansion
 Atg8_PE*			= Atg8 and PE
 Atg8_m*				= Atg8_PE
 # States of Atg8_m:		True="Atg8 membrane bound", False="Atg8 free"
+# Annotation of PE:		"<iframe src='http://en.wikipedia.org/wiki/Phosphatidylethanolamine'></iframe>"
 
 Atg8_r* 			= Atg8_m and Atg4
 # States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 in or on autophagosome"
@@ -378,38 +378,38 @@ lysis* = fusion and Atg15_Vac
 
 degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
 
-# Annotation of Atg1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg3:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg4:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg5:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg6:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg7:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg8:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg9:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg10:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg11:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg12:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg13:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg14:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg15:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg16:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg17:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg18:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg19:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg20:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg21:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg22:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg23:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg24:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg25:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg26:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg27:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg28:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg29:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg30:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg31:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg32:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg33:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
-# Annotation of Atg34:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins' width='99%' height='85%'></iframe>"
+# Annotation of Atg1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg3:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg4:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg5:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg6:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg7:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg8:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg9:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg10:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg11:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg12:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg13:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg14:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg15:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg16:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg17:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg18:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg19:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg20:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg21:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg22:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg23:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg24:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg25:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg26:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg27:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg28:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg29:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg30:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg31:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg32:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg33:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg34:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 
