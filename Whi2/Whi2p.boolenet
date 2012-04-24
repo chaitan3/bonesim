@@ -134,14 +134,14 @@ actin*				= App1
 # cell cycle
 #
 
-Cdc28*				= ( not Whi2) and ( not Whi3) and ( not Whi4)
+Cdc28*				= ( not Whi2) or ( not Whi3) or ( not Whi4)
 # States of Whi3:		True="present", False="absent"
 # States of Whi4:		True="present", False="absent"
 
-Cln1*				= ( not Cdc28)
-Cln2*				= ( not Whi3) and ( not Cdc28)
+Cln1*				= Cdc28
+Cln2*				= Whi3 and Cdc28
 # Whi1 is another name for Cln3
-Cln3*				= not Whi3
+Cln3*				= Whi3
 
 G1_cyclins*			= Cln1 and Cln2 and Cln3
 # States of G1_cyclins:		True="present", False="absent"
@@ -155,7 +155,7 @@ G1_cyclins*			= Cln1 and Cln2 and Cln3
 Whi5*				= not (Cdc28 and Cln3)
 # States of Whi5:		True="repressing", False="inactive"
 
-G1_arrest*			= Whi5 and G1_cyclins
+G1_arrest*			= Whi5 and ( not G1_cyclins)
 # States of G1_arrest:		True="cell arresting in G1", False="cell fails to arrest in G1"
 
 
