@@ -239,7 +239,7 @@ preApe1				= True
 Ape1*				= preApe1
 # States of Ape1:		True="complexed", False="dissociated"
 
-CVT*				= PAS and Ape1 and (Lap4_PAS or Ams1_PAS)
+CVT*				= selective_autophagy and Ape1 and (Lap4_PAS or Ams1_PAS)
 # States of CVT:		True="complex assembled", False="absent"
 
 Lap4_Vac*			= CVT and Lap4_PAS
@@ -279,15 +279,17 @@ AP_expansion*			= AP_assembly and Atg8_PE
 
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria and Whi2_Psr1_2
 Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= AP_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
+mitophagy*			= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
 
 Atg30_Px*			= Atg30 and peroxisome
 Atg11_30_Px*			= Atg11 and Atg30_Px
-pexophagy*			= AP_expansion and Atg11_30_Px
+pexophagy*			= selective_autophagy and Atg11_30_Px
 
-ribophagy*			= AP_expansion
-aggrephagy*			= UPR and AP_expansion
+ribophagy*			= selective_autophagy
+aggrephagy*			= UPR and selective_autophagy
 # Annotation of UPR:		"unfolded protein response pathway"
+
+selective_autophagy*		= AP_expansion
 
 Atg8_cleaved*			= Atg8 and Atg4
 Atg8_PE*			= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
@@ -309,8 +311,7 @@ microtubule*			= Tub1 and Tub2 and Spc98
 Atg8_mtub*			= Atg8_PE and microtubule and Atg4
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 
-selective_autophagy*		= mitophagy or pexophagy or ribophagy or aggrephagy or CVT
-mature_AP*			=  bulk_autophagy or selective_autophagy
+mature_AP*			=  bulk_autophagy or pexophagy or ribophagy or aggrephagy or mitophagy or CVT
 transport_to_vacuole*		= mature_AP and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
