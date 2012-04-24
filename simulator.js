@@ -107,7 +107,8 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 							showAnnotationTab();
 							}
 						}	*/
-					jSBGN_node.simulation.annotation = '<input type=button value="Annotate now" onclick="text = prompt(\'Please enter annotation for '+jSBGN_node.id+':\'); if (text) { jSBGN_node.simulation.annotation = text; showAnnotation('+jSBGN_node.id+'); }" />';
+//					jSBGN_node.simulation.annotation = '<input type=button value="Annotate now" onclick="text = prompt(\'Please enter annotation for '+jSBGN_node.id+':\'); if (text) { jSBGN_node.simulation.annotation = text; showAnnotation('+jSBGN_node.id+'); }" />';
+					jSBGN_node.simulation.annotation = '<iframe width="99%" height="85%" src="http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Boole\'sche_Modellierung_des_Whi2p-abh%C3%A4ngigen_Signalweges"></iframe>';
 					showAnnotation(jSBGN_node.id);
 					}
 				}
