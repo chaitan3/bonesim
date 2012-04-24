@@ -187,7 +187,9 @@ STRE*				= Msn2_4
 
 bulk_autophagy*			= AP_expansion
 
-Atg1*				= ( not PKA) and ( not TORC1)
+# nur damit das PKA irgendwie drinnebleibt
+# A.Reichert vermutet Wichtigkeit von PKA, falls TORC1 deletiert
+Atg1*				= (PKA or ( not PKA)) and ( not TORC1)
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
