@@ -113,10 +113,9 @@ TORC1*				= Nitrogen and ( not Rapa_Fpr1)
 # Whi2 pathway
 #
 
-Whi2*				= Nitrogen
 # Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
-Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
+Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2) and ( not Nitrogen)
 # States of Whi2_Psr1_2:	True="complexed", False="dissociated"
 # States of Psr1:		True="present", False="absent"
 # States of Psr2:		True="present", False="absent"
@@ -189,19 +188,15 @@ Spc98*				= Whi2
 # TORC1 activity deactivates Msn2_4 activity
 # 
 
-Msn2_4_P*			= Whi2_Psr1_2
-Msn2_4*				= Msn2_4_P and (PKA or TORC1)
+Msn2_4*				= Whi2_Psr1_2 and not (PKA and TORC1)
 # States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
-
-Msn2_4_n*			= Msn2_4_P
-# States of Msn2_4_n:		True="nuclear import", False="inactive"
 
 Rdp3				= True
 Hda3				= True
 chromatin*			= Rdp3 and Hda3
 # States of chromatin:		True="chromatin remodeling", False="chromatin condensed"
 
-STRE*				= Msn2_4_n and chromatin
+STRE*				= Msn2_4 and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
