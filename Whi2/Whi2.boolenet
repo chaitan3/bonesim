@@ -36,8 +36,6 @@ oxidative_phosphorylation*		= not Glucose and Pyruvat
 
 # States of Nitrogen:		True="enough nitrogen", False="starving"
 
-log_phase*			= nutrient_fermentation
-stationary_phase*		= oxidative_phosphorylation
 cell_death*			= not (nutrient_fermentation or oxidative_phosphorylation)
 
 energy*				= nutrient_fermentation or oxidative_phosphorylation or degradation
@@ -80,10 +78,7 @@ Rim15*				= Sch9
 # Gpr1 pathway
 #
 
-GPR1*				= True
-# States of GPR1:		True="gene is transcribed and translated", False="gene is silent"
-
-Gpr1p*				= GPR1 and Glucose
+Gpr1p*				= Glucose
 # States of Gpr1p:		True="receptor firing", False="receptor silent"
 
 # presumably an adenylate cyclase
