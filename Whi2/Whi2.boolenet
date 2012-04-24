@@ -277,7 +277,7 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 AP_assembly*			= PAS
 AP_expansion*			= AP_assembly and Atg8_PE
 
-Atg11_32_mito*			= Atg11 and Atg32 and mitochondria and Whi2_Psr1_2
+Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 Atg33_mito*			= Atg33 and mitochondria
 mitophagy*			= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito and Atg33_mito)
 
