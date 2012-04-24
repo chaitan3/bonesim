@@ -199,29 +199,29 @@ Spc98*				= Whi2
 
 # phosphorylated is the deactivated state
 # dephosphorylation triggers to nuclear import
-# Ras2p is a Msn2 suppressor: Ras2p activity leads to phosporylation of Msn2
-# PKA phosphorylates Msn2 (citation?)
-# since active Ras2p also triggers adenylat cyclation which in turn activates PKA, I assume Ras2p may actually not directly be acting on Msn2
-# TORC1 activity deactivates Msn2 activity
+# Ras2p is a Msn2_4 suppressor: Ras2p activity leads to phosporylation of Msn2_4
+# PKA phosphorylates Msn2_4 (citation?)
+# since active Ras2p also triggers adenylat cyclation which in turn activates PKA, I assume Ras2p may actually not directly be acting on Msn2_4
+# TORC1 activity deactivates Msn2_4 activity
 # 
 
-# Whi2p activity also modulates Msn2 activity
+# Whi2p activity also modulates Msn2_4 activity
 # by influencing PKA
 # No! also directly: has been found complexed with Whi2p and Psr1/2 !
-# Whi2p dephosphorylates Msn2 when complexed
+# Whi2p dephosphorylates Msn2_4 when complexed
 
-Msn2*				= Whi2_Psr1_2
-# States of Msn2:		True="dephosphorylated = active, False="phosphorylated = inactive"
+Msn2_4*				= Whi2_Psr1_2
+# States of Msn2_4:		True="dephosphorylated = active, False="phosphorylated = inactive"
 
-Msn2_n*				= Msn2
-# States of Msn2_n:		True="nuclear import", False="inactive"
+Msn2_4_n*			= Msn2_4
+# States of Msn2_4_n:		True="nuclear import", False="inactive"
 
 Rdp3				= True
 Hda3				= True
 chromatin*			= Rdp3 and Hda3
-# States of chromatin:		True="remodeling", False="normal"
+# States of chromatin:		True="chromatin remodeling", False="chromatin condensed"
 
-STRE*				= Msn2_n and chromatin
+STRE*				= Msn2_4_n and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
