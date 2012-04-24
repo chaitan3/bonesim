@@ -34,7 +34,7 @@ nutrient_fermentation*			= Glucose
 oxidative_phosphorylation*		= not Glucose and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
-# States of starvation:		True="starving", False="well-fed"
+# States of Nitrogen:		True="enough nitrogen", False="starving"
 
 log_phase*			= nutrient_fermentation
 stationary_phase*		= oxidative_phosphorylation
@@ -103,8 +103,8 @@ Rapa_Fpr1*			= Rapamycin and Fpr1
 # States of Fpr1:		True="present",		False="absent"
 
 # TORC1 is active under nutrient rich conditions
-# Rapamycin "simulates" starvation
-TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
+# Rapamycin "simulates" Nitrogen
+TORC1*				= Nitrogen and ( not Rapa_Fpr1)
 # States of TORC1:		True="complex active", False="complex inactive"
 # Annotation of TORC1:		"M<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
 
@@ -113,7 +113,7 @@ TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
 # Whi2 pathway
 #
 
-Whi2*				= starvation
+Whi2*				= Nitrogen
 # Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
 Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
@@ -190,7 +190,7 @@ Spc98*				= Whi2
 # 
 
 Msn2_4*				= Whi2_Psr1_2
-# States of Msn2_4:		True="dephosphorylated = active, False="phosphorylated = inactive"
+# States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
 
 Msn2_4_n*			= Msn2_4
 # States of Msn2_4_n:		True="nuclear import", False="inactive"
