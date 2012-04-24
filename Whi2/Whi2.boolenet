@@ -116,7 +116,7 @@ Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2) and ( not Glucose and not Nitrogen)
 # actin organization
 #
 
-App1*				= Whi2
+App1*				= Whi2_Psr1_2
 
 actin*				= App1
 # States of actin:		True="wild-type", False="disorganized"
@@ -155,7 +155,7 @@ G1_arrest*			= Whi5 and ( not G1_cyclins)
 # unknown function
 #
 
-Lsm2*				= Whi2
+Lsm2*				= Whi2_Psr1_2
 
 RNA_processing*			= Lsm2
 mRNA_decay*			= Lsm2
