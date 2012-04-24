@@ -326,7 +326,8 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 AV_assembly*			= PAS
 AV_expansion*			= AV_assembly and Atg8_PE
 
-Atg32*				= Whi2_Psr1_2 and ( not TORC1 )
+Atg32*				= selective_autophagy
+
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 Atg33_mito*			= Atg33 and mitochondria
 mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
