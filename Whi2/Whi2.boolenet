@@ -126,7 +126,7 @@ actin*				= App1
 # cell cycle
 #
 
-Cdc28*				= ( not Whi2) or ( not Whi3) or ( not Whi4)
+Cdc28*				= ( not Whi2_Psr1_2) or ( not Whi3) or ( not Whi4)
 # States of Whi3:		True="present", False="absent"
 # States of Whi4:		True="present", False="absent"
 
