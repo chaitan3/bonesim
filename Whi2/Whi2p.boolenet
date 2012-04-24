@@ -306,8 +306,10 @@ Ams1_Vac*			= CVT and Ams1_PAS
 # States of Lap4_Vac:		True="vacuolar", False="absent"
 # States of Ams1_Vac:		True="vacuolar", False="absent"
 
-
-mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and AV_expansion
+mitochondria			= True
+Atg33				= True
+Atg33_mito*			= Atg33 and mitochondria
+mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and AV_expansion and Atg33_mito
 
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 # States of Atg9_mt:		True="localized to mitochondria", False="free"
@@ -412,4 +414,15 @@ degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
 # Annotation of Atg32:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg33:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg34:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+
+# Annotation of Atg1_13_17:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg13_hypoP:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg8_PE:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg8_m:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg8_mtub:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg8_r:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg9_PAS:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg9_mt:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg15_ER:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg15_Vac:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 
