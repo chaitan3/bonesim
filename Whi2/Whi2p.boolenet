@@ -311,19 +311,16 @@ Atg33				= True
 Atg33_mito*			= Atg33 and mitochondria
 mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and AV_expansion and Atg33_mito
 
-# States of Atg8_mtub:		True="bound to microtubule", False="free"
-# States of Atg9_mt:		True="localized to mitochondria", False="free"
-
-# States of PAS:		True="assembled", False="absent"
-# Annotation of PAS:		"pre-autophagosomal structure"
-
-
 MVB				= True
 Atg15_ER*			= MVB
 Atg15_Vac*			= Atg15_ER
 
 Atg9_PAS*			= Atg9 and PAS
 Atg9_mt*			= Atg9_PAS and Atg2
+# States of Atg9_mt:		True="localized to mitochondria", False="free"
+
+# States of PAS:		True="assembled", False="absent"
+# Annotation of PAS:		"pre-autophagosomal structure"
 
 
 #
@@ -365,6 +362,7 @@ microtubule*			= Tub1 and Tub2 and Spc98
 # Aut2 is Atg4
 # Aut7 is Atg8
 Atg8_mtub*			= Atg8_m and microtubule and Atg4
+# States of Atg8_mtub:		True="bound to microtubule", False="free"
 
 mature_AV*			= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
 transport_to_vacuole*		= mature_AV and Atg8_mtub
@@ -425,4 +423,5 @@ degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
 # Annotation of Atg9_mt:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg15_ER:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg15_Vac:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg33_mito:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 
