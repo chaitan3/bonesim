@@ -209,7 +209,7 @@ STRE2*				= STRE
 
 bulk_autophagy*			= AV_expansion
 
-Atg1*				= PKA or Rim15
+Atg1*				= ( not TORC1) or (( not PKA) and ( not Rim15))
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
