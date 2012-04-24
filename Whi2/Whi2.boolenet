@@ -1,6 +1,6 @@
 
 #
-# Hypothetical Whi2p-associated signal transduction module
+# Hypothetical Whi2-associated signal transduction module
 #
 # Boolean Network modeled by Matthias Bock
 #
@@ -109,14 +109,14 @@ TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
 
 
 #
-# Whi2p pathway
+# Whi2 pathway
 #
 
 Whi2*				= not Ras
 # Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
 Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
-# States of Whi2p_Psr1_2:	True="complexed", False="dissociated"
+# States of Whi2_Psr1_2:	True="complexed", False="dissociated"
 # States of Psr1:		True="present", False="absent"
 # States of Psr2:		True="present", False="absent"
 
@@ -187,11 +187,6 @@ Spc98*				= Whi2
 # since active Ras2p also triggers adenylat cyclation which in turn activates PKA, I assume Ras2p may actually not directly be acting on Msn2_4
 # TORC1 activity deactivates Msn2_4 activity
 # 
-
-# Whi2p activity also modulates Msn2_4 activity
-# by influencing PKA
-# No! also directly: has been found complexed with Whi2p and Psr1/2 !
-# Whi2p dephosphorylates Msn2_4 when complexed
 
 Msn2_4*				= Whi2_Psr1_2
 # States of Msn2_4:		True="dephosphorylated = active, False="phosphorylated = inactive"
