@@ -192,7 +192,7 @@ STRE*				= Msn2_4 and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
-bulk_autophagy*			= AV_expansion
+bulk_autophagy*			= AP_expansion
 
 Atg1*				= ( not TORC1) or (( not PKA) and ( not Rim15))
 
@@ -293,21 +293,21 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 # aggrephagy
 
 # autophagic vacuole assembly (GO:0000045)
-AV_assembly*			= PAS
-AV_expansion*			= AV_assembly and Atg8_PE
+AP_assembly*			= PAS
+AP_expansion*			= AP_assembly and Atg8_PE
 
 Atg32*				= selective_autophagy
 
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria and Whi2_Psr1_2
 Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
+mitophagy*			= AP_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
 
 Atg30_Px*			= Atg30 and peroxisome
 Atg11_30_Px*			= Atg11 and Atg30_Px
-pexophagy*			= AV_expansion and Atg11_30_Px
+pexophagy*			= AP_expansion and Atg11_30_Px
 
-ribophagy*			= AV_expansion
-aggrephagy*			= UPR and AV_expansion
+ribophagy*			= AP_expansion
+aggrephagy*			= UPR and AP_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
 
 Atg8_cleaved*			= Atg8 and Atg4
@@ -329,8 +329,8 @@ microtubule*			= Tub1 and Tub2 and Spc98
 Atg8_mtub*			= Atg8_PE and microtubule and Atg4
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 
-mature_AV*			= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
-transport_to_vacuole*		= mature_AV and Atg8_mtub
+mature_AP*			= mitophagy or bulk_autophagy or pexophagy or ribophagy or aggrephagy
+transport_to_vacuole*		= mature_AP and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
 docking*			= transport_to_vacuole
