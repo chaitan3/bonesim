@@ -16,9 +16,6 @@ Glucose				= True
 Pyruvat*			= Glucose or Glycerol
 # States of Pyruvat:		True="present", False="absent"
 
-Nitrogen			= True
-# States of Nitrogen:		True="present", False="absent"
-
 Rapamycin			= False
 # States of Rapamycin:		True="present", False="absent"
 
@@ -31,7 +28,7 @@ Rapamycin			= False
 # "helper" values
 #
 
-starvation*			= not (Glucose and Nitrogen)
+starvation*			= not Glucose
 # States of starvation:		True="starving", False="well-fed"
 
 nutrient_fermentation*			= Glucose
