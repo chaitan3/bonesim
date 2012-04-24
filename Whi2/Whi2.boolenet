@@ -28,13 +28,13 @@ Rapamycin			= False
 # "helper" values
 #
 
-starvation*			= not Glucose
-# States of starvation:		True="starving", False="well-fed"
 
 nutrient_fermentation*			= Glucose
 # States of nutrient_fermentation:	True="anaerob metabolism", False="anaerob metabolism absent"
-oxidative_phosphorylation*		= starvation and Pyruvat
+oxidative_phosphorylation*		= not Glucose and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
+
+# States of starvation:		True="starving", False="well-fed"
 
 log_phase*			= nutrient_fermentation
 stationary_phase*		= oxidative_phosphorylation
@@ -106,14 +106,14 @@ Rapa_Fpr1*			= Rapamycin and Fpr1
 # Rapamycin "simulates" starvation
 TORC1*				= ( not starvation) and ( not Rapa_Fpr1)
 # States of TORC1:		True="complex active", False="complex inactive"
-# Annotation of TORC1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
+# Annotation of TORC1:		"M<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
 
 
 #
 # Whi2 pathway
 #
 
-Whi2*				= not Ras
+Whi2*				= starvation
 # Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
 Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2)
