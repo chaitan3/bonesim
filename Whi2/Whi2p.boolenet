@@ -319,6 +319,7 @@ Atg9_PAS*			= Atg9 and PAS
 Atg9_mt*			= Atg9_PAS and Atg2
 # States of Atg9_mt:		True="localized to mitochondria", False="free"
 
+PAS*				= Atg1_13_17 and Atg29 and Atg31
 # States of PAS:		True="assembled", False="absent"
 # Annotation of PAS:		"pre-autophagosomal structure"
 
