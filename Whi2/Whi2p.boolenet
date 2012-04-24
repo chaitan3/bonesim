@@ -47,16 +47,17 @@ Rapamycin			= False
 # "helper" values
 #
 
-starvation*			= not ((Glucose or Pyruvat) and Nitrogen)
+starvation*			= not (Glucose and Nitrogen)
 # States of starvation:		True="starving", False="well-fed"
 
 nutrient_fermentation*			= Glucose
 # States of nutrient_fermentation:	True="anaerob metabolism", False="anaerob metabolism absent"
-oxidative_phosphorylation*		= ( not nutrient_fermentation) and Pyruvat
+oxidative_phosphorylation*		= starvation and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
-stationary_phase*		= starvation
 log_phase*			= nutrient_fermentation
+stationary_phase*		= oxidative_phosphorylation
+cell_death*			= not (nutrient_fermentation or oxidative_phosphorylation)
 
 energy*				= nutrient_fermentation or oxidative_phosphorylation or degradation
 # States of energy:		True="available", False="lacking"
