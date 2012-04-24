@@ -165,7 +165,7 @@ mRNA_decay*			= Lsm2
 # microtubule nucleation
 #
 
-Spc98*				= Whi2
+Spc98*				= Whi2_Psr1_2
 
 
 #
