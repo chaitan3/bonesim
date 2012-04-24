@@ -239,7 +239,6 @@ selective_autophagy*		= STRE2
 Atg11*				= selective_autophagy
 Atg24*				= selective_autophagy
 
-G1_arrest*			= STRE
 heatshock_resistance*		= STRE
 carbohydrate_storage*		= STRE
 # States of carbohydrate_storage: True="increased trehalose and glycogen levels", False="wild-type"
@@ -332,9 +331,9 @@ Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 Atg33_mito*			= Atg33 and mitochondria
 mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
 
-Atg30_poxi*			= Atg30 and peroxisome
-Atg11_30_poxi*			= Atg11 and Atg30_poxi
-pexophagy*			= AV_expansion and Atg11_30_poxi
+Atg30_Px*			= Atg30 and peroxisome
+Atg11_30_Px*			= Atg11 and Atg30_Px
+pexophagy*			= AV_expansion and Atg11_30_Px
 
 ribophagy*			= AV_expansion
 aggrephagy*			= UPR and AV_expansion
