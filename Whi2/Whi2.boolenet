@@ -72,7 +72,6 @@ PKA*				= cAMP
 
 Sch9*				= TORC1
 Rim15*				= ( not PKA) and ( not Sch9) and ( not TORC1)
-#Rim15_n*			= Rim15 and (not TORC1)
 
 
 #
@@ -183,15 +182,10 @@ Spc98*				= Whi2
 # TORC1 activity deactivates Msn2_4 activity
 # 
 
-Msn2_4*				= Whi2_Psr1_2 and not (PKA and ( not Rim15))
+Msn2_4*				= Whi2_Psr1_2 and not (PKA and ( not Rim15) and ( not TORC1))
 # States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
 
-Rdp3				= True
-Hda3				= True
-chromatin*			= Rdp3 and Hda3
-# States of chromatin:		True="chromatin remodeling", False="chromatin condensed"
-
-STRE*				= Msn2_4 and chromatin
+STRE*				= Msn2_4
 
 bulk_autophagy*			= AP_expansion
 
