@@ -13,7 +13,7 @@
 Glucose				= True
 # States of Glucose:		True="present", False="absent"
 
-Pyruvat				= True
+Pyruvat*			= Glucose or Glycerol
 # States of Pyruvat:		True="present", False="absent"
 
 Nitrogen			= True
@@ -50,12 +50,15 @@ Rapamycin			= False
 starvation*			= not ((Glucose or Pyruvat) and Nitrogen)
 # States of starvation:		True="starving", False="well-fed"
 
-fermentation*				= Glucose
-# States of fermentation:		True="anaerob metabolism", False="anaerob metabolism absent"
-oxidative_phosphorylation*		= ( not fermentation) and Pyruvat
+nutrient_fermentation*			= Glucose
+# States of nutrient_fermentation:	True="anaerob metabolism", False="anaerob metabolism absent"
+oxidative_phosphorylation*		= ( not nutrient_fermentation) and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
-energy*				= fermentation or oxidative_phosphorylation or degradation
+stationary_phase*		= starvation
+log_phase*			= nutrient_fermentation
+
+energy*				= nutrient_fermentation or oxidative_phosphorylation or degradation
 # States of energy:		True="available", False="lacking"
 
 
