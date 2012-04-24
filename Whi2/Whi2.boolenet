@@ -192,7 +192,8 @@ STRE*				= Msn2_4 and chromatin
 
 bulk_autophagy*			= AP_expansion
 
-Atg1*				= ( not TORC1) or (( not PKA) and ( not Rim15))
+Atg1*				= STRE and (( not TORC1) or (( not PKA) and ( not Rim15)))
+# States of Atg1:		True="increased expression", False="basal level expression"
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
@@ -302,6 +303,7 @@ ribophagy*			= AP_expansion
 aggrephagy*			= UPR and AP_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
 
+Atg8*				= STRE
 Atg8_cleaved*			= Atg8 and Atg4
 Atg8_PE*			= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
 # States of Atg8_PE:		True="Atg8 membrane bound", False="Atg8 free"
