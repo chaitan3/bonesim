@@ -221,12 +221,9 @@ STRE*				= Msn2_n and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
-# Atg1_13_17 and ... aber der genau Mechanismus ist, denke ich, aufgeklärt
 bulk_autophagy*			= AV_expansion
 
-# Atg1 is necessary for any autophagic type vesicle formation
-# gets phosphorylated by PKA
-Atg1*				= STRE1 and (PKA or Rim15)
+Atg1*				= PKA or Rim15
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
@@ -420,5 +417,6 @@ degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
 # Annotation of Atg9_mt:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg15_ER:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg15_Vac:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
+# Annotation of Atg11_32_mito:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 # Annotation of Atg33_mito:	"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins'></iframe>"
 
