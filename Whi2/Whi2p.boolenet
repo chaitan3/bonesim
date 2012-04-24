@@ -277,10 +277,11 @@ Atg11				= True
 #
 Lap4				= True
 Ams1				= True
-Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19 and Atg20
+Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19 and Atg20_24
 # States of Lap4_PAS:		True="transported", False="free"
-
 # States of Atg19:		True="present", False="absent"
+
+Atg20_24*			= Atg20 and Atg24
 
 Ams1_PAS*			= PAS and Ams1 and Atg11 and (Atg19 or Atg34)
 # States of Ams1_PAS:		True="transported", False="free"
@@ -328,7 +329,7 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 AV_assembly*			= PAS
 AV_expansion*			= AV_assembly and Atg8_PE
 
-Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
+Atg32*				= Whi2_Psr1_2 and ( not TORC1 )
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 Atg33_mito*			= Atg33 and mitochondria
 mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
