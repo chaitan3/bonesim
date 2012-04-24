@@ -189,8 +189,6 @@ chromatin*			= Rdp3 and Hda3
 # States of chromatin:		True="chromatin remodeling", False="chromatin condensed"
 
 STRE*				= Msn2_4 and chromatin
-STRE1*				= STRE
-STRE2*				= STRE
 
 bulk_autophagy*			= AP_expansion
 
@@ -198,16 +196,13 @@ Atg1*				= ( not TORC1) or (( not PKA) and ( not Rim15))
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13*				= STRE1 and ( not (TORC1 or (TORC1 and PKA)))
+Atg13*				= STRE and ( not (TORC1 or (TORC1 and PKA)))
+# States of Atg13:		True="active = hypophosphorylated", False="inactive = phosphorylated"
 
-Atg17*				= STRE1
+Atg17*				= STRE
 
 Atg1_13_17*			= Atg1 and Atg13 and Atg17
 
-
-selective_autophagy*		= STRE2
-Atg11*				= selective_autophagy
-Atg24*				= selective_autophagy
 
 heatshock_resistance*		= STRE
 carbohydrate_storage*		= STRE
@@ -294,8 +289,6 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 # autophagic vacuole assembly (GO:0000045)
 AP_assembly*			= PAS
 AP_expansion*			= AP_assembly and Atg8_PE
-
-Atg32*				= selective_autophagy
 
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria and Whi2_Psr1_2
 Atg33_mito*			= Atg33 and mitochondria
