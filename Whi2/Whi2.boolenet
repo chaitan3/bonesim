@@ -281,7 +281,8 @@ Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 Atg33_mito*			= Atg33 and mitochondria
 mitophagy*			= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito and Atg33_mito) and MitoX
 
-MitoX*				= Whi2_Psr1_2
+MitoX*				= Whi2_Psr1_2 and ( not PKA)
+# States of MitoX:		True="dephosphorylated", False="phosphorylated"
 
 Atg30_Px*			= Atg30 and peroxisome
 Atg11_30_Px*			= Atg11 and Atg30_Px
