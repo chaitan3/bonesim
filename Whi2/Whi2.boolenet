@@ -182,7 +182,7 @@ Spc98*				= Whi2
 # TORC1 activity deactivates Msn2_4 activity
 # 
 
-Msn2_4*				= Whi2_Psr1_2 and not (PKA and Rim15)
+Msn2_4*				= Whi2_Psr1_2 and not (PKA and ( not Rim15))
 # States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
 
 Rdp3				= True
