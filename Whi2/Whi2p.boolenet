@@ -311,7 +311,7 @@ Ams1_Vac*			= CVT and Ams1_PAS
 mitochondria			= True
 Atg33				= True
 Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= Atg11_32_mito and Atg8_mtub and Atg9_mt and AV_expansion and Atg33_mito
+mitophagy*			= AV_expansion and Atg8_mtub and Atg9_mt and (Atg11_32_mito or Atg33_mito)
 
 MVB				= True
 Atg15_ER*			= MVB
@@ -338,23 +338,22 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 # ribophagy
 # aggrephagy
 
+# autophagic vacuole assembly (GO:0000045)
+AV_assembly*			= PAS
+AV_expansion*			= AV_assembly and Atg8_m
+
 pexophagy*			= AV_expansion
 ribophagy*			= AV_expansion
 aggrephagy*			= UPR and AV_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
 
 Atg8_PE*			= Atg8 and PE
-Atg8_m*				= Atg8_PE
+Atg8_m*				= Atg8_PE and starvation
 # States of Atg8_m:		True="Atg8 membrane bound", False="Atg8 free"
 # Annotation of PE:		"<iframe src='http://en.wikipedia.org/wiki/Phosphatidylethanolamine'></iframe>"
 
 Atg8_r* 			= Atg8_m and Atg4
 # States of Atg8_r:		True="Atg8 released from autophagosome", False="Atg8 in or on autophagosome"
-
-# autophagic vacuole assembly (GO:0000045)
-AV_assembly*			= PAS
-
-AV_expansion*			= AV_assembly and Atg8_m
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 microtubule*			= Tub1 and Tub2 and Spc98
