@@ -221,7 +221,8 @@ STRE*				= Msn2_n and chromatin
 STRE1*				= STRE
 STRE2*				= STRE
 
-bulk_autophagy*			= Atg1_13_17 and AV_expansion
+# Atg1_13_17 and ... aber der genau Mechanismus ist, denke ich, aufgeklärt
+bulk_autophagy*			= AV_expansion
 
 # Atg1 is necessary for any autophagic type vesicle formation
 # gets phosphorylated by PKA
@@ -271,6 +272,7 @@ Atg30				= False
 Atg31				= True
 Atg32				= False
 Atg32*				= Whi2_Psr1_2 and not (PKA or TORC1)
+Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 
 
 # Atg11 is essential for selective autophagy
@@ -309,7 +311,7 @@ Ams1_Vac*			= CVT and Ams1_PAS
 mitochondria			= True
 Atg33				= True
 Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= Atg32 and Atg11 and Atg8_mtub and Atg9_mt and AV_expansion and Atg33_mito
+mitophagy*			= Atg11_32_mito and Atg8_mtub and Atg9_mt and AV_expansion and Atg33_mito
 
 MVB				= True
 Atg15_ER*			= MVB
