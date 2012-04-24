@@ -301,14 +301,10 @@ Atg5_12*			= Atg12 and Atg5 and Atg10 and Atg7
 induced_autophagy*		= STRE
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
-microtubule*			= Tub1 and Tub2 and Spc98
-# States of microtubule:	True="microtubule nucleation", False="absent"
-# States of Tub1:		True="present", False="absent"
-# States of Tub2:		True="present", False="absent"
 
 # Aut2 is Atg4
 # Aut7 is Atg8
-Atg8_mtub*			= Atg8_PE and microtubule and Atg4
+Atg8_mtub*			= Atg8_PE and Atg4
 # States of Atg8_mtub:		True="bound to microtubule", False="free"
 
 mature_AP*			=  bulk_autophagy or pexophagy or ribophagy or aggrephagy or mitophagy or CVT
