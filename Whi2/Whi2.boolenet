@@ -191,10 +191,10 @@ Atg1*				= ( not PKA) and ( not TORC1)
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13*				= STRE and ( not (TORC1 or (TORC1 and PKA)))
+Atg13*				= basal_autophagy and ( not (TORC1 or (TORC1 and PKA)))
 # States of Atg13:		True="active = hypophosphorylated", False="inactive = phosphorylated"
 
-Atg17*				= STRE
+Atg17*				= basal_autophagy
 
 Atg1_13_17*			= Atg1 and Atg13 and Atg17
 
@@ -297,7 +297,7 @@ ribophagy*			= AP_expansion
 aggrephagy*			= UPR and AP_expansion
 # Annotation of UPR:		"unfolded protein response pathway"
 
-Atg8*				= STRE
+Atg8*				= basal_autophagy
 Atg8_cleaved*			= Atg8 and Atg4
 Atg8_PE*			= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
 # States of Atg8_PE:		True="Atg8 membrane bound", False="Atg8 free"
@@ -305,6 +305,7 @@ Atg8_PE*			= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
 
 Atg5_12*			= Atg12 and Atg5 and Atg10 and Atg7
 
+induced_autophagy*		= STRE
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 microtubule*			= Tub1 and Tub2 and Spc98
