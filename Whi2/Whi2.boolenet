@@ -47,9 +47,9 @@ energy*				= nutrient_fermentation or oxidative_phosphorylation or degradation
 #
 
 Ras*				= (Ras1 or Ras2) and Gpa2
-# Annotation of Ras:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
-# Annotation of Ras1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
-# Annotation of Ras2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Ras2'></iframe>"
+# Annotation of Ras:		"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
+# Annotation of Ras1:		"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
+# Annotation of Ras2:		"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
 
 Ras_palm*			= Ras
 # States of Ras_palm:		True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
@@ -281,10 +281,11 @@ AP_expansion*			= AP_assembly and Atg8_PE
 
 Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
 Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito and Atg33_mito) and MitoX
+mitophagy*			= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito and Atg33_mito)
+#and MitoX
 
-MitoX*				= Whi2_Psr1_2 and ( not PKA)
-# States of MitoX:		True="dephosphorylated", False="phosphorylated"
+#MitoX*				= Whi2_Psr1_2 and ( not PKA)
+## _tates of MitoX:		True="dephosphorylated", False="phosphorylated"
 
 Atg30_Px*			= Atg30 and peroxisome
 Atg11_30_Px*			= Atg11 and Atg30_Px
