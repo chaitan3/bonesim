@@ -61,7 +61,7 @@ showAnnotation = function(id) {
 				}
 			page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.active+';">'+active+'</div>';
 			page += '&nbsp;&nbsp;<div style="display: inline; padding: 5px; border: 1px dotted blue; background-color:'+mySimulator.colors.inactive+';">'+inactive+'</div>';
-			page += '&nbsp;&nbsp;'+jSBGN_node.simulation.updateRulePy;
+			page += '&nbsp;&nbsp;'+jSBGN_node.simulation.updateRulePy+'&nbsp;&nbsp;<input type=button value=Edit />';
 			page += '<br/><br/>';
 			page += jSBGN_node.simulation.annotation;
 			document.getElementById('annotation_tab').innerHTML = page;
