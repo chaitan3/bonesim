@@ -34,9 +34,8 @@ function RBoolNet_Import(file) {
 		cols = lines[i].split(',');
 		targetNodeId = cols[0].trim();
 		targetNode = returnNode(network, targetNodeId);
-		targetNode.updateRule = RBoolNet2JS(cols[1]);
-		//console.log(targetNode.updateRule);
-		targetNode.updateRuleR = cols[0].trim() + ' <- ' + cols[1].trim();
+		targetNode.simulation.updateRule = RBoolNet2JS(cols[1]);
+		targetNode.simulation.updateRuleR = cols[0].trim() + ' <- ' + cols[1].trim();
 		sourceNodeIds = cols[1].match(protein_name_regex);
 		for (j in sourceNodeIds) {
 			sourceNode = returnNode(network, sourceNodeIds[j]);
