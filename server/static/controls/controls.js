@@ -9,6 +9,12 @@ importRBoolNet = function() {
 				importRBoolNetWindow.close();
 			importRBoolNetWindow = new TemplatePopup.open('/importRBoolNet.html', 'Import Boolean Network', 650, 230);
 			};
+			
+importSBML = function() {
+			if ( typeof(importSBMLWindow) != 'undefined' )
+				importSBMLWindow.close();
+			importSBMLWindow = new TemplatePopup.open('/importSBML.html', 'Import Boolean Network', 650, 230);
+			};
 
 showJSON = function() {
 		window.open('data:text/html,network = '+JSON.stringify(network)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');

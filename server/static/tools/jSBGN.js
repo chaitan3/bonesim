@@ -64,6 +64,7 @@ jSBGN.prototype.exportJSON = function() {
 					var newnode = {};
 					newnode.id = node.id;
 					newnode.data = node.data;
+					newnode.type = node.type;
 					_nodes = _nodes.concat([newnode]);
 					}
 
