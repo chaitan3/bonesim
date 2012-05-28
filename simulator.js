@@ -180,6 +180,31 @@ updateSVG = function(id) {
 		if (graph_refresh_required)
 			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 50); // update again in 20ms
 		}
+		
+function exportStateJSON(nodes) {	
+	var state = new Object();
+	for (i in nodes) {
+		if (nodes[i].simulation.update) {
+			if(nodes[i].simulation.myState)
+				state[nodes[i].id] = 1;
+			else
+				state[nodes[i].id] = 0;
+		}
+	}
+	console.log(JSON.stringify(state));
+	return JSON.stringify(state);
+}
+
+function updateNodeRules(state, nodes) {	
+	for (i in nodes) {
+		if (nodes[i].simulation.update) {
+			if(state[nodes[i].id])
+				nodes[i].simulation.updateRule = (true).toString();
+			else
+				nodes[i].simulation.updateRule = (false).toString();
+		}
+	}
+}
 
 Iterate = function(id) {
 		var mySimulator = getMySimulator(document.getElementById(id));
@@ -193,12 +218,18 @@ Iterate = function(id) {
 		else	e.innerHTML = e.innerHTML+'.';
 		var steps = document.getElementById('Steps');
 		steps.innerHTML = parseInt(steps.innerHTML)+1;
+		
+		if (scopes) {
+			newState = parseJSON(POST(env['biographer'] + '/Simulate/Iterate', 'state=' + exportStateJSON(mySimulator.jSBGN.nodes)));
+			console.log(JSON.stringify(newState));
+			updateNodeRules(newState, mySimulator.jSBGN.nodes);
+		}
 
 		// calculation
 		var changed = [];
 		for (idx in mySimulator.jSBGN.nodes) {
 			var jSBGN_node = mySimulator.jSBGN.nodes[idx];
-			if ( jSBGN_node.simulation.update && jSBGN_node.simulation.updateRule.trim() != '') {
+			if ( jSBGN_node.simulation.update && (jSBGN_node.simulation.updateRule.trim() != '')) {
 //				if (jSBGN_node.id == "Whi3p")	// bug
 //					console.log(jSBGN_node.simulation.updateRule);
 				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
