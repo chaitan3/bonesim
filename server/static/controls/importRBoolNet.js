@@ -22,15 +22,17 @@ function rotateAroundCenter() {
 
 function LoadMammal() {
 	delete network;
+	scopes = false;
 	BooleNetDebug('Downloading ...');
 	data = GET(env['biographer']+'/Get/Mammal_RBoolNet');
 	BooleNetDebug('Importing ...');
 	network = RBoolNet_Import(data);
 	BooleNetDebug('Graphviz ...');
 	doGraphviz();
-	if (importRBoolNetWindow)
+	if (typeof(importRBoolNetWindow) != 'undefined')
 		importRBoolNetWindow.close();
-	window.setTimeout('popupControls.close();', 300);
+	if (typeof(popupControls) != 'undefined')
+		window.setTimeout('popupControls.close();', 300);
 	}
 
 

@@ -23,16 +23,17 @@ function rotateAroundCenter() {
 
 function LoadSBML() {
 	delete network;
+	scopes = true;
 	BooleNetDebug('Downloading ...');
 	data = GET(env['biographer']+'/Get/Sample_SBML');
 	BooleNetDebug('Importing ...');
-	json = parseJSON(data);
-	network = new jSBGN(json.nodes, json.edges);
+	network = SBML_import(data);
 	BooleNetDebug('Graphviz ...');
 	doGraphviz();
-	if (importSBMLWindow)
+	if (typeof(importSBMLWindow) != 'undefined')
 		importSBMLWindow.close();
-	window.setTimeout('popupControls.close();', 300);
+	if (typeof(popupControls) != 'undefined')
+		window.setTimeout('popupControls.close();', 300);
 	}
 
 

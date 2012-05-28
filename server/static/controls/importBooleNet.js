@@ -22,14 +22,16 @@ function rotateAroundCenter() {
 
 function LoadWhi2p() {
 	delete network;
+	scopes = false;
 	BooleNetDebug('Downloading ...');
 	data = GET(env['biographer']+'/Get/Whi2p_boolenet');
 	BooleNetDebug('Importing ...');
 	network = BooleNet.Import(data);
 	BooleNetDebug('Graphviz ...');
 	doGraphviz();
-	if (importBooleNetWindow)
+	if (typeof(importBooleNetWindow) != 'undefined')
 		importBooleNetWindow.close();
-	window.setTimeout('popupControls.close();', 300);
+	if (typeof(popupControls) != 'undefined')
+		window.setTimeout('popupControls.close();', 300);
 	}
 

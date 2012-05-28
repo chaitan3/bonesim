@@ -16,4 +16,5 @@ def Mammal_RBoolNet():
 
 def Sample_SBML():
 	path_to_file = os.path.join(request.folder, 'static','simulator','simpleX0-T-X1.sbml')
+	importScopes(path_to_file)
 	return Graph(SBML=open(path_to_file).read()).exportJSON()
