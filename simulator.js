@@ -42,6 +42,12 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 						var jSBGN_node = this.jSBGN.nodes[n];
 						var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
 						jSBGN_node.simulation.myElement = SVG_node;
+						if (SVG_node != null) {
+							if (!jSBGN_node.simulation.myState) 
+								jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.inactive);
+							else
+								jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.active);
+						}
 						jSBGN_node.simulation.myJSBGN = this.jSBGN;
 						}
 					this.installSVGonClickListeners();
@@ -143,7 +149,7 @@ updateSVG = function(id) {
 		var graph_refresh_required = false;
 		for (n in mySimulator.jSBGN.nodes) {			// update color and dashing of all Nodes
 			var jSBGN_node = mySimulator.jSBGN.nodes[n];
-
+			
 			if (jSBGN_node != null && jSBGN_node.simulation.myElement != null) {
 				// which color is this node currently fading to ?
 				var desired = mySimulator.colors.inactive;
@@ -153,7 +159,7 @@ updateSVG = function(id) {
 					var desired = undesired;
 					var undesired = temp;
 					}
-
+				
 				// continue fading
 				var current = jSBGN_node.simulation.myElement.getAttribute('fill');
 				if ( current.toLowerCase() != desired.toLowerCase() ) {
@@ -206,26 +212,19 @@ function updateNodeRules(state, nodes) {
 	}
 }
 
-Iterate = function(id) {
-		var mySimulator = getMySimulator(document.getElementById(id));
+function scopesResponse(response, id) {
+	var mySimulator = getMySimulator(document.getElementById(id));
+	if (response != null) {
+		var newState = parseJSON(response);
+		console.log(JSON.stringify(newState));
+		updateNodeRules(newState, mySimulator.jSBGN.nodes);
+		runSimulator(id);
+	}
+}
 
-		mySimulator.running = true;
-
-		// messages
-		var e = document.getElementById('Progress');
-		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )
-			e.innerHTML = 'Iterating ...'
-		else	e.innerHTML = e.innerHTML+'.';
-		var steps = document.getElementById('Steps');
-		steps.innerHTML = parseInt(steps.innerHTML)+1;
-		
-		if (scopes) {
-			newState = parseJSON(POST(env['biographer'] + '/Simulate/Iterate', 'state=' + exportStateJSON(mySimulator.jSBGN.nodes)));
-			console.log(JSON.stringify(newState));
-			updateNodeRules(newState, mySimulator.jSBGN.nodes);
-		}
-
-		// calculation
+function runSimulator(id) {
+	var mySimulator = getMySimulator(document.getElementById(id));
+	// calculation
 		var changed = [];
 		for (idx in mySimulator.jSBGN.nodes) {
 			var jSBGN_node = mySimulator.jSBGN.nodes[idx];
@@ -258,8 +257,28 @@ Iterate = function(id) {
 			console.log('Boolean network reached steady state.');
 			mySimulator.running = false;
 			}
+}
 
-//		console.log(mySimulator.jSBGN.getNodeById('Whi3p').simulation.myState); // bug
+Iterate = function(id) {
+		var mySimulator = getMySimulator(document.getElementById(id));
+
+		mySimulator.running = true;
+
+		// messages
+		var e = document.getElementById('Progress');
+		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )
+			e.innerHTML = 'Iterating ...'
+		else	e.innerHTML = e.innerHTML+'.';
+		var steps = document.getElementById('Steps');
+		steps.innerHTML = parseInt(steps.innerHTML)+1;
+		
+		if (scopes)
+			POST(env['biographer'] + '/Simulate/Iterate', 'state=' + 
+			exportStateJSON(mySimulator.jSBGN.nodes), function (response) {
+				scopesResponse(response, id);
+				});
+		else
+			runSimulator(id);
 		}
 
 Simulator.prototype.Iterate = function() {
