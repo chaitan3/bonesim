@@ -135,7 +135,7 @@ BooleNet = {
 								var annotation = setup.substring(a, b);
 								if (typeof(node.simulation) === 'undefined')
 									node.simulation = {};
-								node.simulation.annotation = annotation.replace('<iframe src=', '<iframe width="99%" height="85%" src=');
+								node.simulation.annotation = annotation.replace('<iframe src=', '<iframe width="99%" height="90%" src=');
 //								console.log(node.id+' annotation: '+a+'-'+b+'-'+annotation);
 								}
 							}

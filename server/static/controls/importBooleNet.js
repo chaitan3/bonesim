@@ -23,7 +23,7 @@ function rotateAroundCenter() {
 function LoadWhi2p() {
 	delete network;
 	BooleNetDebug('Downloading ...');
-	data = GET(env['biographer']+'/Get/Whi2p_boolenet');
+	data = GET(env['biographer']+'/Get/Whi2_boolenet');
 	BooleNetDebug('Importing ...');
 	network = BooleNet.Import(data);
 	BooleNetDebug('Graphviz ...');
