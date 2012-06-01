@@ -65,12 +65,10 @@
 	<script src="{{ = URL(request.application, 'static/tools', 'BooleNet.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'import.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/tools', 'RBoolNet.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'SBML.js') }}"></script>
 
 	<script src="{{ = URL(request.application, 'static/controls', 'controls.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/controls', 'importBooleNet.js') }}"></script>
 	<script src="{{ = URL(request.application, 'static/controls', 'importRBoolNet.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/controls', 'importSBML.js') }}"></script>
 
 	<!-- linked in from visualization (bui) repo -->
 	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
@@ -168,7 +166,7 @@
 						};
 
 //			showControls();
-			window.setTimeout('LoadSBML();', 500);
+//			window.setTimeout('LoadWhi2p();', 500);
 		</script>
 		<input type=button value="press C for controls" onclick="showControls();"/>
 	</div>

@@ -13,9 +13,9 @@
 		<td>
 			<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
 		</td>
-		<td id=ProgressCol style="visibility: hidden; text-align: right;">
-			<img id=Tron src="{{images}}/Progress.svg" style="visibility: hidden;"/>
-			<canvas id=canvas width=70 height=70></canvas>
+		<td id=ProgressCol style="text-align: right;">
+			<img id=Tron src="{{images}}/Progress.svg" style="display:none; "/>
+			<!--canvas id=canvas width=70 height=70></canvas-->
 		</td>
 		<td id=ButtonCol>
 			<input type=file id=File onchange="ImportChain();" />
@@ -32,7 +32,7 @@
 	</tr>
 	<tr>
 		<td colspan=3>
-			<label id="BooleNetDebug" style="color: #9ec9e2; font-weight: bold;">test</label>
+			<label id="BooleNetDebug" style="color: #9ec9e2; font-weight: bold;"></label>
 		</td>
 	</tr>
 </table>
