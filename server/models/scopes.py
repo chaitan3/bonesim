@@ -1,7 +1,13 @@
 import sys,os
 sys.path.append(os.path.join(request.folder, 'static','simulator','Scopes'))
-import Scopes
-import json
+try:
+	import Scopes
+except ImportError:
+	print "Warning: libScopes not found"
+try:
+	import json
+except ImportError:
+	print "Warning: JSON library not found"
 
 def importScopes(sbml_file):
 	#net = Scopes.Net()
