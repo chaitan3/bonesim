@@ -52,14 +52,29 @@
 					color:			blue;
 					font-weight:		bold;
 					}
+		#Save			{	
+					border:			1px solid white;
+					background-image:	url(img/Oxygen_Save.png);
+					background-color:	white;
+					background-repeat:	no-repeat;
+					width:			34px;
+					height:			34px;
+					cursor:			pointer;
+					}
+		#Save:hover		{
+					border:			1px solid grey;
+					}
 		#divMouseClickBehavior	{
-					border:			1px solid black;
+					border:			1px solid white;
 					background-color:	white;
 					overflow:		hidden;
 					float:			right;
 					z-index:		5;
 					margin-right:		30px;
 					padding:		5px;
+					}
+		#divMouseClickBehavior:hover {
+					border:			1px solid black;
 					}
 	</style>
 
@@ -83,6 +98,7 @@
 	<script src="main/lib/BooleNet.js"></script>
 	<script src="main/lib/RBoolNet.js"></script>
 	<script src="main/lib/import.js"></script>
+	<script src="main/lib/export.js"></script>
 
 	<script src="main/controls/controls.js"></script>
 	<script src="main/controls/importBooleNet.js"></script>
@@ -163,6 +179,7 @@
 		showTab('graphviz');
 	</script>
 
+	<input type=button id=Save onclick=exportSVG(); />
 
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
 
