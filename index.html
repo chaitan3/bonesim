@@ -15,8 +15,8 @@
 					position:		absolute;
 					left:			1px;
 					right:			1px;
-					top:			30px;
-					bottom:			38px;
+					top:			38px;
+					bottom:			1px;
 					overflow:		scroll;
 					}
 		#graphvizSVG		{
@@ -47,39 +47,38 @@
 
 	<script>
 		env = {}
-		env["biographer"] = "/{{ = request.application }}";
-		env["tools"] = "{{ = URL(request.application, 'static', 'tools') }}";
-		env["templates"] = "{{ = URL(request.application, 'static', 'controls') }}";
-		env["images"] = "{{ = URL(request.application, 'static', 'img') }}";
+		env["biographer"] = "https://kafka.carpe-diem-berlin.de/biographer";
+		env["tools"] = "main/tools";
+		env["templates"] = "main/templates";
+		env["images"] = "img";
 	</script>
 
-	<!-- our own scripts -->
-	<script src="{{ = URL(request.application, 'static/tools', 'string.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'array.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'httplib.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'popups.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'templates.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'visibility.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'fader.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'jSBGN.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'BooleNet.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'import.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/tools', 'RBoolNet.js') }}"></script>
+	<script src="main/tools/string.js"></script>
+	<script src="main/tools/array.js"></script>
+	<script src="main/tools/httplib.js"></script>
+	<script src="main/tools/popups.js"></script>
+	<script src="main/tools/templates.js"></script>
+	<script src="main/tools/visibility.js"></script>
+	<script src="main/tools/fader.js"></script>
+	<script src="main/tools/jSBGN.js"></script>
+	<script src="main/tools/BooleNet.js"></script>
+	<script src="main/tools/RBoolNet.js"></script>
+	<script src="main/tools/import.js"></script>
 
-	<script src="{{ = URL(request.application, 'static/controls', 'controls.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/controls', 'importBooleNet.js') }}"></script>
-	<script src="{{ = URL(request.application, 'static/controls', 'importRBoolNet.js') }}"></script>
+	<script src="main/controls/controls.js"></script>
+	<script src="main/controls/importBooleNet.js"></script>
+	<script src="main/controls/importRBoolNet.js"></script>
 
-	<!-- linked in from visualization (bui) repo -->
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-1.6.min.js"></script>
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery.simulate.js"></script>
-	<script type="text/javascript" src="{{ = URL(r=request, c='static', f='bui') }}/js/jquery-ui-1.8.12.custom.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="{{ = URL(r=request, c='static', f='bui') }}/css/jquery-ui-1.8.13.css" />
-	<script type="text/javascript" src="{{ = URL(request.application, 'static/bui/js', 'biographer-ui.js') }}"></script>
-	<link rel="stylesheet" type="text/css" href="{{ = URL(request.application, 'static/bui/css', 'visualization-html.css') }}"/>
+	<script src="main/simulator.js"></script>
 
-	<!-- linked in from simulator repo -->
-	<script src="{{ = URL(request.application, 'static/simulator', 'simulator.js') }}"></script>
+	<!-- begin biographer-visualizer -->
+	<script type="text/javascript" src="bui/js/jquery-1.6.min.js"></script>
+	<script type="text/javascript" src="bui/js/jquery.simulate.js"></script>
+	<script type="text/javascript" src="bui/js/jquery-ui-1.8.12.custom.min.js"></script>
+	<script type="text/javascript" src="bui/js/biographer-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="bui/css/jquery-ui-1.8.13.css"/>
+	<link rel="stylesheet" type="text/css" href="bui/css/visualization-html.css"/>
+	<!-- end biographer-visualizer -->
 </head>
 
 <body>
@@ -97,6 +96,10 @@
 	<input class=tabselector id=editor	type=button value=editor />
 	<input class=tabselector id=annotation	type=button value=annotation />
 
+	<input type=button value=half onclick='document.getElementById("viewport").setAttribute("transform", "scale(300 300) rotate(0) transform(4 1448)");'/>
+
+	<input type=button value="press C for controls" onclick="showControls();"/>
+
 	<label id=Progress></label>
 	<label id=Steps>0</label>
 
@@ -112,7 +115,7 @@
 	<div class=tab id="annotation_tab" style="padding: 20px;">
 		no annotation loaded
 	</div>
-	<script src="{{ = URL(request.application, 'static/tools', 'tabs.js') }}"></script>
+	<script src="main/tools/tabs.js"></script>
 	<script>
 		showTab('graphviz');
 	</script>
@@ -120,13 +123,12 @@
 
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
 
-	<input type=button value=half onclick='document.getElementById("viewport").setAttribute("transform", "scale(300 300) rotate(0) transform(4 1448)");'/>
-
 	<div style="border: none; float:right;">
 		mouse click:
 		<input type=button id='btnSimulation' value='simulation' onclick='setMouseClickSimulation();'/>
 		<input type=button id='btnAnnotation' value='annotation' onclick='setMouseClickAnnotation();'/>
 	</div>
+
 	<script>
 		setMouseClickSimulation = function() {
 			mouseClick = 'simulation';
@@ -143,33 +145,27 @@
 			document.getElementById('btnAnnotation').style.color = 'white';
 			}
 		setMouseClickAnnotation();
+
+		function showControls() {
+			if ( typeof(popupControls) != "undefined" )
+				popupControls.close();
+			popupControls = new TemplatePopup.open('/controls.html', 'Controls', 220, 360);
+			}
+
+		document.onkeyup = function(e) {
+					if (e.keyCode == 67) { // "C"
+						showControls();
+						}
+					else if (e.keyCode == 27) { // escape
+						if ( typeof(importBooleNetWindow) != 'undefined' )
+							importBooleNetWindow.close();
+						else 	popupControls.close();
+						}
+					};
+//		showControls();
+//		window.setTimeout('LoadWhi2();', 500);
 	</script>
 
-
-	<div id=Statusbar>
-		<script>
-			function showControls() {
-				if ( typeof(popupControls) != "undefined" )
-					popupControls.close();
-				popupControls = new TemplatePopup.open('/controls.html', 'Controls', 220, 360);
-				}
-
-			document.onkeyup = function(e) {
-						if (e.keyCode == 67) { // "C"
-							showControls();
-							}
-						else if (e.keyCode == 27) { // escape
-							if ( typeof(importBooleNetWindow) != 'undefined' )
-								importBooleNetWindow.close();
-							else 	popupControls.close();
-							}
-						};
-
-//			showControls();
-//			window.setTimeout('LoadWhi2p();', 500);
-		</script>
-		<input type=button value="press C for controls" onclick="showControls();"/>
-	</div>
 </body>
 
 </html>
