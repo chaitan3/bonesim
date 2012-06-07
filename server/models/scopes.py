@@ -1,51 +1,51 @@
-import sys, os
-
-sys.path.append(os.path.join(request.folder,'models','Scopes'))
+import sys
 try:
         import Scopes
 except ImportError:
         print "Warning: libScopes wrapper not found"
 
 try:
-	import json
+        import json
 except ImportError:
-	print "Warning: JSON library not found"
+        print "Warning: JSON library not found"
 
 def importScopes(sbml_file):
-	#net = Scopes.Net()
-	#nodemap = Scopes.importSBML(net, sbml_file)
-	#session.net = net
-	#session.nodemap = nodemap
 	session.sbml = sbml_file
+	session.seed = None
 
-def importStateJSON(state, present, nodemap):
+def importStateJSON(state, nodemap, net):
+	present = Scopes.VC(net.numC())
 	stateDict = json.loads(state)
-	#nodemap = session.nodemap
 	for i in stateDict.keys():
-		print i
-		present.put(nodemap[str(i)], stateDict[i])
+		present[nodemap[str(i)]] = stateDict[i]
+	return present
 		
 def exportStateJSON(present, net):
-	#net = session.net	
 	nc = net.numC()
 	state = dict()
 	for i in range(0, nc):
-		state[str(net.name(i))] = present.at(i)
+		state[str(net.name(i))] = present[i]
 	return json.dumps(state)
 
 def singleIteration(state):
-	print session.sbml
-	#net = session.net
 	net = Scopes.Net()
 	nodemap = Scopes.importSBML(net, session.sbml)
 	nc = net.numC()
 	nr = net.numR()
 	active = Scopes.VC(nr)
 	blocking = Scopes.VC(nr)
-	present = Scopes.VC(nc)
 	depleted = Scopes.VC(nc)
-	importStateJSON(state, present, nodemap)
+	present = importStateJSON(state, nodemap, net)
 	
-	Scopes.dScopeStep(net, present, depleted, active, blocking)
+	if not session.seed:
+		seed = present
+		session.seed = [i for i in seed]
+	else:
+		seed = Scopes.VC(nc)
+		for i in range(0, nc):
+			print i
+			seed[i] = session.seed[i]
+	
+	Scopes.dScopeStep(net, present, depleted, active, blocking, seed)
 	
 	return exportStateJSON(present, net)
