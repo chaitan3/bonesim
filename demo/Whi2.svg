@@ -1,0 +1,5335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xlink="http://www.w3.org/1999/xlink"
+   width="2634.625"
+   height="1401.75"
+   viewBox="0 0 2107.7 1121.4"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Whi2.svg">
+  <metadata
+     id="metadata1807">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs1805">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 1000 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="3761.25 : 1000 : 1"
+       inkscape:persp3d-origin="1880.625 : 666.66667 : 1"
+       id="perspective1809" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="492"
+     id="namedview1803"
+     showgrid="false"
+     inkscape:zoom="0.118"
+     inkscape:cx="1881.0625"
+     inkscape:cy="384.36335"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <g
+     id="viewport"
+     class="graph"
+     transform="matrix(0.7,0,0,0.7,3.15,1117.55)">
+    <title
+       id="title5">_anonymous_0</title>
+    <polygon
+       points="3006,5 -4,5 -4,5 -4,-1596 3006,-1596 "
+       id="polygon7"
+       style="fill:#ffffff;stroke:#ffffff" />
+    <!-- node0 -->
+    <g
+       id="node1"
+       class="node">
+      <title
+         id="title10">node0</title>
+      <ellipse
+         id="Glucose"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2220"
+         cy="-1573"
+         rx="50"
+         ry="18.5"
+         d="m 2270,-1573 c 0,10.2173 -22.3858,18.5 -50,18.5 -27.6142,0 -50,-8.2827 -50,-18.5 0,-10.2173 22.3858,-18.5 50,-18.5 27.6142,0 50,8.2827 50,18.5 z"
+         sodipodi:cx="2220"
+         sodipodi:cy="-1573"
+         sodipodi:rx="50"
+         sodipodi:ry="18.5" />
+      <text
+         x="2220"
+         y="-1569.4"
+         font-size="14.00"
+         id="text13"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Glucose</text>
+    </g>
+    <!-- node21 -->
+    <g
+       id="node2"
+       class="node">
+      <title
+         id="title16">node21</title>
+      <ellipse
+         id="Gpr1p"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2220"
+         cy="-1499"
+         rx="40.9631"
+         ry="18.5"
+         d="m 2260.9631,-1499 c 0,10.2173 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.2827 -40.9631,-18.5 0,-10.2173 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.2827 40.9631,18.5 z"
+         sodipodi:cx="2220"
+         sodipodi:cy="-1499"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="2220"
+         y="-1495.4"
+         font-size="14.00"
+         id="text19"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Gpr1p</text>
+    </g>
+    <!-- node0&#45;&gt;node21 -->
+    <g
+       id="edge2"
+       class="edge">
+      <title
+         id="title22">node0-&gt;node21</title>
+      <path
+         d="m 2220,-1554.3 c 0,8 0,17.7 0,26.6"
+         id="path24"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2223,-1527 2223,-1527 2220,-1517 2216,-1527 "
+         id="polygon26"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node1 -->
+    <g
+       id="node4"
+       class="node">
+      <title
+         id="title29">node1</title>
+      <ellipse
+         id="Pyruvat"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1972"
+         cy="-1499"
+         rx="50"
+         ry="18.5"
+         d="m 2022,-1499 c 0,10.2173 -22.3858,18.5 -50,18.5 -27.6142,0 -50,-8.2827 -50,-18.5 0,-10.2173 22.3858,-18.5 50,-18.5 27.6142,0 50,8.2827 50,18.5 z"
+         sodipodi:cx="1972"
+         sodipodi:cy="-1499"
+         sodipodi:rx="50"
+         sodipodi:ry="18.5" />
+      <text
+         x="1972"
+         y="-1495.4"
+         font-size="14.00"
+         id="text32"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Pyruvat</text>
+    </g>
+    <!-- node0&#45;&gt;node1 -->
+    <g
+       id="edge4"
+       class="edge">
+      <title
+         id="title35">node0-&gt;node1</title>
+      <path
+         d="m 2181,-1561.4 c -43.3,13 -113.3,33.8 -160.2,47.8"
+         id="path37"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2021,-1510 2021,-1510 2011,-1510 2019,-1516 "
+         id="polygon39"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node5 -->
+    <g
+       id="node6"
+       class="node">
+      <title
+         id="title42">node5</title>
+      <ellipse
+         id="oxidative_phosphorylation"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1938"
+         cy="-1425"
+         rx="139"
+         ry="18.5"
+         d="m 2077,-1425 c 0,10.2173 -62.2324,18.5 -139,18.5 -76.7676,0 -139,-8.2827 -139,-18.5 0,-10.2173 62.2324,-18.5 139,-18.5 76.7676,0 139,8.2827 139,18.5 z"
+         sodipodi:cx="1938"
+         sodipodi:cy="-1425"
+         sodipodi:rx="139"
+         sodipodi:ry="18.5" />
+      <text
+         x="1938"
+         y="-1421.4"
+         font-size="14.00"
+         id="text45"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">oxidative_phosphorylation</text>
+    </g>
+    <!-- node0&#45;&gt;node5 -->
+    <g
+       id="edge6"
+       class="edge">
+      <title
+         id="title48">node0-&gt;node5</title>
+      <path
+         d="m 2191.1,-1557.9 c -49.7,26.1 -151.7,79.7 -209.9,110.2"
+         id="path50"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1982,-1444 1982,-1444 1972,-1443 1979,-1450 "
+         id="polygon52"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node25 -->
+    <g
+       id="node8"
+       class="node">
+      <title
+         id="title55">node25</title>
+      <ellipse
+         id="Whi2_Psr1_2"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2443"
+         cy="-1129"
+         rx="76"
+         ry="18.5"
+         d="m 2519,-1129 c 0,10.2173 -34.0264,18.5 -76,18.5 -41.9736,0 -76,-8.2827 -76,-18.5 0,-10.2173 34.0264,-18.5 76,-18.5 41.9736,0 76,8.2827 76,18.5 z"
+         sodipodi:cx="2443"
+         sodipodi:cy="-1129"
+         sodipodi:rx="76"
+         sodipodi:ry="18.5" />
+      <text
+         x="2443"
+         y="-1125.4"
+         font-size="14.00"
+         id="text58"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Whi2_Psr1_2</text>
+    </g>
+    <!-- node0&#45;&gt;node25 -->
+    <g
+       id="edge8"
+       class="edge">
+      <title
+         id="title61">node0-&gt;node25</title>
+      <path
+         d="m 2267.6,-1567.4 c 74.6,11.8 210.4,46.5 210.4,142.4 0,0 0,0 0,148 0,42.5 -13.8,90.1 -24.1,119.6"
+         id="path63"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2457,-1156 2457,-1156 2450,-1147 2450,-1158 "
+         id="polygon65"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node4 -->
+    <g
+       id="node10"
+       class="node">
+      <title
+         id="title68">node4</title>
+      <ellipse
+         id="nutrient_fermentation"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2627"
+         cy="-1425"
+         rx="121"
+         ry="18.5"
+         d="m 2748,-1425 c 0,10.2173 -54.1735,18.5 -121,18.5 -66.8265,0 -121,-8.2827 -121,-18.5 0,-10.2173 54.1735,-18.5 121,-18.5 66.8265,0 121,8.2827 121,18.5 z"
+         sodipodi:cx="2627"
+         sodipodi:cy="-1425"
+         sodipodi:rx="121"
+         sodipodi:ry="18.5" />
+      <text
+         x="2627"
+         y="-1421.4"
+         font-size="14.00"
+         id="text71"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">nutrient_fermentation</text>
+    </g>
+    <!-- node0&#45;&gt;node4 -->
+    <g
+       id="edge10"
+       class="edge">
+      <title
+         id="title74">node0-&gt;node4</title>
+      <path
+         d="m 2268.9,-1569.1 c 55.9,5.8 149,19.7 223.1,51.1 40,17 80.2,46.7 106.2,68"
+         id="path76"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2600,-1452 2600,-1452 2606,-1443 2596,-1447 "
+         id="polygon78"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node12 -->
+    <g
+       id="node12"
+       class="node">
+      <title
+         id="title81">node12</title>
+      <ellipse
+         id="Gpa2"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2220"
+         cy="-1425"
+         rx="37.246101"
+         ry="18.5"
+         d="m 2257.2461,-1425 c 0,10.2173 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.2827 -37.2461,-18.5 0,-10.2173 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.2827 37.2461,18.5 z"
+         sodipodi:cx="2220"
+         sodipodi:cy="-1425"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2220"
+         y="-1421.4"
+         font-size="14.00"
+         id="text84"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Gpa2</text>
+    </g>
+    <!-- node21&#45;&gt;node12 -->
+    <g
+       id="edge12"
+       class="edge">
+      <title
+         id="title87">node21-&gt;node12</title>
+      <path
+         d="m 2220,-1480.3 c 0,8 0,17.7 0,26.6"
+         id="path89"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2223,-1453 2223,-1453 2220,-1443 2216,-1453 "
+         id="polygon91"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node1&#45;&gt;node5 -->
+    <g
+       id="edge32"
+       class="edge">
+      <title
+         id="title94">node1-&gt;node5</title>
+      <path
+         d="m 1963.6,-1480.7 c -3.9,8.4 -8.5,18.5 -12.8,27.8"
+         id="path96"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1953,-1451 1953,-1451 1946,-1443 1947,-1454 "
+         id="polygon98"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node6 -->
+    <g
+       id="node14"
+       class="node">
+      <title
+         id="title101">node6</title>
+      <ellipse
+         id="cell_death"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2597"
+         cy="-1351"
+         rx="61"
+         ry="18.5"
+         d="m 2658,-1351 c 0,10.2173 -27.3106,18.5 -61,18.5 -33.6894,0 -61,-8.2827 -61,-18.5 0,-10.2173 27.3106,-18.5 61,-18.5 33.6894,0 61,8.2827 61,18.5 z"
+         sodipodi:cx="2597"
+         sodipodi:cy="-1351"
+         sodipodi:rx="61"
+         sodipodi:ry="18.5" />
+      <text
+         x="2597"
+         y="-1347.4"
+         font-size="14.00"
+         id="text104"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">cell_death</text>
+    </g>
+    <!-- node5&#45;&gt;node6 -->
+    <g
+       id="edge14"
+       class="edge">
+      <title
+         id="title107">node5-&gt;node6</title>
+      <path
+         d="m 2037.1,-1412 c 16.3,2.1 33.1,4.1 48.9,6 158.5,18.7 345.1,38.1 443,48.1"
+         id="path109"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2529,-1361 2529,-1361 2539,-1356 2528,-1354 "
+         id="polygon111"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node7 -->
+    <g
+       id="node16"
+       class="node">
+      <title
+         id="title114">node7</title>
+      <ellipse
+         id="energy"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1365"
+         cy="-19"
+         rx="46"
+         ry="18.5"
+         d="m 1411,-19 c 0,10.2172679 -20.5949,18.5 -46,18.5 -25.4051,0 -46,-8.2827321 -46,-18.5 0,-10.217268 20.5949,-18.5 46,-18.5 25.4051,0 46,8.282732 46,18.5 z"
+         sodipodi:cx="1365"
+         sodipodi:cy="-19"
+         sodipodi:rx="46"
+         sodipodi:ry="18.5" />
+      <text
+         x="1365"
+         y="-15.4"
+         font-size="14.00"
+         id="text117"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">energy</text>
+    </g>
+    <!-- node5&#45;&gt;node7 -->
+    <g
+       id="edge16"
+       class="edge">
+      <title
+         id="title120">node5-&gt;node7</title>
+      <path
+         d="m 1801,-1421.7 c -442,11.5 -1801,54.3 -1801,144.7 0,0 0,0 0,1110 0,66.97 1052.2,130.427 1309,144.918"
+         id="path122"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1309,-25 1309,-25 1319,-21 1309,-18 "
+         id="polygon124"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node43 -->
+    <g
+       id="node18"
+       class="node">
+      <title
+         id="title127">node43</title>
+      <ellipse
+         id="Spc98"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2411"
+         cy="-1055"
+         rx="40.9631"
+         ry="18.5"
+         d="m 2451.9631,-1055 c 0,10.2173 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.2827 -40.9631,-18.5 0,-10.2173 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.2827 40.9631,18.5 z"
+         sodipodi:cx="2411"
+         sodipodi:cy="-1055"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="2411"
+         y="-1051.4"
+         font-size="14.00"
+         id="text130"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Spc98</text>
+    </g>
+    <!-- node25&#45;&gt;node43 -->
+    <g
+       id="edge18"
+       class="edge">
+      <title
+         id="title133">node25-&gt;node43</title>
+      <path
+         d="m 2434.9,-1110.3 c -3.6,8.4 -8,18.4 -12,27.7"
+         id="path135"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2426,-1081 2426,-1081 2419,-1073 2419,-1083 "
+         id="polygon137"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node40 -->
+    <g
+       id="node20"
+       class="node">
+      <title
+         id="title140">node40</title>
+      <ellipse
+         id="Lsm2"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2507"
+         cy="-1055"
+         rx="37.246101"
+         ry="18.5"
+         d="m 2544.2461,-1055 c 0,10.2173 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.2827 -37.2461,-18.5 0,-10.2173 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.2827 37.2461,18.5 z"
+         sodipodi:cx="2507"
+         sodipodi:cy="-1055"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2507"
+         y="-1051.4"
+         font-size="14.00"
+         id="text143"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Lsm2</text>
+    </g>
+    <!-- node25&#45;&gt;node40 -->
+    <g
+       id="edge20"
+       class="edge">
+      <title
+         id="title146">node25-&gt;node40</title>
+      <path
+         d="m 2458.8,-1110.7 c 8.1,9.3 18,20.8 26.7,30.9"
+         id="path148"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2488,-1081 2488,-1081 2492,-1072 2483,-1077 "
+         id="polygon150"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node29 -->
+    <g
+       id="node22"
+       class="node">
+      <title
+         id="title153">node29</title>
+      <ellipse
+         id="App1"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2271"
+         cy="-1055"
+         rx="37"
+         ry="18.5"
+         d="m 2308,-1055 c 0,10.2173 -16.5655,18.5 -37,18.5 -20.4345,0 -37,-8.2827 -37,-18.5 0,-10.2173 16.5655,-18.5 37,-18.5 20.4345,0 37,8.2827 37,18.5 z"
+         sodipodi:cx="2271"
+         sodipodi:cy="-1055"
+         sodipodi:rx="37"
+         sodipodi:ry="18.5" />
+      <text
+         x="2271"
+         y="-1051.4"
+         font-size="14.00"
+         id="text156"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">App1</text>
+    </g>
+    <!-- node25&#45;&gt;node29 -->
+    <g
+       id="edge22"
+       class="edge">
+      <title
+         id="title159">node25-&gt;node29</title>
+      <path
+         d="m 2405.3,-1112.8 c -28.8,12.4 -68.3,29.4 -97,41.7"
+         id="path161"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2309,-1067 2309,-1067 2299,-1067 2306,-1074 "
+         id="polygon163"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node31 -->
+    <g
+       id="node24"
+       class="node">
+      <title
+         id="title166">node31</title>
+      <ellipse
+         id="Cdc28"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2765"
+         cy="-1055"
+         rx="40.9631"
+         ry="18.5"
+         d="m 2805.9631,-1055 c 0,10.2173 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.2827 -40.9631,-18.5 0,-10.2173 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.2827 40.9631,18.5 z"
+         sodipodi:cx="2765"
+         sodipodi:cy="-1055"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="2765"
+         y="-1051.4"
+         font-size="14.00"
+         id="text169"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Cdc28</text>
+    </g>
+    <!-- node25&#45;&gt;node31 -->
+    <g
+       id="edge24"
+       class="edge">
+      <title
+         id="title172">node25-&gt;node31</title>
+      <path
+         d="m 2498.4,-1116.3 c 62,14.3 161.6,37.2 219.9,50.6"
+         id="path174"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2719,-1069 2719,-1069 2728,-1063 2717,-1062 "
+         id="polygon176"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node44 -->
+    <g
+       id="node26"
+       class="node">
+      <title
+         id="title179">node44</title>
+      <ellipse
+         id="Msn2_4"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2161"
+         cy="-907"
+         rx="49.193001"
+         ry="18.5"
+         d="m 2210.193,-907 c 0,10.21727 -22.0245,18.5 -49.193,18.5 -27.1685,0 -49.193,-8.28273 -49.193,-18.5 0,-10.21727 22.0245,-18.5 49.193,-18.5 27.1685,0 49.193,8.28273 49.193,18.5 z"
+         sodipodi:cx="2161"
+         sodipodi:cy="-907"
+         sodipodi:rx="49.193001"
+         sodipodi:ry="18.5" />
+      <text
+         x="2161"
+         y="-903.40002"
+         font-size="14.00"
+         id="text182"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Msn2_4</text>
+    </g>
+    <!-- node25&#45;&gt;node44 -->
+    <g
+       id="edge26"
+       class="edge">
+      <title
+         id="title185">node25-&gt;node44</title>
+      <path
+         d="m 2485.8,-1113.6 c 71.3,27.9 201.4,89.6 146.2,151.6 -27,30.29 -291.4,46.53 -411.8,52.41"
+         id="path187"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2220,-906 2220,-906 2210,-909 2219,-913 "
+         id="polygon189"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node4&#45;&gt;node6 -->
+    <g
+       id="edge28"
+       class="edge">
+      <title
+         id="title192">node4-&gt;node6</title>
+      <path
+         d="m 2619.4,-1406.3 c -3.3,8.3 -7.4,18.2 -11.1,27.4"
+         id="path194"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2611,-1377 2611,-1377 2604,-1369 2604,-1379 "
+         id="polygon196"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node4&#45;&gt;node7 -->
+    <g
+       id="edge30"
+       class="edge">
+      <title
+         id="title199">node4-&gt;node7</title>
+      <path
+         d="m 2643.5,-1406.3 c 8.1,10.1 17.5,23.2 23.5,36.3 17.7,38.6 22,50.5 22,93 0,0 0,0 0,1110 0,64.87 -1017.2,129.728 -1268.4,144.755"
+         id="path201"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1420,-18 1420,-18 1410,-21 1420,-25 "
+         id="polygon203"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node9 -->
+    <g
+       id="node40"
+       class="node">
+      <title
+         id="title206">node9</title>
+      <ellipse
+         id="Ras"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2130"
+         cy="-1351"
+         rx="29"
+         ry="18.5"
+         d="m 2159,-1351 c 0,10.2173 -12.9837,18.5 -29,18.5 -16.0163,0 -29,-8.2827 -29,-18.5 0,-10.2173 12.9837,-18.5 29,-18.5 16.0163,0 29,8.2827 29,18.5 z"
+         sodipodi:cx="2130"
+         sodipodi:cy="-1351"
+         sodipodi:rx="29"
+         sodipodi:ry="18.5" />
+      <text
+         x="2130"
+         y="-1347.4"
+         font-size="14.00"
+         id="text209"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ras</text>
+    </g>
+    <!-- node12&#45;&gt;node9 -->
+    <g
+       id="edge54"
+       class="edge">
+      <title
+         id="title212">node12-&gt;node9</title>
+      <path
+         d="m 2200.5,-1408.9 c -13.1,10.7 -30.4,24.9 -44.6,36.6"
+         id="path214"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2157,-1369 2157,-1369 2148,-1365 2153,-1374 "
+         id="polygon216"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node41 -->
+    <g
+       id="node90"
+       class="node">
+      <title
+         id="title219">node41</title>
+      <ellipse
+         id="RNA_processing"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2534"
+         cy="-981"
+         rx="89"
+         ry="18.5"
+         d="m 2623,-981 c 0,10.21727 -39.8467,18.5 -89,18.5 -49.1533,0 -89,-8.28273 -89,-18.5 0,-10.21727 39.8467,-18.5 89,-18.5 49.1533,0 89,8.28273 89,18.5 z"
+         sodipodi:cx="2534"
+         sodipodi:cy="-981"
+         sodipodi:rx="89"
+         sodipodi:ry="18.5" />
+      <text
+         x="2534"
+         y="-977.40002"
+         font-size="14.00"
+         id="text222"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">RNA_processing</text>
+    </g>
+    <!-- node40&#45;&gt;node41 -->
+    <g
+       id="edge102"
+       class="edge">
+      <title
+         id="title225">node40-&gt;node41</title>
+      <path
+         d="m 2513.7,-1036.7 c 3,8.3 6.7,18.3 10,27.5"
+         id="path227"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2527,-1010 2527,-1010 2527,-999 2520,-1007 "
+         id="polygon229"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node42 -->
+    <g
+       id="node92"
+       class="node">
+      <title
+         id="title232">node42</title>
+      <ellipse
+         id="mRNA_decay"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2352"
+         cy="-981"
+         rx="75.195"
+         ry="18.5"
+         d="m 2427.195,-981 c 0,10.21727 -33.6659,18.5 -75.195,18.5 -41.5291,0 -75.195,-8.28273 -75.195,-18.5 0,-10.21727 33.6659,-18.5 75.195,-18.5 41.5291,0 75.195,8.28273 75.195,18.5 z"
+         sodipodi:cx="2352"
+         sodipodi:cy="-981"
+         sodipodi:rx="75.195"
+         sodipodi:ry="18.5" />
+      <text
+         x="2352"
+         y="-977.40002"
+         font-size="14.00"
+         id="text235"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">mRNA_decay</text>
+    </g>
+    <!-- node40&#45;&gt;node42 -->
+    <g
+       id="edge104"
+       class="edge">
+      <title
+         id="title238">node40-&gt;node42</title>
+      <path
+         d="m 2480,-1042.1 c -23.2,11.1 -57.1,27.2 -84.2,40.2"
+         id="path240"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2397,-998 2397,-998 2386,-997 2394,-1004 "
+         id="polygon242"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node30 -->
+    <g
+       id="node82"
+       class="node">
+      <title
+         id="title245">node30</title>
+      <ellipse
+         id="actin"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2224"
+         cy="-981"
+         rx="35.137798"
+         ry="18.5"
+         d="m 2259.1378,-981 c 0,10.21727 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="2224"
+         sodipodi:cy="-981"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="2224"
+         y="-977.40002"
+         font-size="14.00"
+         id="text248"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">actin</text>
+    </g>
+    <!-- node29&#45;&gt;node30 -->
+    <g
+       id="edge94"
+       class="edge">
+      <title
+         id="title251">node29-&gt;node30</title>
+      <path
+         d="m 2259.6,-1037.1 c -5.6,8.9 -12.6,19.9 -18.8,29.7"
+         id="path253"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2243,-1005 2243,-1005 2235,-998 2237,-1009 "
+         id="polygon255"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node34 -->
+    <g
+       id="node84"
+       class="node">
+      <title
+         id="title258">node34</title>
+      <ellipse
+         id="Cln1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2751"
+         cy="-981"
+         rx="34"
+         ry="18.5"
+         d="m 2785,-981 c 0,10.21727 -15.2223,18.5 -34,18.5 -18.7777,0 -34,-8.28273 -34,-18.5 0,-10.21727 15.2223,-18.5 34,-18.5 18.7777,0 34,8.28273 34,18.5 z"
+         sodipodi:cx="2751"
+         sodipodi:cy="-981"
+         sodipodi:rx="34"
+         sodipodi:ry="18.5" />
+      <text
+         x="2751"
+         y="-977.40002"
+         font-size="14.00"
+         id="text261"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Cln1</text>
+    </g>
+    <!-- node31&#45;&gt;node34 -->
+    <g
+       id="edge96"
+       class="edge">
+      <title
+         id="title264">node31-&gt;node34</title>
+      <path
+         d="m 2761.5,-1036.3 c -1.6,8.1 -3.4,17.8 -5.1,26.8"
+         id="path266"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2759,-1008 2759,-1008 2754,-999 2752,-1009 "
+         id="polygon268"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node38 -->
+    <g
+       id="node86"
+       class="node">
+      <title
+         id="title271">node38</title>
+      <ellipse
+         id="Whi5"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2964"
+         cy="-981"
+         rx="37.246101"
+         ry="18.5"
+         d="m 3001.2461,-981 c 0,10.21727 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.28273 -37.2461,-18.5 0,-10.21727 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.28273 37.2461,18.5 z"
+         sodipodi:cx="2964"
+         sodipodi:cy="-981"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2964"
+         y="-977.40002"
+         font-size="14.00"
+         id="text274"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Whi5</text>
+    </g>
+    <!-- node31&#45;&gt;node38 -->
+    <g
+       id="edge98"
+       class="edge">
+      <title
+         id="title277">node31-&gt;node38</title>
+      <path
+         d="m 2797,-1043.1 c 34.7,12.9 90.1,33.5 127.5,47.41"
+         id="path279"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2925,-998 2925,-998 2934,-992 2923,-992 "
+         id="polygon281"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node35 -->
+    <g
+       id="node88"
+       class="node">
+      <title
+         id="title284">node35</title>
+      <ellipse
+         id="Cln2"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2837"
+         cy="-981"
+         rx="34"
+         ry="18.5"
+         d="m 2871,-981 c 0,10.21727 -15.2223,18.5 -34,18.5 -18.7777,0 -34,-8.28273 -34,-18.5 0,-10.21727 15.2223,-18.5 34,-18.5 18.7777,0 34,8.28273 34,18.5 z"
+         sodipodi:cx="2837"
+         sodipodi:cy="-981"
+         sodipodi:rx="34"
+         sodipodi:ry="18.5" />
+      <text
+         x="2837"
+         y="-977.40002"
+         font-size="14.00"
+         id="text287"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Cln2</text>
+    </g>
+    <!-- node31&#45;&gt;node35 -->
+    <g
+       id="edge100"
+       class="edge">
+      <title
+         id="title290">node31-&gt;node35</title>
+      <path
+         d="m 2781.7,-1037.8 c 9.5,9.7 21.5,22.1 31.9,32.8"
+         id="path292"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2816,-1007 2816,-1007 2820,-997 2811,-1002 "
+         id="polygon294"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node45 -->
+    <g
+       id="node66"
+       class="node">
+      <title
+         id="title297">node45</title>
+      <ellipse
+         id="STRE"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2232"
+         cy="-833"
+         rx="37.246101"
+         ry="18.5"
+         d="m 2269.2461,-833 c 0,10.21727 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.28273 -37.2461,-18.5 0,-10.21727 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.28273 37.2461,18.5 z"
+         sodipodi:cx="2232"
+         sodipodi:cy="-833"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2232"
+         y="-829.40002"
+         font-size="14.00"
+         id="text300"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">STRE</text>
+    </g>
+    <!-- node44&#45;&gt;node45 -->
+    <g
+       id="edge70"
+       class="edge">
+      <title
+         id="title303">node44-&gt;node45</title>
+      <path
+         d="m 2177.8,-889.46 c 9.3,9.63 20.9,21.72 31,32.23"
+         id="path305"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2211,-859 2211,-859 2215,-849 2206,-854 "
+         id="polygon307"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node2 -->
+    <g
+       id="node31"
+       class="node">
+      <title
+         id="title310">node2</title>
+      <ellipse
+         id="Glycerol"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1972"
+         cy="-1573"
+         rx="50.8032"
+         ry="18.5"
+         d="m 2022.8032,-1573 c 0,10.2173 -22.7454,18.5 -50.8032,18.5 -28.0578,0 -50.8032,-8.2827 -50.8032,-18.5 0,-10.2173 22.7454,-18.5 50.8032,-18.5 28.0578,0 50.8032,8.2827 50.8032,18.5 z"
+         sodipodi:cx="1972"
+         sodipodi:cy="-1573"
+         sodipodi:rx="50.8032"
+         sodipodi:ry="18.5" />
+      <text
+         x="1972"
+         y="-1569.4"
+         font-size="14.00"
+         id="text313"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Glycerol</text>
+    </g>
+    <!-- node2&#45;&gt;node1 -->
+    <g
+       id="edge34"
+       class="edge">
+      <title
+         id="title316">node2-&gt;node1</title>
+      <path
+         d="m 1972,-1554.3 c 0,8 0,17.7 0,26.6"
+         id="path318"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1975,-1527 1975,-1527 1972,-1517 1968,-1527 "
+         id="polygon320"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node3 -->
+    <g
+       id="node33"
+       class="node">
+      <title
+         id="title323">node3</title>
+      <ellipse
+         id="Rapamycin"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2252"
+         cy="-1277"
+         rx="65"
+         ry="18.5"
+         d="m 2317,-1277 c 0,10.2173 -29.1015,18.5 -65,18.5 -35.8985,0 -65,-8.2827 -65,-18.5 0,-10.2173 29.1015,-18.5 65,-18.5 35.8985,0 65,8.2827 65,18.5 z"
+         sodipodi:cx="2252"
+         sodipodi:cy="-1277"
+         sodipodi:rx="65"
+         sodipodi:ry="18.5" />
+      <text
+         x="2252"
+         y="-1273.4"
+         font-size="14.00"
+         id="text326"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Rapamycin</text>
+    </g>
+    <!-- node22 -->
+    <g
+       id="node34"
+       class="node">
+      <title
+         id="title329">node22</title>
+      <ellipse
+         id="Rapa_Fpr1"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2093"
+         cy="-1203"
+         rx="63.2481"
+         ry="18.5"
+         d="m 2156.2481,-1203 c 0,10.2173 -28.3171,18.5 -63.2481,18.5 -34.931,0 -63.2481,-8.2827 -63.2481,-18.5 0,-10.2173 28.3171,-18.5 63.2481,-18.5 34.931,0 63.2481,8.2827 63.2481,18.5 z"
+         sodipodi:cx="2093"
+         sodipodi:cy="-1203"
+         sodipodi:rx="63.2481"
+         sodipodi:ry="18.5" />
+      <text
+         x="2093"
+         y="-1199.4"
+         font-size="14.00"
+         id="text332"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Rapa_Fpr1</text>
+    </g>
+    <!-- node3&#45;&gt;node22 -->
+    <g
+       id="edge36"
+       class="edge">
+      <title
+         id="title335">node3-&gt;node22</title>
+      <path
+         d="m 2217.9,-1261.1 c -24,11.1 -56.2,26.1 -82,38.1"
+         id="path337"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2137,-1219 2137,-1219 2126,-1218 2134,-1226 "
+         id="polygon339"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node19 -->
+    <g
+       id="node36"
+       class="node">
+      <title
+         id="title342">node19</title>
+      <ellipse
+         id="TORC1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2093"
+         cy="-1129"
+         rx="46"
+         ry="18.5"
+         d="m 2139,-1129 c 0,10.2173 -20.5949,18.5 -46,18.5 -25.4051,0 -46,-8.2827 -46,-18.5 0,-10.2173 20.5949,-18.5 46,-18.5 25.4051,0 46,8.2827 46,18.5 z"
+         sodipodi:cx="2093"
+         sodipodi:cy="-1129"
+         sodipodi:rx="46"
+         sodipodi:ry="18.5" />
+      <text
+         x="2093"
+         y="-1125.4"
+         font-size="14.00"
+         id="text345"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">TORC1</text>
+    </g>
+    <!-- node22&#45;&gt;node19 -->
+    <g
+       id="edge38"
+       class="edge">
+      <title
+         id="title348">node22-&gt;node19</title>
+      <path
+         d="m 2093,-1184.3 c 0,8 0,17.7 0,26.6"
+         id="path350"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2096,-1157 2096,-1157 2093,-1147 2089,-1157 "
+         id="polygon352"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node19&#45;&gt;node44 -->
+    <g
+       id="edge86"
+       class="edge">
+      <title
+         id="title355">node19-&gt;node44</title>
+      <path
+         d="m 2102,-1110.6 c 5,10.5 11.2,24.2 16,36.6 12.5,32.2 15.2,40.6 24,74 5.6,21.41 10.6,45.97 14,64.47"
+         id="path357"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2159,-936 2159,-936 2157,-925 2152,-934 "
+         id="polygon359"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node49 -->
+    <g
+       id="node57"
+       class="node">
+      <title
+         id="title362">node49</title>
+      <ellipse
+         id="Atg13"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1862"
+         cy="-981"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1902.9631,-981 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1862"
+         sodipodi:cy="-981"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1862"
+         y="-977.40002"
+         font-size="14.00"
+         id="text365"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg13</text>
+    </g>
+    <!-- node19&#45;&gt;node49 -->
+    <g
+       id="edge78"
+       class="edge">
+      <title
+         id="title368">node19-&gt;node49</title>
+      <path
+         d="m 2050.6,-1121.6 c -50.4,9.5 -130.3,27.3 -152.6,47.6 -18.4,16.7 -27.5,44 -31.9,64.7"
+         id="path370"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1869,-1008 1869,-1008 1864,-999 1862,-1009 "
+         id="polygon372"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node48 -->
+    <g
+       id="node59"
+       class="node">
+      <title
+         id="title375">node48</title>
+      <ellipse
+         id="Atg1"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1956"
+         cy="-981"
+         rx="35.137798"
+         ry="18.5"
+         d="m 1991.1378,-981 c 0,10.21727 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="1956"
+         sodipodi:cy="-981"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="1956"
+         y="-977.40002"
+         font-size="14.00"
+         id="text378"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg1</text>
+    </g>
+    <!-- node19&#45;&gt;node48 -->
+    <g
+       id="edge82"
+       class="edge">
+      <title
+         id="title381">node19-&gt;node48</title>
+      <path
+         d="m 2066.5,-1113.6 c -15.8,10 -35.6,24 -50.5,39.6 -18.8,19.7 -35.2,46.1 -46.1,65.8"
+         id="path383"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1972,-1006 1972,-1006 1965,-999 1966,-1009 "
+         id="polygon385"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node20 -->
+    <g
+       id="node61"
+       class="node">
+      <title
+         id="title388">node20</title>
+      <ellipse
+         id="Rim15"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2090"
+         cy="-981"
+         rx="43"
+         ry="18.5"
+         d="m 2133,-981 c 0,10.21727 -19.2518,18.5 -43,18.5 -23.7482,0 -43,-8.28273 -43,-18.5 0,-10.21727 19.2518,-18.5 43,-18.5 23.7482,0 43,8.28273 43,18.5 z"
+         sodipodi:cx="2090"
+         sodipodi:cy="-981"
+         sodipodi:rx="43"
+         sodipodi:ry="18.5" />
+      <text
+         x="2090"
+         y="-977.40002"
+         font-size="14.00"
+         id="text391"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Rim15</text>
+    </g>
+    <!-- node19&#45;&gt;node20 -->
+    <g
+       id="edge84"
+       class="edge">
+      <title
+         id="title394">node19-&gt;node20</title>
+      <path
+         d="m 2097.6,-1110.6 c 2.5,10.7 5.2,24.3 6.4,36.6 1.7,16.8 2.1,21.2 0,38 -1.1,8.8 -3.2,18.3 -5.4,26.8"
+         id="path396"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2101,-1008 2101,-1008 2095,-999 2095,-1009 "
+         id="polygon398"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node18 -->
+    <g
+       id="node70"
+       class="node">
+      <title
+         id="title401">node18</title>
+      <ellipse
+         id="Sch9"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2060"
+         cy="-1055"
+         rx="35.137798"
+         ry="18.5"
+         d="m 2095.1378,-1055 c 0,10.2173 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.2827 -35.1378,-18.5 0,-10.2173 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.2827 35.1378,18.5 z"
+         sodipodi:cx="2060"
+         sodipodi:cy="-1055"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="2060"
+         y="-1051.4"
+         font-size="14.00"
+         id="text404"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Sch9</text>
+    </g>
+    <!-- node19&#45;&gt;node18 -->
+    <g
+       id="edge80"
+       class="edge">
+      <title
+         id="title407">node19-&gt;node18</title>
+      <path
+         d="m 2084.8,-1110.7 c -3.8,8.5 -8.3,18.8 -12.6,28.2"
+         id="path409"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2075,-1080 2075,-1080 2068,-1073 2068,-1083 "
+         id="polygon411"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node8 -->
+    <g
+       id="node38"
+       class="node">
+      <title
+         id="title414">node8</title>
+      <ellipse
+         id="degradation"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1365"
+         cy="-93"
+         rx="70"
+         ry="18.5"
+         d="m 1435,-93 c 0,10.217268 -31.3401,18.5 -70,18.5 -38.6599,0 -70,-8.282732 -70,-18.5 0,-10.21727 31.3401,-18.5 70,-18.5 38.6599,0 70,8.28273 70,18.5 z"
+         sodipodi:cx="1365"
+         sodipodi:cy="-93"
+         sodipodi:rx="70"
+         sodipodi:ry="18.5" />
+      <text
+         x="1365"
+         y="-89.400002"
+         font-size="14.00"
+         id="text417"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">degradation</text>
+    </g>
+    <!-- node8&#45;&gt;node7 -->
+    <g
+       id="edge40"
+       class="edge">
+      <title
+         id="title420">node8-&gt;node7</title>
+      <path
+         d="m 1365,-74.327 c 0,8.063 0,17.679 0,26.616"
+         id="path422"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1368,-47 1368,-47 1365,-37 1361,-47 "
+         id="polygon424"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node14 -->
+    <g
+       id="node41"
+       class="node">
+      <title
+         id="title427">node14</title>
+      <ellipse
+         id="Ras_farn"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1895"
+         cy="-1277"
+         rx="54.112301"
+         ry="18.5"
+         d="m 1949.1123,-1277 c 0,10.2173 -24.2269,18.5 -54.1123,18.5 -29.8854,0 -54.1123,-8.2827 -54.1123,-18.5 0,-10.2173 24.2269,-18.5 54.1123,-18.5 29.8854,0 54.1123,8.2827 54.1123,18.5 z"
+         sodipodi:cx="1895"
+         sodipodi:cy="-1277"
+         sodipodi:rx="54.112301"
+         sodipodi:ry="18.5" />
+      <text
+         x="1895"
+         y="-1273.4"
+         font-size="14.00"
+         id="text430"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ras_farn</text>
+    </g>
+    <!-- node9&#45;&gt;node14 -->
+    <g
+       id="edge42"
+       class="edge">
+      <title
+         id="title433">node9-&gt;node14</title>
+      <path
+         d="m 2104,-1342.8 c -38.4,12.1 -110.8,34.9 -159.4,50.2"
+         id="path435"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1945,-1289 1945,-1289 1934,-1289 1943,-1295 "
+         id="polygon437"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node13 -->
+    <g
+       id="node43"
+       class="node">
+      <title
+         id="title440">node13</title>
+      <ellipse
+         id="Ras_palm"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2025"
+         cy="-1277"
+         rx="58"
+         ry="18.5"
+         d="m 2083,-1277 c 0,10.2173 -25.9675,18.5 -58,18.5 -32.0325,0 -58,-8.2827 -58,-18.5 0,-10.2173 25.9675,-18.5 58,-18.5 32.0325,0 58,8.2827 58,18.5 z"
+         sodipodi:cx="2025"
+         sodipodi:cy="-1277"
+         sodipodi:rx="58"
+         sodipodi:ry="18.5" />
+      <text
+         x="2025"
+         y="-1273.4"
+         font-size="14.00"
+         id="text443"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ras_palm</text>
+    </g>
+    <!-- node9&#45;&gt;node13 -->
+    <g
+       id="edge44"
+       class="edge">
+      <title
+         id="title446">node9-&gt;node13</title>
+      <path
+         d="m 2110.3,-1337.1 c -15,10.5 -35.7,25.2 -53,37.4"
+         id="path448"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2059,-1296 2059,-1296 2049,-1294 2055,-1302 "
+         id="polygon450"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node15 -->
+    <g
+       id="node45"
+       class="node">
+      <title
+         id="title453">node15</title>
+      <ellipse
+         id="Cyr1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1938"
+         cy="-1203"
+         rx="35.137798"
+         ry="18.5"
+         d="m 1973.1378,-1203 c 0,10.2173 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.2827 -35.1378,-18.5 0,-10.2173 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.2827 35.1378,18.5 z"
+         sodipodi:cx="1938"
+         sodipodi:cy="-1203"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="1938"
+         y="-1199.4"
+         font-size="14.00"
+         id="text456"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Cyr1</text>
+    </g>
+    <!-- node14&#45;&gt;node15 -->
+    <g
+       id="edge46"
+       class="edge">
+      <title
+         id="title459">node14-&gt;node15</title>
+      <path
+         d="m 1905.6,-1258.7 c 5.1,8.7 11.3,19.4 16.9,29"
+         id="path461"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1925,-1231 1925,-1231 1927,-1220 1919,-1227 "
+         id="polygon463"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node13&#45;&gt;node15 -->
+    <g
+       id="edge48"
+       class="edge">
+      <title
+         id="title466">node13-&gt;node15</title>
+      <path
+         d="m 2004.4,-1259.5 c -12,10.2 -27.2,23.2 -40.1,34.1"
+         id="path468"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1966,-1222 1966,-1222 1956,-1218 1962,-1228 "
+         id="polygon470"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node16 -->
+    <g
+       id="node53"
+       class="node">
+      <title
+         id="title473">node16</title>
+      <ellipse
+         id="cAMP"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1938"
+         cy="-1129"
+         rx="38"
+         ry="18.5"
+         d="m 1976,-1129 c 0,10.2173 -17.0132,18.5 -38,18.5 -20.9868,0 -38,-8.2827 -38,-18.5 0,-10.2173 17.0132,-18.5 38,-18.5 20.9868,0 38,8.2827 38,18.5 z"
+         sodipodi:cx="1938"
+         sodipodi:cy="-1129"
+         sodipodi:rx="38"
+         sodipodi:ry="18.5" />
+      <text
+         x="1938"
+         y="-1125.4"
+         font-size="14.00"
+         id="text476"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">cAMP</text>
+    </g>
+    <!-- node15&#45;&gt;node16 -->
+    <g
+       id="edge56"
+       class="edge">
+      <title
+         id="title479">node15-&gt;node16</title>
+      <path
+         d="m 1938,-1184.3 c 0,8 0,17.7 0,26.6"
+         id="path481"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1941,-1157 1941,-1157 1938,-1147 1934,-1157 "
+         id="polygon483"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node10 -->
+    <g
+       id="node48"
+       class="node">
+      <title
+         id="title486">node10</title>
+      <ellipse
+         id="Ras1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2310"
+         cy="-1425"
+         rx="35.137798"
+         ry="18.5"
+         d="m 2345.1378,-1425 c 0,10.2173 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.2827 -35.1378,-18.5 0,-10.2173 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.2827 35.1378,18.5 z"
+         sodipodi:cx="2310"
+         sodipodi:cy="-1425"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="2310"
+         y="-1421.4"
+         font-size="14.00"
+         id="text489"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ras1</text>
+    </g>
+    <!-- node10&#45;&gt;node9 -->
+    <g
+       id="edge50"
+       class="edge">
+      <title
+         id="title492">node10-&gt;node9</title>
+      <path
+         d="m 2282.6,-1413 c -5.5,2.3 -11.2,4.8 -16.6,7 -34.5,14.4 -74.2,30.4 -101.8,41.4"
+         id="path494"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2165,-1361 2165,-1361 2154,-1360 2162,-1367 "
+         id="polygon496"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node11 -->
+    <g
+       id="node50"
+       class="node">
+      <title
+         id="title499">node11</title>
+      <ellipse
+         id="Ras2"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2130"
+         cy="-1425"
+         rx="35.137798"
+         ry="18.5"
+         d="m 2165.1378,-1425 c 0,10.2173 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.2827 -35.1378,-18.5 0,-10.2173 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.2827 35.1378,18.5 z"
+         sodipodi:cx="2130"
+         sodipodi:cy="-1425"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="2130"
+         y="-1421.4"
+         font-size="14.00"
+         id="text502"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ras2</text>
+    </g>
+    <!-- node11&#45;&gt;node9 -->
+    <g
+       id="edge52"
+       class="edge">
+      <title
+         id="title505">node11-&gt;node9</title>
+      <path
+         d="m 2130,-1406.3 c 0,8 0,17.7 0,26.6"
+         id="path507"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2133,-1379 2133,-1379 2130,-1369 2126,-1379 "
+         id="polygon509"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node17 -->
+    <g
+       id="node55"
+       class="node">
+      <title
+         id="title512">node17</title>
+      <ellipse
+         id="PKA"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1938"
+         cy="-1055"
+         rx="31"
+         ry="18.5"
+         d="m 1969,-1055 c 0,10.2173 -13.8792,18.5 -31,18.5 -17.1208,0 -31,-8.2827 -31,-18.5 0,-10.2173 13.8792,-18.5 31,-18.5 17.1208,0 31,8.2827 31,18.5 z"
+         sodipodi:cx="1938"
+         sodipodi:cy="-1055"
+         sodipodi:rx="31"
+         sodipodi:ry="18.5" />
+      <text
+         x="1938"
+         y="-1051.4"
+         font-size="14.00"
+         id="text515"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">PKA</text>
+    </g>
+    <!-- node16&#45;&gt;node17 -->
+    <g
+       id="edge58"
+       class="edge">
+      <title
+         id="title518">node16-&gt;node17</title>
+      <path
+         d="m 1938,-1110.3 c 0,8 0,17.7 0,26.6"
+         id="path520"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1941,-1083 1941,-1083 1938,-1073 1934,-1083 "
+         id="polygon522"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node17&#45;&gt;node44 -->
+    <g
+       id="edge66"
+       class="edge">
+      <title
+         id="title525">node17-&gt;node44</title>
+      <path
+         d="m 1955.9,-1039.6 c 12.5,10.9 29.5,25.9 44.1,39.6 17.4,16.38 18.3,24.46 38,38 23.5,16.21 52.6,29.47 76.6,38.91"
+         id="path527"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2116,-926 2116,-926 2124,-919 2113,-919 "
+         id="polygon529"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node17&#45;&gt;node49 -->
+    <g
+       id="edge60"
+       class="edge">
+      <title
+         id="title532">node17-&gt;node49</title>
+      <path
+         d="m 1921.5,-1038.9 c -10.2,9.9 -23.6,22.9 -35,34.1"
+         id="path534"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1888,-1002 1888,-1002 1879,-997 1884,-1007 "
+         id="polygon536"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node17&#45;&gt;node48 -->
+    <g
+       id="edge62"
+       class="edge">
+      <title
+         id="title539">node17-&gt;node48</title>
+      <path
+         d="m 1942.5,-1036.3 c 2,8.2 4.4,18 6.6,27.1"
+         id="path541"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1952,-1009 1952,-1009 1951,-999 1945,-1008 "
+         id="polygon543"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node17&#45;&gt;node20 -->
+    <g
+       id="edge64"
+       class="edge">
+      <title
+         id="title546">node17-&gt;node20</title>
+      <path
+         d="m 1962.1,-1043.3 c 24.2,11.8 61.9,30.2 90.1,43.9"
+         id="path548"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2053,-1002 2053,-1002 2061,-994 2050,-996 "
+         id="polygon550"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node50 -->
+    <g
+       id="node64"
+       class="node">
+      <title
+         id="title553">node50</title>
+      <ellipse
+         id="Atg1_13_17"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1812"
+         cy="-907"
+         rx="71"
+         ry="18.5"
+         d="m 1883,-907 c 0,10.21727 -31.7878,18.5 -71,18.5 -39.2122,0 -71,-8.28273 -71,-18.5 0,-10.21727 31.7878,-18.5 71,-18.5 39.2122,0 71,8.28273 71,18.5 z"
+         sodipodi:cx="1812"
+         sodipodi:cy="-907"
+         sodipodi:rx="71"
+         sodipodi:ry="18.5" />
+      <text
+         x="1812"
+         y="-903.40002"
+         font-size="14.00"
+         id="text556"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg1_13_17</text>
+    </g>
+    <!-- node49&#45;&gt;node50 -->
+    <g
+       id="edge68"
+       class="edge">
+      <title
+         id="title559">node49-&gt;node50</title>
+      <path
+         d="m 1849.9,-963.09 c -5.9,8.78 -13.2,19.53 -19.8,29.26"
+         id="path561"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1832,-931 1832,-931 1824,-925 1827,-935 "
+         id="polygon563"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node48&#45;&gt;node50 -->
+    <g
+       id="edge72"
+       class="edge">
+      <title
+         id="title566">node48-&gt;node50</title>
+      <path
+         d="m 1930.6,-967.94 c -21.3,10.96 -52.2,26.84 -77.2,39.64"
+         id="path568"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1854,-925 1854,-925 1844,-923 1851,-931 "
+         id="polygon570"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node20&#45;&gt;node44 -->
+    <g
+       id="edge74"
+       class="edge">
+      <title
+         id="title573">node20-&gt;node44</title>
+      <path
+         d="m 2106.5,-963.84 c 9.1,9.49 20.5,21.44 30.6,31.93"
+         id="path575"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2139,-934 2139,-934 2144,-924 2134,-929 "
+         id="polygon577"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node60 -->
+    <g
+       id="node140"
+       class="node">
+      <title
+         id="title580">node60</title>
+      <ellipse
+         id="PAS"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1328"
+         cy="-833"
+         rx="31"
+         ry="18.5"
+         d="m 1359,-833 c 0,10.21727 -13.8792,18.5 -31,18.5 -17.1208,0 -31,-8.28273 -31,-18.5 0,-10.21727 13.8792,-18.5 31,-18.5 17.1208,0 31,8.28273 31,18.5 z"
+         sodipodi:cx="1328"
+         sodipodi:cy="-833"
+         sodipodi:rx="31"
+         sodipodi:ry="18.5" />
+      <text
+         x="1328"
+         y="-829.40002"
+         font-size="14.00"
+         id="text583"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">PAS</text>
+    </g>
+    <!-- node50&#45;&gt;node60 -->
+    <g
+       id="edge156"
+       class="edge">
+      <title
+         id="title586">node50-&gt;node60</title>
+      <path
+         d="m 1750.7,-897.63 c -100.6,15.38 -298,45.57 -382.6,58.5"
+         id="path588"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1368,-835 1368,-835 1358,-837 1367,-842 "
+         id="polygon590"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node52 -->
+    <g
+       id="node115"
+       class="node">
+      <title
+         id="title593">node52</title>
+      <ellipse
+         id="heatshock_resistance"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2545"
+         cy="-759"
+         rx="116"
+         ry="18.5"
+         d="m 2661,-759 c 0,10.21727 -51.935,18.5 -116,18.5 -64.065,0 -116,-8.28273 -116,-18.5 0,-10.21727 51.935,-18.5 116,-18.5 64.065,0 116,8.28273 116,18.5 z"
+         sodipodi:cx="2545"
+         sodipodi:cy="-759"
+         sodipodi:rx="116"
+         sodipodi:ry="18.5" />
+      <text
+         x="2545"
+         y="-755.40002"
+         font-size="14.00"
+         id="text596"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">heatshock_resistance</text>
+    </g>
+    <!-- node45&#45;&gt;node52 -->
+    <g
+       id="edge132"
+       class="edge">
+      <title
+         id="title599">node45-&gt;node52</title>
+      <path
+         d="m 2265.5,-825.08 c 48.5,11.47 139.7,33.02 204.7,48.39"
+         id="path601"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2471,-780 2471,-780 2480,-774 2469,-773 "
+         id="polygon603"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node53 -->
+    <g
+       id="node117"
+       class="node">
+      <title
+         id="title606">node53</title>
+      <ellipse
+         id="carbohydrate_storage"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2061"
+         cy="-759"
+         rx="118"
+         ry="18.5"
+         d="m 2179,-759 c 0,10.21727 -52.8304,18.5 -118,18.5 -65.1696,0 -118,-8.28273 -118,-18.5 0,-10.21727 52.8304,-18.5 118,-18.5 65.1696,0 118,8.28273 118,18.5 z"
+         sodipodi:cx="2061"
+         sodipodi:cy="-759"
+         sodipodi:rx="118"
+         sodipodi:ry="18.5" />
+      <text
+         x="2061"
+         y="-755.40002"
+         font-size="14.00"
+         id="text609"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">carbohydrate_storage</text>
+    </g>
+    <!-- node45&#45;&gt;node53 -->
+    <g
+       id="edge134"
+       class="edge">
+      <title
+         id="title612">node45-&gt;node53</title>
+      <path
+         d="m 2203.8,-820.78 c -25.2,10.89 -62.6,27.08 -92.8,40.16"
+         id="path614"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2111,-777 2111,-777 2101,-776 2109,-783 "
+         id="polygon616"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node109 -->
+    <g
+       id="node119"
+       class="node">
+      <title
+         id="title619">node109</title>
+      <ellipse
+         id="induced_autophagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2304"
+         cy="-759"
+         rx="107"
+         ry="18.5"
+         d="m 2411,-759 c 0,10.21727 -47.9055,18.5 -107,18.5 -59.0945,0 -107,-8.28273 -107,-18.5 0,-10.21727 47.9055,-18.5 107,-18.5 59.0945,0 107,8.28273 107,18.5 z"
+         sodipodi:cx="2304"
+         sodipodi:cy="-759"
+         sodipodi:rx="107"
+         sodipodi:ry="18.5" />
+      <text
+         x="2304"
+         y="-755.40002"
+         font-size="14.00"
+         id="text622"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">induced_autophagy</text>
+    </g>
+    <!-- node45&#45;&gt;node109 -->
+    <g
+       id="edge136"
+       class="edge">
+      <title
+         id="title625">node45-&gt;node109</title>
+      <path
+         d="m 2248.3,-816.21 c 9.1,9.34 20.6,21.14 30.8,31.6"
+         id="path627"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2281,-786 2281,-786 2286,-777 2276,-782 "
+         id="polygon629"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node18&#45;&gt;node20 -->
+    <g
+       id="edge76"
+       class="edge">
+      <title
+         id="title632">node18-&gt;node20</title>
+      <path
+         d="m 2067.4,-1036.7 c 3.4,8.4 7.6,18.7 11.4,28"
+         id="path634"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2082,-1009 2082,-1009 2082,-999 2075,-1007 "
+         id="polygon636"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node23 -->
+    <g
+       id="node77"
+       class="node">
+      <title
+         id="title639">node23</title>
+      <ellipse
+         id="Fpr1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2135"
+         cy="-1277"
+         rx="34"
+         ry="18.5"
+         d="m 2169,-1277 c 0,10.2173 -15.2223,18.5 -34,18.5 -18.7777,0 -34,-8.2827 -34,-18.5 0,-10.2173 15.2223,-18.5 34,-18.5 18.7777,0 34,8.2827 34,18.5 z"
+         sodipodi:cx="2135"
+         sodipodi:cy="-1277"
+         sodipodi:rx="34"
+         sodipodi:ry="18.5" />
+      <text
+         x="2135"
+         y="-1273.4"
+         font-size="14.00"
+         id="text642"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Fpr1</text>
+    </g>
+    <!-- node23&#45;&gt;node22 -->
+    <g
+       id="edge88"
+       class="edge">
+      <title
+         id="title645">node23-&gt;node22</title>
+      <path
+         d="m 2124.8,-1259.1 c -4.9,8.7 -10.9,19.3 -16.4,29"
+         id="path647"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2111,-1228 2111,-1228 2103,-1221 2105,-1231 "
+         id="polygon649"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node24 -->
+    <g
+       id="node79"
+       class="node">
+      <title
+         id="title652">node24</title>
+      <ellipse
+         id="Nitrogen"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2228"
+         cy="-1203"
+         rx="54.112301"
+         ry="18.5"
+         d="m 2282.1123,-1203 c 0,10.2173 -24.2269,18.5 -54.1123,18.5 -29.8854,0 -54.1123,-8.2827 -54.1123,-18.5 0,-10.2173 24.2269,-18.5 54.1123,-18.5 29.8854,0 54.1123,8.2827 54.1123,18.5 z"
+         sodipodi:cx="2228"
+         sodipodi:cy="-1203"
+         sodipodi:rx="54.112301"
+         sodipodi:ry="18.5" />
+      <text
+         x="2228"
+         y="-1199.4"
+         font-size="14.00"
+         id="text655"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Nitrogen</text>
+    </g>
+    <!-- node24&#45;&gt;node25 -->
+    <g
+       id="edge92"
+       class="edge">
+      <title
+         id="title658">node24-&gt;node25</title>
+      <path
+         d="m 2266.4,-1189.8 c 34.2,11.8 84.5,29.1 122.6,42.2"
+         id="path660"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2390,-1150 2390,-1150 2399,-1144 2388,-1144 "
+         id="polygon662"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node24&#45;&gt;node19 -->
+    <g
+       id="edge90"
+       class="edge">
+      <title
+         id="title665">node24-&gt;node19</title>
+      <path
+         d="m 2199.4,-1187.3 c -20.3,11.1 -47.8,26.2 -69.7,38.2"
+         id="path667"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2131,-1145 2131,-1145 2120,-1144 2127,-1152 "
+         id="polygon669"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node37 -->
+    <g
+       id="node100"
+       class="node">
+      <title
+         id="title672">node37</title>
+      <ellipse
+         id="G1_cyclins"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2855"
+         cy="-907"
+         rx="63"
+         ry="18.5"
+         d="m 2918,-907 c 0,10.21727 -28.2061,18.5 -63,18.5 -34.7939,0 -63,-8.28273 -63,-18.5 0,-10.21727 28.2061,-18.5 63,-18.5 34.7939,0 63,8.28273 63,18.5 z"
+         sodipodi:cx="2855"
+         sodipodi:cy="-907"
+         sodipodi:rx="63"
+         sodipodi:ry="18.5" />
+      <text
+         x="2855"
+         y="-903.40002"
+         font-size="14.00"
+         id="text675"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">G1_cyclins</text>
+    </g>
+    <!-- node34&#45;&gt;node37 -->
+    <g
+       id="edge112"
+       class="edge">
+      <title
+         id="title678">node34-&gt;node37</title>
+      <path
+         d="m 2772,-966.02 c 14.5,10.28 34,24.14 50.4,35.84"
+         id="path680"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2824,-932 2824,-932 2830,-924 2820,-927 "
+         id="polygon682"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node39 -->
+    <g
+       id="node102"
+       class="node">
+      <title
+         id="title685">node39</title>
+      <ellipse
+         id="G1_arrest"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="2905"
+         cy="-833"
+         rx="61"
+         ry="18.5"
+         d="m 2966,-833 c 0,10.21727 -27.3106,18.5 -61,18.5 -33.6894,0 -61,-8.28273 -61,-18.5 0,-10.21727 27.3106,-18.5 61,-18.5 33.6894,0 61,8.28273 61,18.5 z"
+         sodipodi:cx="2905"
+         sodipodi:cy="-833"
+         sodipodi:rx="61"
+         sodipodi:ry="18.5" />
+      <text
+         x="2905"
+         y="-829.40002"
+         font-size="14.00"
+         id="text688"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">G1_arrest</text>
+    </g>
+    <!-- node38&#45;&gt;node39 -->
+    <g
+       id="edge114"
+       class="edge">
+      <title
+         id="title691">node38-&gt;node39</title>
+      <path
+         d="m 2956.8,-962.82 c -7.5,18.75 -19.4,48.83 -29.8,74.82 -3.5,8.81 -7.4,18.42 -10.8,27.1"
+         id="path693"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2919,-859 2919,-859 2912,-851 2912,-862 "
+         id="polygon695"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node35&#45;&gt;node37 -->
+    <g
+       id="edge116"
+       class="edge">
+      <title
+         id="title698">node35-&gt;node37</title>
+      <path
+         d="m 2841.5,-962.33 c 2,8.15 4.4,17.89 6.6,26.91"
+         id="path700"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2851,-936 2851,-936 2850,-925 2844,-934 "
+         id="polygon702"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node26 -->
+    <g
+       id="node94"
+       class="node">
+      <title
+         id="title705">node26</title>
+      <ellipse
+         id="Whi2"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2543"
+         cy="-1203"
+         rx="37.246101"
+         ry="18.5"
+         d="m 2580.2461,-1203 c 0,10.2173 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.2827 -37.2461,-18.5 0,-10.2173 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.2827 37.2461,18.5 z"
+         sodipodi:cx="2543"
+         sodipodi:cy="-1203"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2543"
+         y="-1199.4"
+         font-size="14.00"
+         id="text708"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Whi2</text>
+    </g>
+    <!-- node26&#45;&gt;node25 -->
+    <g
+       id="edge106"
+       class="edge">
+      <title
+         id="title711">node26-&gt;node25</title>
+      <path
+         d="m 2522.3,-1187.7 c -13.6,10.1 -31.7,23.5 -47.2,34.9"
+         id="path713"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2477,-1149 2477,-1149 2466,-1146 2472,-1155 "
+         id="polygon715"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node27 -->
+    <g
+       id="node96"
+       class="node">
+      <title
+         id="title718">node27</title>
+      <ellipse
+         id="Psr1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2333"
+         cy="-1203"
+         rx="33.029598"
+         ry="18.5"
+         d="m 2366.0296,-1203 c 0,10.2173 -14.7879,18.5 -33.0296,18.5 -18.2417,0 -33.0296,-8.2827 -33.0296,-18.5 0,-10.2173 14.7879,-18.5 33.0296,-18.5 18.2417,0 33.0296,8.2827 33.0296,18.5 z"
+         sodipodi:cx="2333"
+         sodipodi:cy="-1203"
+         sodipodi:rx="33.029598"
+         sodipodi:ry="18.5" />
+      <text
+         x="2333"
+         y="-1199.4"
+         font-size="14.00"
+         id="text721"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Psr1</text>
+    </g>
+    <!-- node27&#45;&gt;node25 -->
+    <g
+       id="edge108"
+       class="edge">
+      <title
+         id="title724">node27-&gt;node25</title>
+      <path
+         d="m 2354.2,-1188.7 c 15.4,10.3 36.4,24.5 54.2,36.4"
+         id="path726"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2410,-1155 2410,-1155 2416,-1146 2406,-1149 "
+         id="polygon728"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node28 -->
+    <g
+       id="node98"
+       class="node">
+      <title
+         id="title731">node28</title>
+      <ellipse
+         id="Psr2"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2417"
+         cy="-1203"
+         rx="33.029598"
+         ry="18.5"
+         d="m 2450.0296,-1203 c 0,10.2173 -14.7879,18.5 -33.0296,18.5 -18.2417,0 -33.0296,-8.2827 -33.0296,-18.5 0,-10.2173 14.7879,-18.5 33.0296,-18.5 18.2417,0 33.0296,8.2827 33.0296,18.5 z"
+         sodipodi:cx="2417"
+         sodipodi:cy="-1203"
+         sodipodi:rx="33.029598"
+         sodipodi:ry="18.5" />
+      <text
+         x="2417"
+         y="-1199.4"
+         font-size="14.00"
+         id="text734"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Psr2</text>
+    </g>
+    <!-- node28&#45;&gt;node25 -->
+    <g
+       id="edge110"
+       class="edge">
+      <title
+         id="title737">node28-&gt;node25</title>
+      <path
+         d="m 2423.4,-1184.7 c 2.9,8.3 6.5,18.3 9.7,27.5"
+         id="path739"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2436,-1158 2436,-1158 2436,-1147 2429,-1155 "
+         id="polygon741"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node37&#45;&gt;node39 -->
+    <g
+       id="edge130"
+       class="edge">
+      <title
+         id="title744">node37-&gt;node39</title>
+      <path
+         d="m 2867.4,-888.71 c 5.8,8.72 13,19.31 19.5,28.92"
+         id="path746"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2889,-861 2889,-861 2892,-851 2884,-857 "
+         id="polygon748"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node32 -->
+    <g
+       id="node105"
+       class="node">
+      <title
+         id="title751">node32</title>
+      <ellipse
+         id="Whi3"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2853"
+         cy="-1129"
+         rx="37.246101"
+         ry="18.5"
+         d="m 2890.2461,-1129 c 0,10.2173 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.2827 -37.2461,-18.5 0,-10.2173 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.2827 37.2461,18.5 z"
+         sodipodi:cx="2853"
+         sodipodi:cy="-1129"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2853"
+         y="-1125.4"
+         font-size="14.00"
+         id="text754"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Whi3</text>
+    </g>
+    <!-- node32&#45;&gt;node31 -->
+    <g
+       id="edge118"
+       class="edge">
+      <title
+         id="title757">node32-&gt;node31</title>
+      <path
+         d="m 2833.9,-1112.9 c -12.1,10.1 -27.8,23.4 -41.2,34.6"
+         id="path759"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2794,-1075 2794,-1075 2784,-1071 2790,-1080 "
+         id="polygon761"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node32&#45;&gt;node35 -->
+    <g
+       id="edge120"
+       class="edge">
+      <title
+         id="title764">node32-&gt;node35</title>
+      <path
+         d="m 2851,-1110.3 c -2.8,25.4 -7.7,70.9 -10.9,100.5"
+         id="path766"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2843,-1009 2843,-1009 2839,-999 2836,-1009 "
+         id="polygon768"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node36 -->
+    <g
+       id="node108"
+       class="node">
+      <title
+         id="title771">node36</title>
+      <ellipse
+         id="Cln3"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2899"
+         cy="-1055"
+         rx="34"
+         ry="18.5"
+         d="m 2933,-1055 c 0,10.2173 -15.2223,18.5 -34,18.5 -18.7777,0 -34,-8.2827 -34,-18.5 0,-10.2173 15.2223,-18.5 34,-18.5 18.7777,0 34,8.2827 34,18.5 z"
+         sodipodi:cx="2899"
+         sodipodi:cy="-1055"
+         sodipodi:rx="34"
+         sodipodi:ry="18.5" />
+      <text
+         x="2899"
+         y="-1051.4"
+         font-size="14.00"
+         id="text774"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Cln3</text>
+    </g>
+    <!-- node32&#45;&gt;node36 -->
+    <g
+       id="edge122"
+       class="edge">
+      <title
+         id="title777">node32-&gt;node36</title>
+      <path
+         d="m 2864.1,-1111.1 c 5.6,8.9 12.4,19.9 18.5,29.7"
+         id="path779"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2885,-1083 2885,-1083 2888,-1072 2879,-1079 "
+         id="polygon781"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node36&#45;&gt;node38 -->
+    <g
+       id="edge126"
+       class="edge">
+      <title
+         id="title784">node36-&gt;node38</title>
+      <path
+         d="m 2913.7,-1038.2 c 8.5,9.6 19.2,21.8 28.5,32.4"
+         id="path786"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2945,-1007 2945,-1007 2949,-997 2939,-1003 "
+         id="polygon788"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node36&#45;&gt;node37 -->
+    <g
+       id="edge124"
+       class="edge">
+      <title
+         id="title791">node36-&gt;node37</title>
+      <path
+         d="m 2896.5,-1036.5 c -2.9,19 -8.3,49.27 -16.5,74.5 -3,9.13 -7,18.77 -11,27.38"
+         id="path793"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2872,-932 2872,-932 2864,-925 2865,-935 "
+         id="polygon795"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node33 -->
+    <g
+       id="node112"
+       class="node">
+      <title
+         id="title798">node33</title>
+      <ellipse
+         id="Whi4"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="2761"
+         cy="-1129"
+         rx="37.246101"
+         ry="18.5"
+         d="m 2798.2461,-1129 c 0,10.2173 -16.6756,18.5 -37.2461,18.5 -20.5705,0 -37.2461,-8.2827 -37.2461,-18.5 0,-10.2173 16.6756,-18.5 37.2461,-18.5 20.5705,0 37.2461,8.2827 37.2461,18.5 z"
+         sodipodi:cx="2761"
+         sodipodi:cy="-1129"
+         sodipodi:rx="37.246101"
+         sodipodi:ry="18.5" />
+      <text
+         x="2761"
+         y="-1125.4"
+         font-size="14.00"
+         id="text801"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Whi4</text>
+    </g>
+    <!-- node33&#45;&gt;node31 -->
+    <g
+       id="edge128"
+       class="edge">
+      <title
+         id="title804">node33-&gt;node31</title>
+      <path
+         d="m 2762,-1110.3 c 0.4,8 1,17.7 1.4,26.6"
+         id="path806"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="2766,-1083 2766,-1083 2764,-1073 2759,-1083 "
+         id="polygon808"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node46 -->
+    <g
+       id="node121"
+       class="node">
+      <title
+         id="title811">node46</title>
+      <ellipse
+         id="bulk_autophagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="717"
+         cy="-537"
+         rx="90"
+         ry="18.5"
+         d="m 807,-537 c 0,10.21727 -40.29437,18.5 -90,18.5 -49.70563,0 -90,-8.28273 -90,-18.5 0,-10.21727 40.29437,-18.5 90,-18.5 49.70563,0 90,8.28273 90,18.5 z"
+         sodipodi:cx="717"
+         sodipodi:cy="-537"
+         sodipodi:rx="90"
+         sodipodi:ry="18.5" />
+      <text
+         x="717"
+         y="-533.40002"
+         font-size="14.00"
+         id="text814"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">bulk_autophagy</text>
+    </g>
+    <!-- node110 -->
+    <g
+       id="node122"
+       class="node">
+      <title
+         id="title817">node110</title>
+      <ellipse
+         id="mature_AP"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="885"
+         cy="-463"
+         rx="66"
+         ry="18.5"
+         d="m 951,-463 c 0,10.21727 -29.54921,18.5 -66,18.5 -36.45079,0 -66,-8.28273 -66,-18.5 0,-10.21727 29.54921,-18.5 66,-18.5 36.45079,0 66,8.28273 66,18.5 z"
+         sodipodi:cx="885"
+         sodipodi:cy="-463"
+         sodipodi:rx="66"
+         sodipodi:ry="18.5" />
+      <text
+         x="885"
+         y="-459.39999"
+         font-size="14.00"
+         id="text820"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">mature_AP</text>
+    </g>
+    <!-- node46&#45;&gt;node110 -->
+    <g
+       id="edge138"
+       class="edge">
+      <title
+         id="title823">node46-&gt;node110</title>
+      <path
+         d="m 755.12,-520.21 c 25.18,11.09 58.29,25.68 84.77,37.34"
+         id="path825"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="841,-485 841,-485 849,-478 838,-479 "
+         id="polygon827"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node111 -->
+    <g
+       id="node124"
+       class="node">
+      <title
+         id="title830">node111</title>
+      <ellipse
+         id="transport_to_vacuole"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="437"
+         cy="-389"
+         rx="115"
+         ry="18.5"
+         d="m 552,-389 c 0,10.21727 -51.48725,18.5 -115,18.5 -63.51275,0 -115,-8.28273 -115,-18.5 0,-10.21727 51.48725,-18.5 115,-18.5 63.51275,0 115,8.28273 115,18.5 z"
+         sodipodi:cx="437"
+         sodipodi:cy="-389"
+         sodipodi:rx="115"
+         sodipodi:ry="18.5" />
+      <text
+         x="437"
+         y="-385.39999"
+         font-size="14.00"
+         id="text833"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">transport_to_vacuole</text>
+    </g>
+    <!-- node110&#45;&gt;node111 -->
+    <g
+       id="edge140"
+       class="edge">
+      <title
+         id="title836">node110-&gt;node111</title>
+      <path
+         d="m 827.81,-453.55 c -75.94,12.54 -210.89,34.83 -300.62,49.65"
+         id="path838"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="527,-400 527,-400 517,-402 526,-407 "
+         id="polygon840"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node112 -->
+    <g
+       id="node239"
+       class="node">
+      <title
+         id="title843">node112</title>
+      <ellipse
+         id="docking"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="437"
+         cy="-315"
+         rx="49"
+         ry="18.5"
+         d="m 486,-315 c 0,10.21727 -21.93805,18.5 -49,18.5 -27.06195,0 -49,-8.28273 -49,-18.5 0,-10.21727 21.93805,-18.5 49,-18.5 27.06195,0 49,8.28273 49,18.5 z"
+         sodipodi:cx="437"
+         sodipodi:cy="-315"
+         sodipodi:rx="49"
+         sodipodi:ry="18.5" />
+      <text
+         x="437"
+         y="-311.39999"
+         font-size="14.00"
+         id="text846"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">docking</text>
+    </g>
+    <!-- node111&#45;&gt;node112 -->
+    <g
+       id="edge276"
+       class="edge">
+      <title
+         id="title849">node111-&gt;node112</title>
+      <path
+         d="m 437,-370.33 c 0,8.07 0,17.68 0,26.62"
+         id="path851"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="440,-343 440,-343 437,-333 433,-343 "
+         id="polygon853"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node47 -->
+    <g
+       id="node126"
+       class="node">
+      <title
+         id="title856">node47</title>
+      <ellipse
+         id="AP_expansion"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="852"
+         cy="-685"
+         rx="80"
+         ry="18.5"
+         d="m 932,-685 c 0,10.21727 -35.81722,18.5 -80,18.5 -44.18278,0 -80,-8.28273 -80,-18.5 0,-10.21727 35.81722,-18.5 80,-18.5 44.18278,0 80,8.28273 80,18.5 z"
+         sodipodi:cx="852"
+         sodipodi:cy="-685"
+         sodipodi:rx="80"
+         sodipodi:ry="18.5" />
+      <text
+         x="852"
+         y="-681.40002"
+         font-size="14.00"
+         id="text859"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">AP_expansion</text>
+    </g>
+    <!-- node47&#45;&gt;node46 -->
+    <g
+       id="edge144"
+       class="edge">
+      <title
+         id="title862">node47-&gt;node46</title>
+      <path
+         d="m 816.69,-668.31 c -17.18,9.43 -37.2,22.5 -51.69,38.31 -17.33,18.91 -30.14,45.24 -38.15,65.06"
+         id="path864"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="730,-563 730,-563 723,-555 723,-566 "
+         id="polygon866"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node71 -->
+    <g
+       id="node127"
+       class="node">
+      <title
+         id="title869">node71</title>
+      <ellipse
+         id="selective_autophagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="885"
+         cy="-611"
+         rx="111.036"
+         ry="18.5"
+         d="m 996.036,-611 c 0,10.21727 -49.71251,18.5 -111.036,18.5 -61.32349,0 -111.036,-8.28273 -111.036,-18.5 0,-10.21727 49.71251,-18.5 111.036,-18.5 61.32349,0 111.036,8.28273 111.036,18.5 z"
+         sodipodi:cx="885"
+         sodipodi:cy="-611"
+         sodipodi:rx="111.036"
+         sodipodi:ry="18.5" />
+      <text
+         x="885"
+         y="-607.40002"
+         font-size="14.00"
+         id="text872"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">selective_autophagy</text>
+    </g>
+    <!-- node47&#45;&gt;node71 -->
+    <g
+       id="edge142"
+       class="edge">
+      <title
+         id="title875">node47-&gt;node71</title>
+      <path
+         d="m 860.33,-666.33 c 3.71,8.33 8.16,18.31 12.26,27.49"
+         id="path877"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="875,-640 875,-640 876,-629 869,-637 "
+         id="polygon879"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node98 -->
+    <g
+       id="node130"
+       class="node">
+      <title
+         id="title882">node98</title>
+      <ellipse
+         id="aggrephagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1178"
+         cy="-537"
+         rx="69"
+         ry="18.5"
+         d="m 1247,-537 c 0,10.21727 -30.8924,18.5 -69,18.5 -38.1076,0 -69,-8.28273 -69,-18.5 0,-10.21727 30.8924,-18.5 69,-18.5 38.1076,0 69,8.28273 69,18.5 z"
+         sodipodi:cx="1178"
+         sodipodi:cy="-537"
+         sodipodi:rx="69"
+         sodipodi:ry="18.5" />
+      <text
+         x="1178"
+         y="-533.40002"
+         font-size="14.00"
+         id="text885"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">aggrephagy</text>
+    </g>
+    <!-- node71&#45;&gt;node98 -->
+    <g
+       id="edge146"
+       class="edge">
+      <title
+         id="title888">node71-&gt;node98</title>
+      <path
+         d="m 946.42,-595.49 c 50.34,12.72 121.18,30.61 171.28,43.25"
+         id="path890"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1118,-555 1118,-555 1127,-549 1116,-548 "
+         id="polygon892"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node70 -->
+    <g
+       id="node132"
+       class="node">
+      <title
+         id="title895">node70</title>
+      <ellipse
+         id="CVT"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1425"
+         cy="-537"
+         rx="32"
+         ry="18.5"
+         d="m 1457,-537 c 0,10.21727 -14.3269,18.5 -32,18.5 -17.6731,0 -32,-8.28273 -32,-18.5 0,-10.21727 14.3269,-18.5 32,-18.5 17.6731,0 32,8.28273 32,18.5 z"
+         sodipodi:cx="1425"
+         sodipodi:cy="-537"
+         sodipodi:rx="32"
+         sodipodi:ry="18.5" />
+      <text
+         x="1425"
+         y="-533.40002"
+         font-size="14.00"
+         id="text898"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">CVT</text>
+    </g>
+    <!-- node71&#45;&gt;node70 -->
+    <g
+       id="edge148"
+       class="edge">
+      <title
+         id="title901">node71-&gt;node70</title>
+      <path
+         d="m 964.67,-598.08 c 13.45,2.1 27.28,4.19 40.33,6.08 138.5,20.03 303.2,40.67 378.6,49.95"
+         id="path903"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1384,-545 1384,-545 1393,-540 1383,-538 "
+         id="polygon905"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node90 -->
+    <g
+       id="node134"
+       class="node">
+      <title
+         id="title908">node90</title>
+      <ellipse
+         id="mitophagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="512"
+         cy="-537"
+         rx="63"
+         ry="18.5"
+         d="m 575,-537 c 0,10.21727 -28.20606,18.5 -63,18.5 -34.79394,0 -63,-8.28273 -63,-18.5 0,-10.21727 28.20606,-18.5 63,-18.5 34.79394,0 63,8.28273 63,18.5 z"
+         sodipodi:cx="512"
+         sodipodi:cy="-537"
+         sodipodi:rx="63"
+         sodipodi:ry="18.5" />
+      <text
+         x="512"
+         y="-533.40002"
+         font-size="14.00"
+         id="text911"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">mitophagy</text>
+    </g>
+    <!-- node71&#45;&gt;node90 -->
+    <g
+       id="edge150"
+       class="edge">
+      <title
+         id="title914">node71-&gt;node90</title>
+      <path
+         d="m 813.52,-596.82 c -69.31,13.75 -173.41,34.4 -239.37,47.49"
+         id="path916"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="574,-545 574,-545 564,-547 573,-552 "
+         id="polygon918"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node96 -->
+    <g
+       id="node136"
+       class="node">
+      <title
+         id="title921">node96</title>
+      <ellipse
+         id="pexophagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1027"
+         cy="-537"
+         rx="64"
+         ry="18.5"
+         d="m 1091,-537 c 0,10.21727 -28.6538,18.5 -64,18.5 -35.34622,0 -64,-8.28273 -64,-18.5 0,-10.21727 28.65378,-18.5 64,-18.5 35.3462,0 64,8.28273 64,18.5 z"
+         sodipodi:cx="1027"
+         sodipodi:cy="-537"
+         sodipodi:rx="64"
+         sodipodi:ry="18.5" />
+      <text
+         x="1027"
+         y="-533.40002"
+         font-size="14.00"
+         id="text924"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">pexophagy</text>
+    </g>
+    <!-- node71&#45;&gt;node96 -->
+    <g
+       id="edge152"
+       class="edge">
+      <title
+         id="title927">node71-&gt;node96</title>
+      <path
+         d="m 919.01,-593.28 c 20.3,10.58 46.2,24.08 67.54,35.2"
+         id="path929"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="988,-561 988,-561 995,-553 985,-554 "
+         id="polygon931"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node97 -->
+    <g
+       id="node138"
+       class="node">
+      <title
+         id="title934">node97</title>
+      <ellipse
+         id="ribophagy"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="885"
+         cy="-537"
+         rx="60"
+         ry="18.5"
+         d="m 945,-537 c 0,10.21727 -26.86292,18.5 -60,18.5 -33.13708,0 -60,-8.28273 -60,-18.5 0,-10.21727 26.86292,-18.5 60,-18.5 33.13708,0 60,8.28273 60,18.5 z"
+         sodipodi:cx="885"
+         sodipodi:cy="-537"
+         sodipodi:rx="60"
+         sodipodi:ry="18.5" />
+      <text
+         x="885"
+         y="-533.40002"
+         font-size="14.00"
+         id="text937"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">ribophagy</text>
+    </g>
+    <!-- node71&#45;&gt;node97 -->
+    <g
+       id="edge154"
+       class="edge">
+      <title
+         id="title940">node71-&gt;node97</title>
+      <path
+         d="m 885,-592.33 c 0,8.07 0,17.68 0,26.62"
+         id="path942"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="888,-565 888,-565 885,-555 881,-565 "
+         id="polygon944"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node98&#45;&gt;node110 -->
+    <g
+       id="edge174"
+       class="edge">
+      <title
+         id="title947">node98-&gt;node110</title>
+      <path
+         d="m 1127.6,-524.28 c -51,12.88 -129.75,32.78 -183.62,46.38"
+         id="path949"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="944,-474 944,-474 934,-475 943,-481 "
+         id="polygon951"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node70&#45;&gt;node110 -->
+    <g
+       id="edge190"
+       class="edge">
+      <title
+         id="title954">node70-&gt;node110</title>
+      <path
+         d="m 1393.6,-532.7 c -84.8,11.63 -320.5,43.92 -438.87,60.14"
+         id="path956"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="955,-469 955,-469 944,-471 954,-476 "
+         id="polygon958"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node72 -->
+    <g
+       id="node161"
+       class="node">
+      <title
+         id="title961">node72</title>
+      <ellipse
+         id="Lap4_Vac"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1502"
+         cy="-463"
+         rx="58"
+         ry="18.5"
+         d="m 1560,-463 c 0,10.21727 -25.9675,18.5 -58,18.5 -32.0325,0 -58,-8.28273 -58,-18.5 0,-10.21727 25.9675,-18.5 58,-18.5 32.0325,0 58,8.28273 58,18.5 z"
+         sodipodi:cx="1502"
+         sodipodi:cy="-463"
+         sodipodi:rx="58"
+         sodipodi:ry="18.5" />
+      <text
+         x="1502"
+         y="-459.39999"
+         font-size="14.00"
+         id="text964"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Lap4_Vac</text>
+    </g>
+    <!-- node70&#45;&gt;node72 -->
+    <g
+       id="edge192"
+       class="edge">
+      <title
+         id="title967">node70-&gt;node72</title>
+      <path
+         d="m 1441.7,-520.94 c 10.2,9.76 23.3,22.42 34.8,33.42"
+         id="path969"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1478,-490 1478,-490 1483,-480 1474,-485 "
+         id="polygon971"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node73 -->
+    <g
+       id="node167"
+       class="node">
+      <title
+         id="title974">node73</title>
+      <ellipse
+         id="Ams1_Vac"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1365"
+         cy="-463"
+         rx="61"
+         ry="18.5"
+         d="m 1426,-463 c 0,10.21727 -27.3106,18.5 -61,18.5 -33.6894,0 -61,-8.28273 -61,-18.5 0,-10.21727 27.3106,-18.5 61,-18.5 33.6894,0 61,8.28273 61,18.5 z"
+         sodipodi:cx="1365"
+         sodipodi:cy="-463"
+         sodipodi:rx="61"
+         sodipodi:ry="18.5" />
+      <text
+         x="1365"
+         y="-459.39999"
+         font-size="14.00"
+         id="text977"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ams1_Vac</text>
+    </g>
+    <!-- node70&#45;&gt;node73 -->
+    <g
+       id="edge194"
+       class="edge">
+      <title
+         id="title980">node70-&gt;node73</title>
+      <path
+         d="m 1411.4,-520.21 c -7.5,9.22 -16.9,20.86 -25.3,31.22"
+         id="path982"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1388,-486 1388,-486 1379,-481 1383,-490 "
+         id="polygon984"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node90&#45;&gt;node110 -->
+    <g
+       id="edge230"
+       class="edge">
+      <title
+         id="title987">node90-&gt;node110</title>
+      <path
+         d="m 564.26,-526.63 c 67.31,13.35 184.24,36.55 256.79,50.94"
+         id="path989"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="821,-479 821,-479 830,-473 820,-472 "
+         id="polygon991"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node96&#45;&gt;node110 -->
+    <g
+       id="edge232"
+       class="edge">
+      <title
+         id="title994">node96-&gt;node110</title>
+      <path
+         d="m 995.84,-520.76 c -20.67,10.77 -47.99,25.01 -70.34,36.65"
+         id="path996"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="927,-480 927,-480 916,-479 923,-487 "
+         id="polygon998"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node97&#45;&gt;node110 -->
+    <g
+       id="edge234"
+       class="edge">
+      <title
+         id="title1001">node97-&gt;node110</title>
+      <path
+         d="m 885,-518.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1003"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="888,-491 888,-491 885,-481 881,-491 "
+         id="polygon1005"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node59 -->
+    <g
+       id="node142"
+       class="node">
+      <title
+         id="title1008">node59</title>
+      <ellipse
+         id="Lap4_PAS"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1715"
+         cy="-611"
+         rx="60"
+         ry="18.5"
+         d="m 1775,-611 c 0,10.21727 -26.8629,18.5 -60,18.5 -33.1371,0 -60,-8.28273 -60,-18.5 0,-10.21727 26.8629,-18.5 60,-18.5 33.1371,0 60,8.28273 60,18.5 z"
+         sodipodi:cx="1715"
+         sodipodi:cy="-611"
+         sodipodi:rx="60"
+         sodipodi:ry="18.5" />
+      <text
+         x="1715"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1011"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Lap4_PAS</text>
+    </g>
+    <!-- node60&#45;&gt;node59 -->
+    <g
+       id="edge158"
+       class="edge">
+      <title
+         id="title1014">node60-&gt;node59</title>
+      <path
+         d="m 1359.1,-832.08 c 111.8,3.58 488.7,18.25 527.9,54.08 37,33.86 44,71.81 14,112 -14.9,19.96 -74.7,35.22 -122.6,44.55"
+         id="path1016"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1778,-617 1778,-617 1768,-619 1777,-624 "
+         id="polygon1018"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node66 -->
+    <g
+       id="node144"
+       class="node">
+      <title
+         id="title1021">node66</title>
+      <ellipse
+         id="Ams1_PAS"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1395"
+         cy="-611"
+         rx="63"
+         ry="18.5"
+         d="m 1458,-611 c 0,10.21727 -28.2061,18.5 -63,18.5 -34.7939,0 -63,-8.28273 -63,-18.5 0,-10.21727 28.2061,-18.5 63,-18.5 34.7939,0 63,8.28273 63,18.5 z"
+         sodipodi:cx="1395"
+         sodipodi:cy="-611"
+         sodipodi:rx="63"
+         sodipodi:ry="18.5" />
+      <text
+         x="1395"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1024"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ams1_PAS</text>
+    </g>
+    <!-- node60&#45;&gt;node66 -->
+    <g
+       id="edge160"
+       class="edge">
+      <title
+         id="title1027">node60-&gt;node66</title>
+      <path
+         d="m 1326.6,-814.28 c -1.6,31.9 -1.7,98.22 20.4,148.28 4.8,10.83 12.5,21.08 20.3,29.73"
+         id="path1029"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1370,-638 1370,-638 1374,-628 1364,-633 "
+         id="polygon1031"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node83 -->
+    <g
+       id="node146"
+       class="node">
+      <title
+         id="title1034">node83</title>
+      <ellipse
+         id="AP_assembly"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="833"
+         cy="-759"
+         rx="75"
+         ry="18.5"
+         d="m 908,-759 c 0,10.21727 -33.57864,18.5 -75,18.5 -41.42136,0 -75,-8.28273 -75,-18.5 0,-10.21727 33.57864,-18.5 75,-18.5 41.42136,0 75,8.28273 75,18.5 z"
+         sodipodi:cx="833"
+         sodipodi:cy="-759"
+         sodipodi:rx="75"
+         sodipodi:ry="18.5" />
+      <text
+         x="833"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1037"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">AP_assembly</text>
+    </g>
+    <!-- node60&#45;&gt;node83 -->
+    <g
+       id="edge162"
+       class="edge">
+      <title
+         id="title1040">node60-&gt;node83</title>
+      <path
+         d="m 1297.4,-829.86 c -68.4,7.25 -239,26.47 -380.4,51.86 -6.53,1.17 -13.31,2.51 -20.07,3.92"
+         id="path1042"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="897,-770 897,-770 887,-771 896,-777 "
+         id="polygon1044"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node77 -->
+    <g
+       id="node148"
+       class="node">
+      <title
+         id="title1047">node77</title>
+      <ellipse
+         id="Atg9_PAS"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="547"
+         cy="-759"
+         rx="59.031601"
+         ry="18.5"
+         d="m 606.0316,-759 c 0,10.21727 -26.42935,18.5 -59.0316,18.5 -32.60225,0 -59.0316,-8.28273 -59.0316,-18.5 0,-10.21727 26.42935,-18.5 59.0316,-18.5 32.60225,0 59.0316,8.28273 59.0316,18.5 z"
+         sodipodi:cx="547"
+         sodipodi:cy="-759"
+         sodipodi:rx="59.031601"
+         sodipodi:ry="18.5" />
+      <text
+         x="547"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1050"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg9_PAS</text>
+    </g>
+    <!-- node60&#45;&gt;node77 -->
+    <g
+       id="edge164"
+       class="edge">
+      <title
+         id="title1053">node60-&gt;node77</title>
+      <path
+         d="m 1296.8,-831.41 c -119.4,6.22 -547.62,29.72 -681.8,53.41 -5.15,0.91 -10.47,2.04 -15.76,3.3"
+         id="path1055"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="599,-771 599,-771 589,-772 597,-777 "
+         id="polygon1057"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node59&#45;&gt;node70 -->
+    <g
+       id="edge180"
+       class="edge">
+      <title
+         id="title1060">node59-&gt;node70</title>
+      <path
+         d="m 1668.7,-599.19 c -56.6,14.45 -151.5,38.67 -204.6,52.22"
+         id="path1062"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1464,-543 1464,-543 1454,-544 1463,-550 "
+         id="polygon1064"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node59&#45;&gt;node72 -->
+    <g
+       id="edge178"
+       class="edge">
+      <title
+         id="title1067">node59-&gt;node72</title>
+      <path
+         d="m 1690.6,-594.02 c -38.4,26.64 -112.7,78.29 -155.7,108.16"
+         id="path1069"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1536,-482 1536,-482 1526,-480 1532,-488 "
+         id="polygon1071"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node66&#45;&gt;node70 -->
+    <g
+       id="edge184"
+       class="edge">
+      <title
+         id="title1074">node66-&gt;node70</title>
+      <path
+         d="m 1402.6,-592.33 c 3.4,8.37 7.4,18.4 11.2,27.62"
+         id="path1076"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1417,-565 1417,-565 1417,-555 1410,-563 "
+         id="polygon1078"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node66&#45;&gt;node73 -->
+    <g
+       id="edge186"
+       class="edge">
+      <title
+         id="title1081">node66-&gt;node73</title>
+      <path
+         d="m 1391.2,-592.26 c -5.1,25.36 -14.4,70.82 -20.4,100.51"
+         id="path1083"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1374,-490 1374,-490 1368,-481 1367,-492 "
+         id="polygon1085"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node83&#45;&gt;node47 -->
+    <g
+       id="edge196"
+       class="edge">
+      <title
+         id="title1088">node83-&gt;node47</title>
+      <path
+         d="m 837.79,-740.33 c 2.1,8.15 4.6,17.89 6.91,26.91"
+         id="path1090"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="848,-714 848,-714 847,-703 841,-712 "
+         id="polygon1092"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node79 -->
+    <g
+       id="node174"
+       class="node">
+      <title
+         id="title1095">node79</title>
+      <ellipse
+         id="Atg9_mt"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="333"
+         cy="-685"
+         rx="52.9104"
+         ry="18.5"
+         d="m 385.9104,-685 c 0,10.21727 -23.68879,18.5 -52.9104,18.5 -29.22161,0 -52.9104,-8.28273 -52.9104,-18.5 0,-10.21727 23.68879,-18.5 52.9104,-18.5 29.22161,0 52.9104,8.28273 52.9104,18.5 z"
+         sodipodi:cx="333"
+         sodipodi:cy="-685"
+         sodipodi:rx="52.9104"
+         sodipodi:ry="18.5" />
+      <text
+         x="333"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1098"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg9_mt</text>
+    </g>
+    <!-- node77&#45;&gt;node79 -->
+    <g
+       id="edge198"
+       class="edge">
+      <title
+         id="title1101">node77-&gt;node79</title>
+      <path
+         d="m 507.25,-745.25 c -35.84,12.39 -88.61,30.64 -126.68,43.8"
+         id="path1103"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="381,-698 381,-698 370,-698 379,-704 "
+         id="polygon1105"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node51 -->
+    <g
+       id="node150"
+       class="node">
+      <title
+         id="title1108">node51</title>
+      <ellipse
+         id="Atg17"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1762"
+         cy="-981"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1802.9631,-981 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1762"
+         sodipodi:cy="-981"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1762"
+         y="-977.40002"
+         font-size="14.00"
+         id="text1111"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg17</text>
+    </g>
+    <!-- node51&#45;&gt;node50 -->
+    <g
+       id="edge166"
+       class="edge">
+      <title
+         id="title1114">node51-&gt;node50</title>
+      <path
+         d="m 1774.1,-963.09 c 5.9,8.78 13.2,19.53 19.8,29.26"
+         id="path1116"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1796,-935 1796,-935 1799,-925 1791,-931 "
+         id="polygon1118"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node54 -->
+    <g
+       id="node152"
+       class="node">
+      <title
+         id="title1121">node54</title>
+      <ellipse
+         id="misfolding"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1239"
+         cy="-759"
+         rx="61"
+         ry="18.5"
+         d="m 1300,-759 c 0,10.21727 -27.3106,18.5 -61,18.5 -33.6894,0 -61,-8.28273 -61,-18.5 0,-10.21727 27.3106,-18.5 61,-18.5 33.6894,0 61,8.28273 61,18.5 z"
+         sodipodi:cx="1239"
+         sodipodi:cy="-759"
+         sodipodi:rx="61"
+         sodipodi:ry="18.5" />
+      <text
+         x="1239"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1124"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">misfolding</text>
+    </g>
+    <!-- node55 -->
+    <g
+       id="node153"
+       class="node">
+      <title
+         id="title1127">node55</title>
+      <ellipse
+         id="ER_stress"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1142"
+         cy="-685"
+         rx="57.830299"
+         ry="18.5"
+         d="m 1199.8303,-685 c 0,10.21727 -25.8915,18.5 -57.8303,18.5 -31.9388,0 -57.8303,-8.28273 -57.8303,-18.5 0,-10.21727 25.8915,-18.5 57.8303,-18.5 31.9388,0 57.8303,8.28273 57.8303,18.5 z"
+         sodipodi:cx="1142"
+         sodipodi:cy="-685"
+         sodipodi:rx="57.830299"
+         sodipodi:ry="18.5" />
+      <text
+         x="1142"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1130"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">ER_stress</text>
+    </g>
+    <!-- node54&#45;&gt;node55 -->
+    <g
+       id="edge168"
+       class="edge">
+      <title
+         id="title1133">node54-&gt;node55</title>
+      <path
+         d="m 1216,-741.46 c -13,9.93 -29.5,22.48 -43.5,33.22"
+         id="path1135"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1174,-705 1174,-705 1164,-702 1170,-710 "
+         id="polygon1137"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node56 -->
+    <g
+       id="node155"
+       class="node">
+      <title
+         id="title1140">node56</title>
+      <ellipse
+         id="UPR"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="1218"
+         cy="-611"
+         rx="31.8295"
+         ry="18.5"
+         d="m 1249.8295,-611 c 0,10.21727 -14.2506,18.5 -31.8295,18.5 -17.5789,0 -31.8295,-8.28273 -31.8295,-18.5 0,-10.21727 14.2506,-18.5 31.8295,-18.5 17.5789,0 31.8295,8.28273 31.8295,18.5 z"
+         sodipodi:cx="1218"
+         sodipodi:cy="-611"
+         sodipodi:rx="31.8295"
+         sodipodi:ry="18.5" />
+      <text
+         x="1218"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1143"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">UPR</text>
+    </g>
+    <!-- node55&#45;&gt;node56 -->
+    <g
+       id="edge170"
+       class="edge">
+      <title
+         id="title1146">node55-&gt;node56</title>
+      <path
+         d="m 1160.4,-667.09 c 10.2,9.94 23,22.41 34,33.07"
+         id="path1148"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1196,-636 1196,-636 1201,-626 1192,-631 "
+         id="polygon1150"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node56&#45;&gt;node98 -->
+    <g
+       id="edge172"
+       class="edge">
+      <title
+         id="title1153">node56-&gt;node98</title>
+      <path
+         d="m 1208.3,-593.09 c -4.6,8.63 -10.3,19.15 -15.5,28.75"
+         id="path1155"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1195,-562 1195,-562 1188,-555 1189,-565 "
+         id="polygon1157"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node57 -->
+    <g
+       id="node159"
+       class="node">
+      <title
+         id="title1160">node57</title>
+      <ellipse
+         id="Lap4"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1983"
+         cy="-685"
+         rx="35.137798"
+         ry="18.5"
+         d="m 2018.1378,-685 c 0,10.21727 -15.7317,18.5 -35.1378,18.5 -19.4061,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.7317,-18.5 35.1378,-18.5 19.4061,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="1983"
+         sodipodi:cy="-685"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="1983"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1163"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Lap4</text>
+    </g>
+    <!-- node57&#45;&gt;node59 -->
+    <g
+       id="edge176"
+       class="edge">
+      <title
+         id="title1166">node57-&gt;node59</title>
+      <path
+         d="m 1955.2,-673.54 c -6.9,2.64 -14.2,5.33 -21.2,7.54 -53.2,16.92 -115,32.04 -159.3,42.12"
+         id="path1168"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1775,-620 1775,-620 1764,-621 1773,-627 "
+         id="polygon1170"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node72&#45;&gt;node8 -->
+    <g
+       id="edge188"
+       class="edge">
+      <title
+         id="title1173">node72-&gt;node8</title>
+      <path
+         d="m 1491.6,-444.49 c -14.4,27.39 -38.6,80.77 -38.6,129.49 0,0 0,0 0,74 0,48.64 -35.5,95.23 -61.5,122.74"
+         id="path1175"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1393,-115 1393,-115 1384,-111 1388,-120 "
+         id="polygon1177"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node58 -->
+    <g
+       id="node164"
+       class="node">
+      <title
+         id="title1180">node58</title>
+      <ellipse
+         id="Ams1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1395"
+         cy="-685"
+         rx="39"
+         ry="18.5"
+         d="m 1434,-685 c 0,10.21727 -17.4609,18.5 -39,18.5 -21.5391,0 -39,-8.28273 -39,-18.5 0,-10.21727 17.4609,-18.5 39,-18.5 21.5391,0 39,8.28273 39,18.5 z"
+         sodipodi:cx="1395"
+         sodipodi:cy="-685"
+         sodipodi:rx="39"
+         sodipodi:ry="18.5" />
+      <text
+         x="1395"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1183"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ams1</text>
+    </g>
+    <!-- node58&#45;&gt;node66 -->
+    <g
+       id="edge182"
+       class="edge">
+      <title
+         id="title1186">node58-&gt;node66</title>
+      <path
+         d="m 1395,-666.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1188"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1398,-639 1398,-639 1395,-629 1391,-639 "
+         id="polygon1190"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node73&#45;&gt;node8 -->
+    <g
+       id="edge222"
+       class="edge">
+      <title
+         id="title1193">node73-&gt;node8</title>
+      <path
+         d="m 1365,-444.31 c 0,28.08 0,82.8 0,129.31 0,0 0,0 0,74 0,41.42 0,89.36 0,119.19"
+         id="path1195"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1368,-121 1368,-121 1365,-111 1361,-121 "
+         id="polygon1197"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node79&#45;&gt;node90 -->
+    <g
+       id="edge244"
+       class="edge">
+      <title
+         id="title1200">node79-&gt;node90</title>
+      <path
+         d="m 338.73,-666.58 c 7.28,20.65 21.67,53.93 44.27,74.58 19.98,18.26 46.94,31.03 71.05,39.64"
+         id="path1202"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="455,-555 455,-555 463,-549 453,-548 "
+         id="polygon1204"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node61 -->
+    <g
+       id="node176"
+       class="node">
+      <title
+         id="title1207">node61</title>
+      <ellipse
+         id="Atg11"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1259"
+         cy="-685"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1299.9631,-685 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1259"
+         sodipodi:cy="-685"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1259"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1210"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg11</text>
+    </g>
+    <!-- node61&#45;&gt;node59 -->
+    <g
+       id="edge200"
+       class="edge">
+      <title
+         id="title1213">node61-&gt;node59</title>
+      <path
+         d="m 1295.7,-676.45 c 15.7,3.5 34.4,7.44 51.3,10.45 113.1,20.14 142.5,18.39 256,36 16.1,2.5 33.6,5.38 49.7,8.12"
+         id="path1215"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1653,-625 1653,-625 1662,-620 1652,-618 "
+         id="polygon1217"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node61&#45;&gt;node66 -->
+    <g
+       id="edge202"
+       class="edge">
+      <title
+         id="title1220">node61-&gt;node66</title>
+      <path
+         d="m 1285.2,-670.73 c 20.1,10.92 48.1,26.17 70.8,38.52"
+         id="path1222"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1357,-635 1357,-635 1365,-627 1354,-628 "
+         id="polygon1224"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node95 -->
+    <g
+       id="node179"
+       class="node">
+      <title
+         id="title1227">node95</title>
+      <ellipse
+         id="Atg11_30_Px"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1091"
+         cy="-611"
+         rx="77"
+         ry="18.5"
+         d="m 1168,-611 c 0,10.21727 -34.4741,18.5 -77,18.5 -42.5259,0 -77,-8.28273 -77,-18.5 0,-10.21727 34.4741,-18.5 77,-18.5 42.5259,0 77,8.28273 77,18.5 z"
+         sodipodi:cx="1091"
+         sodipodi:cy="-611"
+         sodipodi:rx="77"
+         sodipodi:ry="18.5" />
+      <text
+         x="1091"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1230"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg11_30_Px</text>
+    </g>
+    <!-- node61&#45;&gt;node95 -->
+    <g
+       id="edge204"
+       class="edge">
+      <title
+         id="title1233">node61-&gt;node95</title>
+      <path
+         d="m 1229.4,-671.94 c -25.5,11.23 -62.8,27.62 -92.2,40.58"
+         id="path1235"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1138,-628 1138,-628 1128,-627 1135,-634 "
+         id="polygon1237"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node85 -->
+    <g
+       id="node181"
+       class="node">
+      <title
+         id="title1240">node85</title>
+      <ellipse
+         id="Atg11_32_mito"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="478"
+         cy="-611"
+         rx="86"
+         ry="18.5"
+         d="m 564,-611 c 0,10.21727 -38.50351,18.5 -86,18.5 -47.49649,0 -86,-8.28273 -86,-18.5 0,-10.21727 38.50351,-18.5 86,-18.5 47.49649,0 86,8.28273 86,18.5 z"
+         sodipodi:cx="478"
+         sodipodi:cy="-611"
+         sodipodi:rx="86"
+         sodipodi:ry="18.5" />
+      <text
+         x="478"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1243"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg11_32_mito</text>
+    </g>
+    <!-- node61&#45;&gt;node85 -->
+    <g
+       id="edge206"
+       class="edge">
+      <title
+         id="title1246">node61-&gt;node85</title>
+      <path
+         d="m 1229.6,-672.11 c -6.7,2.43 -13.8,4.66 -20.6,6.11 -276.91,58.98 -355.16,0.15 -636,36 -8.21,1.05 -16.78,2.4 -25.27,3.89"
+         id="path1248"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="548,-622 548,-622 537,-624 547,-629 "
+         id="polygon1250"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node95&#45;&gt;node96 -->
+    <g
+       id="edge208"
+       class="edge">
+      <title
+         id="title1253">node95-&gt;node96</title>
+      <path
+         d="m 1075.2,-592.71 c -7.8,9.05 -17.4,20.13 -26,30.02"
+         id="path1255"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1051,-560 1051,-560 1042,-555 1046,-564 "
+         id="polygon1257"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node85&#45;&gt;node90 -->
+    <g
+       id="edge210"
+       class="edge">
+      <title
+         id="title1260">node85-&gt;node90</title>
+      <path
+         d="m 486.58,-592.33 c 3.85,8.39 8.48,18.46 12.73,27.7"
+         id="path1262"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="502,-565 502,-565 503,-555 496,-563 "
+         id="polygon1264"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node62 -->
+    <g
+       id="node185"
+       class="node">
+      <title
+         id="title1267">node62</title>
+      <ellipse
+         id="Atg19"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1715"
+         cy="-685"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1755.9631,-685 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1715"
+         sodipodi:cy="-685"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1715"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1270"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg19</text>
+    </g>
+    <!-- node62&#45;&gt;node59 -->
+    <g
+       id="edge212"
+       class="edge">
+      <title
+         id="title1273">node62-&gt;node59</title>
+      <path
+         d="m 1715,-666.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1275"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1718,-639 1718,-639 1715,-629 1711,-639 "
+         id="polygon1277"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node62&#45;&gt;node66 -->
+    <g
+       id="edge214"
+       class="edge">
+      <title
+         id="title1280">node62-&gt;node66</title>
+      <path
+         d="m 1684.6,-672.55 c -6.4,2.37 -13.2,4.69 -19.6,6.55 -68.6,19.87 -148.9,35.26 -204,44.64"
+         id="path1282"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1461,-617 1461,-617 1451,-619 1460,-624 "
+         id="polygon1284"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node63 -->
+    <g
+       id="node188"
+       class="node">
+      <title
+         id="title1287">node63</title>
+      <ellipse
+         id="Atg20_24"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1833"
+         cy="-685"
+         rx="59.031601"
+         ry="18.5"
+         d="m 1892.0316,-685 c 0,10.21727 -26.4293,18.5 -59.0316,18.5 -32.6023,0 -59.0316,-8.28273 -59.0316,-18.5 0,-10.21727 26.4293,-18.5 59.0316,-18.5 32.6023,0 59.0316,8.28273 59.0316,18.5 z"
+         sodipodi:cx="1833"
+         sodipodi:cy="-685"
+         sodipodi:rx="59.031601"
+         sodipodi:ry="18.5" />
+      <text
+         x="1833"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1290"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg20_24</text>
+    </g>
+    <!-- node63&#45;&gt;node59 -->
+    <g
+       id="edge216"
+       class="edge">
+      <title
+         id="title1293">node63-&gt;node59</title>
+      <path
+         d="m 1806.5,-668.39 c -16.6,10.4 -38.1,23.92 -56.2,35.23"
+         id="path1295"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1752,-630 1752,-630 1741,-627 1748,-636 "
+         id="polygon1297"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node64 -->
+    <g
+       id="node190"
+       class="node">
+      <title
+         id="title1300">node64</title>
+      <ellipse
+         id="Atg20"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1737"
+         cy="-759"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1777.9631,-759 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1737"
+         sodipodi:cy="-759"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1737"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1303"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg20</text>
+    </g>
+    <!-- node64&#45;&gt;node63 -->
+    <g
+       id="edge218"
+       class="edge">
+      <title
+         id="title1306">node64-&gt;node63</title>
+      <path
+         d="m 1757.8,-742.94 c 13,10.02 30,23.09 44.5,34.29"
+         id="path1308"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1804,-711 1804,-711 1810,-702 1800,-705 "
+         id="polygon1310"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node65 -->
+    <g
+       id="node192"
+       class="node">
+      <title
+         id="title1313">node65</title>
+      <ellipse
+         id="Atg24"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1837"
+         cy="-759"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1877.9631,-759 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1837"
+         sodipodi:cy="-759"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1837"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1316"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg24</text>
+    </g>
+    <!-- node65&#45;&gt;node63 -->
+    <g
+       id="edge220"
+       class="edge">
+      <title
+         id="title1319">node65-&gt;node63</title>
+      <path
+         d="m 1836,-740.33 c -0.4,8.07 -1,17.68 -1.4,26.62"
+         id="path1321"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1838,-713 1838,-713 1834,-703 1831,-713 "
+         id="polygon1323"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node67 -->
+    <g
+       id="node195"
+       class="node">
+      <title
+         id="title1326">node67</title>
+      <ellipse
+         id="Atg34"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1493"
+         cy="-685"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1533.9631,-685 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1493"
+         sodipodi:cy="-685"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1493"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1329"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg34</text>
+    </g>
+    <!-- node67&#45;&gt;node66 -->
+    <g
+       id="edge224"
+       class="edge">
+      <title
+         id="title1332">node67-&gt;node66</title>
+      <path
+         d="m 1471.7,-668.94 c -13.2,10.02 -30.6,23.09 -45.4,34.29"
+         id="path1334"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1427,-631 1427,-631 1417,-628 1423,-637 "
+         id="polygon1336"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node68 -->
+    <g
+       id="node197"
+       class="node">
+      <title
+         id="title1339">node68</title>
+      <ellipse
+         id="preApe1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1604"
+         cy="-685"
+         rx="52.004002"
+         ry="18.5"
+         d="m 1656.004,-685 c 0,10.21727 -23.283,18.5 -52.004,18.5 -28.721,0 -52.004,-8.28273 -52.004,-18.5 0,-10.21727 23.283,-18.5 52.004,-18.5 28.721,0 52.004,8.28273 52.004,18.5 z"
+         sodipodi:cx="1604"
+         sodipodi:cy="-685"
+         sodipodi:rx="52.004002"
+         sodipodi:ry="18.5" />
+      <text
+         x="1604"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1342"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">preApe1</text>
+    </g>
+    <!-- node69 -->
+    <g
+       id="node198"
+       class="node">
+      <title
+         id="title1345">node69</title>
+      <ellipse
+         id="Ape1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1557"
+         cy="-611"
+         rx="37"
+         ry="18.5"
+         d="m 1594,-611 c 0,10.21727 -16.5655,18.5 -37,18.5 -20.4345,0 -37,-8.28273 -37,-18.5 0,-10.21727 16.5655,-18.5 37,-18.5 20.4345,0 37,8.28273 37,18.5 z"
+         sodipodi:cx="1557"
+         sodipodi:cy="-611"
+         sodipodi:rx="37"
+         sodipodi:ry="18.5" />
+      <text
+         x="1557"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1348"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ape1</text>
+    </g>
+    <!-- node68&#45;&gt;node69 -->
+    <g
+       id="edge226"
+       class="edge">
+      <title
+         id="title1351">node68-&gt;node69</title>
+      <path
+         d="m 1592.4,-666.71 c -5.6,8.85 -12.5,19.63 -18.7,29.35"
+         id="path1353"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1576,-635 1576,-635 1568,-628 1570,-639 "
+         id="polygon1355"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node69&#45;&gt;node70 -->
+    <g
+       id="edge228"
+       class="edge">
+      <title
+         id="title1358">node69-&gt;node70</title>
+      <path
+         d="m 1532.2,-597.08 c -21.3,11.9 -51.9,29.11 -75.1,42.06"
+         id="path1360"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1458,-551 1458,-551 1448,-550 1455,-558 "
+         id="polygon1362"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node74 -->
+    <g
+       id="node204"
+       class="node">
+      <title
+         id="title1365">node74</title>
+      <ellipse
+         id="MVB"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="88"
+         cy="-389"
+         rx="34"
+         ry="18.5"
+         d="m 122,-389 c 0,10.21727 -15.22232,18.5 -34,18.5 -18.777681,0 -34,-8.28273 -34,-18.5 0,-10.21727 15.222319,-18.5 34,-18.5 18.77768,0 34,8.28273 34,18.5 z"
+         sodipodi:cx="88"
+         sodipodi:cy="-389"
+         sodipodi:rx="34"
+         sodipodi:ry="18.5" />
+      <text
+         x="88"
+         y="-385.39999"
+         font-size="14.00"
+         id="text1368"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">MVB</text>
+    </g>
+    <!-- node75 -->
+    <g
+       id="node205"
+       class="node">
+      <title
+         id="title1371">node75</title>
+      <ellipse
+         id="Atg15_ER"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="88"
+         cy="-315"
+         rx="60"
+         ry="18.5"
+         d="m 148,-315 c 0,10.21727 -26.86292,18.5 -60,18.5 -33.137085,0 -60,-8.28273 -60,-18.5 0,-10.21727 26.862915,-18.5 60,-18.5 33.13708,0 60,8.28273 60,18.5 z"
+         sodipodi:cx="88"
+         sodipodi:cy="-315"
+         sodipodi:rx="60"
+         sodipodi:ry="18.5" />
+      <text
+         x="88"
+         y="-311.39999"
+         font-size="14.00"
+         id="text1374"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg15_ER</text>
+    </g>
+    <!-- node74&#45;&gt;node75 -->
+    <g
+       id="edge236"
+       class="edge">
+      <title
+         id="title1377">node74-&gt;node75</title>
+      <path
+         d="m 88,-370.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1379"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="91,-343 91,-343 88,-333 84,-343 "
+         id="polygon1381"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node76 -->
+    <g
+       id="node207"
+       class="node">
+      <title
+         id="title1384">node76</title>
+      <ellipse
+         id="Atg15_Vac"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="122"
+         cy="-241"
+         rx="63.2481"
+         ry="18.5"
+         d="m 185.2481,-241 c 0,10.21727 -28.31714,18.5 -63.2481,18.5 -34.930961,0 -63.2481,-8.28273 -63.2481,-18.5 0,-10.21727 28.317139,-18.5 63.2481,-18.5 34.93096,0 63.2481,8.28273 63.2481,18.5 z"
+         sodipodi:cx="122"
+         sodipodi:cy="-241"
+         sodipodi:rx="63.2481"
+         sodipodi:ry="18.5" />
+      <text
+         x="122"
+         y="-237.39999"
+         font-size="14.00"
+         id="text1387"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg15_Vac</text>
+    </g>
+    <!-- node75&#45;&gt;node76 -->
+    <g
+       id="edge238"
+       class="edge">
+      <title
+         id="title1390">node75-&gt;node76</title>
+      <path
+         d="m 96.58,-296.33 c 3.85,8.39 8.48,18.46 12.73,27.7"
+         id="path1392"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="112,-269 112,-269 113,-259 106,-267 "
+         id="polygon1394"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node116 -->
+    <g
+       id="node209"
+       class="node">
+      <title
+         id="title1397">node116</title>
+      <ellipse
+         id="lysis"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="305"
+         cy="-167"
+         rx="31.8295"
+         ry="18.5"
+         d="m 336.8295,-167 c 0,10.21727 -14.25055,18.5 -31.8295,18.5 -17.57895,0 -31.8295,-8.28273 -31.8295,-18.5 0,-10.21727 14.25055,-18.5 31.8295,-18.5 17.57895,0 31.8295,8.28273 31.8295,18.5 z"
+         sodipodi:cx="305"
+         sodipodi:cy="-167"
+         sodipodi:rx="31.8295"
+         sodipodi:ry="18.5" />
+      <text
+         x="305"
+         y="-163.39999"
+         font-size="14.00"
+         id="text1400"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">lysis</text>
+    </g>
+    <!-- node76&#45;&gt;node116 -->
+    <g
+       id="edge240"
+       class="edge">
+      <title
+         id="title1403">node76-&gt;node116</title>
+      <path
+         d="m 159.03,-226.02 c 32.18,13.01 78.5,31.74 110.28,44.59"
+         id="path1405"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="270,-184 270,-184 278,-177 268,-178 "
+         id="polygon1407"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node116&#45;&gt;node8 -->
+    <g
+       id="edge242"
+       class="edge">
+      <title
+         id="title1410">node116-&gt;node8</title>
+      <path
+         d="m 337.01,-164.77 c 144.14,10.07 735.19,51.33 949.69,66.306"
+         id="path1412"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1287,-101 1287,-101 1297,-97 1286,-94 "
+         id="polygon1414"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node78 -->
+    <g
+       id="node213"
+       class="node">
+      <title
+         id="title1417">node78</title>
+      <ellipse
+         id="Atg9"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="799"
+         cy="-833"
+         rx="35.137798"
+         ry="18.5"
+         d="m 834.1378,-833 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="799"
+         sodipodi:cy="-833"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="799"
+         y="-829.40002"
+         font-size="14.00"
+         id="text1420"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg9</text>
+    </g>
+    <!-- node78&#45;&gt;node77 -->
+    <g
+       id="edge246"
+       class="edge">
+      <title
+         id="title1423">node78-&gt;node77</title>
+      <path
+         d="m 772.27,-820.67 c -5.64,2.38 -11.6,4.73 -17.27,6.67 -60.79,20.8 -77.95,19.35 -140,36 -4.64,1.24 -9.45,2.55 -14.28,3.88"
+         id="path1425"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="601,-770 601,-770 590,-771 599,-777 "
+         id="polygon1427"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node80 -->
+    <g
+       id="node215"
+       class="node">
+      <title
+         id="title1430">node80</title>
+      <ellipse
+         id="Atg2"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="659"
+         cy="-759"
+         rx="35.137798"
+         ry="18.5"
+         d="m 694.1378,-759 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="659"
+         sodipodi:cy="-759"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="659"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1433"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg2</text>
+    </g>
+    <!-- node80&#45;&gt;node79 -->
+    <g
+       id="edge248"
+       class="edge">
+      <title
+         id="title1436">node80-&gt;node79</title>
+      <path
+         d="m 632.86,-746.47 c -5.78,2.42 -11.95,4.74 -17.86,6.47 -95.08,27.85 -123.53,13.43 -220,36 -4.37,1.02 -8.89,2.19 -13.4,3.43"
+         id="path1438"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="382,-697 382,-697 371,-697 380,-703 "
+         id="polygon1440"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node81 -->
+    <g
+       id="node217"
+       class="node">
+      <title
+         id="title1443">node81</title>
+      <ellipse
+         id="Atg29"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1378"
+         cy="-907"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1418.9631,-907 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1378"
+         sodipodi:cy="-907"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1378"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1446"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg29</text>
+    </g>
+    <!-- node81&#45;&gt;node60 -->
+    <g
+       id="edge250"
+       class="edge">
+      <title
+         id="title1449">node81-&gt;node60</title>
+      <path
+         d="m 1365.9,-889.09 c -6.2,9.13 -13.8,20.4 -20.6,30.44"
+         id="path1451"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1348,-856 1348,-856 1339,-850 1342,-860 "
+         id="polygon1453"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node82 -->
+    <g
+       id="node219"
+       class="node">
+      <title
+         id="title1456">node82</title>
+      <ellipse
+         id="Atg31"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1278"
+         cy="-907"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1318.9631,-907 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1278"
+         sodipodi:cy="-907"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1278"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1459"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg31</text>
+    </g>
+    <!-- node82&#45;&gt;node60 -->
+    <g
+       id="edge252"
+       class="edge">
+      <title
+         id="title1462">node82-&gt;node60</title>
+      <path
+         d="m 1290.1,-889.09 c 6.2,9.13 13.8,20.4 20.6,30.44"
+         id="path1464"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1313,-860 1313,-860 1316,-850 1307,-856 "
+         id="polygon1466"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node84 -->
+    <g
+       id="node221"
+       class="node">
+      <title
+         id="title1469">node84</title>
+      <ellipse
+         id="Atg8_PE"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="394"
+         cy="-759"
+         rx="53"
+         ry="18.5"
+         d="m 447,-759 c 0,10.21727 -23.72891,18.5 -53,18.5 -29.27109,0 -53,-8.28273 -53,-18.5 0,-10.21727 23.72891,-18.5 53,-18.5 29.27109,0 53,8.28273 53,18.5 z"
+         sodipodi:cx="394"
+         sodipodi:cy="-759"
+         sodipodi:rx="53"
+         sodipodi:ry="18.5" />
+      <text
+         x="394"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1472"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg8_PE</text>
+    </g>
+    <!-- node84&#45;&gt;node47 -->
+    <g
+       id="edge254"
+       class="edge">
+      <title
+         id="title1475">node84-&gt;node47</title>
+      <path
+         d="m 437.96,-748.35 c 13.15,2.96 27.63,6.01 41.04,8.35 125.33,21.9 158.56,14.7 284,36 7.07,1.2 14.43,2.57 21.75,4.02"
+         id="path1477"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="785,-703 785,-703 794,-697 784,-696 "
+         id="polygon1479"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node91 -->
+    <g
+       id="node223"
+       class="node">
+      <title
+         id="title1482">node91</title>
+      <ellipse
+         id="Atg8_mtub"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="270"
+         cy="-611"
+         rx="66"
+         ry="18.5"
+         d="m 336,-611 c 0,10.21727 -29.54921,18.5 -66,18.5 -36.45079,0 -66,-8.28273 -66,-18.5 0,-10.21727 29.54921,-18.5 66,-18.5 36.45079,0 66,8.28273 66,18.5 z"
+         sodipodi:cx="270"
+         sodipodi:cy="-611"
+         sodipodi:rx="66"
+         sodipodi:ry="18.5" />
+      <text
+         x="270"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1485"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg8_mtub</text>
+    </g>
+    <!-- node84&#45;&gt;node91 -->
+    <g
+       id="edge256"
+       class="edge">
+      <title
+         id="title1488">node84-&gt;node91</title>
+      <path
+         d="m 346.37,-750.71 c -26.99,7.39 -58.63,21.18 -75.37,46.71 -12.39,18.88 -11.54,44.89 -8.22,64.61"
+         id="path1490"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="266,-639 266,-639 264,-629 259,-638 "
+         id="polygon1492"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node113 -->
+    <g
+       id="node225"
+       class="node">
+      <title
+         id="title1495">node113</title>
+      <ellipse
+         id="fusion"
+         style="fill:#ffffff;stroke:#000000;stroke-dasharray:none"
+         cx="305"
+         cy="-241"
+         rx="41"
+         ry="18.5"
+         d="m 346,-241 c 0,10.21727 -18.35633,18.5 -41,18.5 -22.64367,0 -41,-8.28273 -41,-18.5 0,-10.21727 18.35633,-18.5 41,-18.5 22.64367,0 41,8.28273 41,18.5 z"
+         sodipodi:cx="305"
+         sodipodi:cy="-241"
+         sodipodi:rx="41"
+         sodipodi:ry="18.5" />
+      <text
+         x="305"
+         y="-237.39999"
+         font-size="14.00"
+         id="text1498"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">fusion</text>
+    </g>
+    <!-- node84&#45;&gt;node113 -->
+    <g
+       id="edge258"
+       class="edge">
+      <title
+         id="title1501">node84-&gt;node113</title>
+      <path
+         d="M 348.3,-749.52 C 284.38,-733.28 176,-693.57 176,-611 c 0,0 0,0 0,222 0,42.19 -6.68,59.53 19,93 15.92,20.75 41.79,34.24 64.44,42.66"
+         id="path1503"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="260,-256 260,-256 268,-250 258,-250 "
+         id="polygon1505"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node91&#45;&gt;node111 -->
+    <g
+       id="edge262"
+       class="edge">
+      <title
+         id="title1508">node91-&gt;node111</title>
+      <path
+         d="m 283.67,-592.83 c 29.42,39.11 98.86,131.42 133.28,177.17"
+         id="path1510"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="419,-417 419,-417 423,-407 414,-413 "
+         id="polygon1512"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node91&#45;&gt;node90 -->
+    <g
+       id="edge260"
+       class="edge">
+      <title
+         id="title1515">node91-&gt;node90</title>
+      <path
+         d="m 314.67,-597.34 c 40.54,12.4 100.41,30.7 143.57,43.9"
+         id="path1517"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="459,-556 459,-556 468,-550 457,-550 "
+         id="polygon1519"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node113&#45;&gt;node116 -->
+    <g
+       id="edge264"
+       class="edge">
+      <title
+         id="title1522">node113-&gt;node116</title>
+      <path
+         d="m 305,-222.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1524"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="308,-195 308,-195 305,-185 301,-195 "
+         id="polygon1526"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node86 -->
+    <g
+       id="node230"
+       class="node">
+      <title
+         id="title1529">node86</title>
+      <ellipse
+         id="Atg32"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="445"
+         cy="-685"
+         rx="40.9631"
+         ry="18.5"
+         d="m 485.9631,-685 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="445"
+         sodipodi:cy="-685"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="445"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1532"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg32</text>
+    </g>
+    <!-- node86&#45;&gt;node85 -->
+    <g
+       id="edge266"
+       class="edge">
+      <title
+         id="title1535">node86-&gt;node85</title>
+      <path
+         d="m 453.16,-666.71 c 3.74,8.39 8.25,18.51 12.4,27.82"
+         id="path1537"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="468,-640 468,-640 469,-629 462,-637 "
+         id="polygon1539"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node87 -->
+    <g
+       id="node232"
+       class="node">
+      <title
+         id="title1542">node87</title>
+      <ellipse
+         id="mitochondria"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="579"
+         cy="-685"
+         rx="75.195"
+         ry="18.5"
+         d="m 654.195,-685 c 0,10.21727 -33.66595,18.5 -75.195,18.5 -41.52905,0 -75.195,-8.28273 -75.195,-18.5 0,-10.21727 33.66595,-18.5 75.195,-18.5 41.52905,0 75.195,8.28273 75.195,18.5 z"
+         sodipodi:cx="579"
+         sodipodi:cy="-685"
+         sodipodi:rx="75.195"
+         sodipodi:ry="18.5" />
+      <text
+         x="579"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1545"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">mitochondria</text>
+    </g>
+    <!-- node87&#45;&gt;node85 -->
+    <g
+       id="edge268"
+       class="edge">
+      <title
+         id="title1548">node87-&gt;node85</title>
+      <path
+         d="m 555.06,-667.46 c -13.26,9.71 -29.94,21.94 -44.39,32.52"
+         id="path1550"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="512,-632 512,-632 502,-628 508,-637 "
+         id="polygon1552"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node88 -->
+    <g
+       id="node234"
+       class="node">
+      <title
+         id="title1555">node88</title>
+      <ellipse
+         id="Atg33_mito"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="650"
+         cy="-611"
+         rx="68.167397"
+         ry="18.5"
+         d="m 718.1674,-611 c 0,10.21727 -30.51959,18.5 -68.1674,18.5 -37.64781,0 -68.1674,-8.28273 -68.1674,-18.5 0,-10.21727 30.51959,-18.5 68.1674,-18.5 37.64781,0 68.1674,8.28273 68.1674,18.5 z"
+         sodipodi:cx="650"
+         sodipodi:cy="-611"
+         sodipodi:rx="68.167397"
+         sodipodi:ry="18.5" />
+      <text
+         x="650"
+         y="-607.40002"
+         font-size="14.00"
+         id="text1558"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg33_mito</text>
+    </g>
+    <!-- node87&#45;&gt;node88 -->
+    <g
+       id="edge270"
+       class="edge">
+      <title
+         id="title1561">node87-&gt;node88</title>
+      <path
+         d="m 596.55,-666.71 c 8.77,9.14 19.52,20.35 29.08,30.31"
+         id="path1563"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="628,-638 628,-638 632,-629 623,-633 "
+         id="polygon1565"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node88&#45;&gt;node90 -->
+    <g
+       id="edge272"
+       class="edge">
+      <title
+         id="title1568">node88-&gt;node90</title>
+      <path
+         d="m 619.03,-594.39 c -20.03,10.74 -46.27,24.81 -67.75,36.33"
+         id="path1570"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="552,-554 552,-554 542,-553 549,-561 "
+         id="polygon1572"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node89 -->
+    <g
+       id="node237"
+       class="node">
+      <title
+         id="title1575">node89</title>
+      <ellipse
+         id="Atg33"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="713"
+         cy="-685"
+         rx="40.9631"
+         ry="18.5"
+         d="m 753.9631,-685 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="713"
+         sodipodi:cy="-685"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="713"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1578"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg33</text>
+    </g>
+    <!-- node89&#45;&gt;node88 -->
+    <g
+       id="edge274"
+       class="edge">
+      <title
+         id="title1581">node89-&gt;node88</title>
+      <path
+         d="m 698.07,-667.46 c -7.75,9.1 -17.38,20.41 -25.97,30.5"
+         id="path1583"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="674,-634 674,-634 665,-629 669,-639 "
+         id="polygon1585"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node112&#45;&gt;node113 -->
+    <g
+       id="edge308"
+       class="edge">
+      <title
+         id="title1588">node112-&gt;node113</title>
+      <path
+         d="m 409.33,-299.49 c -20.24,11.35 -47.85,26.82 -69.57,39.01"
+         id="path1590"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="341,-257 341,-257 330,-255 337,-263 "
+         id="polygon1592"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node92 -->
+    <g
+       id="node241"
+       class="node">
+      <title
+         id="title1595">node92</title>
+      <ellipse
+         id="Atg30_Px"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1008"
+         cy="-685"
+         rx="57.830299"
+         ry="18.5"
+         d="m 1065.8303,-685 c 0,10.21727 -25.8915,18.5 -57.8303,18.5 -31.93879,0 -57.8303,-8.28273 -57.8303,-18.5 0,-10.21727 25.89151,-18.5 57.8303,-18.5 31.9388,0 57.8303,8.28273 57.8303,18.5 z"
+         sodipodi:cx="1008"
+         sodipodi:cy="-685"
+         sodipodi:rx="57.830299"
+         sodipodi:ry="18.5" />
+      <text
+         x="1008"
+         y="-681.40002"
+         font-size="14.00"
+         id="text1598"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg30_Px</text>
+    </g>
+    <!-- node92&#45;&gt;node95 -->
+    <g
+       id="edge278"
+       class="edge">
+      <title
+         id="title1601">node92-&gt;node95</title>
+      <path
+         d="m 1027.7,-667.46 c 10.6,9.44 23.8,21.25 35.4,31.63"
+         id="path1603"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1065,-638 1065,-638 1070,-628 1061,-632 "
+         id="polygon1605"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node93 -->
+    <g
+       id="node243"
+       class="node">
+      <title
+         id="title1608">node93</title>
+      <ellipse
+         id="Atg30"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="1119"
+         cy="-759"
+         rx="40.9631"
+         ry="18.5"
+         d="m 1159.9631,-759 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="1119"
+         sodipodi:cy="-759"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="1119"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1611"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg30</text>
+    </g>
+    <!-- node93&#45;&gt;node92 -->
+    <g
+       id="edge280"
+       class="edge">
+      <title
+         id="title1614">node93-&gt;node92</title>
+      <path
+         d="m 1096,-743.67 c -15.6,10.39 -36.4,24.28 -53.9,35.94"
+         id="path1616"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1043,-704 1043,-704 1033,-701 1039,-710 "
+         id="polygon1618"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node94 -->
+    <g
+       id="node245"
+       class="node">
+      <title
+         id="title1621">node94</title>
+      <ellipse
+         id="peroxisome"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="993"
+         cy="-759"
+         rx="67"
+         ry="18.5"
+         d="m 1060,-759 c 0,10.21727 -29.9969,18.5 -67,18.5 -37.00308,0 -67,-8.28273 -67,-18.5 0,-10.21727 29.99692,-18.5 67,-18.5 37.0031,0 67,8.28273 67,18.5 z"
+         sodipodi:cx="993"
+         sodipodi:cy="-759"
+         sodipodi:rx="67"
+         sodipodi:ry="18.5" />
+      <text
+         x="993"
+         y="-755.40002"
+         font-size="14.00"
+         id="text1624"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">peroxisome</text>
+    </g>
+    <!-- node94&#45;&gt;node92 -->
+    <g
+       id="edge282"
+       class="edge">
+      <title
+         id="title1627">node94-&gt;node92</title>
+      <path
+         d="m 996.79,-740.33 c 1.63,8.07 3.61,17.68 5.41,26.62"
+         id="path1629"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="1005,-714 1005,-714 1004,-703 998,-712 "
+         id="polygon1631"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node99 -->
+    <g
+       id="node247"
+       class="node">
+      <title
+         id="title1634">node99</title>
+      <ellipse
+         id="Atg8_cleaved"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="507"
+         cy="-833"
+         rx="77"
+         ry="18.5"
+         d="m 584,-833 c 0,10.21727 -34.47407,18.5 -77,18.5 -42.52593,0 -77,-8.28273 -77,-18.5 0,-10.21727 34.47407,-18.5 77,-18.5 42.52593,0 77,8.28273 77,18.5 z"
+         sodipodi:cx="507"
+         sodipodi:cy="-833"
+         sodipodi:rx="77"
+         sodipodi:ry="18.5" />
+      <text
+         x="507"
+         y="-829.40002"
+         font-size="14.00"
+         id="text1637"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg8_cleaved</text>
+    </g>
+    <!-- node99&#45;&gt;node84 -->
+    <g
+       id="edge284"
+       class="edge">
+      <title
+         id="title1640">node99-&gt;node84</title>
+      <path
+         d="m 480.22,-815.46 c -15.78,10.33 -35.89,23.5 -52.72,34.52"
+         id="path1642"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="429,-777 429,-777 419,-775 425,-783 "
+         id="polygon1644"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node100 -->
+    <g
+       id="node249"
+       class="node">
+      <title
+         id="title1647">node100</title>
+      <ellipse
+         id="Atg8"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="507"
+         cy="-907"
+         rx="35.137798"
+         ry="18.5"
+         d="m 542.1378,-907 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="507"
+         sodipodi:cy="-907"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="507"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1650"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg8</text>
+    </g>
+    <!-- node100&#45;&gt;node99 -->
+    <g
+       id="edge286"
+       class="edge">
+      <title
+         id="title1653">node100-&gt;node99</title>
+      <path
+         d="m 507,-888.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1655"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="510,-861 510,-861 507,-851 503,-861 "
+         id="polygon1657"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node101 -->
+    <g
+       id="node251"
+       class="node">
+      <title
+         id="title1660">node101</title>
+      <ellipse
+         id="Atg4"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="317"
+         cy="-907"
+         rx="35.137798"
+         ry="18.5"
+         d="m 352.1378,-907 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="317"
+         sodipodi:cy="-907"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="317"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1663"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg4</text>
+    </g>
+    <!-- node101&#45;&gt;node91 -->
+    <g
+       id="edge288"
+       class="edge">
+      <title
+         id="title1666">node101-&gt;node91</title>
+      <path
+         d="m 288.04,-896.58 c -19.4,8.68 -43.44,23.11 -55.04,44.58 -37.68,69.71 -0.47,166.32 22.25,213.23"
+         id="path1668"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="258,-640 258,-640 259,-629 252,-636 "
+         id="polygon1670"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node101&#45;&gt;node99 -->
+    <g
+       id="edge290"
+       class="edge">
+      <title
+         id="title1673">node101-&gt;node99</title>
+      <path
+         d="m 345.44,-895.92 c 29.34,11.42 75.69,29.47 111.23,43.32"
+         id="path1675"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="458,-855 458,-855 466,-848 455,-849 "
+         id="polygon1677"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node102 -->
+    <g
+       id="node254"
+       class="node">
+      <title
+         id="title1680">node102</title>
+      <ellipse
+         id="Atg3"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="277"
+         cy="-833"
+         rx="35.137798"
+         ry="18.5"
+         d="m 312.1378,-833 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="277"
+         sodipodi:cy="-833"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="277"
+         y="-829.40002"
+         font-size="14.00"
+         id="text1683"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg3</text>
+    </g>
+    <!-- node102&#45;&gt;node84 -->
+    <g
+       id="edge292"
+       class="edge">
+      <title
+         id="title1686">node102-&gt;node84</title>
+      <path
+         d="m 299.56,-818.73 c 17.04,10.78 40.74,25.76 60.12,38.03"
+         id="path1688"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="361,-783 361,-783 368,-775 357,-777 "
+         id="polygon1690"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node103 -->
+    <g
+       id="node256"
+       class="node">
+      <title
+         id="title1693">node103</title>
+      <ellipse
+         id="Atg7"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="599"
+         cy="-907"
+         rx="35.137798"
+         ry="18.5"
+         d="m 634.1378,-907 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="599"
+         sodipodi:cy="-907"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="599"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1696"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg7</text>
+    </g>
+    <!-- node103&#45;&gt;node84 -->
+    <g
+       id="edge294"
+       class="edge">
+      <title
+         id="title1699">node103-&gt;node84</title>
+      <path
+         d="m 603.58,-888.32 c 3.86,20.57 6.37,53.48 -10.58,74.32 -4.72,5.8 -87.94,27.44 -145.25,41.78"
+         id="path1701"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="448,-768 448,-768 437,-769 446,-775 "
+         id="polygon1703"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node104 -->
+    <g
+       id="node258"
+       class="node">
+      <title
+         id="title1706">node104</title>
+      <ellipse
+         id="Atg5_12"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="693"
+         cy="-833"
+         rx="53"
+         ry="18.5"
+         d="m 746,-833 c 0,10.21727 -23.72891,18.5 -53,18.5 -29.27109,0 -53,-8.28273 -53,-18.5 0,-10.21727 23.72891,-18.5 53,-18.5 29.27109,0 53,8.28273 53,18.5 z"
+         sodipodi:cx="693"
+         sodipodi:cy="-833"
+         sodipodi:rx="53"
+         sodipodi:ry="18.5" />
+      <text
+         x="693"
+         y="-829.40002"
+         font-size="14.00"
+         id="text1709"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg5_12</text>
+    </g>
+    <!-- node103&#45;&gt;node104 -->
+    <g
+       id="edge296"
+       class="edge">
+      <title
+         id="title1712">node103-&gt;node104</title>
+      <path
+         d="m 618.93,-891.31 c 12.89,10.15 29.89,23.53 44.35,34.92"
+         id="path1714"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="665,-858 665,-858 671,-849 661,-853 "
+         id="polygon1716"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node104&#45;&gt;node84 -->
+    <g
+       id="edge298"
+       class="edge">
+      <title
+         id="title1719">node104-&gt;node84</title>
+      <path
+         d="m 651.97,-821.06 c -8.56,2.41 -17.55,4.87 -25.97,7.06 -60.27,15.68 -129.84,31.93 -176.95,42.66"
+         id="path1721"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="449,-767 449,-767 439,-769 448,-774 "
+         id="polygon1723"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node105 -->
+    <g
+       id="node261"
+       class="node">
+      <title
+         id="title1726">node105</title>
+      <ellipse
+         id="Atg16"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="371"
+         cy="-833"
+         rx="40.9631"
+         ry="18.5"
+         d="m 411.9631,-833 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="371"
+         sodipodi:cy="-833"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="371"
+         y="-829.40002"
+         font-size="14.00"
+         id="text1729"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg16</text>
+    </g>
+    <!-- node105&#45;&gt;node84 -->
+    <g
+       id="edge300"
+       class="edge">
+      <title
+         id="title1732">node105-&gt;node84</title>
+      <path
+         d="m 376.8,-814.33 c 2.56,8.22 5.61,18.04 8.43,27.12"
+         id="path1734"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="388,-787 388,-787 388,-777 381,-785 "
+         id="polygon1736"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node106 -->
+    <g
+       id="node263"
+       class="node">
+      <title
+         id="title1739">node106</title>
+      <ellipse
+         id="Atg12"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="793"
+         cy="-907"
+         rx="40.9631"
+         ry="18.5"
+         d="m 833.9631,-907 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="793"
+         sodipodi:cy="-907"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="793"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1742"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg12</text>
+    </g>
+    <!-- node106&#45;&gt;node104 -->
+    <g
+       id="edge302"
+       class="edge">
+      <title
+         id="title1745">node106-&gt;node104</title>
+      <path
+         d="m 771.3,-890.94 c -13.86,10.25 -32.05,23.71 -47.41,35.08"
+         id="path1747"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="725,-852 725,-852 715,-849 721,-858 "
+         id="polygon1749"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node107 -->
+    <g
+       id="node265"
+       class="node">
+      <title
+         id="title1752">node107</title>
+      <ellipse
+         id="Atg5"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="887"
+         cy="-907"
+         rx="35.137798"
+         ry="18.5"
+         d="m 922.1378,-907 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="887"
+         sodipodi:cy="-907"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="887"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1755"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg5</text>
+    </g>
+    <!-- node107&#45;&gt;node104 -->
+    <g
+       id="edge304"
+       class="edge">
+      <title
+         id="title1758">node107-&gt;node104</title>
+      <path
+         d="m 860.11,-895.1 c -5.63,2.41 -11.55,4.88 -17.11,7.1 -34.14,13.62 -73.13,27.88 -102.8,38.46"
+         id="path1760"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="741,-846 741,-846 730,-846 738,-852 "
+         id="polygon1762"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node108 -->
+    <g
+       id="node267"
+       class="node">
+      <title
+         id="title1765">node108</title>
+      <ellipse
+         id="Atg10"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="693"
+         cy="-907"
+         rx="40.9631"
+         ry="18.5"
+         d="m 733.9631,-907 c 0,10.21727 -18.3398,18.5 -40.9631,18.5 -22.6233,0 -40.9631,-8.28273 -40.9631,-18.5 0,-10.21727 18.3398,-18.5 40.9631,-18.5 22.6233,0 40.9631,8.28273 40.9631,18.5 z"
+         sodipodi:cx="693"
+         sodipodi:cy="-907"
+         sodipodi:rx="40.9631"
+         sodipodi:ry="18.5" />
+      <text
+         x="693"
+         y="-903.40002"
+         font-size="14.00"
+         id="text1768"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Atg10</text>
+    </g>
+    <!-- node108&#45;&gt;node104 -->
+    <g
+       id="edge306"
+       class="edge">
+      <title
+         id="title1771">node108-&gt;node104</title>
+      <path
+         d="m 693,-888.33 c 0,8.07 0,17.68 0,26.62"
+         id="path1773"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="696,-861 696,-861 693,-851 689,-861 "
+         id="polygon1775"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node114 -->
+    <g
+       id="node270"
+       class="node">
+      <title
+         id="title1778">node114</title>
+      <ellipse
+         id="Ccz1"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="335"
+         cy="-315"
+         rx="35.137798"
+         ry="18.5"
+         d="m 370.1378,-315 c 0,10.21727 -15.73173,18.5 -35.1378,18.5 -19.40607,0 -35.1378,-8.28273 -35.1378,-18.5 0,-10.21727 15.73173,-18.5 35.1378,-18.5 19.40607,0 35.1378,8.28273 35.1378,18.5 z"
+         sodipodi:cx="335"
+         sodipodi:cy="-315"
+         sodipodi:rx="35.137798"
+         sodipodi:ry="18.5" />
+      <text
+         x="335"
+         y="-311.39999"
+         font-size="14.00"
+         id="text1781"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Ccz1</text>
+    </g>
+    <!-- node114&#45;&gt;node113 -->
+    <g
+       id="edge310"
+       class="edge">
+      <title
+         id="title1784">node114-&gt;node113</title>
+      <path
+         d="m 327.58,-296.71 c -3.42,8.45 -7.56,18.67 -11.36,28.03"
+         id="path1786"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="319,-267 319,-267 312,-259 312,-269 "
+         id="polygon1788"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+    <!-- node115 -->
+    <g
+       id="node272"
+       class="node">
+      <title
+         id="title1791">node115</title>
+      <ellipse
+         id="Vam3"
+         style="fill:#10d010;stroke:#000000;stroke-dasharray:none"
+         cx="243"
+         cy="-315"
+         rx="38.856201"
+         ry="18.5"
+         d="m 281.8562,-315 c 0,10.21727 -17.39651,18.5 -38.8562,18.5 -21.45969,0 -38.8562,-8.28273 -38.8562,-18.5 0,-10.21727 17.39651,-18.5 38.8562,-18.5 21.45969,0 38.8562,8.28273 38.8562,18.5 z"
+         sodipodi:cx="243"
+         sodipodi:cy="-315"
+         sodipodi:rx="38.856201"
+         sodipodi:ry="18.5" />
+      <text
+         x="243"
+         y="-311.39999"
+         font-size="14.00"
+         id="text1794"
+         style="font-size:14px;text-anchor:middle;font-family:'Times Roman,serif'">Vam3</text>
+    </g>
+    <!-- node115&#45;&gt;node113 -->
+    <g
+       id="edge312"
+       class="edge">
+      <title
+         id="title1797">node115-&gt;node113</title>
+      <path
+         d="m 257.69,-297.46 c 7.8,9.3 17.52,20.91 26.12,31.17"
+         id="path1799"
+         style="fill:none;stroke:#000000" />
+      <polygon
+         points="286,-268 286,-268 290,-258 281,-263 "
+         id="polygon1801"
+         style="fill:#000000;stroke:#000000" />
+    </g>
+  </g>
+</svg>
