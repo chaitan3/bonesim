@@ -1,9 +1,11 @@
-import sys,os
-sys.path.append(os.path.join(request.folder, 'static','simulator','Scopes'))
+import sys, os
+
+sys.path.append(os.path.join(request.folder,'models','Scopes'))
 try:
-	import Scopes
+        import Scopes
 except ImportError:
-	print "Warning: libScopes not found"
+        print "Warning: libScopes wrapper not found"
+
 try:
 	import json
 except ImportError:
