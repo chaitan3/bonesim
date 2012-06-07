@@ -51,6 +51,9 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 						jSBGN_node.simulation.myJSBGN = this.jSBGN;
 						}
 					this.installSVGonClickListeners();
+					
+					var steps = document.getElementById('Steps');
+					steps.innerHTML = '0';
 					}
 
 showAnnotation = function(id) {

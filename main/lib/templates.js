@@ -69,7 +69,8 @@ TemplatePopup = {
 				},
 
 		close : function() {
-				this.popup.close();
+				if (this.popup != undefined)
+					this.popup.close();
 				delete this.template;
 				delete this.popup;
 				delete this;

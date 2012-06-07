@@ -80,7 +80,7 @@
 
 	<script>
 		env = {}
-		env["biographer"] = "https://kafka.carpe-diem-berlin.de/biographer";
+		env["biographer"] = "http://127.0.0.1:8000/biographer";
 		env["tools"] = "main/lib";
 		env["templates"] = "main/controls";
 		env["images"] = "img";
@@ -97,12 +97,14 @@
 	<script src="main/lib/jSBGN.js"></script>
 	<script src="main/lib/BooleNet.js"></script>
 	<script src="main/lib/RBoolNet.js"></script>
+	<script src="main/lib/SBML.js"></script>
 	<script src="main/lib/import.js"></script>
 	<script src="main/lib/export.js"></script>
 
 	<script src="main/controls/controls.js"></script>
 	<script src="main/controls/importBooleNet.js"></script>
 	<script src="main/controls/importRBoolNet.js"></script>
+	<script src="main/controls/importSBML.js"></script>
 
 	<script src="main/simulator.js"></script>
 
@@ -200,7 +202,7 @@
 
 	<script>
 		function showControls() {
-			console.log(typeof(popupControls));
+//			console.log(typeof(popupControls));
 			if ( typeof(popupControls) != "undefined" )
 				popupControls.close();
 			popupControls = new TemplatePopup.open('/controls.html', 'Controls', 220, 360);
