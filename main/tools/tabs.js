@@ -11,14 +11,14 @@ showTab = function(id) {
 		// un-highlight all other tabselectors
 		for (index in tabSelectors) {
 			var ts = document.getElementById(tabSelectors[index].id);
-			ts.style['background-color'] = '#DDD';
-			ts.style['color'] = 'black';
+			ts.style['background-color'] = 'white';
+//			ts.style['color'] = 'yellow';
 			}
 
 		// highlight corresponding tabselector
 		var ts = document.getElementById(id);
 		ts.style['background-color'] = 'blue';
-		ts.style['color'] = 'white';
+//		ts.style['color'] = 'white';
 		}
 
 onTabSelectorClick = function(event) {

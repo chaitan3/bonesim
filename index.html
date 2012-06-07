@@ -14,7 +14,7 @@
 					position:		absolute;
 					left:			1px;
 					right:			1px;
-					top:			38px;
+					top:			56px;
 					bottom:			1px;
 					overflow:		scroll;
 					}
@@ -24,6 +24,16 @@
 					color:			#7474cf;
 					font-weight:		bold;
 					font-size:		26;
+					}
+		input.tabselector	{
+					border:			none;
+					color:			white;
+					background-color:	white;
+					background-image:	url(img/Aqua_button.png);
+					width:			126px;
+					height:			32px;
+					background-repeat:	no-repeat;
+					background-position:	middle center;
 					}
 		#graphvizSVG		{
 					border:			none;
@@ -142,7 +152,7 @@
 		<table style="width:100%; height:100%">
 		<tr>
 		<td style="text-align:center; vertical-align:middle;">
-		no annotation loaded
+		no annotations loaded
 		</td>
 		</tr>
 		</table>
@@ -155,7 +165,7 @@
 
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
 
-	<div id="divMouseClickBehavior" align=right>
+	<div id="divMouseClickBehavior" align=right onclick="MouseShowHide();">
 		<script>
 			MouseShowHide = function() {
 						div = document.getElementById('MouseClickBehavior');
@@ -163,7 +173,7 @@
 						else					div.style.display = 'none';
 						}
 		</script>
-		<img src="img/Nuvola_devices_mouse.png" height=42 onclick="MouseShowHide();"><br/>
+		<img id=Mouse src="img/Nuvola_devices_mouse.png" height=28><br/>
 		<div id=MouseClickBehavior style="display:none;">
 		<input type=radio name=MouseClickBehavior value='simulation' checked/> Simulation<br/>
 		<input type=radio name=MouseClickBehavior value='annotation'        /> Annotation
@@ -172,6 +182,7 @@
 
 	<script>
 		function showControls() {
+			console.log(typeof(popupControls));
 			if ( typeof(popupControls) != "undefined" )
 				popupControls.close();
 			popupControls = new TemplatePopup.open('/controls.html', 'Controls', 220, 360);
