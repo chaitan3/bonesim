@@ -2,8 +2,8 @@
 function ImportChain() {
 	document.getElementById('ButtonCol').style.display = 'none';
 	document.getElementById('ProgressCol').style.display = 'inline';
-	rotateAroundCenter();
-	debug('Opening file ...');
+//	RotateTronCircle('canvas');
+	console.debug('Opening file ...');
 	var reader = new FileReader();
 	reader.readAsText(document.getElementById('File').files[0]);
 	reader.onload = Opened;
