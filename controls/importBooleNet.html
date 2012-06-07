@@ -1,0 +1,39 @@
+<style>
+	.BooleNetTable	{
+			border:			none;
+			margin:			0;
+			padding:		0;
+			width:			100%;
+			height:			100%;
+			}
+</style>
+
+<table class=BooleNetTable>
+	<tr style='height:75px;'>
+		<td>
+			<img src="{{images}}/BooleTron.png" style="vertical-align:middle;"/>
+		</td>
+		<td id=ProgressCol style="text-align: right;">
+			<img id=Tron src="{{images}}/Progress.svg" style="display:none; "/>
+			<!--canvas id=canvas width=70 height=70></canvas-->
+		</td>
+		<td id=ButtonCol>
+			<input type=file id=File onchange="ImportChain();" />
+			<br/>
+			<input type=button value="Whi2p" onclick="LoadWhi2p();" />
+			<br/>
+			After import: 
+			<input type=checkbox id=layout /> layout 
+			<input type=checkbox id=graphviz checked /> graphviz
+			<input type=checkbox id=update checked /> update UI 
+			<br/>
+			<input type=button value=Cancel onclick="importBooleNetWindow.close();" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=3>
+			<label id="BooleNetDebug" style="color: #9ec9e2; font-weight: bold;"></label>
+		</td>
+	</tr>
+</table>
+
