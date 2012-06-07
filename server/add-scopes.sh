@@ -3,8 +3,8 @@
 hg clone -r python-devel https://code.google.com/p/libscopes/ 
 cd libscopes
 make python
-cp build/python/Scopes.py ../models/Scopes
-cp build/python/_Scopes.so ../models/Scopes
+cp build/python/Scopes.py ../modules
+cp build/python/_Scopes.so ../modules
 cd ..
 rm -rf libscopes
 
