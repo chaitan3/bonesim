@@ -272,7 +272,7 @@ Iterate = function(id) {
 		var steps = document.getElementById('Steps');
 		steps.innerHTML = parseInt(steps.innerHTML)+1;
 		
-		if (scopes)
+		if (typeof(scopes) != "undefined" && scopes)
 			POST(env['biographer'] + '/Simulate/Iterate', 'state=' + 
 			exportStateJSON(mySimulator.jSBGN.nodes), function (response) {
 				scopesResponse(response, id);
