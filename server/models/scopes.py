@@ -1,16 +1,27 @@
 try:
-        import Scopes
+	exec('import applications.%s.modules.Scopes as Scopes' % request.application)
 except ImportError:
-        print "Warning: libScopes wrapper not found"
+	print "Warning: libScopes wrapper not found"
 
 try:
-        import json
+	import json
 except ImportError:
-        print "Warning: JSON library not found"
+	print "Warning: JSON library not found"
 
 def importScopes(sbml_file):
 	session.sbml = sbml_file
 	session.seed = None
+	
+def getInitialSeed():
+	net = Scopes.Net()
+	nodemap = Scopes.importSBML(net, session.sbml)
+	nc = net.numC()
+	tgt = Scopes.VC(nc, 1)
+	idx = Scopes.VS(nc)
+	for i in range(0, nc):
+		idx[i] = i
+	seed = Scopes.findseed(net, idx, tgt)
+	return exportStateJSON(seed, net)
 
 def importStateJSON(state, nodemap, net):
 	present = Scopes.VC(net.numC())
@@ -42,7 +53,6 @@ def singleIteration(state):
 	else:
 		seed = Scopes.VC(nc)
 		for i in range(0, nc):
-			print i
 			seed[i] = session.seed[i]
 	
 	Scopes.dScopeStep(net, present, depleted, active, blocking, seed)
