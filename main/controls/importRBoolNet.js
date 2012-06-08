@@ -11,7 +11,7 @@ function LoadMammal() {
 	delete network;
 	scopes = false;
 	BooleNetDebug('Downloading ...');
-	data = GET(env['biographer']+'/Get/Mammal_RBoolNet');
+	data = GET(env['biographer']+'/static/simulator/demo/mammal.r');
 	BooleNetDebug('Importing ...');
 	network = RBoolNet_Import(data);
 	BooleNetDebug('Graphviz ...');

@@ -16,3 +16,15 @@ function SBML_import(file) {
 	}
 	return network;
 }
+
+function SBML_importGuessSeed(data) {
+	seed = parseJSON(data);
+	for (i in network.nodes) {
+		if (network.nodes[i].simulation.update) {
+			if(seed[network.nodes[i].id])
+				network.nodes[i].simulation.myState = true;
+			else
+				network.nodes[i].simulation.myState = false;
+		}
+	}
+}
