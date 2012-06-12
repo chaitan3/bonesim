@@ -78,7 +78,8 @@ function doneGraphviz(response) {
                 var adopted = document.importNode(xmlRoot, true); 
                 parent.appendChild(adopted);
 
-		new OpacityFader(document.getElementById('graphviz_tab'), start=0, stop=1, duration=600, delayStart=500);
+		// new OpacityFader(document.getElementById('graphviz_tab'), start=0, stop=1, duration=600, delayStart=500);
+		showTab('graphviz');
  		}
 
 	simulator = new Simulator();
