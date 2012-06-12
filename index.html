@@ -52,17 +52,14 @@
 					color:			blue;
 					font-weight:		bold;
 					}
-		#Save			{	
-					border:			1px solid white;
-					background-image:	url(img/Oxygen_Save.png);
-					background-color:	white;
-					background-repeat:	no-repeat;
-					width:			34px;
-					height:			34px;
+		.Icon			{	
+					border:			1px solid grey;
+					width:			32px;
+					height:			32px;
 					cursor:			pointer;
 					}
-		#Save:hover		{
-					border:			1px solid grey;
+		.Icon:hover		{
+					border:			1px solid black;
 					}
 		#divMouseClickBehavior	{
 					border:			1px solid white;
@@ -129,7 +126,8 @@
 
 	<!--input type=button value=half onclick='document.getElementById("viewport").setAttribute("transform", "scale(300 300) rotate(0) transform(4 1448)");'/-->
 
-	<input type=button value="press C for controls" onclick="showControls();"/>
+	<img class=Icon src="img/Import.png" alt="Press C for Controls" onclick="showControls();" />
+	<img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" />
 
 	<label id=Progress></label>
 	<label id=Steps>0</label>
@@ -168,8 +166,6 @@
 	<script>
 		showTab('graphviz');
 	</script>
-
-	<input type=button id=Save onclick=exportSVG(); />
 
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
 

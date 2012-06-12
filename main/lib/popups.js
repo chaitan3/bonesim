@@ -29,7 +29,7 @@ Popup = {
 				// popup window
 				this.div = document.createElement('div');
 				this.div.id = Math.random();
-				this.div.style.border = '1px dotted black';
+				this.div.style.border = '1px solid white';
 				this.div.style.position = "absolute";
 				this.div.style.width = this.width;
 				this.div.style.height = this.height;
