@@ -58,30 +58,31 @@ function doGraphviz() {
 	}
 
 function doneGraphviz(response) {
-	if ( response != null ) {
-//		DOMinsert(response, document.getElementById('graphviz_tab'));
+	showTab('graphviz');
 
-		var parser = new DOMParser(); 
-                var xmlDoc = parser.parseFromString(response, "text/xml"); 
-                parent = document.getElementById('graphviz_tab');
+        // erase SVG canvas
+        parent = document.getElementById('graphviz_tab');
+        var child = parent.firstChild; 
+        while (child!=null) { 
+		parent.removeChild(child); 
+		child = parent.firstChild; 
+		} 
 
-                // eliminate any children 
-                var child = parent.firstChild; 
-                while (child!=null) 
-                { 
-                parent.removeChild(child); 
-                child = parent.firstChild; 
-                } 
-
-                var xmlRoot = xmlDoc.documentElement; 
-
-                var adopted = document.importNode(xmlRoot, true); 
-                parent.appendChild(adopted);
-
-		// new OpacityFader(document.getElementById('graphviz_tab'), start=0, stop=1, duration=600, delayStart=500);
-		showTab('graphviz');
+	// valid response ?
+	if ( response == null || response == '' ) {
+		console.debug("We didn't get anything from the server, aborting, sorry.");
+		alert("Graphviz error!");
+		return
  		}
 
+	// import graphviz SVG
+	var parser = new DOMParser(); 
+        var xmlDoc = parser.parseFromString(response, "text/xml"); 
+        var xmlRoot = xmlDoc.documentElement; 
+        var adopted = document.importNode(xmlRoot, true); 
+        parent.appendChild(adopted);
+
+	// start simulation
 	simulator = new Simulator();
 	simulator.Initialize(network, document.getElementById('viewport')); // <g>, not <svg>
 	window.setTimeout('simulator.Iterate();', 1000);
