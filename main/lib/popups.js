@@ -6,51 +6,45 @@ Popup = {
 		open : function(title, width, height, fade) {
 				this.width = width;
 				this.height = height;
+				this.fade = fade;
 
+				// shadow div
 				this.background = document.createElement('div');
+				this.background.id = Math.random();
+				this.background.style.border = 0;
+				this.background.style.position = 'absolute';
+				this.background.style.left = 0;
+				this.background.style.top = 0;
+				this.background.style.width = "100%";
+				this.background.style.height = "100%";
+				this.background.style['background-color'] = 'grey';
+				this.background.style.opacity = 0.7;
 				document.body.appendChild(this.background);
-//				this.maximizeBackground();
-					style = this.background.style;
-					style.border = 0;
-					style.position = 'absolute';
-					style.left = 0;
-					style.top = 0;
-					style.width = "100%";
-					style.height = "100%";
-					style['background-color'] = 'grey';
-					style.opacity = 0.7;
+
 				if (fade) {
-					style.opacity = 0;
+					this.background.style.opacity = 0;
 					new OpacityFader(this.background, start=0, stop=0.7, duration=300, delayStart=0);
 					}
 
+				// popup window
 				this.div = document.createElement('div');
+				this.div.id = Math.random();
+				this.div.style.border = '1px dotted black';
+				this.div.style.position = "absolute";
+				this.div.style.width = this.width;
+				this.div.style.height = this.height;
+				this.div.style.left = (window.innerWidth-this.width)/2;
+				this.div.style.top = (window.innerHeight-this.height)/2;
+				this.div.style.color = '#9ec9e2';
+				this.div.style['background-color'] = 'black';
+				this.div.style.padding = '10px';
 				document.body.appendChild(this.div);
-//				this.centerDiv();
-					style = this.div.style;
-
-					left = (window.innerWidth-this.width)/2;
-					top = (window.innerHeight-this.height)/2;
-
-					style = this.div.style;
-					style.position = "absolute";
-					style.left = left;
-					style.top = top;
-					style.width = this.width;
-					style.height = this.height;
-//				this.putDivDecorations();
-					style = this.div.style;
-					style.border = '1px dotted black';
-					style.color = '#9ec9e2';
-					style['background-color'] = 'black';
-					style.padding = '10px';
 
 				if (fade) {
-					style.opacity = 0;
+					this.div.style.opacity = 0;
 					new OpacityFader(this.div, start=0, stop=1, duration=375, delayStart=300);
 					}
 
-				this.fade = fade;
 				this.write = Popup.write;
 				this.close = Popup.close;
 				},
