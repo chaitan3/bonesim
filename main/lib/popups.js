@@ -3,7 +3,7 @@ Popup = {
 		background : undefined,
 		div : undefined,
 
-		open : function(title, width, height) {
+		open : function(title, width, height, fade) {
 				this.width = width;
 				this.height = height;
 
@@ -18,8 +18,11 @@ Popup = {
 					style.width = "100%";
 					style.height = "100%";
 					style['background-color'] = 'grey';
+					style.opacity = 0.7;
+				if (fade) {
 					style.opacity = 0;
-				new OpacityFader(this.background, start=0, stop=0.7, duration=300, delayStart=0);
+					new OpacityFader(this.background, start=0, stop=0.7, duration=300, delayStart=0);
+					}
 
 				this.div = document.createElement('div');
 				document.body.appendChild(this.div);
@@ -40,11 +43,14 @@ Popup = {
 					style.border = '1px dotted black';
 					style.color = '#9ec9e2';
 					style['background-color'] = 'black';
-					style.opacity = 0;
 					style.padding = '10px';
 
-				new OpacityFader(this.div, start=0, stop=1, duration=375, delayStart=300);
+				if (fade) {
+					style.opacity = 0;
+					new OpacityFader(this.div, start=0, stop=1, duration=375, delayStart=300);
+					}
 
+				this.fade = fade;
 				this.write = Popup.write;
 				this.close = Popup.close;
 				},
@@ -55,12 +61,20 @@ Popup = {
 
 		close : function() {
 				if (this.div) {
-					new OpacityFader(this.div, start=0.7, stop=0, duration=300, delayStart=0);
-					window.setTimeout('document.body.removeChild(document.getElementById("'+this.div.id+'"));', 300);
+					if (this.fade) {
+						new OpacityFader(this.div, start=0.7, stop=0, duration=300, delayStart=0);
+						window.setTimeout('document.body.removeChild(document.getElementById("'+this.div.id+'"));', 300);
+						}
+					else
+						document.body.removeChild(this.div);
 					}
 				if (this.background) {
-					new OpacityFader(this.background, start=0.7, stop=0, duration=300, delayStart=300);
-					window.setTimeout('document.body.removeChild(document.getElementById("'+this.background.id+'"));', 600);
+					if (this.fade) {
+						new OpacityFader(this.background, start=0.7, stop=0, duration=300, delayStart=300);
+						window.setTimeout('document.body.removeChild(document.getElementById("'+this.background.id+'"));', 600);
+						}
+					else
+						document.body.removeChild(this.background);
 					}
 				if (this) {
 					delete this;

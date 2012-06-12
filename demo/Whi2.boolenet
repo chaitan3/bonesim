@@ -34,12 +34,11 @@ nutrient_fermentation*			= Glucose
 oxidative_phosphorylation*		= not Glucose and Pyruvat
 # States of oxidative_phosphorylation:	True="taking place", False="not taking place"
 
-# States of Nitrogen:		True="enough nitrogen", False="starving"
+Nitrogen				= True
+# States of Nitrogen:			True="present", False="nitrogen starvation"
 
-cell_death*			= not (nutrient_fermentation or oxidative_phosphorylation)
-
-energy*				= nutrient_fermentation or oxidative_phosphorylation or degradation
-# States of energy:		True="available", False="lacking"
+energy*					= nutrient_fermentation or oxidative_phosphorylation or degradation
+# States of energy:			True="available", False="lacking"
 
 
 #
