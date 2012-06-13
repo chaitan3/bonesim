@@ -747,18 +747,17 @@ class Graph:
 
 		counter = 0
 		for edge in self.Edges:
-			print edge.source
-			print edge.target
-			self.log(debug, 'Adding edge from '+str(edge.source.id)+' to '+str(edge.target.id))
+			arrow = 'empty'
+			if edge.owns('type'):
+				if edge.type in [absoluteInhibition, inhibition]:
+					arrow = 'tee'
+				elif edge.type in [catalysis, necessaryStimulation]:
+					arrow = 'odot'
+			self.log(debug, 'Adding edge from '+str(edge.source.id)+' to '+str(edge.target.id)+': '+arrow )
 
 			try:
 				source = edge.source.alias
 				target = edge.target.alias
-				arrow = 'normal'
-				if edge.owns('type') and getEdgeType(edge.type) == inhibition:
-					arrow = 'tee'
-				elif edge.owns('sbo') and getEdgeType(edge.sbo) == inhibition:
-					arrow = 'tee'
 				graphviz_model.add_edge( source, target, arrowhead=arrow )
 				counter += 1
 			except:

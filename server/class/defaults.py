@@ -21,5 +21,5 @@ MandatoryEdgeKeys	= ['id','sbo','type','source','target']
 EdgeKeys		= MandatoryEdgeKeys + ['data']
 OptionalEdgeKeys	= ['label', 'handles', 'points']
 EdgeKeyAliases		= {}
-DefaultEdge		= { "sbo":13, "type":"Substrate", "source":0, "target":0, "data":{ "label":"", "handles":[], "points":[] } }
+DefaultEdge		= { "type":"Substrate", "source":0, "target":0, "data":{ "label":"", "handles":[], "points":[] } }
 
