@@ -234,7 +234,13 @@ function runSimulator(id) {
 			if ( jSBGN_node.simulation.update && (jSBGN_node.simulation.updateRule.trim() != '')) {
 //				if (jSBGN_node.id == "Whi3p")	// bug
 //					console.log(jSBGN_node.simulation.updateRule);
-				jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+				try	{
+					jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+					}
+				catch(err)	{
+						console.error('Invalid update rule dropped, node '+jSBGN_node.id+': '+jSBGN_node.simulation.updateRule);
+						jSBGN_node.simulation.updateRule = 'true';
+						}
 				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
 				if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
 					changed = changed.concat([jSBGN_node]);
