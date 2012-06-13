@@ -102,7 +102,6 @@ BooleNet = {
 											 updateRulePy : ''
 											 };
 								network.appendNode(processNode);
-								console.debug(processNodeId+': '+rightside);
 
 								// import update rule
 								targetNode.simulation.updateRule = makeRule(rightside);

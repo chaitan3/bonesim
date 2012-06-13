@@ -94,6 +94,8 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 				}
 
 		if (!event.ctrlKey) {
+			if (typeof(mouseClick) == 'undefined')
+				mouseClick = 'simulation';
 			if (mouseClick == 'simulation') {
 //				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState); // vorher
 
