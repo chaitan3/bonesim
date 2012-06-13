@@ -2,7 +2,17 @@
 protein_name_regex = /[A-Za-z0-9_]+/g;
 
 BooleNet2BooleNetJS = function(data) {
-			return data.replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ');
+			return data.replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ').replace_all('(not ', '(! ');
+			}
+
+guessEdgeType = function(label, rule) {
+			prefix = rule.substr(rule.indexOf(label)-4, 4);
+			if (prefix == 'not ')	// yes, this doesn't always apply, it's provisorically, lateron: lex yacc?
+				return 'Inhibition';
+			suffix = label.substr(label.length-3, 3);
+			if (suffix == 'ase')
+				return 'Catalysis';
+			return 'Substrate';
 			}
 
 getMyState = function(id) {
@@ -91,6 +101,7 @@ BooleNet = {
 										edge.target = targetNodeId;
 										edge.sourceNode = sourceNode;
 										edge.targetNode = targetNode;
+										edge.type = guessEdgeType(sourceNode.data.label, s[1]);
 										sourceNode.edges.push(edge);
 										targetNode.edges.push(edge);
 										network.appendEdge(edge);
@@ -144,6 +155,10 @@ BooleNet = {
 				}
 			console.log('Imported '+network.nodes.length+' nodes and '+network.edges.length+' edges.');
 //			console.log((network.getNodeById('Whi3p').simulation.updateRule);
+
+			if (network.nodes.length == 0 && network.edges.length == 0)
+				alert('Invalid BooleNet network!');
+
 			return network;
 			},
 

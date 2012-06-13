@@ -76,6 +76,7 @@ jSBGN.prototype.exportJSON = function() {
 					newedge.id = edge.id;
 					newedge.source = edge.source;
 					newedge.target = edge.target;
+					newedge.type = edge.type;
 					_edges = _edges.concat([newedge]);
 					}
 
