@@ -740,8 +740,10 @@ class Graph:
 							node.alias = 'node'+str(alias_counter)
 							alias_counter += 1
 							l = node.data.label if node.data.owns("label") and node.data.label != ""  else str(node.id)
-							s = 'ellipse' if ( getNodeType(str(node.type)) != getNodeType("Process Node")) else 'box'
-							parent.add_node( node.alias, label=str(l), shape=s )
+							s = 'ellipse' if ( getNodeType(str(node.type)) != getNodeType("Process Node")) else 'square'
+							if s == 'square':
+								l = ''
+							parent.add_node( node.id, label=str(l), shape=s )
 		recurse( graphviz_model, TopCompartmentID )
 		self.log(info, 'Added '+str(alias_counter)+' nodes to graphviz model.')
 
@@ -749,16 +751,16 @@ class Graph:
 		for edge in self.Edges:
 			arrow = 'empty'
 			if edge.owns('type'):
-				if edge.type in [absoluteInhibition, inhibition]:
+				if edge.type == product:
+					arrow = 'normal'
+				elif edge.type in [absoluteInhibition, inhibition]:
 					arrow = 'tee'
 				elif edge.type in [catalysis, necessaryStimulation]:
 					arrow = 'odot'
 			self.log(debug, 'Adding edge from '+str(edge.source.id)+' to '+str(edge.target.id)+': '+arrow )
 
 			try:
-				source = edge.source.alias
-				target = edge.target.alias
-				graphviz_model.add_edge( source, target, arrowhead=arrow )
+				graphviz_model.add_edge( edge.source.id, edge.target.id, id=edge.id, arrowhead=arrow )
 				counter += 1
 			except:
 				print "failed to add edge"

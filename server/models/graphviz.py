@@ -13,14 +13,19 @@ def mkdir_and_parents( path ):
 			os.mkdir(fullpath)
 
 def WorkaroundChromiumIssue123607(line):
-	import re
 	key = 'points="'
 	p = line.find(key)+len(key)
 	q = line.find('"', p)
 	points = line[p:q]
-	numbers = re.findall('[0-9]*\.[0-9]*', points)
-	for number in numbers:
-		points = points.replace(number, str(int(float(number))))
+	def Round(n):
+		n = n.group(0)
+		if n.find('.') > -1:
+			return n[:n.find('.')]
+		if n.find(',') > -1:
+			return n[:n.find('.')]
+		return n
+	import re
+	points = re.sub('[0-9]*[\.,][0-9]*', Round, points)
 	line = line[:p]+points+line[q:]
 	return line
 
@@ -29,27 +34,28 @@ def prepareSVG(f):
 	outfile = open(f, 'w')
 
 	inside_node = False
-	replacement = ''
+	new_g = ''
 	for line in infile:
 		if '<polygon ' in line:
 			line = WorkaroundChromiumIssue123607(line)
 		if '"graph1"' in line:		# required for SVGPan.js
 			line = line.replace('"graph1"', '"viewport"').replace('scale(1 1)', 'scale(0.7 0.7)')
 		if inside_node:
+			if not '<title>' in line:	# we don't need the <title>
+				new_g += line+'\n'
 			if '</g>' in line:		# node ends
-				p = replacement.find('>', replacement.find('<text '))+1		# set ellipse id according to text label
-				q = replacement.find('</text>', p)
-				label = replacement[p:q]
-				name = label.replace(' ','_')
-				replacement = replacement.replace('fill="none"', 'id="'+name+'" fill="white" style="cursor:pointer"')
-				outfile.write(replacement+'</g>\n')
+				if '<text ' in new_g:	# not a process node, which don't have a label
+					p = new_g.find('>', new_g.find('<text '))+1		# set ellipse id according to text label
+					q = new_g.find('</text>', p)
+					label = new_g[p:q]
+					name = label.replace(' ','_')
+					new_g = new_g.replace('fill="none"', 'id="'+name+'" fill="white" style="cursor:pointer"')
+				outfile.write(new_g)
 				inside_node = False
-			else:
-				replacement += line+'\n'
 		else:
 			if 'class="node"' in line:	# node begins
 				inside_node = True
-				replacement = line+'\n'
+				new_g = line+'\n'
 			else:
 				outfile.write(line+'\n')
 
