@@ -13,7 +13,7 @@ typeInhibition = 'Inhibition';
 
 
 BooleNet2BooleNetJS = function(data) {
-			return data.replace_all(' and ', ' && ').replace_all(' or ', ' || ').replace_all(' not ', ' ! ').replace_all('(not ', '(! ');
+			return data.replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!');
 			}
 
 guessEdgeType = function(label, rule) {
@@ -81,9 +81,8 @@ BooleNet = {
 							// in case it's an initial state definition ("... = True/False")
 							if (s[1] == 'True')
 								targetNode.simulation.myState = true;
-							if (s[1] == 'False')
+							else if (s[1] == 'False')
 								targetNode.simulation.myState = false;
-
 							else	{
 								// create a process node
 								var processNodeId = 'process'+targetNodeId;
@@ -103,6 +102,7 @@ BooleNet = {
 											 updateRulePy : ''
 											 };
 								network.appendNode(processNode);
+								console.debug(processNodeId+': '+rightside);
 
 								// import update rule
 								targetNode.simulation.updateRule = makeRule(rightside);

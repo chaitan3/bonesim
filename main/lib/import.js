@@ -58,8 +58,6 @@ function doGraphviz() {
 	}
 
 function doneGraphviz(response) {
-	console.debug(response);
-
 	showTab('graphviz');
 
         // erase SVG canvas
