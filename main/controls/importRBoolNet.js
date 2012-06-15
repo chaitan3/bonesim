@@ -14,8 +14,12 @@ function LoadMammal() {
 	data = GET(env['biographer']+'/static/simulator/demo/mammal.r');
 	BooleNetDebug('Importing ...');
 	network = RBoolNet_Import(data);
-	BooleNetDebug('Graphviz ...');
-	doGraphviz();
+	//~ BooleNetDebug('Graphviz ...');
+	//~ doGraphviz();
+	console.log(network); 
+	bui.importFromJSON(graph, network);
+	console.log(graph.drawables());
+	draws = graph.drawables();
 	if (typeof(importRBoolNetWindow) != 'undefined')
 		importRBoolNetWindow.close();
 	if (typeof(popupControls) != 'undefined')

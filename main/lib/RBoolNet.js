@@ -21,6 +21,8 @@ function returnNode(network, nodeId) {
 	if (node == null) {		
 		node = {};
 		node.id = nodeId;
+		node.type = 'Simple Chemical';
+		node.sbo = 240;
 		node.data = {};
 		node.data.label = nodeId;
 		node.edges = [];
