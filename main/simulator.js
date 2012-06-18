@@ -40,13 +40,16 @@ Simulator.prototype.Initialize = function(jSBGN, SVG) {
 
 					for (n in this.jSBGN.nodes) {
 						var jSBGN_node = this.jSBGN.nodes[n];
-						var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
+						var SVG_node = draws[jSBGN_node.id].nodeGroup().childNodes[0];
+            //var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
 						jSBGN_node.simulation.myElement = SVG_node;
 						if (SVG_node != null) {
 							if (!jSBGN_node.simulation.myState) 
-								jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.inactive);
+								//jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.inactive);
+                jSBGN_node.simulation.myElement.style.fill=this.colors.inactive;
 							else
-								jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.active);
+                jSBGN_node.simulation.myElement.style.fill=this.colors.active;
+								//jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.active);
 						}
 						jSBGN_node.simulation.myJSBGN = this.jSBGN;
 						}
@@ -82,7 +85,7 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 		var SVG_node = event.srcElement;
 		var mySimulator = getMySimulator(SVG_node);
-		var jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.id);
+		var jSBGN_node = mySimulator.jSBGN.getNodeById(SVG_node.parentElement.id);
 
 //		console.log('Node clicked: '+jSBGN_node.id);
 
@@ -103,7 +106,7 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 
 //				console.log(jSBGN_node.id+' = '+jSBGN_node.simulation.myState); // nachher
 
-				Simulate();
+				//Simulate();
 				}
 			else if (mouseClick == 'annotation') {
 				var annotation = jSBGN_node.simulation.annotation;
@@ -144,6 +147,7 @@ Simulator.prototype.installSVGonClickListeners = function() {
 							}
 
 updateSVG = function(id) {
+    graph.suspendRedraw(1000);
 		var mySimulator = getMySimulator(document.getElementById(id));
 
 		if ( mySimulator.updateSVG_Timeout != null ) {						// stop other updateSVG timeouts
@@ -166,10 +170,12 @@ updateSVG = function(id) {
 					}
 				
 				// continue fading
-				var current = jSBGN_node.simulation.myElement.getAttribute('fill');
-				if ( current.toLowerCase() != desired.toLowerCase() ) {
+				//var current = jSBGN_node.simulation.myElement.getAttribute('fill');
+				var current = jSBGN_node.simulation.myElement.style.fill;
+        if ( current.toLowerCase() != desired.toLowerCase() ) {
 					var graph_refresh_required = true;
-					jSBGN_node.simulation.myElement.setAttribute('fill', NextColor(undesired, current, desired)); // Fading
+          jSBGN_node.simulation.myElement.style.fill=NextColor(undesired, current, desired);
+					//jSBGN_node.simulation.myElement.setAttribute('fill', NextColor(undesired, current, desired)); // Fading
 //					jSBGN_node.simulation.myElement.setAttribute('fill', desired);
 					}
 
@@ -188,6 +194,7 @@ updateSVG = function(id) {
 					}
 				}
 			}
+    graph.unsuspendRedraw();
 		if (graph_refresh_required)
 			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 50); // update again in 20ms
 		}
@@ -257,8 +264,9 @@ function runSimulator(id) {
 				var jSBGN_node = changed[idx];			// State = NextState
 				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
 				}
-			try { delay=parseInt(document.getElementById('Delay').value); }
-			catch(err) { delay=500;	}
+			//try { delay=parseInt(document.getElementById('Delay').value); }
+			//catch(err) { delay=500;	}
+      delay = 500;
 			if ( mySimulator.updateSVG_Timeout == null )
 				updateSVG();
 			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again

@@ -4,13 +4,6 @@
 	<title>biosimulator</title>
 
 	<style>
-		.active circle {
-			fill: #10d010 !important;
-			background-color: #10d010;
-		}
-		.inactive circle {
-			fill: #d01010 !important;
-		}
 		
 		body			{
 					background-color:	white;
@@ -124,6 +117,8 @@
 		network = new jSBGN( nodes=[], edges=[] );
 
 		window.onunload = function() {
+          if ( typeof(popupControls) != 'undefined' )
+				
 					popupControls.close();
 //					confirm('Really close and loose unsaved data ?');
 					}
@@ -138,7 +133,9 @@
 
 	<img class=Icon src="img/Import.png" alt="Press C for Controls" onclick="showControls();" />
 	<img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" />
-
+  
+  <input id=start	type=button value="Start Simulation" onclick="simulator.Iterate();" />
+  
 	<label id=Progress></label>
 	<label id=Steps>0</label>
 
