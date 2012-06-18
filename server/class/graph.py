@@ -749,14 +749,14 @@ class Graph:
 
 		counter = 0
 		for edge in self.Edges:
-			arrow = 'empty'
+			arrow = 'none'	# consumption
 			if edge.owns('type'):
 				if edge.type == product:
-					arrow = 'normal'
+					arrow = 'normal' # production
 				elif edge.type in [absoluteInhibition, inhibition]:
-					arrow = 'tee'
+					arrow = 'tee' # inhibition
 				elif edge.type in [catalysis, necessaryStimulation]:
-					arrow = 'odot'
+					arrow = 'odot' # catalysis
 			self.log(debug, 'Adding edge from '+str(edge.source.id)+' to '+str(edge.target.id)+': '+arrow )
 
 			try:

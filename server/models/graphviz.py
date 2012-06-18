@@ -37,7 +37,7 @@ def prepareSVG(f):
 		if 'points="' in line:
 			line = WorkaroundChromiumIssue123607(line)
 		if '"graph1"' in line:		# required for SVGPan.js
-			line = line.replace('"graph1"', '"viewport"').replace('scale(1 1)', 'scale(0.7 0.7)')
+			line = line.replace('"graph1"', '"viewport"').replace('scale(1 1)', 'scale(0.55 0.55)')
 		if inside_node:
 			if line.find('<title>') < 0:	# we don't need the <title>
 				new_g += line.replace('fill="none"', 'fill="white"')+'\n'
