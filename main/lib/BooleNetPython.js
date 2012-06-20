@@ -16,9 +16,17 @@ BooleNet2BooleNetJS = function(data) {
 			return data.replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!');
 			}
 
+guessNodeType = function(label) {
+			// process nodes must begin with "process..."
+			if (label.substr(0,7) == 'process')
+				return typeProcess;
+			else
+				return typeMacromolecule;
+			}
+
 guessEdgeType = function(label, rule) {
-			prefix = rule.substr(rule.indexOf(label)-4, 4);
-			if (prefix == 'not ')	// yes, this doesn't always apply, it's provisorically, lateron: lex yacc?
+			prefix = rule.substr(rule.indexOf(' '+label)-3, 3);
+			if (prefix == 'not')	// yes, this doesn't always apply, it's provisorically, lateron: lex yacc?
 				return typeInhibition;
 			suffix = label.substr(label.length-3, 3);
 			if (suffix == 'ase')
@@ -65,9 +73,14 @@ BooleNet = {
 							if (targetNode == null) {
 								var targetNode = {};
 								targetNode.id = targetNodeId;
-								targetNode.type = typeMacromolecule;
 								targetNode.data = {};
+								targetNode.type = guessNodeType(targetNode.id);
 								targetNode.data.label = targetNodeId;
+
+								// if the target node is a process node
+								if (targetNode.type == typeProcess)
+									targetNode.data.label = '';
+
 								targetNode.edges = [];
 								targetNode.simulation = {
 											myState : true, // set default initial state
@@ -84,28 +97,41 @@ BooleNet = {
 							else if (s[1] == 'False')
 								targetNode.simulation.myState = false;
 							else	{
-								// create a process node
-								var processNodeId = 'process'+targetNodeId;
-								var processNode = network.getNodeById(processNodeId);
-								if (processNode != null)
-									var processNodeId = 'process'+targetNodeId+('_'+Math.random()).replace('.', '').substr(0, 4);
-								var processNode = {}
-								processNode.id = processNodeId;
-								processNode.type = typeProcess;
-								processNode.data = {};
-								processNode.data.label = '';
-								processNode.edges = [];
-								processNode.simulation = {
-											 myState : true, // set default initial state
-											 update : true,
-											 updateRule : '',
-											 updateRulePy : ''
-											 };
-								network.appendNode(processNode);
-
 								// import update rule
 								targetNode.simulation.updateRule = makeRule(rightside);
 								targetNode.simulation.updateRulePy = s[0]+' = '+s[1].trim();
+
+								// if reaction target is a process node
+								// connect source nodes directly to target,
+								// w/o another process node inbetween
+
+								// if the reaction source is a process node,
+								// we don't need another process node either
+
+								if (targetNode.id.substr(0,7) == 'process' || s[1].indexOf('process') > -1) {
+									connectSourceNodesToMe = targetNode;
+									}
+								else	{ 
+									// create a process node
+									var processNodeId = 'process'+targetNodeId;
+									var processNode = network.getNodeById(processNodeId);
+									if (processNode != null)
+										var processNodeId = 'process'+targetNodeId+('_'+Math.random()).replace('.', '').substr(0, 4);
+									var processNode = {}
+									processNode.id = processNodeId;
+									processNode.type = typeProcess;
+									processNode.data = {};
+									processNode.data.label = '';
+									processNode.edges = [];
+									processNode.simulation = {
+												 myState : true, // set default initial state
+												 update : true,
+												 updateRule : '',
+												 updateRulePy : ''
+												 };
+									network.appendNode(processNode);
+									connectSourceNodesToMe = processNode;
+									}
 
 								// for every node on the right side of the rule, create nodes if necessary, and add edges
 								var sourceNodeIds = rightside.match(protein_name_regex);
@@ -118,9 +144,14 @@ BooleNet = {
 										if (sourceNode == null) {			
 											var sourceNode = {};
 											sourceNode.id = sourceNodeId;
-											sourceNode.type = typeMacromolecule;
+											sourceNode.type = guessNodeType(sourceNode.id);
 											sourceNode.data = {};
 											sourceNode.data.label = sourceNodeId;
+
+											// if source node is a process node, draw no label
+											if (sourceNode.type == typeProcess)
+												sourceNode.data.label = '';
+
 											sourceNode.edges = [];
 											sourceNode.simulation = {
 														myState: true,	// set default initial state
@@ -131,35 +162,62 @@ BooleNet = {
 											}
 
 										// don't create a process node for the source node here
-							
-										// create edge from source to process node
-										var edge = network.getEdgeBySourceAndTargetId(sourceNodeId, processNodeId);
-										if (edge == null) {
-											var edge = {};
-											edge.id = sourceNodeId+'_'+processNodeId;
-											edge.source = sourceNodeId;
-											edge.target = processNodeId;
-											edge.sourceNode = sourceNode;
-											edge.targetNode = processNode;
-											edge.type = guessEdgeType(sourceNode.data.label, s[1]);
-											sourceNode.edges.push(edge);
-											processNode.edges.push(edge);
-											network.appendEdge(edge);
-											}
 
-										// create edge from process to target node
-										var edge = network.getEdgeBySourceAndTargetId(processNodeId, targetNodeId);
-										if (edge == null) {
-											var edge = {};
-											edge.id = processNodeId+' -> '+targetNodeId;
-											edge.source = processNodeId;
-											edge.target = targetNodeId;
-											edge.sourceNode = processNode;
-											edge.targetNode = targetNode;
-											edge.type = typeProduct;
-											processNode.edges.push(edge);
-											targetNode.edges.push(edge);
-											network.appendEdge(edge);
+										// we have a process node inbetween source and target
+										if (connectSourceNodesToMe == processNode) {
+											// create edge from source to process node
+											var edge = network.getEdgeBySourceAndTargetId(sourceNodeId, processNode.id);
+											if (edge == null) {
+												var edge = {};
+												edge.id = sourceNodeId+'_'+processNodeId;
+												edge.source = sourceNodeId;
+												edge.target = processNode.id;
+												edge.sourceNode = sourceNode;
+												edge.targetNode = processNode;
+												edge.type = guessEdgeType(sourceNode.data.label, s[1]);
+												sourceNode.edges.push(edge);
+												processNode.edges.push(edge);
+												network.appendEdge(edge);
+												}
+
+											// create edge from process to target node
+											var edge = network.getEdgeBySourceAndTargetId(processNodeId, targetNode.id);
+											if (edge == null) {
+												var edge = {};
+												edge.id = processNodeId+' -> '+targetNode.id;
+												edge.source = processNodeId;
+												edge.target = targetNode.id;
+												edge.sourceNode = processNode;
+												edge.targetNode = targetNode;
+												edge.type = typeProduct;
+												processNode.edges.push(edge);
+												targetNode.edges.push(edge);
+												network.appendEdge(edge);
+												}
+											}
+										// source and target nodes are directly connected
+										else if (connectSourceNodesToMe == targetNode) {
+											// create edge from source to target node
+											var edge = network.getEdgeBySourceAndTargetId(sourceNode.id, targetNode.id);
+											if (edge == null) {
+												var edge = {};
+												edge.id = sourceNode.id+' -> '+targetNode.id;
+												edge.source = sourceNode.id;
+												edge.target = targetNode.id;
+												edge.sourceNode = sourceNode;
+												edge.targetNode = targetNode;
+
+												// if the source node is a process node
+												// the edge will be a product edge
+												if (sourceNode.id.substr(0,7) == 'process')
+													edge.type = typeProduct
+												else	// else it's either educt or catalyzer
+													edge.type = guessEdgeType(sourceNode.data.label, s[1]);
+
+												sourceNode.edges.push(edge);
+												targetNode.edges.push(edge);
+												network.appendEdge(edge);
+												}
 											}
 										}
 									}
