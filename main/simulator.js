@@ -1,63 +1,32 @@
 
-green = '#10d010';
-red = '#d01010';
-yellow = '#f4fd01';
-black = '#000000';
-blue = '#7474cf';
+function Simulator(jSBGN, SVG) {
+  this.jSBGN = jSBGN;
+  this.SVG = SVG;
+  this.running = false;
+  this.updateSVG_Timeout = null;
+  this.scopes = false;
+  
+  this.colors = {
+    active: '#10d010',
+    inactive: '#ffffff',
+    cyclic_attraktor: '#f9f883',
+  };
 
-getMySimulator = function(DOMelement) {
-//			zu welchem SVG gehörst du?
-//			im globalen object nachschauen
-//			zugehörigen Simulator zurückgeben
-
-			// temporary workaround
-			return simulator;
-			}
-
-Simulator = function() {
-		this.jSBGN = null;			// a reference to our network
-
-		this.SVG = null;			// a reference to our SVG
-
-		this.running = false;
-		this.updateSVG_Timeout = null;		// not null in case the Simulator is running
-
-		this.colors = {
-			active: green,
-			inactive: '#ffffff',
-			cyclic_attraktor: '#f9f883',
-			};
-	     }
-
-Simulator.prototype.Initialize = function(jSBGN, SVG) {
-					this.jSBGN = jSBGN;
-//					this.jSBGN.mySimulator = this;
-					this.SVG = SVG;
-//					this.SVG.mySimulator = this; // a ref for asynchronous calls
-
-					this.running = false;
-					this.updateSVG_Timeout = null;
-
-					for (n in this.jSBGN.nodes) {
-						var jSBGN_node = this.jSBGN.nodes[n];
-						var SVG_node = draws[jSBGN_node.id].nodeGroup().childNodes[0];
-            //var SVG_node = document.getElementById(jSBGN_node.id.replace(' ', '_'));
-						jSBGN_node.simulation.myElement = SVG_node;
-						if (SVG_node != null) {
-							if (!jSBGN_node.simulation.myState) 
-								//jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.inactive);
-                jSBGN_node.simulation.myElement.style.fill=this.colors.inactive;
-							else
-                jSBGN_node.simulation.myElement.style.fill=this.colors.active;
-								//jSBGN_node.simulation.myElement.setAttribute('fill', this.colors.active);
-						}
-						jSBGN_node.simulation.myJSBGN = this.jSBGN;
-						}
-					this.installSVGonClickListeners();
-					
-					var steps = document.getElementById('Steps');
-					steps.innerHTML = '0';
-					}
+  for (n in this.jSBGN.nodes) {
+    var jSBGN_node = this.jSBGN.nodes[n];
+    var SVG_node = draws[jSBGN_node.id].nodeGroup().childNodes[0];
+    jSBGN_node.simulation.myElement = SVG_node;
+    if (SVG_node != null) {
+      if (!jSBGN_node.simulation.myState) 
+        jSBGN_node.simulation.myElement.style.fill=this.colors.inactive;
+      else
+        jSBGN_node.simulation.myElement.style.fill=this.colors.active;
+    }
+    jSBGN_node.simulation.myJSBGN = this.jSBGN;
+  }
+  this.installSVGonClickListeners();
+  $('#Steps').text = 0;
+}
 
 showAnnotation = function(id) {
 			// temporary workaround
@@ -199,8 +168,9 @@ updateSVG = function(id) {
 			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 50); // update again in 20ms
 		}
 		
-function exportStateJSON(nodes) {	
+function Simulator.exportStateJSON() {	
 	var state = new Object();
+  var nodes = this.jSBGN.nodes;
 	for (i in nodes) {
 		if (nodes[i].simulation.update) {
 			if(nodes[i].simulation.myState)
@@ -213,7 +183,8 @@ function exportStateJSON(nodes) {
 	return JSON.stringify(state);
 }
 
-function updateNodeRules(state, nodes) {	
+function Simulator.updateNodeRules(state) {	
+  var nodes = this.jSBGN.nodes;
 	for (i in nodes) {
 		if (nodes[i].simulation.update) {
 			if(state[nodes[i].id])
@@ -224,83 +195,88 @@ function updateNodeRules(state, nodes) {
 	}
 }
 
-function scopesResponse(response, id) {
-	var mySimulator = getMySimulator(document.getElementById(id));
+function Simulator.scopesResponse(response) {
 	if (response != null) {
 		var newState = parseJSON(response);
 		console.log(JSON.stringify(newState));
-		updateNodeRules(newState, mySimulator.jSBGN.nodes);
-		runSimulator(id);
+		this.updateNodeRules(newState);
+		this.iterate();
 	}
 }
 
-function runSimulator(id) {
-	var mySimulator = getMySimulator(document.getElementById(id));
-	// calculation
-		var changed = [];
-		for (idx in mySimulator.jSBGN.nodes) {
-			var jSBGN_node = mySimulator.jSBGN.nodes[idx];
-			if ( jSBGN_node.simulation.update && (jSBGN_node.simulation.updateRule.trim() != '')) {
-//				if (jSBGN_node.id == "Whi3p")	// bug
-//					console.log(jSBGN_node.simulation.updateRule);
-				try	{
-					jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
-					}
-				catch(err)	{
-						console.error('Invalid update rule dropped, node '+jSBGN_node.id+': '+jSBGN_node.simulation.updateRule);
-						jSBGN_node.simulation.updateRule = 'true';
-						}
-				var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
-				if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
-					changed = changed.concat([jSBGN_node]);
-//					console.log('iterate '+jSBGN_node.id+': '+jSBGN_node.simulation.myState+' -> '+jSBGN_node.simulation.myNextState);
-					}
-				}
-			}
-
-		// steady state ?
-		if ( changed.length > 0 ) {   // network updated -> steady state not reached
-			for (idx in changed) {
-				var jSBGN_node = changed[idx];			// State = NextState
-				jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
-				}
-			//try { delay=parseInt(document.getElementById('Delay').value); }
-			//catch(err) { delay=500;	}
-      delay = 500;
-			if ( mySimulator.updateSVG_Timeout == null )
-				updateSVG();
+function Simulator.iterate() {
+	
+  var changed = [];
+  for (idx in this.jSBGN.nodes) {
+    var jSBGN_node = this.jSBGN.nodes[idx];
+    if ( jSBGN_node.simulation.update && (jSBGN_node.simulation.updateRule.trim() != '')) {
+      try	{
+        jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+      }
+      catch(err)	{
+        console.error('Invalid update rule dropped, node '+jSBGN_node.id+': '+jSBGN_node.simulation.updateRule);
+        jSBGN_node.simulation.updateRule = 'true';
+      }
+      var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
+      if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
+        changed = changed.concat([jSBGN_node]);
+      }
+    }
+  }
+		
+  if ( changed.length > 0 ) {   // network updated -> steady state not reached
+    for (idx in changed) {
+      var jSBGN_node = changed[idx];			// State = NextState
+      jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
+    }
+    delay = 500;
+    if ( mySimulator.updateSVG_Timeout == null ) {
+      updateSVG();
 			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again
-			}
+    }
 		else 	{		// no changes -> steady state
-			updateSVG(id);
+			updateSVG();
 			console.log('Boolean network reached steady state.');
-			mySimulator.running = false;
-			}
+			this.stop();
+    }
+  }
 }
 
-Iterate = function(id) {
-		var mySimulator = getMySimulator(document.getElementById(id));
+function Simulator.start() {
+  this.running = true;
+  $('#simulation').unbind('click', this.start);
+  $('#simulation').click(stopSimulation);
+  $('#simulation').prop('value','Stop Simulation');
+  this.run();
+  console.log('Start Sim');
+}
 
-		mySimulator.running = true;
+function Simulator.stop() {
+  this.running = false;
+  $('#simulation').unbind('click', this.stop);
+  $('#simulation').click(start);
+  $('#simulation').prop('value','Start Simulation');
+  console.log('Stop Sim');
+}
 
-		// messages
-		var e = document.getElementById('Progress');
-		if ( e.innerHTML.length > 30 || e.innerHTML.substr(0,9) != 'Iterating' )
-			e.innerHTML = 'Iterating ...'
-		else	e.innerHTML = e.innerHTML+'.';
-		var steps = document.getElementById('Steps');
-		steps.innerHTML = parseInt(steps.innerHTML)+1;
+
+function Simulator.run() {
+
+  if(!this.running)
+    return;
+    
+  if ( $('#Progress').text.length > 30 || $('#Progress').text.substr(0,9) != 'Iterating' )
+    $('#Progress').text = 'Iterating ...'
+  else	
+    $('#Progress').text += '.';
+  $('#Steps').text = parseInt($('#Steps').text) + 1;
 		
-		if (typeof(scopes) != "undefined" && scopes)
-			POST(env['biographer'] + '/Simulate/Iterate', 'state=' + 
-			exportStateJSON(mySimulator.jSBGN.nodes), function (response) {
-				scopesResponse(response, id);
-				});
-		else
-			runSimulator(id);
-		}
-
-Simulator.prototype.Iterate = function() {
-				Iterate(this.SVG.id);
-				}
+  if (this.scopes)
+    POST(env['biographer'] + '/Simulate/Iterate', 'state=' + 
+    this.exportStateJSON(), function (response) {
+      scopesResponse(response);
+    });
+  else
+    this.iterate();
+}
 

@@ -94,6 +94,10 @@
 	<script src="main/lib/SBML.js"></script>
 	<script src="main/lib/import.js"></script>
 	<script src="main/lib/export.js"></script>
+  <script src="main/lib/d3.js"></script>
+  <script src="main/lib/d3.geom.js"></script>
+  <script src="main/lib/d3.layout.js"></script>
+  
 
 	<script src="main/controls/controls.js"></script>
 	<script src="main/controls/importBooleNet.js"></script>
@@ -134,7 +138,8 @@
 	<img class=Icon src="img/Import.png" alt="Press C for Controls" onclick="showControls();" />
 	<img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" />
   
-  <input id=start	type=button value="Start Simulation" onclick="simulator.Iterate();" />
+  <input id=simulation	type=button value="Start Simulation" onclick="simulator.start()" />
+  
   
 	<label id=Progress></label>
 	<label id=Steps>0</label>
@@ -366,8 +371,6 @@
 		bui.ready(function() {
 			bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
             graph = new bui.Graph(document.getElementById('bui_tab'));
-            //bui.importFromJSON(graph, example);
-            //console.log(graph.drawables());
             LoadMammal();
         });
 		

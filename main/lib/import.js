@@ -106,4 +106,69 @@ function updateUI() {
 //	window.setTimeout('window.close();', 1000);
 //	window.close();
 	}
+  
+function get_nodes_edges(){
+        var nodes = [], edges = [];
+        var all_drawables = graph.drawables();
+        var count = 0;
+        for (var key in all_drawables) {
+            drawable = all_drawables[key];
+            drawable.index = count;
+            ++count;
+            if ((drawable.identifier()=='bui.EdgeHandle')||(drawable.identifier() == 'bui.Labelable')||(drawable.identifier() == 'Compartment')||(drawable.identifier() == 'bui.StateVariable')||(drawable.identifier() == 'bui.StateVariableER')){
+                //ignore
+            }else if (drawable.drawableType()=='node'){
+                var dparent = drawable.parent();
+                if (('absolutePositionCenter' in drawable)&& (!('identifier' in dparent) || dparent.identifier() != 'Complex')){
+                    var pos = drawable.absolutePositionCenter();
+                    drawable.x = pos.x;
+                    drawable.y = pos.y;
+                    nodes.push(drawable);
+                }
+            }else if(drawable.identifier() == 'bui.Edge'){
+                //----------------------------------
+                if (drawable.source().identifier() == 'bui.EdgeHandle'){
+                    if(drawable.source().lparent.target().identifier() == 'bui.StateVariableER'){
+                        drawable.lsource = drawable.source().lparent.target().parent();
+
+                    }else if(drawable.source().lparent.target().identifier() == 'bui.EdgeHandle'){ 
+                        if(drawable.source().lparent.target().lparent.target().identifier() == 'bui.StateVariableER'){
+                            drawable.lsource = drawable.source().lparent.target().lparent.target().parent();
+                        }else {
+                            drawable.lsource = drawable.source().lparent.target().lparent.target();
+                        }
+                    }else {
+                        drawable.lsource = drawable.source().lparent.target();
+                    }
+                }else if(drawable.source().identifier() == 'bui.StateVariableER'){
+                    drawable.lsource = drawable.source().parent();
+                }else {
+                    drawable.lsource = drawable.source()
+                }
+                //----------------------------------
+                if (drawable.target().identifier() == 'bui.EdgeHandle'){
+                    if(drawable.target().lparent.target().identifier() == 'bui.StateVariableER'){
+                        drawable.ltarget = drawable.target().lparent.target().parent();
+
+                    }else if(drawable.target().lparent.target().identifier() == 'bui.EdgeHandle'){ 
+                        if(drawable.target().lparent.target().lparent.target().identifier() == 'bui.StateVariableER'){
+                            drawable.ltarget = drawable.target().lparent.target().lparent.target().parent();
+                        }else {
+                            drawable.ltarget = drawable.target().lparent.target().lparent.target();
+                        }
+
+                    }else{
+                        drawable.ltarget = drawable.target().lparent.target();
+                    }
+
+                }else if(drawable.target().identifier() == 'bui.StateVariableER'){
+                    drawable.ltarget = drawable.target().parent();
+                }else {
+                    drawable.ltarget = drawable.target()
+                }
+                edges.push(drawable);
+            }
+        }
+        return {nodes:nodes, edges:edges}
+}
 
