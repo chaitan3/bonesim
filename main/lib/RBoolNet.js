@@ -6,7 +6,7 @@
  * @return {string} The update rule in JS format
  */
 function RBoolNet2JS(data) {
-	return makeRule(data.replace_all(' & ', ' && ').replace_all(' | ', ' || ').trim());
+	return data.replace_all(' & ', ' && ').replace_all(' | ', ' || ').trim();
 }
 /**
  * Fetch the node from the network given the node id, create it if it

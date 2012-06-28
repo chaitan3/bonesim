@@ -26,19 +26,6 @@ guessEdgeType = function(label, rule) {
 			return typeSubstrate;
 			}
 
-getMyState = function(id) {
-		// temporary workaround
-		mySimulator = simulator;
-
-		return mySimulator.jSBGN.getNodeById(id).simulation.myState;
-		}
-
-makeRule = function(rule) {
-		if (rule.trim() == 'True' || rule.trim() == 'False')
-			return '';
-		return rule.replace(protein_name_regex, function(text) { return "getMyState('"+text+"')"; });
-		}
-
 BooleNet = {
 	Import: function(input) {
 			var input = input.split('\n');

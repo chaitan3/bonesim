@@ -23,16 +23,20 @@ function LoadMammal() {
 	//~ doGraphviz();
 	console.log(network); 
   
-  var s = graph.suspendRedraw(2000);
+  importHandle = graph.suspendRedraw(20000);
   
 	bui.importFromJSON(graph, network);
   //~ bui.importFromJSON(graph, example);
   
   var nodes_edges = get_nodes_edges();
   
-  //~ bui.grid.init(nodes_edges.nodes,nodes_edges.edges);
-  //~ bui.grid.put_on_grid();
-  //~ bui.grid.layout();
+  //~ setTimeout(function() {
+    //~ bui.grid.init(nodes_edges.nodes,nodes_edges.edges);
+    //~ bui.grid.put_on_grid();
+    //~ bui.grid.layout();
+    //~ alert('Hi');
+    //~ graph.unsuspendRedraw(importHandle);
+  //~ }, 2000);
   
   bui.settings.straightenEdges = false;
   var cont = graph.container();
@@ -44,13 +48,14 @@ function LoadMammal() {
          .size([$(cont).width(), $(cont).height()])
          .start();
   
-  graph.unsuspendRedraw(s);
+  force.on("tick", function() {
+    if (force.alpha() < 0.005) {
+      force.stop();
+      graph.unsuspendRedraw(importHandle);
+    }
+  });
   
-  console.log(graph.drawables());
-	draws = graph.drawables();
-  
-  
-  simulator = new Simulator(network, graph.nodeGroup());
+  simulator = new Simulator(network, 500);
   $('#simulation').click(simulator.start);
   
 	if (typeof(importRBoolNetWindow) != 'undefined')
