@@ -8,12 +8,20 @@ BooleNetDebug = function(msg) {
 function LoadSBML() {
 	delete network;
 	scopes = true;
+  var data;
+  
 	BooleNetDebug('Downloading ...');
-	data = GET(env['biographer']+'/Get/Sample_SBML');
+  $.get(env['biographer']+'/Get/Sample_SBML', 
+  function(response) {
+    data = response;
+  });
 	BooleNetDebug('Importing ...');
 	network = SBML_import(data);
 	if (document.getElementById('guess').checked) {
-		data = GET(env['biographer']+'/Simulate/InitialSeed');
+    $.get(env['biographer']+'/Simulate/InitialSeed', 
+    function(response) {
+      data = response;
+    });
 		SBML_importGuessSeed(data);
 		console.log('Guess seed chosen.');
 	}

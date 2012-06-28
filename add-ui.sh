@@ -6,7 +6,7 @@ if [ ! -e 'UI' ]; then
         exit 1
         fi
 cd UI
-python2 src/build/python/manage.py clean build test jslint jsdoc compress createDistribution
+python src/build/python/manage.py clean build test jslint jsdoc compress createDistribution
 cd ..
 cp -R UI/target/distribution bui
 rm -rf UI

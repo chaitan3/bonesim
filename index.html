@@ -138,7 +138,7 @@
 	<img class=Icon src="img/Import.png" alt="Press C for Controls" onclick="showControls();" />
 	<img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" />
   
-  <input id=simulation	type=button value="Start Simulation" onclick="simulator.start()" />
+  <input id=simulation	type=button value="Start Simulation"/>
   
   
 	<label id=Progress></label>
@@ -369,8 +369,10 @@
 		console.log('Initializing bui');
 		
 		bui.ready(function() {
+      $.ajaxSetup({ async: false });
+
 			bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
-            graph = new bui.Graph(document.getElementById('bui_tab'));
+      graph = new bui.Graph(document.getElementById('bui_tab'));
             LoadMammal();
         });
 		

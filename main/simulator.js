@@ -1,17 +1,133 @@
 
-function Simulator(jSBGN, SVG) {
+Simulator = function(jSBGN, SVG) {
   this.jSBGN = jSBGN;
   this.SVG = SVG;
   this.running = false;
   this.updateSVG_Timeout = null;
   this.scopes = false;
   
+  var obj = this;
+  
   this.colors = {
     active: '#10d010',
     inactive: '#ffffff',
     cyclic_attraktor: '#f9f883',
   };
+  
+  this.run = function() {
 
+    if(!this.running)
+      return;
+      
+    var text = $('#Progress').text();
+    if ( text.length > 30 || text.substr(0,9) != 'Iterating' )
+      $('#Progress').text('Iterating ...');
+    else	
+      $('#Progress').text(text + '.');
+    $('#Steps').text(parseInt($('#Steps').text()) + 1);
+      
+    if (this.scopes)
+      $.post(env['biographer'] + '/Simulate/Iterate', 
+      { state : this.exportStateJSON() }, 
+      function (response) {
+        var newState = parseJSON(response);
+        console.log(JSON.stringify(newState));
+        this.updateNodeRules(newState);
+        this.iterate();
+      });
+    else
+      this.iterate();
+  }
+  
+  this.start = function() {
+    obj.running = true;
+    $('#simulation').unbind('click', obj.start);
+    $('#simulation').click(obj.stop);
+    $('#simulation').prop('value','Stop Simulation');
+    console.log('Start Sim');
+    obj.run();
+  }
+
+  this.stop = function() {
+    obj.running = false;
+    $('#simulation').unbind('click', obj.stop);
+    $('#simulation').click(obj.start);
+    $('#simulation').prop('value','Start Simulation');
+    console.log('Stop Sim');
+  }
+
+  var exportStateJSON = function() {	
+    var state = new Object();
+    var nodes = this.jSBGN.nodes;
+    for (i in nodes) {
+      if (nodes[i].simulation.update) {
+        if(nodes[i].simulation.myState)
+          state[nodes[i].id] = 1;
+        else
+          state[nodes[i].id] = 0;
+      }
+    }
+    console.log(JSON.stringify(state));
+    return JSON.stringify(state);
+  }
+
+  var updateNodeRules = function(state) {	
+    var nodes = this.jSBGN.nodes;
+    for (i in nodes) {
+      if (nodes[i].simulation.update) {
+        if(state[nodes[i].id])
+          nodes[i].simulation.updateRule = (true).toString();
+        else
+          nodes[i].simulation.updateRule = (false).toString();
+      }
+    }
+  }
+
+  var iterate = function() {
+    
+    var changed = [];
+    for (idx in this.jSBGN.nodes) {
+      var jSBGN_node = this.jSBGN.nodes[idx];
+      if ( jSBGN_node.simulation.update && (jSBGN_node.simulation.updateRule.trim() != '')) {
+        try	{
+          jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
+        }
+        catch(err)	{
+          console.error('Invalid update rule dropped, node '+jSBGN_node.id+': '+jSBGN_node.simulation.updateRule);
+          jSBGN_node.simulation.updateRule = 'true';
+        }
+        var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
+        if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
+          changed = changed.concat([jSBGN_node]);
+        }
+      }
+    }
+      
+    if ( changed.length > 0 ) {   // network updated -> steady state not reached
+      for (idx in changed) {
+        var jSBGN_node = changed[idx];			// State = NextState
+        jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
+      }
+      if ( this.updateSVG_Timeout == null )
+        updateSVG();
+      setTimeout(function() { obj.run() }, 500);		// iterate again
+    }
+    else 	{		// no changes -> steady state
+      updateSVG();
+      console.log('Boolean network reached steady state.');
+      this.stop();
+    }
+  }
+
+  var installSVGonClickListeners = function() {
+							for (n in this.jSBGN.nodes) {
+								var node = this.jSBGN.nodes[n];
+								if (node != null && node.simulation.myElement != null)
+									node.simulation.myElement.onclick = SVGonClick;
+								}
+							}
+
+  
   for (n in this.jSBGN.nodes) {
     var jSBGN_node = this.jSBGN.nodes[n];
     var SVG_node = draws[jSBGN_node.id].nodeGroup().childNodes[0];
@@ -26,6 +142,7 @@ function Simulator(jSBGN, SVG) {
   }
   this.installSVGonClickListeners();
   $('#Steps').text = 0;
+  console.log(this);
 }
 
 showAnnotation = function(id) {
@@ -107,17 +224,9 @@ SVGonClick = function(event) { // beware: this = SVGellipseElement
 			}
 		}
 
-Simulator.prototype.installSVGonClickListeners = function() {
-							for (n in this.jSBGN.nodes) {
-								var node = this.jSBGN.nodes[n];
-								if (node != null && node.simulation.myElement != null)
-									node.simulation.myElement.onclick = SVGonClick;
-								}
-							}
-
 updateSVG = function(id) {
     graph.suspendRedraw(1000);
-		var mySimulator = getMySimulator(document.getElementById(id));
+		var mySimulator = simulator;
 
 		if ( mySimulator.updateSVG_Timeout != null ) {						// stop other updateSVG timeouts
 			window.clearTimeout(mySimulator.updateSVG_Timeout);
@@ -168,115 +277,8 @@ updateSVG = function(id) {
 			mySimulator.updateSVG_Timeout = window.setTimeout('updateSVG("'+id+'");', 50); // update again in 20ms
 		}
 		
-function Simulator.exportStateJSON() {	
-	var state = new Object();
-  var nodes = this.jSBGN.nodes;
-	for (i in nodes) {
-		if (nodes[i].simulation.update) {
-			if(nodes[i].simulation.myState)
-				state[nodes[i].id] = 1;
-			else
-				state[nodes[i].id] = 0;
-		}
-	}
-	console.log(JSON.stringify(state));
-	return JSON.stringify(state);
-}
-
-function Simulator.updateNodeRules(state) {	
-  var nodes = this.jSBGN.nodes;
-	for (i in nodes) {
-		if (nodes[i].simulation.update) {
-			if(state[nodes[i].id])
-				nodes[i].simulation.updateRule = (true).toString();
-			else
-				nodes[i].simulation.updateRule = (false).toString();
-		}
-	}
-}
-
-function Simulator.scopesResponse(response) {
-	if (response != null) {
-		var newState = parseJSON(response);
-		console.log(JSON.stringify(newState));
-		this.updateNodeRules(newState);
-		this.iterate();
-	}
-}
-
-function Simulator.iterate() {
-	
-  var changed = [];
-  for (idx in this.jSBGN.nodes) {
-    var jSBGN_node = this.jSBGN.nodes[idx];
-    if ( jSBGN_node.simulation.update && (jSBGN_node.simulation.updateRule.trim() != '')) {
-      try	{
-        jSBGN_node.simulation.myNextState = Boolean(eval(jSBGN_node.simulation.updateRule));
-      }
-      catch(err)	{
-        console.error('Invalid update rule dropped, node '+jSBGN_node.id+': '+jSBGN_node.simulation.updateRule);
-        jSBGN_node.simulation.updateRule = 'true';
-      }
-      var changes = changes || (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState);
-      if (jSBGN_node.simulation.myNextState != jSBGN_node.simulation.myState) {
-        changed = changed.concat([jSBGN_node]);
-      }
-    }
-  }
-		
-  if ( changed.length > 0 ) {   // network updated -> steady state not reached
-    for (idx in changed) {
-      var jSBGN_node = changed[idx];			// State = NextState
-      jSBGN_node.simulation.myState = jSBGN_node.simulation.myNextState;
-    }
-    delay = 500;
-    if ( mySimulator.updateSVG_Timeout == null ) {
-      updateSVG();
-			window.setTimeout('Iterate("'+id+'");', delay);		// iterate again
-    }
-		else 	{		// no changes -> steady state
-			updateSVG();
-			console.log('Boolean network reached steady state.');
-			this.stop();
-    }
-  }
-}
-
-function Simulator.start() {
-  this.running = true;
-  $('#simulation').unbind('click', this.start);
-  $('#simulation').click(stopSimulation);
-  $('#simulation').prop('value','Stop Simulation');
-  this.run();
-  console.log('Start Sim');
-}
-
-function Simulator.stop() {
-  this.running = false;
-  $('#simulation').unbind('click', this.stop);
-  $('#simulation').click(start);
-  $('#simulation').prop('value','Start Simulation');
-  console.log('Stop Sim');
-}
 
 
-function Simulator.run() {
 
-  if(!this.running)
-    return;
-    
-  if ( $('#Progress').text.length > 30 || $('#Progress').text.substr(0,9) != 'Iterating' )
-    $('#Progress').text = 'Iterating ...'
-  else	
-    $('#Progress').text += '.';
-  $('#Steps').text = parseInt($('#Steps').text) + 1;
-		
-  if (this.scopes)
-    POST(env['biographer'] + '/Simulate/Iterate', 'state=' + 
-    this.exportStateJSON(), function (response) {
-      scopesResponse(response);
-    });
-  else
-    this.iterate();
-}
+
 
