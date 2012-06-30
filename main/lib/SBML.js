@@ -1,30 +1,54 @@
 
-function SBML_import(file) {
-	var i, json, network;
+jSBGN.prototype.importSBML = function(file) {
+	var i, json, data;
+  
+  var formData = new FormData();
+  formData.append('file', file);
+  $.ajax({
+        url: env['biographer']+'/Put/UploadSBML',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+
+  $.get(env['biographer']+'/Get/processedSBML', 
+  function(response) {
+    data = response;
+  });
 	json = parseJSON(data);
-	network = new jSBGN(json.nodes, json.edges);
-	for (i in network.nodes) {
-		network.nodes[i].simulation = {
+  this.nodes = json.nodes;
+  this.edges = json.edges;
+  
+	for (i in this.nodes) {
+    var node = this.nodes[i];
+		node.simulation = {
 			myState : true,	//Default state of a node is true
 			update : true,
 			updateRule : ''
 		};
-		if ((network.nodes[i].type == 'Compartment') || (network.nodes[i].type == 'Process')) {
-			network.nodes[i].simulation.myState = false;
-			network.nodes[i].simulation.update = false;
+		if ((node.type == 'Compartment') || (node.type == 'Process')) {
+			node.simulation.myState = false;
+			node.simulation.update = false;
 		}
 	}
-	return network;
 }
 
-function SBML_importGuessSeed(data) {
+jSBGN.prototype.applyGuessSeed = function() {
+  var data, seed, node;
+  $.get(env['biographer']+'/Simulate/InitialSeed', 
+    function(response) {
+      data = response;
+    });
 	seed = parseJSON(data);
-	for (i in network.nodes) {
-		if (network.nodes[i].simulation.update) {
-			if(seed[network.nodes[i].id])
-				network.nodes[i].simulation.myState = true;
+	for (i in this.nodes) {
+    node = this.nodes[i];
+		if (node.simulation.update) {
+			if(seed[node.id])
+				node.simulation.myState = true;
 			else
-				network.nodes[i].simulation.myState = false;
+				node.simulation.myState = false;
 		}
 	}
 }

@@ -1,9 +1,7 @@
 
-jSBGN = function(nodes, edges) { // constructor
+jSBGN = function() { // constructor
 		this.nodes = [];
-		if (nodes) this.nodes = nodes;
 		this.edges = [];
-		if (edges) this.edges = edges;
 		}
 
 // http://www.javascriptkit.com/javatutors/oopjs2.shtml

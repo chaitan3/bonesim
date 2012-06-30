@@ -201,33 +201,7 @@ BooleNet = {
 				alert('Invalid BooleNet network!');
 
 			return network;
-			},
-
-	ImportFile: function() {
-//		document.getElementById('ButtonCol').style.display = 'none';
-//		document.getElementById('ProgressCol').style.display = 'inline';
-//		RotateTronCircle('canvas');
-		console.debug('Opening file ...');
-		var reader = new FileReader();
-		reader.readAsText(document.getElementById('File').files[0]);
-		reader.onload = this.FileOpened;
-		currentBooleNet = this;
-		},
-
-	FileOpened: function(evt) {	// this = FileReader Object
-		currentBooleNet.ProcessFile(evt.target.result);
-		},
-
-	ProcessFile: function(data) {
-		console.debug('Importing file ...');
-		network = BooleNet.Import(data);
-		console.debug('Requesting graphviz SVG from server ...');
-		doGraphviz();
-		if (typeof(importBooleNetWindow) != 'undefined')
-			importBooleNetWindow.close();
-		if (typeof(popupControls) != 'undefined')
-			window.setTimeout('popupControls.close();', 300);
-		}
+    }
 
 	}
 

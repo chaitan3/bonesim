@@ -94,9 +94,6 @@
   
 
 	<script src="main/controls/controls.js"></script>
-	<script src="main/controls/importBooleNet.js"></script>
-	<script src="main/controls/importRBoolNet.js"></script>
-	<script src="main/controls/importSBML.js"></script>
 
 	<script src="main/simulator.js"></script>
 
@@ -365,12 +362,21 @@
 	</script>
   
   <div id=importDialog title="Import File">
-    <input type=file id=File /> 
+    <input type=file id=file /> 
     <br><br>
     <b>Type of file:</b> <br>
-    <input type=radio  name="filetype" value="0" checked /> R BoolNet <br>
-    <input type=radio  name="filetype" value="1" /> Python BooleanNet <br>
-    <input type=radio  name="filetype" value="2" /> SBML <br>
+    <div id="fileType">
+      <input type="radio" name="fileType" id="r" checked />R BoolNet<br>
+      <input type="radio" name="fileType" id="python" />Python BooleanNet<br>
+      <input type="radio" name="fileType" id="sbml" />SBML<br>
+    </div>
+    
+    <br><b>Initial Seed:</b> <br>
+    <div id="seed">
+      <input type="radio" name="seed" id="allTrue" checked />All True<br>
+      <input type="radio" name="seed" id="guessSeed" />Guess Seed<br>
+    </div>
+    
     <br><br>
     <button id=importFile> Import </button>
   </div>

@@ -66,11 +66,11 @@ Simulator = function(jsbgn, simDelay) {
   var updateNodeRules = function(state) {	
     for (i in net.nodes) {
       var node = net.nodes[i];
-      if (nodes[i].simulation.update) {
-        if(state[nodes[i].id])
-          nodes[i].simulation.updateRule = (true).toString();
+      if (node.simulation.update) {
+        if(state[node.id])
+          node.simulation.updateRule = (true).toString();
         else
-          nodes[i].simulation.updateRule = (false).toString();
+          node.simulation.updateRule = (false).toString();
       }
     }
   }
