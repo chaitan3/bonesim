@@ -17,6 +17,21 @@ Simulator = function(jsbgn, simDelay) {
     $('#simulation').click(this.start);
     if($('#sbml').attr('checked'))
       simulator.scopes = true;
+      
+    for (n in net.nodes) {
+      var node = net.nodes[n];
+      node.simulation.updateRule = makeRule(node.simulation.updateRule);
+      var svgNode = $('#' + node.id + ' :eq(0)');
+      node.simulation.myElement = svgNode;
+      if (svgNode != null) {
+        svgNode.click(nodeClick);
+        svgNode.css('fill', '#10d010');
+        if (node.simulation.myState) 
+          svgNode.css('fill-opacity', 1);
+        else
+          svgNode.css('fill-opacity', 0);
+      }
+    }
   }
     
   this.run = function() {
@@ -149,20 +164,5 @@ Simulator = function(jsbgn, simDelay) {
     else
       opacity = 0;
     node.simulation.myElement.animate({'fill-opacity':opacity}, delay);
-  }
-  
-  for (n in net.nodes) {
-    var node = net.nodes[n];
-    node.simulation.updateRule = makeRule(node.simulation.updateRule);
-    var svgNode = $('#' + node.id + ' :eq(0)');
-    node.simulation.myElement = svgNode;
-    if (svgNode != null) {
-      svgNode.click(nodeClick);
-      svgNode.css('fill', '#10d010');
-      if (node.simulation.myState) 
-        svgNode.css('fill-opacity', 1);
-      else
-        svgNode.css('fill-opacity', 0);
-    }
   }
 }
