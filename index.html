@@ -64,6 +64,7 @@
 		.Icon:hover		{
 					border:			1px solid black;
 					}
+          
 		#divMouseClickBehavior	{
 					border:			1px solid white;
 					background-color:	white;
@@ -76,6 +77,26 @@
 		#divMouseClickBehavior:hover {
 					border:			1px solid black;
 					}
+          
+    #importDialog {
+      font-size: 14px;
+    }
+    #file {
+      margin: 10px;
+    }
+    #fileType {
+      width: 50%;
+    }
+    #seed {
+      float:right;
+      width: 50%;
+    }
+    #importFile {
+      position:relative;
+      margin: 10px;
+      left:40%;
+    }
+    
 	</style>
 
 	<script src="settings.js"></script>
@@ -122,9 +143,8 @@
   
   <input id=simulation	type=button value="Start Simulation"/>
   
-  
-	<label id=Progress></label>
 	<label id=Steps>0</label>
+  <label id=Progress></label>
 
 	<div class=tab id="graphviz_tab">
 		<img src="demo/Whi2.svg"/>
@@ -352,7 +372,7 @@
     bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
     $.ajaxSetup({ async: false });
     $('#importFile').click(readFile);
-    $('#importDialog').dialog({ autoOpen: false });
+    $('#importDialog').dialog({ autoOpen: false, minWidth: 500 });
     $('#importButton').click(function() {
       if(typeof(simulator) != "undefined") 
         simulator.destroy();
@@ -364,21 +384,22 @@
   
   <div id=importDialog title="Import File">
     <input type=file id=file /> 
-    <br><br>
-    <b>Type of file:</b> <br>
+    
+    <div id="seed">
+      <b>Initial Seed:</b> <br>
+      <input type="radio" name="seed" id="allTrue" checked />All True
+      <input type="radio" name="seed" id="allFalse" />All False<br>
+      <input type="radio" name="seed" id="randomSeed" />Random Seed<br>
+      <input type="radio" name="seed" id="guessSeed" />Guess Seed(SBML only)<br>
+    </div>
+    
     <div id="fileType">
+      <b>Type of file:</b> <br>
       <input type="radio" name="fileType" id="r" checked />R BoolNet<br>
       <input type="radio" name="fileType" id="python" />Python BooleanNet<br>
       <input type="radio" name="fileType" id="sbml" />SBML<br>
     </div>
     
-    <br><b>Initial Seed:</b> <br>
-    <div id="seed">
-      <input type="radio" name="seed" id="allTrue" checked />All True<br>
-      <input type="radio" name="seed" id="guessSeed" />Guess Seed<br>
-    </div>
-    
-    <br><br>
     <button id=importFile> Import </button>
   </div>
 

@@ -110,4 +110,3 @@ jSBGN.prototype.layout = function() {
   //~ force.stop();
 }
   
-

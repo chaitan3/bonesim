@@ -20,19 +20,26 @@ function importFile(data, file) {
     if($('#guessSeed').attr('checked'))
       network.applyGuessSeed();
   }
-  //Apply Seed
+
   $('#bui_tab').html('');
   graph = new bui.Graph($('#bui_tab')[0]);
-  var importHandle = graph.suspendRedraw(20000);
   
+  var importHandle = graph.suspendRedraw(20000);
 	bui.importFromJSON(graph, network);
   network.layout();
-  
   graph.unsuspendRedraw(importHandle);
   
-  simulator = new Simulator(network, 500);
-  $('#simulation').click(simulator.start);
-  
-  if($('#sbml').attr('checked'))
-    simulator.scopes = true;
+  simulator = new Simulator();
+  simulator.init(network, 500);
+}
+
+function getInitialSeed() {
+  if($('#allTrue').attr('checked')) 
+    return true;
+  else if ($('#allFalse').attr('checked')) 
+    return false;
+  else if ($('#randomSeed').attr('checked')) 
+    return Boolean(Math.round(Math.random()));
+  else
+    return true;
 }

@@ -26,10 +26,8 @@ guessEdgeType = function(label, rule) {
 			return typeSubstrate;
 			}
 
-BooleNet = {
-	Import: function(input) {
+jSBGN.prototype.importBooleNet = function(input) {
 			var input = input.split('\n');
-			var network = new jSBGN();
 			for (index in input) {
 				// for every line in the input file
 				var line = input[index];
@@ -48,7 +46,7 @@ BooleNet = {
 
 							// create target node if necessary
 							var targetNodeId = leftside.replace('*','').trim();
-							var targetNode = network.getNodeById(targetNodeId);
+							var targetNode = this.getNodeById(targetNodeId);
 							if (targetNode == null) {
 								var targetNode = {};
 								targetNode.id = targetNodeId;
@@ -57,12 +55,12 @@ BooleNet = {
 								targetNode.data.label = targetNodeId;
 								targetNode.edges = [];
 								targetNode.simulation = {
-											myState : true, // set default initial state
+											myState : getInitialState(), // set default initial state
 											update : true,
 											updateRule : '',
 											updateRulePy : ''
 											};
-								network.appendNode(targetNode);
+								this.appendNode(targetNode);
 								}
 
 							// in case it's an initial state definition ("... = True/False")
@@ -73,7 +71,7 @@ BooleNet = {
 							else	{
 								// create a process node
 								var processNodeId = 'process'+targetNodeId;
-								var processNode = network.getNodeById(processNodeId);
+								var processNode = this.getNodeById(processNodeId);
 								if (processNode != null)
 									var processNodeId = 'process'+targetNodeId+('_'+Math.random()).replace('.', '').substr(0, 4);
 								var processNode = {}
@@ -88,10 +86,10 @@ BooleNet = {
 											 updateRule : '',
 											 updateRulePy : ''
 											 };
-								network.appendNode(processNode);
+								this.appendNode(processNode);
 
 								// import update rule
-								targetNode.simulation.updateRule = makeRule(rightside);
+								targetNode.simulation.updateRule = rightside;
 								targetNode.simulation.updateRulePy = s[0]+' = '+s[1].trim();
 
 								// for every node on the right side of the rule, create nodes if necessary, and add edges
@@ -101,7 +99,7 @@ BooleNet = {
 									if (sourceNodeId != "True" && sourceNodeId != "False") {
 
 										// create source node if necessary
-										var sourceNode = network.getNodeById(sourceNodeId);
+										var sourceNode = this.getNodeById(sourceNodeId);
 										if (sourceNode == null) {			
 											var sourceNode = {};
 											sourceNode.id = sourceNodeId;
@@ -114,13 +112,13 @@ BooleNet = {
 														update: true,
 														updateRule: ''
 														};
-											network.appendNode(sourceNode);
+											this.appendNode(sourceNode);
 											}
 
 										// don't create a process node for the source node here
 							
 										// create edge from source to process node
-										var edge = network.getEdgeBySourceAndTargetId(sourceNodeId, processNodeId);
+										var edge = this.getEdgeBySourceAndTargetId(sourceNodeId, processNodeId);
 										if (edge == null) {
 											var edge = {};
 											edge.id = sourceNodeId+'_'+processNodeId;
@@ -131,11 +129,11 @@ BooleNet = {
 											edge.type = guessEdgeType(sourceNode.data.label, s[1]);
 											sourceNode.edges.push(edge);
 											processNode.edges.push(edge);
-											network.appendEdge(edge);
+											this.appendEdge(edge);
 											}
 
 										// create edge from process to target node
-										var edge = network.getEdgeBySourceAndTargetId(processNodeId, targetNodeId);
+										var edge = this.getEdgeBySourceAndTargetId(processNodeId, targetNodeId);
 										if (edge == null) {
 											var edge = {};
 											edge.id = processNodeId+' -> '+targetNodeId;
@@ -146,7 +144,7 @@ BooleNet = {
 											edge.type = typeProduct;
 											processNode.edges.push(edge);
 											targetNode.edges.push(edge);
-											network.appendEdge(edge);
+											this.appendEdge(edge);
 											}
 										}
 									}
@@ -157,7 +155,7 @@ BooleNet = {
 						if (line.indexOf('# States of ') == 0) {		// state description
 							var colon = line.indexOf(':');
 							var nodeId = line.substring(12, colon);
-							var node = network.getNodeById(nodeId);
+							var node = this.getNodeById(nodeId);
 							if (node == null)
 								console.error('Error in BooleNet input file, line '+index+': Failed to define states. No such node: "'+nodeId+'"');
 							else	{
@@ -177,7 +175,7 @@ BooleNet = {
 						else if (line.indexOf('# Annotation of ') == 0) {	// annotation
 							var colon = line.indexOf(':');
 							var nodeId = line.substring(16, colon);
-							var node = network.getNodeById(nodeId);
+							var node = this.getNodeById(nodeId);
 							if (node == null)
 								console.error('Error in BooleNet input file, line '+index+': Failed to annotate. No such node: "'+nodeId+'"')
 							else	{
@@ -194,14 +192,10 @@ BooleNet = {
 						}
 					}
 				}
-			console.log('Imported '+network.nodes.length+' nodes and '+network.edges.length+' edges.');
-//			console.log((network.getNodeById('Whi3p').simulation.updateRule);
+			console.log('Imported '+this.nodes.length+' nodes and '+this.edges.length+' edges.');
+//			console.log((this.getNodeById('Whi3p').simulation.updateRule);
 
-			if (network.nodes.length == 0 && network.edges.length == 0)
+			if (this.nodes.length == 0 && this.edges.length == 0)
 				alert('Invalid BooleNet network!');
 
-			return network;
     }
-
-	}
-

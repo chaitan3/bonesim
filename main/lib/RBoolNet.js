@@ -27,7 +27,7 @@ function returnNode(network, nodeId) {
 		node.data.label = nodeId;
 		node.edges = [];
 		node.simulation = {
-			myState : true,	//Default state of a node is true
+			myState : getInitialSeed(),	//Default state of a node is true
 			update : true,
 			updateRule : ''
 		};

@@ -5,15 +5,25 @@ Simulator = function(jsbgn, simDelay) {
   this.scopes = false;
   
   var obj = this;
-  var net = jsbgn;
-  var delay = simDelay;
+  var net;
+  var delay;
+  
+  this.init = function(jsbgn, simDelay) {
+    net = jsbgn;
+    delay = simDelay;
+    
+    $('#Progress').text('');
+    $('#Steps').text(0);
+    $('#simulation').click(this.start);
+    if($('#sbml').attr('checked'))
+      simulator.scopes = true;
+  }
     
   this.run = function() {
 
-    if(!(this.running)) {
-      alert('Hi');
+    if(!(this.running))
       return;
-    }
+      
     var text = $('#Progress').text();
     if ( text.length > 30 || text.substr(0,9) != 'Iterating' )
       $('#Progress').text('Iterating ...');
@@ -155,6 +165,4 @@ Simulator = function(jsbgn, simDelay) {
         svgNode.css('fill-opacity', 0);
     }
   }
-  $('#Progress').text('');
-  $('#Steps').text(0);
 }
