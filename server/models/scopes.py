@@ -8,10 +8,13 @@ try:
 except ImportError:
 	print "Warning: JSON library not found"
 
-def importScopes(sbml_file):
-	session.sbml = sbml_file
-	session.seed = None
-	
+import string, random
+
+def randomFileName():
+  size = 10
+  chars = string.letters + string.digits
+  return ''.join(random.choice(chars) for x in range(size))
+
 def getInitialSeed():
 	net = Scopes.Net()
 	nodemap = Scopes.importSBML(net, session.sbml)
