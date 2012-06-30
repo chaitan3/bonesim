@@ -80,13 +80,6 @@
 
 	<script src="settings.js"></script>
 
-	<script src="main/lib/string.js"></script>
-	<script src="main/lib/array.js"></script>
-	<script src="main/lib/popups.js"></script>
-	<script src="main/lib/templates.js"></script>
-	<script src="main/lib/visibility.js"></script>
-	<script src="main/lib/fader.js"></script>
-	<script src="main/lib/Tron.js"></script>
 	<script src="main/lib/jSBGN.js"></script>
 	<script src="main/lib/BooleNet.js"></script>
 	<script src="main/lib/RBoolNet.js"></script>
@@ -94,6 +87,7 @@
 	<script src="main/lib/import.js"></script>
 	<script src="main/lib/export.js"></script>
   
+  <!--script src="http://d3js.org/d3.v2.js"></script-->
   <script src="main/lib/d3.js"></script>
   <script src="main/lib/d3.geom.js"></script>
   <script src="main/lib/d3.layout.js"></script>
@@ -109,25 +103,15 @@
 	<!-- begin biographer-visualizer -->
 	<script type="text/javascript" src="bui/js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="bui/js/jquery.simulate.js"></script>
-	<script type="text/javascript" src="bui/js/jquery-ui-1.8.12.custom.min.js"></script>
+	<script type="text/javascript" src="bui/js/jquery-ui-1.8.21.custom.min.js"></script>
 	<script type="text/javascript" src="bui/js/biographer-ui.js"></script>
-	<link rel="stylesheet" type="text/css" href="bui/css/jquery-ui-1.8.13.css"/>
+	<link rel="stylesheet" type="text/css" href="bui/css/jquery-ui-1.8.21.custom.css"/>
 	<link rel="stylesheet" type="text/css" href="bui/css/visualization-html.css"/>
   
 	<!-- end biographer-visualizer -->
 </head>
 
 <body>
-	<script>
-		network = new jSBGN( nodes=[], edges=[] );
-
-		window.onunload = function() {
-          if ( typeof(popupControls) != 'undefined' )
-				
-					popupControls.close();
-//					confirm('Really close and loose unsaved data ?');
-					}
-	</script>
 
 	<input class=tabselector id=graphviz	type=button value=graphviz />
 	<input class=tabselector id=bui		type=button value=bui />
@@ -136,7 +120,7 @@
 
 	<!--input type=button value=half onclick='document.getElementById("viewport").setAttribute("transform", "scale(300 300) rotate(0) transform(4 1448)");'/-->
 
-	<img class=Icon src="img/Import.png" alt="Press C for Controls" onclick="showControls();" />
+	<img class=Icon id=importButton src="img/Import.png" alt="Open File"/>
 	<img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" />
   
   <input id=simulation	type=button value="Start Simulation"/>
@@ -171,7 +155,7 @@
 	</div>
 	<script src="main/lib/tabs.js"></script>
 	<script>
-		showTab('bui');
+		
 		var example = {
     nodes : [
         {
@@ -366,21 +350,33 @@
         }
     ]
 };
-		
-		console.log('Initializing bui');
-		
-		bui.ready(function() {
-      $.ajaxSetup({ async: false });
-
-			bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
-      graph = new bui.Graph($('#bui_tab')[0]);
-            LoadMammal();
-        });
+	showTab('bui');	
+  bui.ready(function() {
+    bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
+    $.ajaxSetup({ async: false });
+    $('#importFile').click(readFile);
+    graph = new bui.Graph($('#bui_tab')[0]);
+    $('#importDialog').dialog({ autoOpen: false });
+    $('#importButton').click(function() {
+      $('#importDialog').dialog('open');
+    });
+  });
 		
 	</script>
+  
+  <div id=importDialog title="Import File">
+    <input type=file id=File /> 
+    <br><br>
+    <b>Type of file:</b> <br>
+    <input type=radio  name="filetype" value="0" checked /> R BoolNet <br>
+    <input type=radio  name="filetype" value="1" /> Python BooleanNet <br>
+    <input type=radio  name="filetype" value="2" /> SBML <br>
+    <br><br>
+    <button id=importFile> Import </button>
+  </div>
 
 	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
-
+  
 	<div id="divMouseClickBehavior" align=right onclick="MouseShowHide();">
 		<script>
 			MouseShowHide = function() {
@@ -390,33 +386,12 @@
 						}
 		</script>
 		<img id=Mouse src="img/Nuvola_devices_mouse.png" height=28><br/>
+    
 		<div id=MouseClickBehavior style="display:none;">
 		<input type=radio name=MouseClickBehavior value='simulation' checked /> Simulation<br/>
 		<input type=radio name=MouseClickBehavior value='annotation'        /> Annotation
 		</div>
 	</div>
-
-	<script>
-		function showControls() {
-//			console.log(typeof(popupControls));
-			if ( typeof(popupControls) != "undefined" )
-				popupControls.close();
-			popupControls = new TemplatePopup.open('/controls.html', 'Controls', 220, 360);
-			}
-
-		document.onkeyup = function(e) {
-					if (e.keyCode == 67) { // "C"
-						showControls();
-						}
-					else if (e.keyCode == 27) { // escape
-						if ( typeof(importBooleNetWindow) != 'undefined' )
-							importBooleNetWindow.close();
-						else 	popupControls.close();
-						}
-					};
-//		showControls();
-//		window.setTimeout('LoadWhi2();', 500);
-	</script>
 
 </body>
 

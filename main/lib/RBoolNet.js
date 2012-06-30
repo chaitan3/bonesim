@@ -29,8 +29,7 @@ function returnNode(network, nodeId) {
 		node.simulation = {
 			myState : true,	//Default state of a node is true
 			update : true,
-			updateRule : '',
-			updateRuleR : ''
+			updateRule : ''
 		};
 		network.appendNode(node);
 	}
@@ -41,9 +40,10 @@ function returnNode(network, nodeId) {
  * @param {string} file - The contents of the R BoolNet file.
  * @return {jSBGN} An object containing the Boolean network.
  */
-function RBoolNet_Import(file) {
-	var lines, cols, i, j, network, targetNodeId, sourceNodeIds, rule, edge, targetNode, sourceNode;
-	network = new jSBGN();
+jSBGN.prototype.importRBoolNet = function(file) {
+	var lines, cols, i, j;
+  var targetNodeId, sourceNodeIds, rule, edge, targetNode, sourceNode;
+	
 	lines = file.split('\n');	//The file consists of a set of lines describing each node
 	for (i = 1; i < lines.length && lines[i].trim().length > 0; i++) {
 		cols = lines[i].split(',');
@@ -51,15 +51,15 @@ function RBoolNet_Import(file) {
 		if (cols.length != 2) {
 			console.log("The given R BoolNet file cannot be processed");
 		}
-		targetNode = returnNode(network, targetNodeId);
+		targetNode = returnNode(this, targetNodeId);
 		targetNode.simulation.updateRule = RBoolNet2JS(cols[1]);
 		targetNode.simulation.updateRuleR = cols[0].trim() + ' <- ' + cols[1].trim();
 		//Get the list of nodes specified in the update rule
 		sourceNodeIds = cols[1].match(protein_name_regex);
 		for (j in sourceNodeIds) {
-			sourceNode = returnNode(network, sourceNodeIds[j]);
+			sourceNode = returnNode(this, sourceNodeIds[j]);
 			//Create an edge between the two nodes
-			edge = network.getEdgeBySourceAndTargetId(sourceNodeIds[j], targetNodeId);
+			edge = this.getEdgeBySourceAndTargetId(sourceNodeIds[j], targetNodeId);
 			if (edge == null) {
 				edge = {};
 				edge.id = sourceNodeIds[j] + ' -> ' + targetNodeId;
@@ -69,10 +69,9 @@ function RBoolNet_Import(file) {
 				edge.targetNode = targetNode;
 				sourceNode.edges.push(edge);
 				targetNode.edges.push(edge);
-				network.appendEdge(edge);
+				this.appendEdge(edge);
 			}
 		}
 	}
-	console.log('imported ' + network.nodes.length + ' nodes and ' + network.edges.length + ' edges.');
-	return network;
+	console.log('imported ' + this.nodes.length + ' nodes and ' + this.edges.length + ' edges.');
 }

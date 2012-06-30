@@ -38,7 +38,6 @@ Simulator = function(jsbgn, simDelay) {
     $('#simulation').unbind('click', obj.start);
     $('#simulation').click(obj.stop);
     $('#simulation').prop('value','Stop Simulation');
-    console.log('Start Sim');
     obj.run();
   }
 
@@ -47,7 +46,6 @@ Simulator = function(jsbgn, simDelay) {
     $('#simulation').unbind('click', obj.stop);
     $('#simulation').click(obj.start);
     $('#simulation').prop('value','Start Simulation');
-    console.log('Stop Sim');
   }
 
   var exportStateJSON = function() {	
@@ -119,7 +117,7 @@ Simulator = function(jsbgn, simDelay) {
   }
   
   var nodeClick = function(event) { 
-    var node = net.getNodeById(event.srcElement.parentElement.id);
+    var node = net.getNodeById($(this).parent().attr('id'));
     var opacity;
     node.simulation.myState = !node.simulation.myState;
     nodeColorUpdate(node);

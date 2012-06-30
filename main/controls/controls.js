@@ -1,26 +1,24 @@
-importBooleNet = function() {
-			if ( typeof(importBooleNetWindow) != 'undefined' )
-				importBooleNetWindow.close();
-			importBooleNetWindow = new TemplatePopup.open('/importBooleNet.html', 'Import Boolean Network', 650, 230);
-			};
-			
-importRBoolNet = function() {
-			if ( typeof(importRBoolNetWindow) != 'undefined' )
-				importRBoolNetWindow.close();
-			importRBoolNetWindow = new TemplatePopup.open('/importRBoolNet.html', 'Import Boolean Network', 650, 230);
-			};
-			
-importSBML = function() {
-			if ( typeof(importSBMLWindow) != 'undefined' )
-				importSBMLWindow.close();
-			importSBMLWindow = new TemplatePopup.open('/importSBML.html', 'Import Boolean Network', 650, 230);
-			};
+function readFile() {
+  var file = ($('#File')[0].files)[0];
+  var reader = new FileReader();
+  reader.onloadend = function(read) {
+    importFile(read.target.result);
+  }
+  reader.readAsText(file);
+  $('#importDialog').dialog('close');
+}
 
-showJSON = function() {
-		window.open('data:text/html,network = '+JSON.stringify(network)+';', 'Export JSON', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
-		};
-
-showSVG = function() {
-		window.open('data:text/html,&lt;svg&gt;&lt;/svg&gt;', 'View SVG', 'location=no,directories=no,status=yes,menubar=no,copyhistory=no,scrollbars=no');
-		};
-
+function importFile(data) {
+  var network = new jSBGN();
+  network.importRBoolNet(data);
+  
+  importHandle = graph.suspendRedraw(20000);
+  
+	bui.importFromJSON(graph, network);
+  network.layout();
+  
+  graph.unsuspendRedraw(importHandle);
+  
+  simulator = new Simulator(network, 500);
+  $('#simulation').click(simulator.start);
+}

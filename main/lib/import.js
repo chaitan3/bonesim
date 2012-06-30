@@ -1,20 +1,3 @@
-
-function ImportChain() {
-	document.getElementById('ButtonCol').style.display = 'none';
-	document.getElementById('ProgressCol').style.display = 'inline';
-//	RotateTronCircle('canvas');
-	console.debug('Opening file ...');
-	var reader = new FileReader();
-	reader.readAsText(document.getElementById('File').files[0]);
-	reader.onload = Opened;
-	}
-
-function Opened(evt) {
-	data = evt.target.result;
-	debug('Opened. Asking the server to translate the file ...');
-	window.setTimeout('Translate('+data+');', 100);
-	}
-
 function parseJSON(string) {
 	try 	{	// var response = JSON.parse(translated);
 			eval('var obj = '+string+';');	// very dangerous for man-in-the middle code injection !!!
@@ -25,31 +8,6 @@ function parseJSON(string) {
 			return ""
 		}
 	return obj;
-	}
-
-function Parse() {
-	json = parseJSON(translated);
-	s = 'Import successfull: '+json['nodes'].length+' nodes, '+json['edges'].length+' edges';
-	network = json;
-	if ( document.getElementById('layout').checked ) {
-		debug(s+'<br/>Asking the server to make a nice layout ...');
-		window.setTimeout('doLayout();', 100);
-		}
-	else	doneLayouting(null);
-	}
-
-function doLayout() {
-	POST(env['biographer']+'/Layout/biographer', 'network='+network.exportJSONstring(), doneLayouting);
-	}
-
-function doneLayouting(response) {
-	if ( response != null )
-		network = parseJSON(response);
-	if ( document.getElementById('graphviz').checked ) {
-		debug('Plotting using Graphviz ...');
-		window.setTimeout('doGraphviz();', 100);
-		}
-	else	doneGraphviz(null);
 	}
 
 function doGraphviz() {
@@ -94,17 +52,6 @@ function doneGraphviz(response) {
 	else
 		window.close();
 */
-	}
-
-function updateUI() {
-//	delete graph;
-//	graph = new bui.Graph( document.body );
-//	bui.importFromJSON(graph, network);
-	debug('UI updated. '+network.nodes.length+' nodes, '+network.edges.length+' edges.');
-	StartSimulation();
-//	window.setTimeout('window.close();', 500);
-//	window.setTimeout('window.close();', 1000);
-//	window.close();
 	}
   
 function get_nodes_edges(){
@@ -172,3 +119,38 @@ function get_nodes_edges(){
         return {nodes:nodes, edges:edges}
 }
 
+String.prototype.replace_all = function(needle, replacement)
+				{
+					var haystack = String(this);
+					while ( haystack.indexOf(needle) > -1 ) {
+						haystack = haystack.replace(needle, replacement);
+						}
+					return haystack;
+				};
+
+if (typeof(String.prototype.trim) === "undefined")
+	{
+	    String.prototype.trim = function() 
+				    {
+					return String(this).replace(/^\s+|\s+$/g, '');
+				    };
+	}
+// Array Remove - By John Resig (MIT Licensed)
+
+Array.drop = function(from, to) {
+		  var rest = this.slice((to || from) + 1 || this.length);
+		  this.length = from < 0 ? this.length + from : from;
+		  return this.push.apply(this, rest);
+		};
+
+Array.push = function(el) {				// kind of a bugfix, because arr.push doesn't work (in Chromium)
+		this = this.concat([el]);
+		}
+
+function show(id) {
+	document.getElementById(id).style.visibility = 'visible';
+	}
+
+function hide(id) {
+	document.getElementById(id).style.visibility = 'hidden';
+	}
