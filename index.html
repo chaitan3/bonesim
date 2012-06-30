@@ -352,9 +352,10 @@
     bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
     $.ajaxSetup({ async: false });
     $('#importFile').click(readFile);
-    graph = new bui.Graph($('#bui_tab')[0]);
     $('#importDialog').dialog({ autoOpen: false });
     $('#importButton').click(function() {
+      if(typeof(simulator) != "undefined") 
+        simulator.destroy();
       $('#importDialog').dialog('open');
     });
   });

@@ -20,10 +20,9 @@ function importFile(data, file) {
     if($('#guessSeed').attr('checked'))
       network.applyGuessSeed();
   }
-    
   //Apply Seed
-  
-  
+  $('#bui_tab').html('');
+  graph = new bui.Graph($('#bui_tab')[0]);
   var importHandle = graph.suspendRedraw(20000);
   
 	bui.importFromJSON(graph, network);

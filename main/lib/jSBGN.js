@@ -90,23 +90,19 @@ jSBGN.prototype.exportJSONstring = function() {
 jSBGN.prototype.layout = function() {
   var nodes_edges = get_nodes_edges();
   
-  //~ setTimeout(function() {
-    //~ bui.grid.init(nodes_edges.nodes,nodes_edges.edges);
-    //~ bui.grid.put_on_grid();
-    //~ bui.grid.layout();
-    //~ alert('Hi');
-    //~ graph.unsuspendRedraw(importHandle);
-  //~ }, 2000);
+  bui.grid.init(nodes_edges.nodes,nodes_edges.edges);
+  bui.grid.put_on_grid();
+  bui.grid.layout();
   
-  bui.settings.straightenEdges = false;
-  var cont = graph.container();
-  var force = d3.layout.force()
-         .charge(-400)
-         .linkDistance(200)
-         .nodes(nodes_edges.nodes)
-         .links(nodes_edges.edges)
-         .size([$(cont).width(), $(cont).height()])
-         .start();
+  //~ bui.settings.straightenEdges = false;
+  //~ var cont = graph.container();
+  //~ var force = d3.layout.force()
+         //~ .charge(-400)
+         //~ .linkDistance(200)
+         //~ .nodes(nodes_edges.nodes)
+         //~ .links(nodes_edges.edges)
+         //~ .size([$(cont).width(), $(cont).height()])
+         //~ .start();
   //~ while(force.alpha() > 0.005) {
     //~ console.log(force.alpha())
     //~ force.tick();

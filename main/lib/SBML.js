@@ -11,7 +11,7 @@ jSBGN.prototype.importSBML = function(file) {
         cache: false,
         contentType: false,
         processData: false
-    });
+  });
 
   $.get(env['biographer']+'/Get/processedSBML', 
   function(response) {

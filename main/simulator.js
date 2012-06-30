@@ -10,9 +10,10 @@ Simulator = function(jsbgn, simDelay) {
     
   this.run = function() {
 
-    if(!this.running)
+    if(!(this.running)) {
+      alert('Hi');
       return;
-      
+    }
     var text = $('#Progress').text();
     if ( text.length > 30 || text.substr(0,9) != 'Iterating' )
       $('#Progress').text('Iterating ...');
@@ -21,13 +22,17 @@ Simulator = function(jsbgn, simDelay) {
     $('#Steps').text(parseInt($('#Steps').text()) + 1);
       
     if (this.scopes)
-      $.post(env['biographer'] + '/Simulate/Iterate', 
-      { state : exportStateJSON() }, 
-      function (resp) {
-        var newState = parseJSON(resp);
-        console.log(JSON.stringify(newState));
-        updateNodeRules(newState);
-        iterate();
+      $.ajax({
+        url: env['biographer']+'/Simulate/Iterate',
+        type: 'POST',
+        async: false, 
+        data: { state : exportStateJSON() },
+        success: function (resp) {
+          var newState = parseJSON(resp);
+          console.log(JSON.stringify(newState));
+          updateNodeRules(newState);
+          iterate();
+        }
       });
     else
        iterate();
@@ -47,7 +52,12 @@ Simulator = function(jsbgn, simDelay) {
     $('#simulation').click(obj.start);
     $('#simulation').prop('value','Start Simulation');
   }
-
+  
+  this.destroy = function() {
+    this.stop();
+    $('#simulation').unbind('click', obj.start);
+  }
+    
   var exportStateJSON = function() {	
     var state = new Object();
     for (i in net.nodes) {
@@ -145,5 +155,6 @@ Simulator = function(jsbgn, simDelay) {
         svgNode.css('fill-opacity', 0);
     }
   }
-  $('#Steps').text = 0;
+  $('#Progress').text('');
+  $('#Steps').text(0);
 }
