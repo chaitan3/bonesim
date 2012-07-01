@@ -1,0 +1,46 @@
+#bui, #editor, #annotation {
+  width: 100%;
+  height: 100%;
+}
+
+#Progress {
+  color: blue;
+  font-weight: bold;
+}
+#Progress, #Steps {
+  position: relative;
+  top: 10px;
+}
+.Icon {	
+  border:	1px solid white;
+  margin-top: 5px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.Icon:hover{
+  border: 1px solid black;
+}
+
+#tabs {
+  font-size: 16px;
+}
+        
+#importDialog {
+  font-size: 14px;
+}
+#file {
+  margin: 10px;
+}
+#fileType {
+  width: 50%;
+}
+#seed {
+  float:right;
+  width: 50%;
+}
+#importFile {
+  position:relative;
+  margin: 10px;
+  left:40%;
+}

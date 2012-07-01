@@ -73,7 +73,8 @@ Simulator = function(jsbgn, simDelay) {
     obj.running = true;
     $('#simulation').unbind('click', obj.start);
     $('#simulation').click(obj.stop);
-    $('#simulation').prop('value','Stop Simulation');
+    $('#simulation').button( "option", "label", 'Stop Simulation');
+    $('#simulation').button( "option", "icons", {primary: 'ui-icon-pause'});
     obj.run();
   }
 
@@ -81,7 +82,8 @@ Simulator = function(jsbgn, simDelay) {
     obj.running = false;
     $('#simulation').unbind('click', obj.stop);
     $('#simulation').click(obj.start);
-    $('#simulation').prop('value','Start Simulation');
+    $('#simulation').button( "option", "label", 'Start Simulation');
+    $('#simulation').button( "option", "icons", {primary: 'ui-icon-play'});
   }
   
   this.destroy = function() {

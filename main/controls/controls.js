@@ -1,11 +1,25 @@
+bui.ready(function() {
+  bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
+  $('#tabs').tabs();
+  $('#simulation').button({icons: {primary: "ui-icon-play" }});
+  $('#importFile').click(readFile);
+  $('#importDialog').dialog({ autoOpen: false, minWidth: 500 });
+  $('#importButton').click(function() {
+    if(typeof(simulator) != "undefined") 
+      simulator.destroy();
+    $('#importDialog').dialog('open');
+  });
+});
+
 function readFile() {
   var file = ($('#file')[0].files)[0];
   var reader = new FileReader();
+  
+  $('#importDialog').dialog('close');
   reader.onloadend = function(read) {
     importFile(read.target.result, file);
   }
   reader.readAsText(file);
-  $('#importDialog').dialog('close');
 }
 
 function importFile(data, file) {
@@ -24,8 +38,8 @@ function importFile(data, file) {
 }
 
 function importNetwork(network) {
-  $('#bui_tab').html('');
-  graph = new bui.Graph($('#bui_tab')[0]);
+  $('#bui').html('');
+  graph = new bui.Graph($('#bui')[0]);
   
   var importHandle = graph.suspendRedraw(20000);
 	bui.importFromJSON(graph, network);

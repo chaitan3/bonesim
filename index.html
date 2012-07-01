@@ -1,383 +1,70 @@
 <html>
 
 <head>
-	<title>biosimulator</title>
-
-	<style>
-		
-		body			{
-					background-color:	white;
-					color:			#9ec9e2;
-					overflow:		hidden;
-					}
-		div.tab			{
-					border:			2px solid blue;
-					position:		absolute;
-					height:100%;
-					width:100%;
-					left:			1px;
-					right:			1px;
-					top:			56px;
-					bottom:			1px;
-					overflow:		scroll;
-					}
-		div.tab td		{
-					text-align:		center;
-					vertical-align:		middle;
-					color:			#7474cf;
-					font-weight:		bold;
-					font-size:		26;
-					}
-		input.tabselector	{
-					border:			none;
-					color:			white;
-					background-color:	white;
-					background-image:	url(img/Aqua_button.png);
-					width:			126px;
-					height:			32px;
-					background-repeat:	no-repeat;
-					background-position:	middle center;
-					}
-		#graphvizSVG		{
-					border:			none;
-					position:		absolute;
-					left:			1px;
-					top:			1px;
-					right:			1px;
-					bottom:			1px;
-					}
-		#buiCanvas		{
-					top:			60px;
-					bottom:			0;
-					color:			#9ec9e2;
-					}
-		#Progress		{
-					color:			blue;
-					font-weight:		bold;
-					}
-		.Icon			{	
-					border:			1px solid grey;
-					width:			32px;
-					height:			32px;
-					cursor:			pointer;
-					}
-		.Icon:hover		{
-					border:			1px solid black;
-					}
-          
-		#divMouseClickBehavior	{
-					border:			1px solid white;
-					background-color:	white;
-					overflow:		hidden;
-					float:			right;
-					z-index:		5;
-					margin-right:		30px;
-					padding:		5px;
-					}
-		#divMouseClickBehavior:hover {
-					border:			1px solid black;
-					}
-          
-    #importDialog {
-      font-size: 14px;
-    }
-    #file {
-      margin: 10px;
-    }
-    #fileType {
-      width: 50%;
-    }
-    #seed {
-      float:right;
-      width: 50%;
-    }
-    #importFile {
-      position:relative;
-      margin: 10px;
-      left:40%;
-    }
-    
-	</style>
+  <title>biosimulator</title>
 
 	<script src="settings.js"></script>
-
-	<script src="main/lib/jSBGN.js"></script>
-	<script src="main/lib/boolnet.js"></script>
-	<script src="main/lib/SBML.js"></script>
-	<script src="main/lib/import.js"></script>
-	<script src="main/lib/export.js"></script>
   
-  <!--script src="http://d3js.org/d3.v2.js"></script-->
-  <script src="main/lib/d3.js"></script>
-  <script src="main/lib/d3.geom.js"></script>
-  <script src="main/lib/d3.layout.js"></script>
-  <script src="main/lib/libSBGN.js"></script>
-
-	<script src="main/controls/controls.js"></script>
-	<script src="main/simulator.js"></script>
-
-	<!-- begin biographer-visualizer -->
+  <!-- begin biographer-visualizer -->
 	<script type="text/javascript" src="bui/js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="bui/js/jquery.simulate.js"></script>
 	<script type="text/javascript" src="bui/js/jquery-ui-1.8.21.custom.min.js"></script>
 	<script type="text/javascript" src="bui/js/biographer-ui.js"></script>
 	<link rel="stylesheet" type="text/css" href="bui/css/jquery-ui-1.8.21.custom.css"/>
 	<link rel="stylesheet" type="text/css" href="bui/css/visualization-html.css"/>
-  
 	<!-- end biographer-visualizer -->
+  
+  <!--script src="http://d3js.org/d3.v2.js"></script-->
+  <script src="main/lib/d3.js"></script>
+  <script src="main/lib/d3.geom.js"></script>
+  <script src="main/lib/d3.layout.js"></script>
+  
+  <script src="main/lib/libSBGN.js"></script>
+
+  <script src="main/lib/import.js"></script>
+	<script src="main/lib/jSBGN.js"></script>
+  <script src="main/simulator.js"></script>
+	<script src="main/lib/boolnet.js"></script>
+	<script src="main/lib/SBML.js"></script>
+	<script src="main/lib/export.js"></script>
+
+  <script src="main/controls/controls.js"></script>
+  <link rel="stylesheet" type="text/css" href="main/controls/simulator.css"/>
+	
 </head>
 
 <body>
-
-	<input class=tabselector id=graphviz	type=button value=graphviz />
-	<input class=tabselector id=bui		type=button value=bui />
-	<input class=tabselector id=editor	type=button value=editor />
-	<input class=tabselector id=annotation	type=button value=annotation />
-
-	<!--input type=button value=half onclick='document.getElementById("viewport").setAttribute("transform", "scale(300 300) rotate(0) transform(4 1448)");'/-->
-
-	<img class=Icon id=importButton src="img/Import.png" alt="Open File"/>
-	<img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" />
-  
-  <input id=simulation	type=button value="Start Simulation"/>
-  
-	<label id=Steps>0</label>
-  <label id=Progress></label>
-
-	<div class=tab id="graphviz_tab">
-		<img src="demo/Whi2.svg"/>
-	</div>
-	<div class=tab id="bui_tab">
-		
-	</div>
-	<div class=tab id="editor_tab">
-		<table style="width:100%; height:100%">
-		<tr>
-		<td style="text-align:center; vertical-align:middle;">
-		editor not installed
-		</td>
-		</tr>
-		</table>
-	</div>
-	<div class=tab id="annotation_tab" style="padding: 20px;">
-		<table style="width:100%; height:100%">
-		<tr>
-		<td style="text-align:center; vertical-align:middle;">
-		no annotations loaded
-		</td>
-		</tr>
-		</table>
-	</div>
-	<script src="main/lib/tabs.js"></script>
-	<script>
-		
-		var example = {
-    nodes : [
-        {
-            id : 'node1',
-            sbo : 253,
-            data : {
-                x : 100,
-                y : 300,
-                subnodes : [
-                   'node2',
-                   'node3'
-                ],
-                'modification' : [
-                   [
-                      216,
-                      "1068"
-                   ],
-                   [
-                      216,
-                      "1148"
-                   ],
-                   [
-                      216,
-                      "1173"
-                   ],
-                   [
-                      216,
-                      "1086"
-                   ],
-                   [
-                      216,
-                      "992"
-                   ]
-                ]
-            }
-        }, {
-            id : 'node2',
-            sbo : 245,
-            data : {
-                label : 'actin'
-            }
-        }, {
-            id : 'node3',
-            sbo : 245,
-            data : {
-                label : 'myosin'
-            }
-        }, {
-            id : 'node4',
-            sbo : 253,
-            data : {
-                x : 610,
-                y : 325,
-                subnodes : [
-                    'node5',
-                    'node6',
-                    'node7'
-                ]
-            }
-        }, {
-            id : 'node5',
-            sbo : 245,
-            data : {
-                label : 'actin'
-            }
-        }, {
-            id : 'node6',
-            sbo : 245,
-            data : {
-                label : 'myosin'
-            }
-        }, {
-            id : 'node7',
-            sbo : 247,
-            data : {
-                label : 'ATP'
-            }
-        }, {
-            id : 'node8',
-            sbo : 247,
-            data : {
-                label : 'ADP',
-                x : 380,
-                y : 145
-            }
-        }, {
-            id : 'node9',
-            sbo : 247,
-            data : {
-                label : 'Pi',
-                x : 495,
-                y : 155
-            }
-        }, {
-            id : 'node10',
-            sbo : 375,
-            data : {
-                x : 490,
-                y : 250
-            }
-        }, {
-            id : 'node11',
-            sbo : 375,
-            data : {
-                x : 255,
-                y : 180
-            }
-        }, {
-            id : 'node12',
-            sbo : 245,
-            data : {
-                label : 'myosin',
-                x : 220,
-                y : 10
-            }
-        }, {
-            id : 'node13',
-            sbo : 245,
-            data : {
-                label : 'actin',
-                x : 590,
-                y : 20
-            }
-        }, {
-            id : 'node14',
-            sbo : 375,
-            data : {
-                x : 715,
-                y : 125
-            }
-        }
-    ],
-    edges : [
-        {
-             id : 'edge1',
-             sbo : 459,
-             source : 'node1',
-             target : 'node11'
-        }, {
-             id : 'edge2',
-             sbo : 132154, // incorrect SBO id to test robustness
-             source : 'node11',
-             target : 'node12',
-             data : {
-                style : 'dashed'
-            }
-        }, {
-             id : 'edge3',
-             sbo : 459,
-             source : 'node11',
-             target : 'node13',
-            data : {
-                style : 'dotted'
-            }
-        }, {
-             id : 'edge4',
-             sbo : 459,
-             source : 'node13',
-             target : 'node14'
-        }, {
-             id : 'edge5',
-             sbo : 461,
-             source : 'node14',
-             target : 'node4',
-            data : {
-                style : 'dashed'
-            }
-        }, {
-             id : 'edge6',
-             sbo : 13,
-             source : 'node4',
-             target : 'node10'
-        }, {
-             id : 'edge7',
-             sbo : 20,
-             source : 'node10',
-             target : 'node9',
-            data : {
-                type : 'curve',
-                handles : [{ x : 540, y : 240 }, { x : 534, y : 217 }]
-            }
-        }, {
-             id : 'edge8',
-             sbo : 19,
-             source : 'node10',
-             target : 'node8'
-        }, {
-             id : 'edge9',
-             sbo : 459,
-             source : 'node10',
-             target : 'node1'
-        }
-    ]
-};
-	showTab('bui');	
-  bui.ready(function() {
-    bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
-    $('#importFile').click(readFile);
-    $('#importDialog').dialog({ autoOpen: false, minWidth: 500 });
-    $('#importButton').click(function() {
-      if(typeof(simulator) != "undefined") 
-        simulator.destroy();
-      $('#importDialog').dialog('open');
-    });
-  });
-		
-	</script>
+  <div id=tabs>
+    <ul>
+      <li><a href="#bui">bui</a></li>
+      <li><a href="#graphviz">graphviz</a></li>
+      <li><a href="#editor">editor</a></li>
+      <li><a href="#annotation">annotations</a></li>
+      
+      <li><img class=Icon id=importButton src="img/Import.png" alt="Open File"/></li>
+      <li><img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" /></li>
+      <li><button id=simulation>Start Simulation</button></li>
+      <li><label id=Steps>0</label></li>
+      <li><label id=Progress></label></li>
+      
+    </ul>
+    
+    <div id="bui">
+    </div>
+    
+    <div id="graphviz">
+      <img src="demo/Whi2.svg"/>
+    </div>
+    
+    <div id="editor">
+      editor not installed
+    </div>
+    
+    <div id="annotation">
+      no annotations loaded
+    </div>
+    
+  </div>
   
   <div id=importDialog title="Import File">
     <input type=file id=file /> 
@@ -399,24 +86,6 @@
     
     <button id=importFile> Import </button>
   </div>
-
-	<!--script src="/biographer/static/tools/SVGPan.js"></script-->
-  
-	<div id="divMouseClickBehavior" align=right onclick="MouseShowHide();">
-		<script>
-			MouseShowHide = function() {
-						div = document.getElementById('MouseClickBehavior');
-						if (div.style.display == 'none')	div.style.display = 'inline';
-						else					div.style.display = 'none';
-						}
-		</script>
-		<img id=Mouse src="img/Nuvola_devices_mouse.png" height=28><br/>
-    
-		<div id=MouseClickBehavior style="display:none;">
-		<input type=radio name=MouseClickBehavior value='simulation' checked /> Simulation<br/>
-		<input type=radio name=MouseClickBehavior value='annotation'        /> Annotation
-		</div>
-	</div>
 
 </body>
 
