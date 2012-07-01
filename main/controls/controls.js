@@ -16,11 +16,14 @@ function importFile(data, file) {
   else if($('#python').attr('checked'))
     network.importBooleanNetwork(data, '=');
   else {
-    network.importSBML(file);
     if($('#guessSeed').attr('checked'))
-      network.applyGuessSeed();
+      network.importSBML(file, true);
+    else
+      network.importSBML(file, false);
   }
+}
 
+function importNetwork(network) {
   $('#bui_tab').html('');
   graph = new bui.Graph($('#bui_tab')[0]);
   

@@ -57,7 +57,6 @@ Simulator = function(jsbgn, simDelay) {
       $.ajax({
         url: env['biographer']+'/Simulate/Iterate',
         type: 'POST',
-        async: false, 
         data: { state : exportStateJSON() },
         success: function (resp) {
           var newState = JSON.parse(resp);

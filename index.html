@@ -368,7 +368,6 @@
 	showTab('bui');	
   bui.ready(function() {
     bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
-    $.ajaxSetup({ async: false });
     $('#importFile').click(readFile);
     $('#importDialog').dialog({ autoOpen: false, minWidth: 500 });
     $('#importButton').click(function() {
