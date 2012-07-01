@@ -12,9 +12,9 @@ function importFile(data, file) {
   var network = new jSBGN();
   
   if($('#r').attr('checked'))
-    network.importRBoolNet(data);
+    network.importBooleanNetwork(data, ',');
   else if($('#python').attr('checked'))
-    network.importBooleNet(data);
+    network.importBooleanNetwork(data, '=');
   else {
     network.importSBML(file);
     if($('#guessSeed').attr('checked'))

@@ -17,7 +17,7 @@ jSBGN.prototype.importSBML = function(file) {
   function(response) {
     data = response;
   });
-	json = parseJSON(data);
+	json = JSON.parse(data);
   this.nodes = json.nodes;
   this.edges = json.edges;
   
@@ -41,7 +41,7 @@ jSBGN.prototype.applyGuessSeed = function() {
     function(response) {
       data = response;
     });
-	seed = parseJSON(data);
+	seed = JSON.parse(data);
 	for (i in this.nodes) {
     node = this.nodes[i];
 		if (node.simulation.update) {

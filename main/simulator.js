@@ -20,7 +20,13 @@ Simulator = function(jsbgn, simDelay) {
       
     for (n in net.nodes) {
       var node = net.nodes[n];
-      node.simulation.updateRule = makeRule(node.simulation.updateRule);
+      
+      node.simulation = {
+        updateRule: makeRule(net.rules[node.id]),
+        myState: getInitialSeed(),
+        update: true
+      }
+        
       var svgNode = $('#' + node.id + ' :eq(0)');
       node.simulation.myElement = svgNode;
       if (svgNode != null) {
@@ -53,7 +59,7 @@ Simulator = function(jsbgn, simDelay) {
         async: false, 
         data: { state : exportStateJSON() },
         success: function (resp) {
-          var newState = parseJSON(resp);
+          var newState = JSON.parse(resp);
           console.log(JSON.stringify(newState));
           updateNodeRules(newState);
           iterate();

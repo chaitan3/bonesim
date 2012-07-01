@@ -1,15 +1,3 @@
-function parseJSON(string) {
-	try 	{	// var response = JSON.parse(translated);
-			eval('var obj = '+string+';');	// very dangerous for man-in-the middle code injection !!!
-							// but seems to be faster
-		}
-	catch(err) {	debug('Fatal: JSON parsing failed.');
-			alert('Server did not send a valid JSON response!');
-			return ""
-		}
-	return obj;
-	}
-
 function doGraphviz() {
 	document.getElementById('graphviz_tab').style.visibility = 'hidden';
 	POST(env['biographer']+'/Plot/graphviz', 'orphans=yes&network='+network.exportJSONstring(), doneGraphviz);
