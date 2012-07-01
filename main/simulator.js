@@ -16,17 +16,18 @@ Simulator = function(jsbgn, simDelay) {
     $('#Steps').text(0);
     $('#simulation').click(this.start);
     if($('#sbml').attr('checked'))
-      simulator.scopes = true;
+      this.scopes = true;
       
     for (n in net.nodes) {
       var node = net.nodes[n];
       
-      node.simulation = {
-        updateRule: makeRule(net.rules[node.id]),
-        myState: getInitialSeed(),
-        update: true
-      }
-        
+      if(!this.scopes) 
+        node.simulation = {
+          updateRule: makeRule(net.rules[node.id]),
+          myState: getInitialSeed(),
+          update: true
+        }
+      
       var svgNode = $('#' + node.id + ' :eq(0)');
       node.simulation.myElement = svgNode;
       if (svgNode != null) {
