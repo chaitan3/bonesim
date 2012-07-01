@@ -135,13 +135,3 @@ Array.push = function(el) {				// kind of a bugfix, because arr.push doesn't wor
 		this = this.concat([el]);
 		}
 
-function show(id) {
-	document.getElementById(id).style.visibility = 'visible';
-	}
-
-function hide(id) {
-	document.getElementById(id).style.visibility = 'hidden';
-	}
-
-
-

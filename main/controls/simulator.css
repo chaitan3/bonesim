@@ -1,25 +1,40 @@
-#bui, #editor, #annotation {
+#tabs {
   width: 100%;
   height: 100%;
 }
+#bui, #graphviz, #tabs {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+}
 
-#Progress {
-  color: blue;
-  font-weight: bold;
+#dropFile{
+  width: 40%;
+  height: 50px;
+  border: solid black 1px;
+  text-align: center;
+  margin: 10px;
 }
-#Progress, #Steps {
+#dropFile span {
   position: relative;
+  top:15px;
+}
+
+#file {
+  float: right;
+  position: relative;
+  top: 15px;
+}
+
+#iteration{
+  position: absolute;
   top: 10px;
+  left: 5px;
 }
-.Icon {	
-  border:	1px solid white;
-  margin-top: 5px;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-}
-.Icon:hover{
-  border: 1px solid black;
+
+#progress{
+  position: absolute;
+  top: 4px;
 }
 
 #tabs {
@@ -29,6 +44,7 @@
 #importDialog {
   font-size: 14px;
 }
+
 #file {
   margin: 10px;
 }

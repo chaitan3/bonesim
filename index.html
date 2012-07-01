@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <title>biosimulator</title>
 
@@ -41,12 +40,15 @@
       <li><a href="#editor">editor</a></li>
       <li><a href="#annotation">annotations</a></li>
       
-      <li><img class=Icon id=importButton src="img/Import.png" alt="Open File"/></li>
-      <li><img class=Icon src="img/Oxygen_Save.png" alt="Press S to Export" onclick="exportSVG();" /></li>
-      <li><button id=simulation>Start Simulation</button></li>
-      <li><label id=Steps>0</label></li>
-      <li><label id=Progress></label></li>
       
+      <li><button id=importButton>Open</button></li>
+      <li><button id=exportButton>Save</button></li>
+      <li><button id=simulation>Simulate</button></li>
+      
+      <div>
+        <li><img id=progress src='img/progress.gif'/></li>
+        <li><label id=iteration>0</label></li>
+      </div>
     </ul>
     
     <div id="bui">
@@ -68,6 +70,8 @@
   
   <div id=importDialog title="Import File">
     <input type=file id=file /> 
+    <div id=dropFile><span></span></div>
+    
     
     <div id="seed">
       <b>Initial Seed:</b> <br>

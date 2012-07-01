@@ -12,8 +12,7 @@ Simulator = function(jsbgn, simDelay) {
     net = jsbgn;
     delay = simDelay;
     
-    $('#Progress').text('');
-    $('#Steps').text(0);
+    $('#iteration').text(0);
     $('#simulation').click(this.start);
     if($('#sbml').attr('checked'))
       this.scopes = true;
@@ -46,12 +45,7 @@ Simulator = function(jsbgn, simDelay) {
     if(!(this.running))
       return;
       
-    var text = $('#Progress').text();
-    if ( text.length > 30 || text.substr(0,9) != 'Iterating' )
-      $('#Progress').text('Iterating ...');
-    else	
-      $('#Progress').text(text + '.');
-    $('#Steps').text(parseInt($('#Steps').text()) + 1);
+    $('#iteration').text(parseInt($('#iteration').text()) + 1);
       
     if (this.scopes)
       $.ajax({
@@ -73,8 +67,8 @@ Simulator = function(jsbgn, simDelay) {
     obj.running = true;
     $('#simulation').unbind('click', obj.start);
     $('#simulation').click(obj.stop);
-    $('#simulation').button( "option", "label", 'Stop Simulation');
     $('#simulation').button( "option", "icons", {primary: 'ui-icon-pause'});
+    $('#progress').show();
     obj.run();
   }
 
@@ -82,12 +76,11 @@ Simulator = function(jsbgn, simDelay) {
     obj.running = false;
     $('#simulation').unbind('click', obj.stop);
     $('#simulation').click(obj.start);
-    $('#simulation').button( "option", "label", 'Start Simulation');
     $('#simulation').button( "option", "icons", {primary: 'ui-icon-play'});
+    $('#progress').hide();
   }
   
   this.destroy = function() {
-    this.stop();
     $('#simulation').unbind('click', obj.start);
   }
     
@@ -155,7 +148,7 @@ Simulator = function(jsbgn, simDelay) {
     }
     else 	{		// no changes -> steady state
       console.log('Boolean network reached steady state.');
-      stop();
+      obj.stop();
     }
   }
   

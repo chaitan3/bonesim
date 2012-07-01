@@ -1,40 +1,81 @@
+var fileObject;
+
 bui.ready(function() {
   bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
+  
   $('#tabs').tabs();
   $('#simulation').button({icons: {primary: "ui-icon-play" }});
-  $('#importFile').click(readFile);
+  $('#importButton').button({icons: {primary: "ui-icon-folder-open" }});
+  $('#exportButton').button({icons: {primary: "ui-icon-disk" }});
   $('#importDialog').dialog({ autoOpen: false, minWidth: 500 });
+  $('#progress').hide();
+  
+  $('#importFile').click(importFile);
+  $('#file')[0].addEventListener('change', readFile, false);
+  $('#dropFile')[0].addEventListener('drop', dropFile, false);
+  $('#dropFile')[0].addEventListener('dragenter', dragEnter, false);
+  $('#dropFile')[0].addEventListener('dragleave', dragExit, false);
+  $('#dropFile')[0].addEventListener('dragover', dnd, false);
+  
   $('#importButton').click(function() {
     if(typeof(simulator) != "undefined") 
-      simulator.destroy();
+      simulator.stop();
+    fileObject = null;
+    $('#file').attr({ value: '' });
+    $('#dropFile span').html('Drag and Drop File');
     $('#importDialog').dialog('open');
   });
 });
 
-function readFile() {
-  var file = ($('#file')[0].files)[0];
-  var reader = new FileReader();
-  
-  $('#importDialog').dialog('close');
-  reader.onloadend = function(read) {
-    importFile(read.target.result, file);
-  }
-  reader.readAsText(file);
+function readFile(event) {
+  fileObject = event.target.files[0];
 }
 
-function importFile(data, file) {
-  var network = new jSBGN();
+function dnd(event) {
+  event.stopPropagation();
+  event.preventDefault();
+}
+
+function dropFile(event) {
+  dnd(event);
+  fileObject = event.dataTransfer.files[0];
+  $('#dropFile span').html(fileObject.name);
+}
+
+function dragEnter(event) {
+  dnd(event);
+  $('#dropFile span').html('Drop File now');
+}
+
+function dragExit(event) {
+  dnd(event);
+  $('#dropFile span').html('Drag and Drop File');
+}
   
-  if($('#r').attr('checked'))
-    network.importBooleanNetwork(data, ',');
-  else if($('#python').attr('checked'))
-    network.importBooleanNetwork(data, '=');
-  else {
-    if($('#guessSeed').attr('checked'))
-      network.importSBML(file, true);
-    else
-      network.importSBML(file, false);
+function importFile() {
+  $('#importDialog').dialog('close');
+  
+  if (fileObject == null)
+    return;
+  
+  var reader = new FileReader();
+  var data, network, file = fileObject;
+  
+  reader.onload = function(read) {
+    data = read.target.result;
+    network = new jSBGN();
+    if($('#r').attr('checked'))
+      network.importBooleanNetwork(data, ',');
+    else if($('#python').attr('checked'))
+      network.importBooleanNetwork(data, '=');
+    else {
+      if($('#guessSeed').attr('checked'))
+        network.importSBML(file, true);
+      else
+        network.importSBML(file, false);
+    }
   }
+  reader.readAsText(file);
 }
 
 function importNetwork(network) {
@@ -46,6 +87,8 @@ function importNetwork(network) {
   network.layout();
   graph.unsuspendRedraw(importHandle);
   
+  if(typeof(simulator) != "undefined") 
+    simulator.destroy();
   simulator = new Simulator();
   simulator.init(network, 500);
 }
