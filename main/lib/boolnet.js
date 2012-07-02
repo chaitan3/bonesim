@@ -1,6 +1,6 @@
 ruleJS = function(data) {
   return data.replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!')
-  .replace_all(' & ', ' && ').replace_all(' | ', ' || ').trim();
+  .replace(/[&]/g, '&&').replace(/[|]/g, '||').trim();
 }
 
 protein_name_regex = /[A-Za-z0-9_]+/g;
@@ -33,7 +33,7 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
         targetID = targetID.substring(0, targetID.length-1);
       
       if (!(targetID in rules))
-        targetNode = doc.createNode(targetID).type(sb.NodeType.SimpleChemical).label(targetID);  
+        targetNode = doc.createNode(targetID).type(sb.NodeType.Macromolecule).label(targetID);  
       rules[targetID] = rule;
       
       if (rule == 'True' || rule == 'False') 
@@ -45,7 +45,7 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
         sourceID = ruleNodes[j];
         if (!(sourceID in rules)) {
           rules[sourceID] = '';
-          sourceNode = doc.createNode(sourceID).type(sb.NodeType.SimpleChemical).label(sourceID);
+          sourceNode = doc.createNode(sourceID).type(sb.NodeType.Macromolecule).label(sourceID);
         }
         edgeID = sourceID + ' -> ' + targetID;
         if (!(edgeID in rules)) {

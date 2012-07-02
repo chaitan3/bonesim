@@ -1,8 +1,8 @@
 
 jSBGN = function() { // constructor
-		this.nodes = [];
-		this.edges = [];
-		}
+  this.nodes = [];
+  this.edges = [];
+}
 
 // http://www.javascriptkit.com/javatutors/oopjs2.shtml
 
@@ -15,7 +15,7 @@ jSBGN.prototype.removeNode = function(node) {
 				for (index in this.nodes) {
 					var node = this.nodes[index];
 					if (node == Node) {
-						this.nodes.drop(index);		// requires array.js
+						this.nodes.slice(index, 1);		// requires array.js
 						break;
 						}
 					}

@@ -22,7 +22,7 @@ jSBGN.prototype.importSBML = function(file, guessSeed) {
           for (i in obj.nodes) {
             var node = obj.nodes[i];
             node.simulation = {
-              myState : getInitialSeed(),	//Default state of a node is true
+              myState : getInitialSeed(),	
               update : true,
               updateRule : ''
             };

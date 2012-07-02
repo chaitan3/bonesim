@@ -7,24 +7,16 @@ bui.ready(function() {
   $('#simulation').button({icons: {primary: "ui-icon-play" }});
   $('#importButton').button({icons: {primary: "ui-icon-folder-open" }});
   $('#exportButton').button({icons: {primary: "ui-icon-disk" }});
-  $('#importDialog').dialog({ autoOpen: false, minWidth: 500 });
+  $('#importDialog').dialog({ autoOpen: false, minWidth: 600 });
   $('#progress').hide();
   
-  $('#importFile').click(importFile);
+  $('#importButton').click(importDialog);
   $('#file')[0].addEventListener('change', readFile, false);
   $('#dropFile')[0].addEventListener('drop', dropFile, false);
   $('#dropFile')[0].addEventListener('dragenter', dragEnter, false);
   $('#dropFile')[0].addEventListener('dragleave', dragExit, false);
   $('#dropFile')[0].addEventListener('dragover', dnd, false);
-  
-  $('#importButton').click(function() {
-    if(typeof(simulator) != "undefined") 
-      simulator.stop();
-    fileObject = null;
-    $('#file').attr({ value: '' });
-    $('#dropFile span').html('Drag and Drop File');
-    $('#importDialog').dialog('open');
-  });
+  $('#importFile').click(importFile);
 });
 
 function readFile(event) {
@@ -50,6 +42,15 @@ function dragEnter(event) {
 function dragExit(event) {
   dnd(event);
   $('#dropFile span').html('Drag and Drop File');
+}
+
+function importDialog() {
+  if(typeof(simulator) != "undefined") 
+    simulator.stop();
+  fileObject = null;
+  $('#file').attr({ value: '' });
+  $('#dropFile span').html('Drag and Drop File');
+  $('#importDialog').dialog('open');
 }
   
 function importFile() {
