@@ -1,12 +1,13 @@
 #tabs {
-  width: 100%;
-  height: 100%;
   font-size: 16px;
 }
 #bui, #graphviz, #tabs {
   margin: 0px;
   padding: 0px;
   border: none;
+}
+#bui {
+  background-color:white;
 }
 
 #iteration{

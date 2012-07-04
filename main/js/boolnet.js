@@ -13,6 +13,8 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
   var doc = new sb.Document();
   var jsbgn, skip, trimmed;
   
+  doc.lang(sb.Language.AF);
+  
   lines = file.split('\n');	//The file consists of a set of lines describing each node
 	for (i = 0; i < lines.length; i++) {
     trimmed = lines[i].trim();
@@ -50,7 +52,7 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
         edgeID = sourceID + ' -> ' + targetID;
         if (!(edgeID in rules)) {
           rules[edgeID] = '';
-          doc.createArc(edgeID).source(sourceID).target(targetID);
+          doc.createArc(edgeID).type(sb.ArcType.LogicArc).source(sourceID).target(targetID);
         }
       }
 		}
@@ -59,6 +61,7 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
   this.nodes = jsbgn.nodes;
   this.edges = jsbgn.edges;
   this.rules = rules;
+  console.log(jsbgn);
   
   importNetwork(this);
 }

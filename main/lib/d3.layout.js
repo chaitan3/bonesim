@@ -322,7 +322,7 @@ d3.layout.force = function() {
         o = nodes[i];
         o.absolutePositionCenter(o.x,o.y)
     }*/
-    console.log('alpha: '+alpha);
+    //console.log('alpha: '+alpha);
     //event.tick({type: "tick", alpha: alpha});
 
     if((alpha *= .99) < .005) {
@@ -339,10 +339,10 @@ d3.layout.force = function() {
                 drawable.recalculatePoints()
             }
         }
-        return true 
+        return true; 
     }
     // simulated annealing, basically
-    return (alpha *= .99) < .00499999;
+    return false;
   }
 
   force.nodes = function(x) {
