@@ -1,7 +1,7 @@
 var fileObject;
 
 bui.ready(function() {
-  bui.settings.css.stylesheetUrl = 'bui/css/visualization-svg.css';
+  bui.settings.css.stylesheetUrl = 'css/visualization-svg.css';
   
   $('#tabs').tabs();
   $('#simulation').button({icons: {primary: "ui-icon-play" }});

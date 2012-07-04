@@ -61,7 +61,6 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
   this.nodes = jsbgn.nodes;
   this.edges = jsbgn.edges;
   this.rules = rules;
-  console.log(jsbgn);
   
   importNetwork(this);
 }
