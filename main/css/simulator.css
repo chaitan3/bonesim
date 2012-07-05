@@ -1,13 +1,12 @@
 #tabs {
   font-size: 16px;
-}
-#bui, #graphviz, #tabs {
   margin: 0px;
   padding: 0px;
   border: none;
 }
-#bui {
-  background-color:white;
+.tabs {
+  padding: 0px !important;
+  background-color:white !important;
 }
 
 #iteration{
@@ -43,6 +42,10 @@
   margin: 10px;
   position: relative;
   top: 15px;
+}
+
+#options {
+  margin: 10px;
 }
 
 #fileType {

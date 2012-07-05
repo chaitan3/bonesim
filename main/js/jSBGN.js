@@ -90,26 +90,42 @@ jSBGN.prototype.exportJSONstring = function() {
 jSBGN.prototype.layout = function() {
   var nodes_edges = get_nodes_edges();
   
-  //~ bui.grid.init(nodes_edges.nodes,nodes_edges.edges);
-  //~ bui.grid.put_on_grid();
-  //~ bui.grid.layout();
+  var canvas = 3000, padding = 100;
   
-  
-  bui.settings.straightenEdges = false;
-  var cont = graph.container();
-  var w = 3000;//$(cont).width();
-  var h = 3000;//600;
   var force = d3.layout.force()
-         .charge(-6000)
-         .linkDistance(100)
-         .nodes(nodes_edges.nodes)
-         .links(nodes_edges.edges)
-         .size([w, h])
-         .start();
-  //~ while(force.alpha() > 0.005) {
-    //~ console.log(force.alpha())
-    //~ force.tick();
-  //~ }
-  //~ force.stop();
-}
+    .charge(-1500)
+    .linkDistance(50)
+    .linkStrength(0.1)
+    .gravity(0.15)
+    .nodes(nodes_edges.nodes)
+    .links(nodes_edges.edges)
+    .size([canvas, canvas])
+//    .on("tick", function() {console.log(nodes_edges.nodes);console.log(nodes_edges.nodes.CycA.x) });
   
+  force.start();
+  while(force.alpha() > 0.005) {
+    force.tick();
+  }
+  force.stop();
+  
+  var n, minx = canvas, miny = canvas;
+  for (i=0; i< nodes_edges.nodes.length; i++) {
+    n = nodes_edges.nodes[i];
+    if (n.x < minx)
+      minx = n.x;
+    if (n.y < miny)
+      miny = n.y;
+  }  
+  for (i=0; i< nodes_edges.nodes.length; i++) {
+    n = nodes_edges.nodes[i];
+    n.absolutePositionCenter(n.x - (minx - padding), n.y - (miny - padding));
+  }
+  
+  var all_drawables = graph.drawables();
+  for (var key in all_drawables) {
+      drawable = all_drawables[key];
+      if(drawable.identifier() == 'bui.Edge'){
+          drawable.recalculatePoints();
+      }
+  }
+}

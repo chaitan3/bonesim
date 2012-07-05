@@ -69,6 +69,8 @@ function importFile() {
       network.importBooleanNetwork(data, ',');
     else if($('#python').attr('checked'))
       network.importBooleanNetwork(data, '=');
+    else if($('#ginml').attr('checked'))
+      network.importGINML(data);
     else {
       if($('#guessSeed').attr('checked'))
         network.importSBML(file, true);

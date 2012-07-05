@@ -14,16 +14,14 @@
 	<link rel="stylesheet" type="text/css" href="css/visualization-html.css"/>
 	<!-- end biographer-visualizer -->
   
-  <!--script src="http://d3js.org/d3.v2.js"></script-->
-  <script src="lib/d3.js"></script>
-  <script src="lib/d3.geom.js"></script>
-  <script src="lib/d3.layout.js"></script>
+  <script src="lib/d3.v2.js"></script>
   <script src="lib/libSBGN.js"></script>
 
   <script src="js/util.js"></script>
 	<script src="js/jSBGN.js"></script>
 	<script src="js/boolnet.js"></script>
 	<script src="js/SBML.js"></script>
+  <script src="js/GINML.js"></script>
   <script src="js/simulator.js"></script>
   <script src="js/controls.js"></script>
   <link rel="stylesheet" type="text/css" href="css/simulator.css"/>
@@ -44,23 +42,23 @@
       <li><button id=simulation>Simulate</button></li>
       
       <div>
-        <li><img id=progress src='img/progress.gif'/></li>
+        <li><img id=progress src="img/progress.gif"/></li>
         <li><label id=iteration>0</label></li>
       </div>
     </ul>
     
-    <div id="bui">
+    <div id=bui class=tabs>
     </div>
     
-    <div id="graphviz">
+    <div id=graphviz class=tabs>
       graphviz support disabled for now
     </div>
     
-    <div id="editor">
+    <div id=editor class=tabs>
       editor not installed
     </div>
     
-    <div id="annotation">
+    <div id=annotation class=tabs>
       no annotations loaded
     </div>
     
@@ -71,19 +69,25 @@
     <div id=dropFile><span></span></div>
     
     
-    <div id="seed">
+    <div id=seed>
       <b>Initial Seed:</b> <br>
-      <input type="radio" name="seed" id="allTrue" checked />All True
-      <input type="radio" name="seed" id="allFalse" />All False<br>
-      <input type="radio" name="seed" id="randomSeed" />Random Seed<br>
-      <input type="radio" name="seed" id="guessSeed" />Guess Seed(SBML only)<br>
+      <input type=radio name="seed" id=allTrue checked />All True<br>
+      <input type=radio name="seed" id=allFalse />All False<br>
+      <input type=radio name="seed" id=randomSeed />Random Seed<br>
+      <input type=radio name="seed" id=guessSeed />Guess Seed(SBML only)<br>
     </div>
     
-    <div id="fileType">
+    <div id=fileType>
       <b>Type of file:</b> <br>
-      <input type="radio" name="fileType" id="r" checked />R BoolNet<br>
-      <input type="radio" name="fileType" id="python" />Python BooleanNet<br>
-      <input type="radio" name="fileType" id="sbml" />SBML<br>
+      <input type=radio name="fileType" id=r />R BoolNet<br>
+      <input type=radio name="fileType" id=python />Python BooleanNet<br>
+      <input type=radio name="fileType" id=ginml checked />GINML<br>
+      <input type=radio name="fileType" id=sbml />SBML<br>
+    </div>
+    
+    <div id=options>
+      <b>Other Options:</b> <br>
+      <input type=checkbox id=oneclick />Simulate on node click
     </div>
     
     <button id=importFile> Import </button>

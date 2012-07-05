@@ -22,7 +22,7 @@ Simulator = function(jsbgn, simDelay) {
       
       if(!this.scopes) 
         node.simulation = {
-          updateRule: makeRule(net.rules[node.id]),
+          updateRule: net.rules[node.id],
           myState: getInitialSeed(),
           update: true
         }
@@ -111,13 +111,14 @@ Simulator = function(jsbgn, simDelay) {
     }
   }
   
-  var makeRule = function(rule) {
-    if (rule.trim() == 'True' || rule.trim() == 'False')
-      return '';
-    return rule.replace(protein_name_regex, 
+  var evaluate = function(rule) {
+    rule = rule.replace(protein_name_regex, 
     function(text) { 
-      return "net.getNodeById('"+text+"').simulation.myState"; 
+      if (net.getNodeById(text) === null) 
+        return text;
+      return net.getNodeById(text).simulation.myState.toString(); 
     });
+    return Boolean(eval(rule));
   }
 
 
@@ -126,13 +127,7 @@ Simulator = function(jsbgn, simDelay) {
     for (idx in net.nodes) {
       var node = net.nodes[idx];
       if ( node.simulation.update && (node.simulation.updateRule.trim() != '')) {
-        try	{
-          node.simulation.myNextState = Boolean(eval(node.simulation.updateRule));
-        }
-        catch(err)	{
-          console.error('Invalid update rule dropped, node '+node.id+': '+node.simulation.updateRule);
-          node.simulation.updateRule = 'true';
-        }
+        node.simulation.myNextState = evaluate(node.simulation.updateRule);
         if (node.simulation.myNextState != node.simulation.myState) {
           changed = changed.concat([node]);
         }
@@ -144,6 +139,7 @@ Simulator = function(jsbgn, simDelay) {
         node.simulation.myState = node.simulation.myNextState;
         nodeColorUpdate(node);
       }
+      exportStateJSON();
       setTimeout(function() { obj.run() }, delay);		// iterate again
     }
     else 	{		// no changes -> steady state
@@ -157,6 +153,9 @@ Simulator = function(jsbgn, simDelay) {
     var opacity;
     node.simulation.myState = !node.simulation.myState;
     nodeColorUpdate(node);
+    
+    if($('#oneclick').attr('checked')) 
+      obj.start();
   }
   
   var nodeColorUpdate = function(node) {

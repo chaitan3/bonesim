@@ -1,7 +1,9 @@
+
 function doGraphviz() {
 	document.getElementById('graphviz_tab').style.visibility = 'hidden';
 	POST(env['biographer']+'/Plot/graphviz', 'orphans=yes&network='+network.exportJSONstring(), doneGraphviz);
 	}
+  
 
 function doneGraphviz(response) {
 	showTab('graphviz');
@@ -104,5 +106,6 @@ function get_nodes_edges() {
           edges.push(drawable);
       }
   }
-  return {nodes:nodes, edges:edges}
+  return {nodes:nodes, edges:edges};
 }
+
