@@ -8,6 +8,7 @@ bui.ready(function() {
   $('#importButton').button({icons: {primary: "ui-icon-folder-open" }});
   $('#exportButton').button({icons: {primary: "ui-icon-disk" }});
   $('#importDialog').dialog({ autoOpen: false, minWidth: 600 });
+  $('#exportDialog').dialog({ autoOpen: false, minWidth: 400 });
   $('#progress').hide();
   
   $('#importButton').click(importDialog);
@@ -17,6 +18,9 @@ bui.ready(function() {
   $('#dropFile')[0].addEventListener('dragleave', dragExit, false);
   $('#dropFile')[0].addEventListener('dragover', dnd, false);
   $('#importFile').click(importFile);
+  
+  $('#exportButton').click(exportDialog);
+  $('#exportFile').click(exportFile);
 });
 
 function readFile(event) {
@@ -105,4 +109,30 @@ function getInitialSeed() {
     return Boolean(Math.round(Math.random()));
   else
     return true;
+}
+
+
+function exportDialog() {
+  if(typeof(simulator) != "undefined") 
+    simulator.stop();
+  $('#exportDialog').dialog('open');
+}
+
+function exportFile() {
+  $('#exportDialog').dialog('close');
+  if ($('#sbgn').attr('checked')) {
+    var jsbgn = graph.toJSON();
+    var sbgn = null;
+    alert('Wait for Lian to finish his jsbgn reader');
+  }
+  if ($('#jsbgn').attr('checked')) {
+    var jsbgn = JSON.stringify(graph.toJSON());
+    var content = "data:text/plain," + encodeURIComponent(jsbgn);
+    window.open(content, 'tmp');
+  }
+  else if ($('#svg').attr('checked')) {
+    var svg = graph.rawSVG();
+    var content = "data:image/svg+xml," + encodeURIComponent(svg);
+    window.open(content, 'tmp');
+  }
 }

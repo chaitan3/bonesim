@@ -20,7 +20,7 @@
   top: 4px;
 }
 
-#importDialog {
+#importDialog, #exportDialog {
   font-size: 14px;
 }
 
@@ -56,7 +56,7 @@
   width: 50%;
 }
 
-#importFile {
+#importFile, #exportFile {
   position:relative;
   margin: 10px;
   left:40%;

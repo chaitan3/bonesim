@@ -11,6 +11,7 @@ Simulator = function(jsbgn, simDelay) {
   this.init = function(jsbgn, simDelay) {
     net = jsbgn;
     delay = simDelay;
+    net.states = new Object();
     
     $('#iteration').text(0);
     $('#simulation').click(this.start);
@@ -19,20 +20,15 @@ Simulator = function(jsbgn, simDelay) {
       
     for (n in net.nodes) {
       var node = net.nodes[n];
-      
+      net.rules[node.id] = makeFunction(net.rules[node.id]);
       if(!this.scopes) 
-        node.simulation = {
-          updateRule: net.rules[node.id],
-          myState: getInitialSeed(),
-          update: true
-        }
+        net.states[node.id] = getInitialSeed();
       
       var svgNode = $('#' + node.id + ' :eq(0)');
-      node.simulation.myElement = svgNode;
       if (svgNode != null) {
         svgNode.click(nodeClick);
         svgNode.css('fill', '#10d010');
-        if (node.simulation.myState) 
+        if (net.states[node.id]) 
           svgNode.css('fill-opacity', 1);
         else
           svgNode.css('fill-opacity', 0);
@@ -85,61 +81,72 @@ Simulator = function(jsbgn, simDelay) {
   }
     
   var exportStateJSON = function() {	
-    var state = new Object();
+    var states = new Object();
     for (i in net.nodes) {
       var node = net.nodes[i];
-      if (node.simulation.update) {
-        if(node.simulation.myState)
-          state[node.id] = 1;
+      if (net.rules[node.id].length !== 0) {
+        if(net.states[node.id])
+          states[node.id] = 1;
         else
-          state[node.id] = 0;
+          states[node.id] = 0;
       }
     }
-    console.log(JSON.stringify(state));
-    return JSON.stringify(state);
+    console.log(JSON.stringify(states));
+    return JSON.stringify(states);
   }
 
   var updateNodeRules = function(state) {	
     for (i in net.nodes) {
       var node = net.nodes[i];
-      if (node.simulation.update) {
+      if (net.rules[node.id].length !== 0) {
         if(state[node.id])
-          node.simulation.updateRule = (true).toString();
+          net.rules[node.id] = (true).toString();
         else
-          node.simulation.updateRule = (false).toString();
+          net.rules[node.id] = (false).toString();
       }
     }
   }
   
-  var evaluate = function(rule) {
+  var makeFunction = function(rule) {
     rule = rule.replace(protein_name_regex, 
     function(text) { 
-      if (net.getNodeById(text) === null) 
+      if (text === 'true' || text === 'false')
         return text;
-      return net.getNodeById(text).simulation.myState.toString(); 
+      return "states['" + text + "']"; 
     });
-    return Boolean(eval(rule));
+    return Function("states", "return " + rule + ";");
   }
 
+  var sync = function() {
+    var i, id;
+    var changed = new Array();
+    var states = new Object();
+    for (i in net.nodes) {
+      id = net.nodes[i].id;
+      states[id] = net.rules[id](net.states);
+      if (states[id] !== net.states[id]) 
+        changed.push(id);
+    }
+    for (i in changed) {
+      id = changed[i];
+      net.states[id] = states[id];
+    }
+    return changed;
+  }
+
+  var steadyState = function() {
+    var i;
+    for (i in initStates) {
+      
+    }
+  }
 
   var iterate = function() {
-    var changed = [];
-    for (idx in net.nodes) {
-      var node = net.nodes[idx];
-      if ( node.simulation.update && (node.simulation.updateRule.trim() != '')) {
-        node.simulation.myNextState = evaluate(node.simulation.updateRule);
-        if (node.simulation.myNextState != node.simulation.myState) {
-          changed = changed.concat([node]);
-        }
-      }
-    }
+    var changed, i;
+    changed = sync();  
     if ( changed.length > 0 ) {   // network updated -> steady state not reached
-      for (idx in changed) {
-        var node = changed[idx];			// State = NextState
-        node.simulation.myState = node.simulation.myNextState;
-        nodeColorUpdate(node);
-      }
-      exportStateJSON();
+      for (i in changed)
+        nodeColorUpdate(changed[i]);
       setTimeout(function() { obj.run() }, delay);		// iterate again
     }
     else 	{		// no changes -> steady state
@@ -149,20 +156,20 @@ Simulator = function(jsbgn, simDelay) {
   }
   
   var nodeClick = function(event) { 
-    var node = net.getNodeById($(this).parent().attr('id'));
+    var id = $(this).parent().attr('id');
     var opacity;
-    node.simulation.myState = !node.simulation.myState;
-    nodeColorUpdate(node);
+    net.states[id] = !net.states[id];
+    nodeColorUpdate(id);
     
     if($('#oneclick').attr('checked')) 
       obj.start();
   }
   
-  var nodeColorUpdate = function(node) {
-    if (node.simulation.myState) 
+  var nodeColorUpdate = function(id) {
+    if (net.states[id]) 
       opacity = 1;
     else
       opacity = 0;
-    node.simulation.myElement.animate({'fill-opacity':opacity}, delay);
+    $('#' + id + ' :eq(0)').animate({'fill-opacity':opacity}, delay);
   }
 }

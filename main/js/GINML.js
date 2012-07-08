@@ -45,7 +45,6 @@ jSBGN.prototype.importGINML = function(file) {
         incoming.push(arcs[i].id());
       }
     }
-    console.log($(this).attr('basevalue'));
     rules[id] = '(' + Boolean(parseInt($(this).attr('basevalue'))) + '&&!(' + rule + '))||((' + rule + ')&&(false';
     
     $(this).find('parameter').each(function() {

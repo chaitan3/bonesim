@@ -13,7 +13,6 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.21.custom.css"/>
 	<link rel="stylesheet" type="text/css" href="css/visualization-html.css"/>
 	<!-- end biographer-visualizer -->
-  
   <script src="lib/d3.v2.js"></script>
   <script src="lib/libSBGN.js"></script>
 
@@ -91,6 +90,17 @@
     </div>
     
     <button id=importFile> Import </button>
+  </div>
+  
+  <div id=exportDialog title="Export">
+    <div id=graph>
+      <b>Graph</b> <br>
+      <input type=radio name="graph" id=sbgn  />SBGN<br>
+      <input type=radio name="graph" id=svg checked />SVG<br>
+      <input type=radio name="graph" id=jsbgn />jSBGN<br>
+    </div>
+    
+    <button id=exportFile> Export </button>
   </div>
 
 </body>

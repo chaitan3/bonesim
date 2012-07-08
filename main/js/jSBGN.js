@@ -90,7 +90,7 @@ jSBGN.prototype.exportJSONstring = function() {
 jSBGN.prototype.layout = function() {
   var nodes_edges = get_nodes_edges();
   
-  var canvas = 3000, padding = 100;
+  var canvas = 3000;
   
   var force = d3.layout.force()
     .charge(-1500)
@@ -108,19 +108,10 @@ jSBGN.prototype.layout = function() {
   }
   force.stop();
   
-  var n, minx = canvas, miny = canvas;
   for (i=0; i< nodes_edges.nodes.length; i++) {
     n = nodes_edges.nodes[i];
-    if (n.x < minx)
-      minx = n.x;
-    if (n.y < miny)
-      miny = n.y;
-  }  
-  for (i=0; i< nodes_edges.nodes.length; i++) {
-    n = nodes_edges.nodes[i];
-    n.absolutePositionCenter(n.x - (minx - padding), n.y - (miny - padding));
+    n.absolutePositionCenter(n.x, n.y);
   }
-  
   var all_drawables = graph.drawables();
   for (var key in all_drawables) {
       drawable = all_drawables[key];
@@ -128,4 +119,5 @@ jSBGN.prototype.layout = function() {
           drawable.recalculatePoints();
       }
   }
+  graph.reduceTopLeftWhitespace();
 }
