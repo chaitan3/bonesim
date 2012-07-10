@@ -44,7 +44,7 @@ function doneGraphviz(response) {
 */
 	}
   
-function get_nodes_edges() {
+function get_nodes_edges(graph) {
   var nodes = [], edges = [];
   var all_drawables = graph.drawables();
   var count = 0;

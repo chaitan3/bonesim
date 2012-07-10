@@ -30,15 +30,13 @@
 <body>
   <div id=tabs>
     <ul>
-      <li><a href="#bui">bui</a></li>
-      <li><a href="#graphviz">graphviz</a></li>
-      <li><a href="#editor">editor</a></li>
-      <li><a href="#annotation">annotations</a></li>
-      
+      <li><a href="#grn">Network</a></li>
+      <li><a href="#stg">Transitions</a></li>
       
       <li><button id=importButton>Open</button></li>
       <li><button id=exportButton>Save</button></li>
       <li><button id=simulation>Simulate</button></li>
+      <li><button id=analyze>Analyze</button></li>
       
       <div>
         <li><img id=progress src="img/progress.gif"/></li>
@@ -46,19 +44,10 @@
       </div>
     </ul>
     
-    <div id=bui class=tabs>
+    <div id=grn class=tabs>
     </div>
     
-    <div id=graphviz class=tabs>
-      graphviz support disabled for now
-    </div>
-    
-    <div id=editor class=tabs>
-      editor not installed
-    </div>
-    
-    <div id=annotation class=tabs>
-      no annotations loaded
+    <div id=stg class=tabs>
     </div>
     
   </div>
@@ -66,7 +55,6 @@
   <div id=importDialog title="Import File">
     <input type=file id=file /> 
     <div id=dropFile><span></span></div>
-    
     
     <div id=seed>
       <b>Initial Seed:</b> <br>
@@ -87,17 +75,23 @@
     <div id=options>
       <b>Other Options:</b> <br>
       <input type=checkbox id=oneclick />Simulate on node click
+      <input type=checkbox id=scale checked />Scale Graph to fit page
     </div>
     
     <button id=importFile> Import </button>
   </div>
   
   <div id=exportDialog title="Export">
+    <div id=format>
+      <b>Format</b><br>
+      <input type=radio name="format" id=sbgn  />SBGN<br>
+      <input type=radio name="format" id=svg checked />SVG<br>
+      <input type=radio name="format" id=jsbgn />jSBGN<br>
+    </div>
     <div id=graph>
-      <b>Graph</b> <br>
-      <input type=radio name="graph" id=sbgn  />SBGN<br>
-      <input type=radio name="graph" id=svg checked />SVG<br>
-      <input type=radio name="graph" id=jsbgn />jSBGN<br>
+      <b>Graph</b><br>
+      <input type=radio name="graph" id=network checked />Network<br>
+      <input type=radio name="graph" id=trans />Transitions<br><br>
     </div>
     
     <button id=exportFile> Export </button>

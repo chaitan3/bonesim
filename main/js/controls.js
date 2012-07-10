@@ -4,7 +4,9 @@ bui.ready(function() {
   bui.settings.css.stylesheetUrl = 'css/visualization-svg.css';
   
   $('#tabs').tabs();
+  $('#tabs').tabs('select', '#grn');
   $('#simulation').button({icons: {primary: "ui-icon-play" }});
+  $('#analyze').button({icons: {primary: "ui-icon-gear" }});
   $('#importButton').button({icons: {primary: "ui-icon-folder-open" }});
   $('#exportButton').button({icons: {primary: "ui-icon-disk" }});
   $('#importDialog').dialog({ autoOpen: false, minWidth: 600 });
@@ -64,40 +66,47 @@ function importFile() {
     return;
   
   var reader = new FileReader();
-  var data, network, file = fileObject;
+  var data, jsbgn, file = fileObject;
   
   reader.onload = function(read) {
     data = read.target.result;
-    network = new jSBGN();
+    jsbgn = new jSBGN();
     if($('#r').attr('checked'))
-      network.importBooleanNetwork(data, ',');
+      jsbgn.importBooleanNetwork(data, ',');
     else if($('#python').attr('checked'))
-      network.importBooleanNetwork(data, '=');
+      jsbgn.importBooleanNetwork(data, '=');
     else if($('#ginml').attr('checked'))
-      network.importGINML(data);
+      jsbgn.importGINML(data);
     else {
       if($('#guessSeed').attr('checked'))
-        network.importSBML(file, true);
+        jsbgn.importSBML(file, true);
       else
-        network.importSBML(file, false);
+        jsbgn.importSBML(file, false);
     }
+    $('#stg').html('');
+    network = importNetwork(jsbgn, '#grn');
+    $('#tabs').tabs('select', '#grn');
+    
+    if(typeof(simulator) != "undefined") 
+      simulator.destroy();
+    simulator = new Simulator();
+    simulator.init(jsbgn, 500);
   }
   reader.readAsText(file);
 }
 
-function importNetwork(network) {
-  $('#bui').html('');
-  graph = new bui.Graph($('#bui')[0]);
+function importNetwork(jsbgn, tab) {
+  $(tab).html('');
+  var graph = new bui.Graph($(tab)[0]);
   
   var importHandle = graph.suspendRedraw(20000);
-	bui.importFromJSON(graph, network);
-  network.layout();
+	bui.importFromJSON(graph, jsbgn);
+  jsbgn.layout(graph);
+  if($('#scale').attr('checked')) 
+    graph.fitToPage();
   graph.unsuspendRedraw(importHandle);
   
-  if(typeof(simulator) != "undefined") 
-    simulator.destroy();
-  simulator = new Simulator();
-  simulator.init(network, 500);
+  return graph;
 }
 
 function getInitialSeed() {
@@ -120,12 +129,19 @@ function exportDialog() {
 
 function exportFile() {
   $('#exportDialog').dialog('close');
+  
+  var graph;
+  if ($('#network').attr('checked'))
+    graph = network;
+  else if ($('#trans').attr('checked'))
+    graph = trans;
+    
   if ($('#sbgn').attr('checked')) {
     var jsbgn = graph.toJSON();
     var sbgn = null;
     alert('Wait for Lian to finish his jsbgn reader');
   }
-  if ($('#jsbgn').attr('checked')) {
+  else if ($('#jsbgn').attr('checked')) {
     var jsbgn = JSON.stringify(graph.toJSON());
     var content = "data:text/plain," + encodeURIComponent(jsbgn);
     window.open(content, 'tmp');

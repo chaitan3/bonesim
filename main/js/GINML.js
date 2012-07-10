@@ -66,6 +66,4 @@ jSBGN.prototype.importGINML = function(file) {
   this.nodes = jsbgn.nodes;
   this.edges = jsbgn.edges;
   this.rules = rules;
-  
-  importNetwork(this);
 }

@@ -87,8 +87,8 @@ jSBGN.prototype.exportJSONstring = function() {
 					return JSON.stringify( this.exportJSON() );
 					}
           
-jSBGN.prototype.layout = function() {
-  var nodes_edges = get_nodes_edges();
+jSBGN.prototype.layout = function(graph) {
+  var nodes_edges = get_nodes_edges(graph);
   
   var canvas = 3000;
   

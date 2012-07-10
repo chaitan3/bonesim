@@ -9,6 +9,22 @@
   background-color:white !important;
 }
 
+#importButton {
+  margin-left: 20px;
+}
+
+#info {
+  position:fixed;
+  top: 60px;
+  right: 20px;
+  padding: 10px;
+  max-width: 30%;
+  word-wrap: break-word;
+  background-color: lightblue;
+  border: solid blue 1px;
+  font-size: 12px;
+}
+
 #iteration{
   position: absolute;
   top: 10px;
@@ -44,20 +60,25 @@
   top: 15px;
 }
 
+#fileType, #graph {
+  width: 50%;
+}
+#seed, #format {
+  float: right;
+  width: 50%;
+}
+
 #options {
   margin: 10px;
 }
 
-#fileType {
-  width: 50%;
-}
-#seed {
-  float:right;
-  width: 50%;
+#scale {
+  margin-left: 30px;
 }
 
 #importFile, #exportFile {
   position:relative;
   margin: 10px;
+  margin-top: 20px;
   left:40%;
 }
