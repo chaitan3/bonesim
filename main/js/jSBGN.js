@@ -30,15 +30,21 @@ jSBGN.prototype.connect = function() {
 }
           
 jSBGN.prototype.layout = function(graph) {
-  var canvas = 3000;
+  var ratio = $(window).width()/$(window).height();
+  var w = 1e6;
+  var h = w / ratio;
   var force = d3.layout.force()
-    .charge(-2000)
+    /*.charge(-2000)
     .linkDistance(100)
-    .linkStrength(0.2)
+    .linkStrength(1)
+    .gravity(0.1)*/
+    .charge(-3500)
+    .linkDistance(150)
+    .linkStrength(0.5)
     .gravity(0.05)
     .nodes(this.nodes)
     .links(this.edges)
-    .size([canvas, canvas])
+    .size([w, h])
   
   force.start();
   while(force.alpha() > 0.005) {

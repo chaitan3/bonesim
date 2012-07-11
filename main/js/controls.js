@@ -42,6 +42,7 @@ function zoomGraph(event, ui) {
     graph = trans;
   }
   graph.scale(ui.value);
+  graph.reduceTopLeftWhitespace();
 }
 
 function tabChange(event, ui) {
@@ -141,6 +142,14 @@ function importNetwork(jsbgn, tab) {
   graph.reduceTopLeftWhitespace();
   if($('#scale').attr('checked')) 
     graph.fitToPage();
+  /*note about positioning: 
+   * Initial canvas provided to d3 force 1e6 with aspect ratio maintained
+   * d3 force draws at center
+   * imported into bui which discards the space right and bottom of the graph
+   * reduce white space shifts the graph to the top left
+   * fit to page resizes the graph to the page size
+   * option for scale provided
+   */
   graph.unsuspendRedraw(importHandle);
   $('#zoom').slider('option', 'value', graph.scale());
   
