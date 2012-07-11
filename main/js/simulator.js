@@ -7,12 +7,12 @@ Simulator = function(jsbgn, simDelay) {
   var obj = this;
   var net;
   var delay;
-  var ruleFunctions = new Object();
+  var ruleFunctions = {};
   
   this.init = function(jsbgn, simDelay) {
     net = jsbgn;
     delay = simDelay;
-    net.states = new Object();
+    net.states = {};
     
     $('#iteration').text(0);
     $('#simulation').click(this.start);
@@ -81,7 +81,7 @@ Simulator = function(jsbgn, simDelay) {
   }
     
   var exportStateJSON = function() {	
-    var states = new Object();
+    var states = {};
     for (i in net.nodes) {
       var node = net.nodes[i];
       if (net.rules[node.id].length !== 0) {
@@ -119,8 +119,8 @@ Simulator = function(jsbgn, simDelay) {
 
   var sync = function() {
     var i, id;
-    var changed = new Array();
-    var states = new Object();
+    var changed = [];
+    var states = {};
     for (i in net.nodes) {
       id = net.nodes[i].id;
       states[id] = ruleFunctions[id](net.states);
@@ -135,16 +135,16 @@ Simulator = function(jsbgn, simDelay) {
   }
   
   var encodeMap = function(states) {  
-    var map = 0, j = 0, i;  
+    var map = '', j = 0, i;  
     for (i in states) 
-      map |= states[i] << j++;
+      map += +states[i];
     return map;  
   } 
   
   var decodeMap = function(map, states) {
-    var newStates = new Object(), i, j = 0;
+    var newStates = {}, i, j = 0;
     for (i in states)
-      newStates[i] = Boolean((map >> j++) & 1);
+      newStates[i] =  Boolean(parseInt(map[j++]));
     return newStates;  
   }
   
@@ -156,15 +156,15 @@ Simulator = function(jsbgn, simDelay) {
   }
 
   this.attractorSearch = function() {
-    var visitedStates = new Array();
-    var attr, attractors = new Array(), color;
-    var i, j, map, prev, idx, last;
+    var cycle, attractors = [], color;
+    var i, j, map, prev, node, idx;
+    
     var doc = new sb.Document();
     doc.lang(sb.Language.AF);
     
-    var initStates = new Array();
+    var initStates = [], currStates;
     for (i = 0; i < 30; i++) {
-      initStates.push(new Object());
+      initStates.push({});
       for (j in net.states) {
         initStates[i][j] = Boolean(Math.round(Math.random()));
       }
@@ -172,37 +172,32 @@ Simulator = function(jsbgn, simDelay) {
     
     for (i in initStates) {
       net.states = initStates[i];
-      last = visitedStates.length;
-      prev = -1;
+      currStates = [];
+      prev = '';
       for(j = 0 ; ; j++) {
         map = encodeMap(net.states);
-        idx = visitedStates.indexOf(map);
-        if(idx !== -1) {
-          if (idx >= last) {
-            attr = new Object();
-            attr.length = last + j - idx;
-            attr.cycle = visitedStates.slice(idx);
-            attractors.push(attr);
+        node = doc.node(map);
+        if(node !== null) {
+          idx = currStates.indexOf(map);
+          if (idx !== -1) {
+            cycle = currStates.slice(idx);
+            attractors.push(cycle);
           }
-          if (prev !== -1)
-            //draw edge between map and prev map
-            doc.createArc(prev + '->' + map).type(sb.ArcType.PositiveInfluence).source(String(prev)).target(String(map));
+          if (prev.length > 0)
+            doc.createArc(prev + '->' + map).type(sb.ArcType.PositiveInfluence).source(prev).target(map);
           break;
         }
         else {
-          //create node with map
-          doc.createNode(String(map)).type(sb.NodeType.SimpleChemical);
-          
-          if (prev !== -1)
-            //draw edge between map and prev map
-            doc.createArc(prev + '->' + map).type(sb.ArcType.PositiveInfluence).source(String(prev)).target(String(map));
+          doc.createNode(map).type(sb.NodeType.SimpleChemical);
+          if (prev.length > 0)
+            doc.createArc(prev + '->' + map).type(sb.ArcType.PositiveInfluence).source(prev).target(map);
         }
-        visitedStates.push(map);
+        currStates.push(map);
         sync();
         prev = map;
       }
     }
-    //testing purposes
+    
     var jsbgn = new jSBGN(); 
     var tmp = JSON.parse(sb.io.write(doc, 'jsbgn'));
     jsbgn.nodes = tmp.nodes;
@@ -211,15 +206,15 @@ Simulator = function(jsbgn, simDelay) {
     trans = importNetwork(jsbgn, '#stg');
     $('#tabs').tabs('select', '#stg');
     
-    for (i in visitedStates)
-      $('#' + visitedStates[i]).hover(nodeHoverStates, nodeHoverRemove);
+    for (i in jsbgn.nodes)
+      $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
     for (i in attractors) {
-      attr = attractors[i];
+      cycle = attractors[i];
       color = randomColor();
-      for (j in attr.cycle)
-        $('#' + attr.cycle[j] + ' :eq(0)').css('fill', color)
+      for (j in cycle)
+        $('#' + cycle[j] + ' :eq(0)').css('fill', color)
     }
-    return attractors;
+    
   }
 
   var iterate = function() {
@@ -253,7 +248,7 @@ Simulator = function(jsbgn, simDelay) {
   var nodeHoverStates = function() {
     var id = parseInt($(this).attr('id'));
     var states = decodeMap(id, net.states), i;
-    var info = String();
+    var info = '';
     for (i in states)
       info += i + ': ' + states[i] + '<br>';
     $('<div/>', {id:'info', html: info}).prependTo('#stg');

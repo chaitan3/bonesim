@@ -5,12 +5,15 @@ bui.ready(function() {
   
   $('#tabs').tabs();
   $('#tabs').tabs('select', '#grn');
+  $('#tabs').bind('tabsselect', tabChange);
+  
+  $('#zoom').slider({ step: 0.1, max: 2, stop: zoomGraph});
   $('#simulation').button({icons: {primary: "ui-icon-play" }});
   $('#analyze').button({icons: {primary: "ui-icon-gear" }});
   $('#importButton').button({icons: {primary: "ui-icon-folder-open" }});
   $('#exportButton').button({icons: {primary: "ui-icon-disk" }});
-  $('#importDialog').dialog({ autoOpen: false, minWidth: 600 });
-  $('#exportDialog').dialog({ autoOpen: false, minWidth: 400 });
+  $('#importDialog').dialog({ autoOpen: false, minWidth: 600, modal: true });
+  $('#exportDialog').dialog({ autoOpen: false, minWidth: 400, modal: true });
   $('#progress').hide();
   
   $('#importButton').click(importDialog);
@@ -23,7 +26,38 @@ bui.ready(function() {
   
   $('#exportButton').click(exportDialog);
   $('#exportFile').click(exportFile);
+  
 });
+
+function zoomGraph(event, ui) {
+  var i = $('#tabs').tabs('option', 'selected');
+  if(i === 0) {
+    if (typeof(network) == 'undefined')
+      return;
+    graph = network;
+  }
+  else if(i === 1) {
+    if (typeof(trans) == 'undefined')
+      return;
+    graph = trans;
+  }
+  graph.scale(ui.value);
+}
+
+function tabChange(event, ui) {
+  var i = ui.index;
+  if(i === 0) {
+    if (typeof(network) == 'undefined')
+      return;
+    graph = network;
+  }
+  else if(i === 1) {
+    if (typeof(trans) == 'undefined')
+      return;
+    graph = trans;
+  }
+  $('#zoom').slider('option', 'value', graph.scale());;
+}
 
 function readFile(event) {
   fileObject = event.target.files[0];
@@ -101,10 +135,14 @@ function importNetwork(jsbgn, tab) {
   
   var importHandle = graph.suspendRedraw(20000);
 	bui.importFromJSON(graph, jsbgn);
+  jsbgn.connect();
   jsbgn.layout(graph);
+  jsbgn.redraw(graph);
+  graph.reduceTopLeftWhitespace();
   if($('#scale').attr('checked')) 
     graph.fitToPage();
   graph.unsuspendRedraw(importHandle);
+  $('#zoom').slider('option', 'value', graph.scale());
   
   return graph;
 }
@@ -131,9 +169,9 @@ function exportFile() {
   $('#exportDialog').dialog('close');
   
   var graph;
-  if ($('#network').attr('checked'))
+  if ($('#networke').attr('checked'))
     graph = network;
-  else if ($('#trans').attr('checked'))
+  else if ($('#transe').attr('checked'))
     graph = trans;
     
   if ($('#sbgn').attr('checked')) {

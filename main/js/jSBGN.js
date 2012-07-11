@@ -4,120 +4,45 @@ jSBGN = function() { // constructor
   this.edges = [];
 }
 
-// http://www.javascriptkit.com/javatutors/oopjs2.shtml
+jSBGN.prototype.redraw = function(graph) {
+  var all_drawables = graph.drawables();
+  var i, j;
+  for (i = 0; i < this.nodes.length; i++) {
+    j = this.nodes[i];
+    all_drawables[j.id].absolutePositionCenter(j.x, j.y);
+  }
+  for (i = 0; i < this.edges.length; i++) {
+    j = this.edges[i];
+    all_drawables[j.id].recalculatePoints();
+  }
+}
 
-jSBGN.prototype.appendNode = function(node) {
-				//this.nodes.push(Node); 		this doesn't work !!!
-				this.nodes = this.nodes.concat([node]);
-				}
-
-jSBGN.prototype.removeNode = function(node) {
-				for (index in this.nodes) {
-					var node = this.nodes[index];
-					if (node == Node) {
-						this.nodes.slice(index, 1);		// requires array.js
-						break;
-						}
-					}
-				}
-
-jSBGN.prototype.appendEdge = function(edge) {
-				//this.edges.push(edge);		this doesn't work!!!
-				this.edges = this.edges.concat([edge]);
-				}
-
-jSBGN.prototype.getNodeById = function(id) {
-				for (index in this.nodes) {
-					var node = this.nodes[index];
-					if (node.id == id) {
-						return node;
-						break;
-						}
-					}
-				return null;
-				}
-
-jSBGN.prototype.getEdgeBySourceAndTargetId = function(sourceId, targetId) {
-						for (index in this.edges) {
-							var edge = this.edges[index];
-							if (edge.source == sourceId && edge.target == targetId) {
-								return edge;
-								break;
-								}
-							}
-						return null;
-						}
-
-jSBGN.prototype.hasNode = function(id) {
-				return this.getNodeById(id) != null;
-				}
-
-jSBGN.prototype.exportJSON = function() {
-				// export network with object links
-
-				// without node.edges
-				var _nodes = [];
-				for (index in this.nodes) {
-					var node = this.nodes[index];
-					var newnode = {};
-					newnode.id = node.id;
-					newnode.data = node.data;
-					newnode.type = node.type;
-					_nodes = _nodes.concat([newnode]);
-					}
-
-				// without edge.sourceNode & edge.targetNode
-				var _edges = [];
-				for (index in this.edges) {
-					var edge = this.edges[index];
-					var newedge = {};
-					newedge.id = edge.id;
-					newedge.source = edge.source;
-					newedge.target = edge.target;
-					newedge.type = edge.type;
-					_edges = _edges.concat([newedge]);
-					}
-
-				return { nodes: _nodes, edges: _edges };
-				}
-
-
-
-jSBGN.prototype.exportJSONstring = function() {
-					return JSON.stringify( this.exportJSON() );
-					}
+jSBGN.prototype.connect = function() {
+  var i, j;
+  for (i in this.edges) {
+    for (j in this.nodes) {
+      if (this.edges[i].source == this.nodes[j].id)
+        this.edges[i].source = this.nodes[j];
+      if (this.edges[i].target == this.nodes[j].id)
+        this.edges[i].target = this.nodes[j];
+    }
+  }
+}
           
 jSBGN.prototype.layout = function(graph) {
-  var nodes_edges = get_nodes_edges(graph);
-  
   var canvas = 3000;
-  
   var force = d3.layout.force()
-    .charge(-1500)
-    .linkDistance(50)
-    .linkStrength(0.1)
-    .gravity(0.15)
-    .nodes(nodes_edges.nodes)
-    .links(nodes_edges.edges)
+    .charge(-2000)
+    .linkDistance(100)
+    .linkStrength(0.2)
+    .gravity(0.05)
+    .nodes(this.nodes)
+    .links(this.edges)
     .size([canvas, canvas])
-//    .on("tick", function() {console.log(nodes_edges.nodes);console.log(nodes_edges.nodes.CycA.x) });
   
   force.start();
   while(force.alpha() > 0.005) {
     force.tick();
   }
   force.stop();
-  
-  for (i=0; i< nodes_edges.nodes.length; i++) {
-    n = nodes_edges.nodes[i];
-    n.absolutePositionCenter(n.x, n.y);
-  }
-  var all_drawables = graph.drawables();
-  for (var key in all_drawables) {
-      drawable = all_drawables[key];
-      if(drawable.identifier() == 'bui.Edge'){
-          drawable.recalculatePoints();
-      }
-  }
-  graph.reduceTopLeftWhitespace();
 }
