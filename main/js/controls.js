@@ -1,4 +1,7 @@
 var fileObject;
+var network = null, trans = null;
+var simulator = null;
+var jSBGN, Simulator;
 
 $(document).ready(function() {
   $('#tabs').tabs();
@@ -60,12 +63,12 @@ function getScripts() {
 function zoomGraph(event, ui) {
   var i = $('#tabs').tabs('option', 'selected');
   if(i === 0) {
-    if (typeof(network) == 'undefined')
+    if (network === null)
       return;
     graph = network;
   }
   else if(i === 1) {
-    if (typeof(trans) == 'undefined')
+    if (trans === null)
       return;
     graph = trans;
   }
@@ -76,16 +79,16 @@ function zoomGraph(event, ui) {
 function tabChange(event, ui) {
   var i = ui.index;
   if(i === 0) {
-    if (typeof(network) == 'undefined')
+    if (network === null)
       return;
     graph = network;
   }
   else if(i === 1) {
-    if (typeof(trans) == 'undefined')
+    if (trans === null)
       return;
     graph = trans;
   }
-  $('#zoom').slider('option', 'value', graph.scale());;
+  $('#zoom').slider('option', 'value', graph.scale());
 }
 
 function readFile(event) {
@@ -114,7 +117,7 @@ function dragExit(event) {
 }
 
 function importDialog() {
-  if(typeof(simulator) != "undefined") 
+  if(simulator !== null) 
     simulator.stop();
   fileObject = null;
   $('#file').attr({ value: '' });
@@ -125,7 +128,7 @@ function importDialog() {
 function importFile() {
   $('#importDialog').dialog('close');
   
-  if (fileObject == null)
+  if (fileObject === null)
     return;
   
   var reader = new FileReader();
@@ -150,11 +153,11 @@ function importFile() {
     network = importNetwork(jsbgn, '#grn');
     $('#tabs').tabs('select', '#grn');
     
-    if(typeof(simulator) != "undefined") 
+    if(simulator !== null) 
       simulator.destroy();
     simulator = new Simulator();
     simulator.init(jsbgn, 500);
-  }
+  };
   reader.readAsText(file);
 }
 
@@ -197,7 +200,7 @@ function getInitialSeed() {
 
 
 function exportDialog() {
-  if(typeof(simulator) != "undefined") 
+  if(simulator !== null) 
     simulator.stop();
   $('#exportDialog').dialog('open');
 }

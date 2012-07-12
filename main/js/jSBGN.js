@@ -5,7 +5,7 @@
  * hosts the layout function for the network.
  * @constructor
  */
-jSBGN = function () { // constructor
+var jSBGN = function () { 
   this.nodes = [];
   this.edges = [];
 };
@@ -13,21 +13,27 @@ jSBGN = function () { // constructor
 /**After generating the layout, the jSBGN object contains the x and y 
  * coordinates of the nodes. These are imported into the bui graph by
  * using this function.
- * @param {bui.Graph} graph - The bui graph instance.
+ * @param {bui.Graph} graph The bui graph instance.
  */
 jSBGN.prototype.redraw = function (graph) {
   var all_drawables = graph.drawables();
   var i, j;
+  //Node positions updated first
   for (i = 0; i < this.nodes.length; i++) {
     j = this.nodes[i];
     all_drawables[j.id].absolutePositionCenter(j.x, j.y);
   }
+  //Recalculating edges coordinates based on the new nodes coordinates
   for (i = 0; i < this.edges.length; i++) {
     j = this.edges[i];
     all_drawables[j.id].recalculatePoints();
   }
-}
+};
 
+/**Function to substitute the node id's in source and target properties 
+ * of edges with the actual node objects, this is required for the d3
+ * layouter
+ */
 jSBGN.prototype.connect = function () {
   var i, j;
   for (i in this.edges) {
@@ -38,9 +44,14 @@ jSBGN.prototype.connect = function () {
         this.edges[i].target = this.nodes[j];
     }
   }
-}
-          
+};
+
+/**The d3 layouter. Customised for better graphs with networks and 
+ * transitions.
+ * @param {bui.Graph} graph The bui graph instance.
+ */          
 jSBGN.prototype.layout = function(graph) {
+  //Give a canvas to the d3 layouter with the dimensions of the window
   var ratio = $(window).width()/$(window).height();
   var w = 1e6;
   var h = w / ratio;
@@ -55,11 +66,11 @@ jSBGN.prototype.layout = function(graph) {
     .gravity(0.05)
     .nodes(this.nodes)
     .links(this.edges)
-    .size([w, h])
-  
+    .size([w, h]);
+  //Run the d3 layouer, alpha cut-off 0.005
   force.start();
   while(force.alpha() > 0.005) {
     force.tick();
   }
   force.stop();
-}
+};

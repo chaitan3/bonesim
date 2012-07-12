@@ -6,6 +6,7 @@
 #  for production.
 
 JSFILES = main/js/*
+LINT = jshint
 
 all: libs lint doc
 
@@ -43,7 +44,7 @@ libSBGN.js:
 	rm -rf libSBGN.js
 
 lint: 
-	jslint $(JSFILES)
+	$(LINT) $(JSFILES)
 	
 doc: 
 	rm -rf jsdoc
@@ -52,6 +53,6 @@ doc:
 deps: 
 	#dependencies required for the simulator: building libs, checking code
 	sudo apt-get install nodejs npm node-uglify  ant git-core mercurial jsdoc-toolkit
-	sudo npm install -g jslint
+	sudo npm install -g $(LINT)
 
 .PHONY: doc

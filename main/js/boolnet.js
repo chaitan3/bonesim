@@ -1,35 +1,36 @@
-ruleJS = function(data) {
+function ruleJS(data) {
   return data.replace(/[&]/g, '&&').replace(/[|]/g, '||')
   .replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!')
   .trim();
 }
 
-protein_name_regex = /[A-Za-z0-9_]+/g;
-      
-jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
-  var lines, cols, i;
+var protein_name_regex = /[A-Za-z0-9_]+/g;
+var jSBGN;
+
+jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
+  
   var targetNode, sourceNode;
   var targetID, sourceID, edgeID;
-  var rules = new Object(), ruleNodes, rule;
-  var doc = new sb.Document();
-  var jsbgn, skip, trimmed;
+  var rules = {}, ruleNodes, rule;
   
+  var doc = new sb.Document();
   doc.lang(sb.Language.AF);
   
+  var lines, cols, i, j, trimmed;
   lines = file.split('\n');	//The file consists of a set of lines describing each node
 	for (i = 0; i < lines.length; i++) {
     trimmed = lines[i].trim();
-    if (trimmed.length == 0) 
+    if (trimmed.length === 0)
       continue;
     if (trimmed[0] != '#') {
       
       cols = trimmed.split(splitKey);
       if (cols.length != 2)
-        console.error('Error in input file, line ' + i + ': Broken update rule')
+        console.error('Error in input file, line ' + i + ': Broken update rule');
       targetID = cols[0].trim();
       rule = ruleJS(cols[1].trim());
       
-      if(targetID == 'targets' && splitKey == ',')
+      if(targetID === 'targets' && splitKey === ',')
         continue;
       
       if (targetID[targetID.length-1] == '*')
@@ -39,7 +40,7 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
         targetNode = doc.createNode(targetID).type(sb.NodeType.Macromolecule).label(targetID);  
       rules[targetID] = rule;
       
-      if (rule == 'True' || rule == 'False') {
+      if (rule === 'True' || rule === 'False') {
         rules[targetID] = rule.toLowerCase();
         continue;
       }
@@ -59,9 +60,10 @@ jSBGN.prototype.importBooleanNetwork = function(file, splitKey) {
       }
 		}
   }
-  jsbgn = JSON.parse(sb.io.write(doc, 'jsbgn'));
+  
+  var jsbgn = JSON.parse(sb.io.write(doc, 'jsbgn'));
   this.nodes = jsbgn.nodes;
   this.edges = jsbgn.edges;
   this.rules = rules;
-}
+};
 
