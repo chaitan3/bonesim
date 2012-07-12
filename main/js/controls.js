@@ -1,8 +1,6 @@
 var fileObject;
 
-bui.ready(function() {
-  bui.settings.css.stylesheetUrl = 'css/visualization-svg.css';
-  
+$(document).ready(function() {
   $('#tabs').tabs();
   $('#tabs').tabs('select', '#grn');
   $('#tabs').bind('tabsselect', tabChange);
@@ -26,6 +24,27 @@ bui.ready(function() {
   
   $('#exportButton').click(exportDialog);
   $('#exportFile').click(exportFile);
+  
+  $.ajaxSetup({
+    cache: true,
+    mimeType: 'text/javascript'
+  });
+  $.getScript("settings.js");
+  
+  $.getScript("lib/jquery.simulate.js");
+	$.getScript("lib/biographer-ui.min.js", function() {
+    bui.settings.css.stylesheetUrl = 'css/visualization-svg.css';
+  });
+  $.getScript("lib/interact.js");
+  $.getScript("lib/d3.v2.min.js");
+  $.getScript("lib/libSBGN.min.js");
+
+  $.getScript("js/util.js");
+	$.getScript("js/jSBGN.js");
+	$.getScript("js/boolnet.js");
+	$.getScript("js/SBML.js");
+  $.getScript("js/GINML.js");
+  $.getScript("js/simulator.js");
   
 });
 

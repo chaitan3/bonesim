@@ -1,10 +1,10 @@
 
-jSBGN = function() { // constructor
+jSBGN = function () { // constructor
   this.nodes = [];
   this.edges = [];
-}
+};
 
-jSBGN.prototype.redraw = function(graph) {
+jSBGN.prototype.redraw = function (graph) {
   var all_drawables = graph.drawables();
   var i, j;
   for (i = 0; i < this.nodes.length; i++) {
@@ -17,7 +17,7 @@ jSBGN.prototype.redraw = function(graph) {
   }
 }
 
-jSBGN.prototype.connect = function() {
+jSBGN.prototype.connect = function () {
   var i, j;
   for (i in this.edges) {
     for (j in this.nodes) {

@@ -1,0 +1,6 @@
+syntax: glob
+
+deploy.sh
+main/lib
+main/css
+*.pdf

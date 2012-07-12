@@ -1,0 +1,13 @@
+/*
+ * README
+ * 
+ * Copyright 2012 Chaitanya Talnikar <chaitukca@gmail.com>
+ * 
+ */
+
+Welcome to the biographer simulator.
+
+The simulator uses a Makefile to manage the project
+
+To use the simulator, first we have to fetch the required libs.
+Type in the terminal "make libs".
