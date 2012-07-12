@@ -5,7 +5,9 @@
 #  This file contains the necessary targets for building the simulator 
 #  for production.
 
-all: libs
+JSFILES = main/js/*
+
+all: libs lint doc
 
 libs: libdir bui d3 libSBGN.js
 
@@ -16,7 +18,6 @@ libdir:
 
 bui:
 	#fetch biographer-ui, install it's compilation dependencies for ubuntu and build it
-	sudo apt-get install libnode-uglify nodejs
 	hg clone https://code.google.com/p/biographer.visualization/ UI
 	cd UI
 	python src/build/python/manage.py clean build test compress createDistribution
@@ -32,7 +33,6 @@ d3:
 	
 libSBGN.js: 
 	#fetch libSBGN.js, install ant and build it
-	sudo apt-get install ant
 	git clone git://github.com/chemhack/libSBGN.js.git
 	cd libSBGN.js
 	git submodule init
@@ -41,3 +41,17 @@ libSBGN.js:
 	cp build/compiled-advanced.js main/lib/libSBGN.min.js
 	cd ..
 	rm -rf libSBGN.js
+
+lint: 
+	jslint $(JSFILES)
+	
+doc: 
+	rm -rf jsdoc
+	jsdoc -d=jsdoc $(JSFILES)
+	
+deps: 
+	#dependencies required for the simulator: building libs, checking code
+	sudo apt-get install nodejs npm node-uglify  ant git-core mercurial jsdoc-toolkit
+	sudo npm install -g jslint
+
+.PHONY: doc

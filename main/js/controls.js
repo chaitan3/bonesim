@@ -14,6 +14,13 @@ $(document).ready(function() {
   $('#exportDialog').dialog({ autoOpen: false, minWidth: 400, modal: true });
   $('#progress').hide();
   
+  addListeners();
+  
+  getScripts();
+  
+});
+
+function addListeners() {
   $('#importButton').click(importDialog);
   $('#file')[0].addEventListener('change', readFile, false);
   $('#dropFile')[0].addEventListener('drop', dropFile, false);
@@ -24,7 +31,9 @@ $(document).ready(function() {
   
   $('#exportButton').click(exportDialog);
   $('#exportFile').click(exportFile);
-  
+}
+
+function getScripts() {
   $.ajaxSetup({
     cache: true,
     mimeType: 'text/javascript'
@@ -46,7 +55,7 @@ $(document).ready(function() {
   $.getScript("js/GINML.js");
   $.getScript("js/simulator.js");
   
-});
+}
 
 function zoomGraph(event, ui) {
   var i = $('#tabs').tabs('option', 'selected');

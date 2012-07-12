@@ -1,9 +1,20 @@
 
+/**Representation of Graphs using nodes and edges arrays. Used as
+ * a placeholder for importing graphs into biographer-ui. Graphs are 
+ * exported to this format by using the libSBGN.js library. Also 
+ * hosts the layout function for the network.
+ * @constructor
+ */
 jSBGN = function () { // constructor
   this.nodes = [];
   this.edges = [];
 };
 
+/**After generating the layout, the jSBGN object contains the x and y 
+ * coordinates of the nodes. These are imported into the bui graph by
+ * using this function.
+ * @param {bui.Graph} graph - The bui graph instance.
+ */
 jSBGN.prototype.redraw = function (graph) {
   var all_drawables = graph.drawables();
   var i, j;
