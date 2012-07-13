@@ -1,4 +1,4 @@
-var jSBGN.prototype.importGINML = function(file) {
+jSBGN.prototype.importGINML = function(file) {
   //todo 
   //add visual setting importers, taken care by layout currently
   //boolean only supported that is maxval = 1

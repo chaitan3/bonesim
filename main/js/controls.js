@@ -132,11 +132,11 @@ function importFile() {
     return;
   
   var reader = new FileReader();
-  var data, jsbgn, file = fileObject;
+  var data, jsbgn = new jSBGN(), file = fileObject;
   
   reader.onload = function(read) {
     data = read.target.result;
-    jsbgn = new jSBGN();
+    
     if($('#r').attr('checked'))
       jsbgn.importBooleanNetwork(data, ',');
     else if($('#python').attr('checked'))

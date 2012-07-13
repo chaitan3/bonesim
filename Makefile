@@ -52,7 +52,11 @@ doc:
 	
 deps: 
 	#dependencies required for the simulator: building libs, checking code
-	sudo apt-get install nodejs npm node-uglify  ant git-core mercurial jsdoc-toolkit
+	sudo apt-get install nodejs npm node-uglify  ant git-core mercurial \
+		jsdoc-toolkit liqtwebkit4 python-qt4
 	sudo npm install -g $(LINT)
+	
+test:
+	python test/browse.py main/index.html
 
-.PHONY: doc
+.PHONY: doc test

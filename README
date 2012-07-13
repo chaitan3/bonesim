@@ -22,6 +22,8 @@ ant
 git-core(git)
 mercurial(hg)
 jsdoc-toolkit(jsdoc)
+libqtwebkit4
+python-qt4
 2. Fetch and build the libs by executing the command "make libs".
 The above commands adds the following libs:
 biographer-ui
@@ -34,3 +36,7 @@ To perform jslint on the js files execute "make lint".
 Documentation:
 To generate documentation execute "make doc". The docs will reside
 in the jsdoc directory.
+
+Testing or Offline App:
+To test the application using the qt webkit engine. Run "make test".
+Can also be deployed as an offline app.
