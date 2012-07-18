@@ -44,9 +44,11 @@ libSBGN.js:
 	rm -rf libSBGN.js
 
 lint: 
+	#run lint to check code faults
 	$(LINT) $(JSFILES)
 	
 doc: 
+	#create documentation for the project
 	rm -rf jsdoc
 	jsdoc -d=jsdoc $(JSFILES)
 	
@@ -57,6 +59,7 @@ deps:
 	sudo npm install -g $(LINT)
 	
 test:
+	#test the app in a small browser
 	python test/browse.py main/index.html
 
 .PHONY: doc test

@@ -39,8 +39,11 @@ function addListeners() {
 function getScripts() {
   $.ajaxSetup({
     cache: true,
-    mimeType: 'text/javascript'
+    beforeSend: function(xhr) {
+      xhr.overrideMimeType("text/javascript");
+    }
   });
+  
   $.getScript("settings.js");
   
   $.getScript("lib/jquery.simulate.js");
@@ -58,6 +61,10 @@ function getScripts() {
   $.getScript("js/GINML.js");
   $.getScript("js/simulator.js");
   
+  
+  $.ajaxSetup({
+    beforeSend: null
+  });
 }
 
 function zoomGraph(event, ui) {
@@ -143,12 +150,9 @@ function importFile() {
       jsbgn.importBooleanNetwork(data, '=');
     else if($('#ginml').attr('checked'))
       jsbgn.importGINML(data);
-    else {
-      if($('#guessSeed').attr('checked'))
-        jsbgn.importSBML(file, true);
-      else
-        jsbgn.importSBML(file, false);
-    }
+    else 
+      jsbgn.importSBML(file);
+      
     $('#stg').html('');
     network = importNetwork(jsbgn, '#grn');
     $('#tabs').tabs('select', '#grn');
@@ -156,7 +160,9 @@ function importFile() {
     if(simulator !== null) 
       simulator.destroy();
     simulator = new Simulator();
-    simulator.init(jsbgn, 500);
+    if($('#sbml').attr('checked'))
+      simulator.scopes = true;  
+    simulator.init(jsbgn, 500, $('#guessSeed').attr('checked'));
   };
   reader.readAsText(file);
 }
@@ -197,7 +203,6 @@ function getInitialSeed() {
   else
     return true;
 }
-
 
 function exportDialog() {
   if(simulator !== null) 

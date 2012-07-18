@@ -1,6 +1,6 @@
 var trans, jSBGN;
 
-var Simulator = function(jsbgn, simDelay) {
+var Simulator = function() {
   
   this.running = false;
   this.scopes = false;
@@ -37,16 +37,16 @@ var Simulator = function(jsbgn, simDelay) {
     return changed;
   };
   
-  var encodeMap = function(states) {  
+  var encodeMap = function() {  
     var map = '', i;  
-    for (i in states) 
-      map += +states[i];
+    for (i in net.states) 
+      map += +net.states[i];
     return map;  
   };
   
-  var decodeMap = function(map, states) {
+  var decodeMap = function(map) {
     var newStates = {}, i, j = 0;
-    for (i in states)
+    for (i in net.states)
       newStates[i] =  Boolean(parseInt(map[j++], 10));
     return newStates;  
   };
@@ -108,7 +108,48 @@ var Simulator = function(jsbgn, simDelay) {
     $('#info').remove();
   };
   
-  this.init = function(jsbgn, simDelay) {
+  var applyGuessSeed = function() {
+    
+    $.ajax({
+      url: env['biographer']+'/Simulate/InitialSeed',
+      async: false,
+      success: function(data) {
+        var seed = JSON.parse(data);
+        for (i in seed) {
+          if(seed[i])
+            net.states[i] = true;
+          else
+            net.states[i] = false;
+        }
+      }
+    });
+  }
+  
+  var exportStateJSON = function() {	
+    var states = {}, i;
+    for (i in net.nodes) {
+      var node = net.nodes[i];
+      if (net.rules[node.id].length === 0) {
+        if(net.states[node.id])
+          states[node.id] = 1;
+        else
+          states[node.id] = 0;
+      }
+    }
+    return JSON.stringify(states);
+  };
+
+  var updateNodeRules = function(state) {	
+    var i;
+    for (i in state) {
+      if(state[i])
+        ruleFunctions[i] = function() { return true; };
+      else
+        ruleFunctions[i] = function() { return false; };
+    }
+  };
+  
+  this.init = function(jsbgn, simDelay, guessSeed) {
     net = jsbgn;
     delay = simDelay;
     net.states = {};
@@ -116,25 +157,29 @@ var Simulator = function(jsbgn, simDelay) {
     $('#iteration').text(0);
     $('#simulation').click(this.start);
     $('#analyze').click(this.attractorSearch);
-    if($('#sbml').attr('checked'))
-      this.scopes = true;
     
-    var n, node, svgNode;  
-    for (n in net.nodes) {
-      node = net.nodes[n];
-      ruleFunctions[node.id] = makeFunction(net.rules[node.id]);
-      if(!this.scopes) 
-        net.states[node.id] = getInitialSeed();
-      
-      svgNode = $('#' + node.id);
+    var i;
+    for (i in net.rules) {
+      net.states[i] = getInitialSeed();
+      if(this.scopes && net.rules[i].length !== 0)
+        net.states[i] = false;
+    }
+    
+    if(this.scopes && guessSeed)
+      applyGuessSeed();
+    
+    var svgNode;  
+    for (i in net.rules) {
+      ruleFunctions[i] = makeFunction(net.rules[i]);
+      svgNode = $('#' + i);
       if (svgNode !== null) {
         svgNode.hover(nodeHoverRule, nodeHoverRemove);
         svgNode.click(nodeClick);
-        nodeColorUpdate(node.id);
+        nodeColorUpdate(i);
       }
     }
   };
-    
+  
   this.run = function() {
 
     if(!(this.running))
@@ -148,9 +193,7 @@ var Simulator = function(jsbgn, simDelay) {
         type: 'POST',
         data: { state : exportStateJSON() },
         success: function (resp) {
-          var newState = JSON.parse(resp);
-          console.log(JSON.stringify(newState));
-          updateNodeRules(newState);
+          updateNodeRules(JSON.parse(resp));
           iterate();
         }
       });
@@ -178,34 +221,6 @@ var Simulator = function(jsbgn, simDelay) {
   this.destroy = function() {
     $('#simulation').unbind('click', obj.start);
     $('#analyze').unbind('click', obj.attractorSearch);
-  };
-    
-  var exportStateJSON = function() {	
-    var states = {}, i;
-    for (i in net.nodes) {
-      var node = net.nodes[i];
-      if (net.rules[node.id].length !== 0) {
-        if(net.states[node.id])
-          states[node.id] = 1;
-        else
-          states[node.id] = 0;
-      }
-    }
-    console.log(JSON.stringify(states));
-    return JSON.stringify(states);
-  };
-
-  var updateNodeRules = function(state) {	
-    var i;
-    for (i in net.nodes) {
-      var node = net.nodes[i];
-      if (net.rules[node.id].length !== 0) {
-        if(state[node.id])
-          net.rules[node.id] = (true).toString();
-        else
-          net.rules[node.id] = (false).toString();
-      }
-    }
   };
   
   this.attractorSearch = function() {

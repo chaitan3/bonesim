@@ -1,3 +1,5 @@
+var jSBGN;
+
 jSBGN.prototype.importGINML = function(file) {
   //todo 
   //add visual setting importers, taken care by layout currently
