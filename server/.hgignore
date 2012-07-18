@@ -1,0 +1,9 @@
+~*.pyc
+cache
+databases
+errors
+sessions
+modules
+static/simulator
+cron
+uploads
