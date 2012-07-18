@@ -1,4 +1,4 @@
-var jSBGN;
+var jSBGN, serverURL;
 
 jSBGN.prototype.importSBML = function(file) {
   var obj = this;
@@ -11,13 +11,13 @@ jSBGN.prototype.importSBML = function(file) {
   });
   
   $.ajax({
-    url: env['biographer']+'/Put/UploadSBML',
+    url: serverURL + '/Put/UploadSBML',
     type: 'POST',
     data: formData,
     contentType: false,
     processData: false,
     success: function() {
-      $.get(env['biographer']+'/Get/processedSBML', 
+      $.get(serverURL + '/Get/processedSBML', 
         function(data) {
           var json = JSON.parse(data);
           obj.nodes = json.nodes;
@@ -29,9 +29,9 @@ jSBGN.prototype.importSBML = function(file) {
             var node = obj.nodes[i];
             
             if ((node.type == 'Compartment') || (node.type == 'Process'))
-              obj.rules[node.id] = 'false';
-            else
               obj.rules[node.id] = '';
+            else
+              obj.rules[node.id] = 'update';
           }
         }
       );

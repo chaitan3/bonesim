@@ -1,4 +1,4 @@
-var trans, jSBGN;
+var trans, jSBGN, serverURL;
 
 var Simulator = function() {
   
@@ -24,11 +24,10 @@ var Simulator = function() {
     var i, id;
     var changed = [];
     var states = {};
-    for (i in net.nodes) {
-      id = net.nodes[i].id;
-      states[id] = ruleFunctions[id](net.states);
-      if (states[id] !== net.states[id]) 
-        changed.push(id);
+    for (i in net.states) {
+      states[i] = ruleFunctions[i](net.states);
+      if (states[i] !== net.states[i]) 
+        changed.push(i);
     }
     for (i in changed) {
       id = changed[i];
@@ -111,7 +110,7 @@ var Simulator = function() {
   var applyGuessSeed = function() {
     
     $.ajax({
-      url: env['biographer']+'/Simulate/InitialSeed',
+      url: serverURL + '/Simulate/InitialSeed',
       async: false,
       success: function(data) {
         var seed = JSON.parse(data);
@@ -127,14 +126,11 @@ var Simulator = function() {
   
   var exportStateJSON = function() {	
     var states = {}, i;
-    for (i in net.nodes) {
-      var node = net.nodes[i];
-      if (net.rules[node.id].length === 0) {
-        if(net.states[node.id])
-          states[node.id] = 1;
-        else
-          states[node.id] = 0;
-      }
+    for (i in net.states) {
+      if(net.states[i])
+        states[i] = 1;
+      else
+        states[i] = 0;
     }
     return JSON.stringify(states);
   };
@@ -160,20 +156,19 @@ var Simulator = function() {
     
     var i;
     for (i in net.rules) {
-      net.states[i] = getInitialSeed();
-      if(this.scopes && net.rules[i].length !== 0)
-        net.states[i] = false;
+      if(net.rules[i].length !== 0)
+        net.states[i] = getInitialSeed();
     }
-    
     if(this.scopes && guessSeed)
       applyGuessSeed();
     
     var svgNode;  
-    for (i in net.rules) {
+    for (i in net.states) {
       ruleFunctions[i] = makeFunction(net.rules[i]);
       svgNode = $('#' + i);
       if (svgNode !== null) {
-        svgNode.hover(nodeHoverRule, nodeHoverRemove);
+        if(!this.scopes)
+          svgNode.hover(nodeHoverRule, nodeHoverRemove);
         svgNode.click(nodeClick);
         nodeColorUpdate(i);
       }
@@ -189,7 +184,7 @@ var Simulator = function() {
       
     if (this.scopes)
       $.ajax({
-        url: env['biographer']+'/Simulate/Iterate',
+        url: serverURL + '/Simulate/Iterate',
         type: 'POST',
         data: { state : exportStateJSON() },
         success: function (resp) {
