@@ -81,13 +81,11 @@ var Simulator = function() {
   };
   
   var nodeClick = function() { 
-    if(obj.running)
-      return;
     
     var id = $(this).attr('id');
     net.state[id] = !net.state[id];
     nodeColorUpdate(id);
-    if($('#oneclick').attr('checked')) 
+    if($('#oneclick').attr('checked') && !obj.running) 
       setTimeout(function() { obj.start(); }, delay);
   };
   
