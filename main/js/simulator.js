@@ -15,39 +15,39 @@ var Simulator = function() {
     function(text) { 
       if (text === 'true' || text === 'false')
         return text;
-      return "states['" + text + "']"; 
+      return "state['" + text + "']"; 
     });
-    return Function("states", "return " + rule + ";");
+    return Function("state", "return " + rule + ";");
   };
 
   var sync = function() {
     var i, id;
     var changed = [];
-    var states = {};
-    for (i in net.states) {
-      states[i] = ruleFunctions[i](net.states);
-      if (states[i] !== net.states[i]) 
+    var state = {};
+    for (i in net.state) {
+      state[i] = ruleFunctions[i](net.state);
+      if (state[i] !== net.state[i]) 
         changed.push(i);
     }
     for (i in changed) {
       id = changed[i];
-      net.states[id] = states[id];
+      net.state[id] = state[id];
     }
     return changed;
   };
   
   var encodeMap = function() {  
     var map = '', i;  
-    for (i in net.states) 
-      map += +net.states[i];
+    for (i in net.state) 
+      map += +net.state[i];
     return map;  
   };
   
   var decodeMap = function(map) {
-    var newStates = {}, i, j = 0;
-    for (i in net.states)
-      newStates[i] =  Boolean(parseInt(map[j++], 10));
-    return newStates;  
+    var state = {}, i, j = 0;
+    for (i in net.state)
+      state[i] =  Boolean(parseInt(map[j++], 10));
+    return state;  
   };
   
   var randomColor = function() {
@@ -59,7 +59,7 @@ var Simulator = function() {
   
   var nodeColorUpdate = function(id) {
     var opacity;
-    if (net.states[id]) 
+    if (net.state[id]) 
       opacity = 1;
     else
       opacity = 0;
@@ -81,11 +81,14 @@ var Simulator = function() {
   };
   
   var nodeClick = function() { 
+    if(obj.running)
+      return;
+    
     var id = $(this).attr('id');
-    net.states[id] = !net.states[id];
+    net.state[id] = !net.state[id];
     nodeColorUpdate(id);
     if($('#oneclick').attr('checked')) 
-      obj.start();
+      setTimeout(function() { obj.start(); }, delay);
   };
   
   var nodeHoverRule = function() {
@@ -95,11 +98,11 @@ var Simulator = function() {
   };
   
   var nodeHoverStates = function() {
-    var id = parseInt($(this).attr('id'), 10);
-    var states = decodeMap(id, net.states), i;
+    var id = $(this).attr('id');
+    var state = decodeMap(id), i;
     var info = '';
-    for (i in states)
-      info += i + ': ' + states[i] + '<br>';
+    for (i in state)
+      info += i + ': ' + state[i] + '<br>';
     $('<div/>', {id:'info', html: info}).prependTo('#stg');
   };
   
@@ -116,23 +119,27 @@ var Simulator = function() {
         var seed = JSON.parse(data);
         for (i in seed) {
           if(seed[i])
-            net.states[i] = true;
+            net.state[i] = true;
           else
-            net.states[i] = false;
+            net.state[i] = false;
         }
       }
     });
   }
   
-  var exportStateJSON = function() {	
-    var states = {}, i;
-    for (i in net.states) {
-      if(net.states[i])
-        states[i] = 1;
-      else
-        states[i] = 0;
+  var exportStateJSON = function(states) {	
+    var i, j;
+    var exportStates = [];
+    for (i in states) {
+      exportStates.push({});
+      for (j in states[i]) {
+        if(states[i][j])
+          exportStates[i][j] = 1;
+        else
+          exportStates[i][j] = 0;
+      }
     }
-    return JSON.stringify(states);
+    return JSON.stringify(exportStates);
   };
 
   var updateNodeRules = function(state) {	
@@ -148,7 +155,7 @@ var Simulator = function() {
   this.init = function(jsbgn, simDelay, guessSeed) {
     net = jsbgn;
     delay = simDelay;
-    net.states = {};
+    net.state = {};
     
     $('#iteration').text(0);
     $('#simulation').click(this.start);
@@ -157,13 +164,13 @@ var Simulator = function() {
     var i;
     for (i in net.rules) {
       if(net.rules[i].length !== 0)
-        net.states[i] = getInitialSeed();
+        net.state[i] = getInitialSeed();
     }
     if(this.scopes && guessSeed)
       applyGuessSeed();
     
     var svgNode;  
-    for (i in net.states) {
+    for (i in net.state) {
       ruleFunctions[i] = makeFunction(net.rules[i]);
       svgNode = $('#' + i);
       if (svgNode !== null) {
@@ -182,16 +189,17 @@ var Simulator = function() {
       
     $('#iteration').text(parseInt($('#iteration').text(), 10) + 1);
       
-    if (this.scopes)
+    if (this.scopes) {
       $.ajax({
         url: serverURL + '/Simulate/Iterate',
         type: 'POST',
-        data: { state : exportStateJSON() },
+        data: { state : exportStateJSON([net.state]) },
         success: function (resp) {
           updateNodeRules(JSON.parse(resp));
           iterate();
         }
       });
+    }
     else
        iterate();
   };
@@ -226,20 +234,33 @@ var Simulator = function() {
     var initStates = [];
     for (i = 0; i < 30; i++) {
       initStates.push({});
-      for (j in net.states) {
+      for (j in net.state) {
         initStates[i][j] = Boolean(Math.round(Math.random()));
       }
+    }
+    
+    if(obj.scopes) {
+      var statesList;
+      $.ajax({
+        url: serverURL + '/Simulate/AttractorSearch',
+        type: 'POST',
+        async: false,
+        data: { states : exportStateJSON(initStates) },
+        success: function (resp) {
+          statesList = JSON.parse(resp);
+        }
+      });
     }
     
     var cycle, attractors = [];
     var map, prev, node, idx;
     var currStates;
     for (i in initStates) {
-      net.states = initStates[i];
+      net.state = initStates[i];
       currStates = [];
       prev = '';
       for(j = 0 ; ; j++) {
-        map = encodeMap(net.states);
+        map = encodeMap(net.state);
         node = doc.node(map);
         if(node !== null) {
           idx = currStates.indexOf(map);
@@ -257,6 +278,8 @@ var Simulator = function() {
             doc.createArc(prev + '->' + map).type(sb.ArcType.PositiveInfluence).source(prev).target(map);
         }
         currStates.push(map);
+        if(obj.scopes)
+          updateNodeRules(statesList[i][j + 1]);
         sync();
         prev = map;
       }
