@@ -3,11 +3,6 @@ try:
 except ImportError:
 	print "Warning: libScopes wrapper not found"
 
-try:
-	import json
-except ImportError:
-	print "Warning: JSON library not found"
-
 import string, random
 
 def randomFileName():
@@ -15,6 +10,19 @@ def randomFileName():
   chars = string.letters + string.digits
   return ''.join(random.choice(chars) for x in range(size))
 
+def importState(state, nodemap, net):
+	present = Scopes.VC(net.numC())
+	for i in state.keys():
+		present[nodemap[str(i)]] = state[i]
+	return present
+		
+def exportState(present, net):
+	nc = net.numC()
+	state = dict()
+	for i in range(0, nc):
+		state[str(net.name(i))] = present[i]
+	return state
+  
 def getInitialSeed():
 	net = Scopes.Net()
 	nodemap = Scopes.importSBML(net, session.sbml)
@@ -24,21 +32,7 @@ def getInitialSeed():
 	for i in range(0, nc):
 		idx[i] = i
 	seed = Scopes.findseed(net, idx, tgt)
-	return exportStateJSON(seed, net)
-
-def importStateJSON(state, nodemap, net):
-	present = Scopes.VC(net.numC())
-	stateDict = json.loads(state)
-	for i in stateDict.keys():
-		present[nodemap[str(i)]] = stateDict[i]
-	return present
-		
-def exportStateJSON(present, net):
-	nc = net.numC()
-	state = dict()
-	for i in range(0, nc):
-		state[str(net.name(i))] = present[i]
-	return json.dumps(state)
+	return exportState(seed, net)
 
 def singleIteration(state):
 	net = Scopes.Net()
@@ -48,7 +42,7 @@ def singleIteration(state):
 	active = Scopes.VC(nr)
 	blocking = Scopes.VC(nr)
 	depleted = Scopes.VC(nc)
-	present = importStateJSON(state, nodemap, net)
+	present = importState(state, nodemap, net)
 	
 	if not session.seed:
 		seed = present
@@ -60,4 +54,28 @@ def singleIteration(state):
 	
 	Scopes.dScopeStep(net, present, depleted, active, blocking, seed)
 	
-	return exportStateJSON(present, net)
+	return exportState(present, net)
+  
+def getAttractors(initStates):
+  
+  net = Scopes.Net()
+  nodemap = Scopes.importSBML(net, session.sbml)
+  nc = net.numC()
+  nr = net.numR()
+  statesList = []
+  for i in range(0, len(initStates)):
+    ss = Scopes.StateList()
+    seed = importState(initStates[i], nodemap, net)
+    Scopes.dScopeRun(net, 0, 1000, ss, seed);
+    statesList.append([])
+    for j in ss:
+      statesList[i].append(exportState(j.present, net))
+    if ss.cyclic:
+      statesList[i].append(statesList[i][-ss.cyclelen])
+    else:
+      statesList[i].append(statesList[i][-1])  
+  return statesList
+    
+    
+  
+  
