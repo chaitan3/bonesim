@@ -49,7 +49,7 @@ jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
       for (j in ruleNodes) {
         sourceID = ruleNodes[j];
         if (!(sourceID in rules)) {
-          rules[sourceID] = '';
+          rules[sourceID] = sourceID;
           sourceNode = doc.createNode(sourceID).type(sb.NodeType.Macromolecule).label(sourceID);
         }
         edgeID = sourceID + ' -> ' + targetID;
