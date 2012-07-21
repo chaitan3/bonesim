@@ -54,12 +54,8 @@ function getScripts() {
   $.getScript("lib/d3.v2.min.js");
   $.getScript("lib/libSBGN.min.js");
 
-	$.getScript("js/jSBGN.js");
-	$.getScript("js/boolnet.js");
-	$.getScript("js/SBML.js");
-  $.getScript("js/GINML.js");
+	$.getScript("js/import.js");
   $.getScript("js/simulator.js");
-  
   
   $.ajaxSetup({
     beforeSend: null
