@@ -11,7 +11,7 @@ var Simulator = function() {
   var ruleFunctions = {};
   
   var makeFunction = function(rule) {
-    rule = rule.replace(protein_name_regex, 
+    rule = rule.replace(/[A-Za-z0-9_]+/g, 
     function(text) { 
       if (text === 'true' || text === 'false')
         return text;
@@ -114,7 +114,7 @@ var Simulator = function() {
       url: serverURL + '/Simulate/InitialSeed',
       async: false,
       success: function(data) {
-        var seed = JSON.parse(data);
+        var seed = JSON.parse(data), i;
         for (i in seed) {
           if(seed[i])
             net.state[i] = true;
@@ -123,7 +123,7 @@ var Simulator = function() {
         }
       }
     });
-  }
+  };
   
   var exportStateJSON = function(states) {	
     var i, j;

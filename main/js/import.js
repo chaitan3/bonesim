@@ -60,18 +60,36 @@ jSBGN.prototype.layout = function(graph) {
     .linkDistance(100)
     .linkStrength(1)
     .gravity(0.1)*/
-    .charge(-3500)
+    
+    /*.charge(-3500)
     .linkDistance(150)
     .linkStrength(0.5)
     .gravity(0.05)
     .nodes(this.nodes)
     .links(this.edges)
+    .size([w, h]);*/
+    
+    .charge(function(node) { 
+              var size = 0;
+              if(typeof(node.data.label) !== 'undefined')
+                size = node.id.length;
+              return -2000-500*size; 
+            })
+    .linkDistance(function(edge) { 
+                    var size = 0;
+                    if(typeof(edge.source.data.label) !== 'undefined')
+                      size = edge.source.id.length + edge.target.id.length;
+                    return 100 + 30*(edge.source.weight) + 5*size; 
+                  })
+    .linkStrength(1)
+    .gravity(0.1)
+    .nodes(this.nodes)
+    .links(this.edges)
     .size([w, h]);
   //Run the d3 layouer, alpha cut-off 0.005
   force.start();
-  while(force.alpha() > 0.005) {
+  while(force.alpha() > 0.005)
     force.tick();
-  }
   force.stop();
 };
 
@@ -116,7 +134,7 @@ jSBGN.prototype.importSBML = function(file) {
   $.ajaxSetup({
     async: true
   });
-}
+};
 
 jSBGN.prototype.importGINML = function(file) {
   //todo 
@@ -190,14 +208,6 @@ jSBGN.prototype.importGINML = function(file) {
   this.rules = rules;
 };
 
-function ruleJS(data) {
-  return data.replace(/[&]/g, '&&').replace(/[|]/g, '||')
-  .replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!')
-  .trim();
-}
-
-var protein_name_regex = /[A-Za-z0-9_]+/g;
-
 jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
   
   var targetNode, sourceNode;
@@ -219,7 +229,9 @@ jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
       if (cols.length != 2)
         console.error('Error in input file, line ' + i + ': Broken update rule');
       targetID = cols[0].trim();
-      rule = ruleJS(cols[1].trim());
+      rule = cols[1].replace(/[&]/g, '&&').replace(/[|]/g, '||')
+                    .replace(/\band\b/g, '&&').replace(/\bor\b/g, '||').replace(/\bnot\b/g, '!')
+                    .trim();
       
       if(targetID === 'targets' && splitKey === ',')
         continue;
@@ -235,7 +247,7 @@ jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
         rules[targetID] = rule.toLowerCase();
         continue;
       }
-      ruleNodes = rules[targetID].match(protein_name_regex);
+      ruleNodes = rules[targetID].match(/[A-Za-z0-9_]+/g);
       
       for (j in ruleNodes) {
         sourceID = ruleNodes[j];
