@@ -20,26 +20,26 @@ var Simulator = function() {
     return Function("state", "return " + rule + ";");
   };
 
-  var sync = function() {
+  var sync = function(state) {
     var i, id;
     var changed = [];
-    var state = {};
+    var newState = {};
     for (i in net.state) {
-      state[i] = ruleFunctions[i](net.state);
-      if (state[i] !== net.state[i]) 
+      newState[i] = ruleFunctions[i](state);
+      if (newState[i] !== state[i]) 
         changed.push(i);
     }
     for (i in changed) {
       id = changed[i];
-      net.state[id] = state[id];
+      state[id] = newState[id];
     }
     return changed;
   };
   
-  var encodeMap = function() {  
+  var encodeMap = function(state) {  
     var map = '', i;  
-    for (i in net.state) 
-      map += +net.state[i];
+    for (i in state) 
+      map += +state[i];
     return map;  
   };
   
@@ -68,7 +68,7 @@ var Simulator = function() {
   
   var iterate = function() {
     var changed, i;
-    changed = sync();  
+    changed = sync(net.state);  
     if ( changed.length > 0 ) {   // network updated -> steady state not reached
       for (i in changed)
         nodeColorUpdate(changed[i]);
@@ -208,6 +208,7 @@ var Simulator = function() {
     $('#simulation').click(obj.stop);
     $('#simulation').button( "option", "icons", {primary: 'ui-icon-pause'});
     $('#progress').show();
+    $('#tabs').tabs('select', '#grn');
     obj.run();
   };
 
@@ -252,13 +253,13 @@ var Simulator = function() {
     
     var cycle, attractors = [];
     var map, prev, node, idx;
-    var currStates;
+    var currStates, state;
     for (i in initStates) {
-      net.state = initStates[i];
+      state = initStates[i];
       currStates = [];
       prev = '';
       for(j = 0 ; ; j++) {
-        map = encodeMap(net.state);
+        map = encodeMap(state);
         node = doc.node(map);
         if(node !== null) {
           idx = currStates.indexOf(map);
@@ -278,7 +279,7 @@ var Simulator = function() {
         currStates.push(map);
         if(obj.scopes)
           updateNodeRules(statesList[i][j + 1]);
-        sync();
+        sync(state);
         prev = map;
       }
     }
@@ -289,7 +290,6 @@ var Simulator = function() {
     jsbgn.edges = tmp.edges;
     
     trans = importNetwork(jsbgn, '#stg');
-    $('#tabs').tabs('select', '#stg');
     
     var color;
     for (i in jsbgn.nodes)

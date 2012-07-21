@@ -188,6 +188,7 @@ function importNetwork(jsbgn, tab) {
    */
   graph.unsuspendRedraw(importHandle);
   $('#zoom').slider('option', 'value', graph.scale());
+  $('#tabs').tabs('select', tab);
   
   return graph;
 }
