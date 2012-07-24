@@ -25,6 +25,8 @@ Otherwise please refer below for a list of dependencies:
     jsdoc-toolkit(jsdoc)
     libqtwebkit4
     python-qt4
+    jshint
+    selenium python api
 2. Fetch and build the libs by executing the command:
     make libs
 The above commands adds the following libs:
@@ -41,6 +43,12 @@ To generate documentation execute:
     make doc
 The docs will reside in the jsdoc directory.
 
-Testing or Offline App:
+Offline App:
 To test the application using the qt webkit engine. Run:
+    make browse
+    
+Testing:
+To test the simulator, run:
     make test
+The default is Chrome, it can be changed to Firefox. For more details
+read the local.py file in the test folder.

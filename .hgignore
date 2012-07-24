@@ -5,3 +5,4 @@ main/lib
 main/css
 jsdoc
 *.pdf
+*.pyc

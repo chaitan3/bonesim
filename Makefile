@@ -6,6 +6,7 @@
 #  for production.
 
 JSFILES = main/js/*
+HTML = main/index.html
 LINT = jshint
 
 all: libs lint doc
@@ -57,9 +58,16 @@ deps:
 	sudo apt-get install nodejs npm node-uglify  ant git-core mercurial \
 		jsdoc-toolkit liqtwebkit4 python-qt4
 	sudo npm install -g $(LINT)
+	sudo pip install selenium
 	
-test:
+browse:
 	#test the app in a small browser
-	python test/browse.py main/index.html
+	python test/browse.py $(HTML)
+test: 
+	#test using selenium webdriver locally
+	python -m unittest test.local.TestR
+remote:
+	#test using selenium webdriver remotely
+	python test/remote.py
 
 .PHONY: doc test
