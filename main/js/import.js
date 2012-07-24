@@ -93,15 +93,10 @@ jSBGN.prototype.layout = function(graph) {
   force.stop();
 };
 
-jSBGN.prototype.importSBML = function(file) {
-  var obj = this;
+jSBGN.prototype.importSBML = function(file, data) {
   
   var formData = new FormData();
   formData.append('file', file);
-  $.ajaxSetup({
-    cache: false,
-    async: false
-  });
   
   $.ajax({
     url: serverURL + '/Put/UploadSBML',
@@ -109,31 +104,26 @@ jSBGN.prototype.importSBML = function(file) {
     data: formData,
     contentType: false,
     processData: false,
-    success: function() {
-      $.get(serverURL + '/Get/processedSBML', 
-        function(data) {
-          var json = JSON.parse(data);
-          obj.nodes = json.nodes;
-          obj.edges = json.edges;
-          obj.rules = {};
-          
-          var i;
-          for (i in obj.nodes) {
-            var node = obj.nodes[i];
-            
-            if ((node.type == 'Compartment') || (node.type == 'Process'))
-              obj.rules[node.id] = '';
-            else
-              obj.rules[node.id] = 'update';
-          }
-        }
-      );
-    }
+    async: false,
   });
   
-  $.ajaxSetup({
-    async: true
-  });
+  var reader = new sb.io.SbmlReader();
+  var doc = reader.parseText(data);
+  var jsbgn = JSON.parse(sb.io.write(doc, 'jsbgn'));
+  
+  this.nodes = jsbgn.nodes;
+  this.edges = jsbgn.edges;
+  this.rules = {};
+          
+  for (i in this.nodes) {
+    var node = this.nodes[i];
+    node.data.label = node.id;
+    if ((node.sbo === sb.sbo.NodeTypeMapping[sb.NodeType.Compartment]) || 
+        (node.sbo === sb.sbo.NodeTypeMapping[sb.NodeType.Process]))
+      this.rules[node.id] = '';
+    else
+      this.rules[node.id] = 'update';
+  }
 };
 
 jSBGN.prototype.importGINML = function(file) {
@@ -219,7 +209,7 @@ jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
   
   var lines, cols, i, j, trimmed;
   lines = file.split('\n');	//The file consists of a set of lines describing each node
-	for (i = 0; i < lines.length; i++) {
+  for (i = 0; i < lines.length; i++) {
     trimmed = lines[i].trim();
     if (trimmed.length === 0)
       continue;

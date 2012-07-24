@@ -50,6 +50,18 @@ var Simulator = function() {
     return state;  
   };
   
+  var getInitStates = function() {
+    var i, j;
+    var initStates = [];
+    for (i = 0; i < 30; i++) {
+      initStates.push({});
+      for (j in net.state) {
+        initStates[i][j] = Boolean(Math.round(Math.random()));
+      }
+    }
+    return initStates;
+  }
+  
   var randomColor = function() {
     var color = '#', i;
     for (i = 0; i < 6; i++) 
@@ -107,6 +119,25 @@ var Simulator = function() {
   var nodeHoverRemove = function() {
     $('#info').remove();
   };
+  
+  var drawAttractors = function(doc, attractors) {
+    var jsbgn = new jSBGN(); 
+    var tmp = JSON.parse(sb.io.write(doc, 'jsbgn'));
+    jsbgn.nodes = tmp.nodes;
+    jsbgn.edges = tmp.edges;
+    
+    trans = importNetwork(jsbgn, '#stg');
+    
+    var color, cycle;
+    for (i in jsbgn.nodes)
+      $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
+    for (i in attractors) {
+      cycle = attractors[i];
+      color = randomColor();
+      for (j in cycle)
+        $('#' + cycle[j] + ' :eq(0)').css('fill', color);
+    }
+  }
   
   var applyGuessSeed = function() {
     
@@ -230,13 +261,7 @@ var Simulator = function() {
     doc.lang(sb.Language.AF);
     
     var i, j;
-    var initStates = [];
-    for (i = 0; i < 30; i++) {
-      initStates.push({});
-      for (j in net.state) {
-        initStates[i][j] = Boolean(Math.round(Math.random()));
-      }
-    }
+    var initStates = getInitStates();
     
     if(obj.scopes) {
       var statesList;
@@ -284,23 +309,7 @@ var Simulator = function() {
       }
     }
     
-    var jsbgn = new jSBGN(); 
-    var tmp = JSON.parse(sb.io.write(doc, 'jsbgn'));
-    jsbgn.nodes = tmp.nodes;
-    jsbgn.edges = tmp.edges;
-    
-    trans = importNetwork(jsbgn, '#stg');
-    
-    var color;
-    for (i in jsbgn.nodes)
-      $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
-    for (i in attractors) {
-      cycle = attractors[i];
-      color = randomColor();
-      for (j in cycle)
-        $('#' + cycle[j] + ' :eq(0)').css('fill', color);
-    }
-    
+    drawAttractors(doc, attractors);
   };
 
   

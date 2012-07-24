@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 import os, sys
 import unittest
 
@@ -16,7 +17,7 @@ def testFile(driver, fileType, seed='allTrue'):
   driver.find_element_by_id(seed).click()
   driver.find_element_by_id(fileType).click()
   driver.find_element_by_id('importFile').click()
-
+  
 class TestSimulator(unittest.TestCase):
   def setUp(self):
     url = 'http://127.0.0.1:8000/biographer/static/simulator/index.html'
@@ -27,6 +28,7 @@ class TestSimulator(unittest.TestCase):
       os.remove('chromedriver.log')
     except:
       pass
+    #~ self.driver.close()
 
 class TestR(TestSimulator):
   def runTest(self):

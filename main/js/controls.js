@@ -146,7 +146,7 @@ function importFile() {
     else if($('#ginml').attr('checked'))
       jsbgn.importGINML(data);
     else 
-      jsbgn.importSBML(file);
+      jsbgn.importSBML(file, data);
       
     $('#stg').html('');
     network = importNetwork(jsbgn, '#grn');
