@@ -1,4 +1,4 @@
-
+var serverURL;
 /**Representation of Graphs using nodes and edges arrays. Used as
  * a placeholder for importing graphs into biographer-ui. Graphs are 
  * exported to this format by using the libSBGN.js library. Also 
@@ -104,7 +104,7 @@ jSBGN.prototype.importSBML = function(file, data) {
     data: formData,
     contentType: false,
     processData: false,
-    async: false,
+    async: false
   });
   
   var reader = new sb.io.SbmlReader();
@@ -115,6 +115,7 @@ jSBGN.prototype.importSBML = function(file, data) {
   this.edges = jsbgn.edges;
   this.rules = {};
           
+  var i;
   for (i in this.nodes) {
     var node = this.nodes[i];
     node.data.label = node.id;

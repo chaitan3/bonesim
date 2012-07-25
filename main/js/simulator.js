@@ -1,4 +1,6 @@
-var trans, jSBGN, serverURL;
+var trans, serverURL;
+var jSBGN;
+var importNetwork, getInitialSeed;
 
 var Simulator = function() {
   
@@ -60,7 +62,7 @@ var Simulator = function() {
       }
     }
     return initStates;
-  }
+  };
   
   var randomColor = function() {
     var color = '#', i;
@@ -128,7 +130,7 @@ var Simulator = function() {
     
     trans = importNetwork(jsbgn, '#stg');
     
-    var color, cycle;
+    var color, cycle, i, j;
     for (i in jsbgn.nodes)
       $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
     for (i in attractors) {
@@ -137,7 +139,7 @@ var Simulator = function() {
       for (j in cycle)
         $('#' + cycle[j] + ' :eq(0)').css('fill', color);
     }
-  }
+  };
   
   var applyGuessSeed = function() {
     
