@@ -10,7 +10,9 @@ var Simulator = function() {
   var obj = this;
   var net;
   var delay;
+  var plot;
   var ruleFunctions = {};
+  var iterationCount = 0;
   
   var makeFunction = function(rule) {
     rule = rule.replace(/[A-Za-z0-9_]+/g, 
@@ -20,6 +22,138 @@ var Simulator = function() {
       return "state['" + text + "']"; 
     });
     return Function("state", "return " + rule + ";");
+  };
+  
+  var applyGuessSeed = function() {
+    
+    $.ajax({
+      url: serverURL + '/Simulate/InitialSeed',
+      async: false,
+      success: function(data) {
+        var seed = JSON.parse(data), i;
+        for (i in seed) {
+          if(seed[i])
+            net.state[i] = true;
+          else
+            net.state[i] = false;
+        }
+      }
+    });
+  };
+  
+  var nodeColorUpdate = function(id) {
+    var opacity;
+    if (net.state[id]) 
+      opacity = 1;
+    else
+      opacity = 0;
+    $('#' + id + ' :eq(0)').css('fill', '#10d010').animate({'fill-opacity':opacity}, delay);
+  };
+  
+  var nodeClick = function() { 
+    
+    var id = $(this).attr('id');
+    net.state[id] = !net.state[id];
+    nodeColorUpdate(id);
+    if($('#oneclick').attr('checked') && !obj.running) 
+      setTimeout(function() { obj.start(); }, delay);
+  };
+  
+  var nodeHoverRule = function() {
+    var id = $(this).attr('id');
+    var rule = id + ' = ' + net.rules[id];
+    $('<div/>', {id:'info', text: rule}).prependTo('#grn');
+  };
+  
+  var nodeHoverRemove = function() {
+    $('#info').remove();
+  };
+  
+  var randomColor = function() {
+    var color = '#', i;
+    for (i = 0; i < 6; i++) 
+      color += Math.round(Math.random()*0xF).toString(16);
+    return color;
+  };
+  
+  var createPlotter = function(nodes, state) {
+    var i, timeSeries = [], id;
+    
+    for(i in nodes) {
+      id = nodes[i].id;
+      timeSeries.push({ color: randomColor(), 
+        data: [{x: 0, y: +state[id]}], name: id });
+    }
+      
+    plot = new Rickshaw.Graph({
+      element: $("#plotter")[0],
+      width: 600,//$(window).width(),
+      height: 400,//$(window).height(),
+      renderer: 'line',
+      interpolation: 'step-after',
+      series: timeSeries
+    });
+    
+    var xAxis = new Rickshaw.Graph.Axis.Time({
+      graph: plot
+    });
+    var yAxis = new Rickshaw.Graph.Axis.Y({
+      graph: plot,
+      orientation: 'left',
+      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+      element: $('#y')[0]
+    });
+    
+    var legend = new Rickshaw.Graph.Legend({
+      element: $('#legend')[0],
+      graph: plot
+    });
+    
+    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+      graph: plot,
+      legend: legend
+    });
+    
+    plot.render();
+  };
+  
+  this.init = function(jsbgn, simDelay, guessSeed) {
+    net = jsbgn;
+    delay = simDelay;
+    net.state = {};
+    
+    console.log('Initialising simulator');
+    
+    $('#simulation').click(this.start);
+    $('#analyze').click(this.attractorSearch);
+    
+    var i;
+    for (i in net.rules) {
+      if(net.rules[i].length !== 0)
+        net.state[i] = getInitialSeed();
+    }
+    if(this.scopes && guessSeed)
+      applyGuessSeed();
+      
+    createPlotter(net.nodes, net.state);
+    
+    var svgNode;  
+    for (i in net.state) {
+      ruleFunctions[i] = makeFunction(net.rules[i]);
+      svgNode = $('#' + i);
+      if (svgNode !== null) {
+        if(!this.scopes)
+          svgNode.hover(nodeHoverRule, nodeHoverRemove);
+        svgNode.click(nodeClick);
+        nodeColorUpdate(i);
+      }
+    }
+  };
+
+  var updatePlots = function(nodes, state) {
+    for(i in nodes)
+      plot.series[i].data.push({x: iterationCount, y: +state[nodes[i].id]});
+    plot.render();
   };
 
   var sync = function(state) {
@@ -38,52 +172,11 @@ var Simulator = function() {
     return changed;
   };
   
-  var encodeMap = function(state) {  
-    var map = '', i;  
-    for (i in state) 
-      map += +state[i];
-    return map;  
-  };
-  
-  var decodeMap = function(map) {
-    var state = {}, i, j = 0;
-    for (i in net.state)
-      state[i] =  Boolean(parseInt(map[j++], 10));
-    return state;  
-  };
-  
-  var getInitStates = function() {
-    var i, j;
-    var initStates = [];
-    for (i = 0; i < 30; i++) {
-      initStates.push({});
-      for (j in net.state) {
-        initStates[i][j] = Boolean(Math.round(Math.random()));
-      }
-    }
-    return initStates;
-  };
-  
-  var randomColor = function() {
-    var color = '#', i;
-    for (i = 0; i < 6; i++) 
-      color += Math.round(Math.random()*0xF).toString(16);
-    return color;
-  };
-  
-  var nodeColorUpdate = function(id) {
-    var opacity;
-    if (net.state[id]) 
-      opacity = 1;
-    else
-      opacity = 0;
-    $('#' + id + ' :eq(0)').css('fill', '#10d010').animate({'fill-opacity':opacity}, delay);
-  };
-  
   var iterate = function() {
     var changed, i;
     changed = sync(net.state);  
-    if ( changed.length > 0 ) {   // network updated -> steady state not reached
+    
+    if (changed.length > 0) {  
       for (i in changed)
         nodeColorUpdate(changed[i]);
       setTimeout(function() { obj.run(); }, delay);		// iterate again
@@ -92,70 +185,6 @@ var Simulator = function() {
       console.log('Boolean network reached steady state.');
       obj.stop();
     }
-  };
-  
-  var nodeClick = function() { 
-    
-    var id = $(this).attr('id');
-    net.state[id] = !net.state[id];
-    nodeColorUpdate(id);
-    if($('#oneclick').attr('checked') && !obj.running) 
-      setTimeout(function() { obj.start(); }, delay);
-  };
-  
-  var nodeHoverRule = function() {
-    var id = $(this).attr('id');
-    var rule = id + ' = ' + net.rules[id];
-    $('<div/>', {id:'info', text: rule}).prependTo('#grn');
-  };
-  
-  var nodeHoverStates = function() {
-    var id = $(this).attr('id');
-    var state = decodeMap(id), i;
-    var info = '';
-    for (i in state)
-      info += i + ': ' + state[i] + '<br>';
-    $('<div/>', {id:'info', html: info}).prependTo('#stg');
-  };
-  
-  var nodeHoverRemove = function() {
-    $('#info').remove();
-  };
-  
-  var drawAttractors = function(doc, attractors) {
-    var jsbgn = new jSBGN(); 
-    var tmp = JSON.parse(sb.io.write(doc, 'jsbgn'));
-    jsbgn.nodes = tmp.nodes;
-    jsbgn.edges = tmp.edges;
-    
-    trans = importNetwork(jsbgn, '#stg');
-    
-    var color, cycle, i, j;
-    for (i in jsbgn.nodes)
-      $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
-    for (i in attractors) {
-      cycle = attractors[i];
-      color = randomColor();
-      for (j in cycle)
-        $('#' + cycle[j] + ' :eq(0)').css('fill', color);
-    }
-  };
-  
-  var applyGuessSeed = function() {
-    
-    $.ajax({
-      url: serverURL + '/Simulate/InitialSeed',
-      async: false,
-      success: function(data) {
-        var seed = JSON.parse(data), i;
-        for (i in seed) {
-          if(seed[i])
-            net.state[i] = true;
-          else
-            net.state[i] = false;
-        }
-      }
-    });
   };
   
   var exportStateJSON = function(states) {	
@@ -183,42 +212,13 @@ var Simulator = function() {
     }
   };
   
-  this.init = function(jsbgn, simDelay, guessSeed) {
-    net = jsbgn;
-    delay = simDelay;
-    net.state = {};
-    
-    $('#iteration').text(0);
-    $('#simulation').click(this.start);
-    $('#analyze').click(this.attractorSearch);
-    
-    var i;
-    for (i in net.rules) {
-      if(net.rules[i].length !== 0)
-        net.state[i] = getInitialSeed();
-    }
-    if(this.scopes && guessSeed)
-      applyGuessSeed();
-    
-    var svgNode;  
-    for (i in net.state) {
-      ruleFunctions[i] = makeFunction(net.rules[i]);
-      svgNode = $('#' + i);
-      if (svgNode !== null) {
-        if(!this.scopes)
-          svgNode.hover(nodeHoverRule, nodeHoverRemove);
-        svgNode.click(nodeClick);
-        nodeColorUpdate(i);
-      }
-    }
-  };
-  
   this.run = function() {
 
     if(!(this.running))
       return;
-      
-    $('#iteration').text(parseInt($('#iteration').text(), 10) + 1);
+    
+    updatePlots(net.nodes, net.state);  
+    $('#iteration').text(iterationCount++);
       
     if (this.scopes) {
       $.ajax({
@@ -235,27 +235,60 @@ var Simulator = function() {
        iterate();
   };
   
-  this.start = function() {
-    obj.running = true;
-    $('#simulation').unbind('click', obj.start);
-    $('#simulation').click(obj.stop);
-    $('#simulation').button( "option", "icons", {primary: 'ui-icon-pause'});
-    $('#progress').show();
-    $('#tabs').tabs('select', '#grn');
-    obj.run();
-  };
-
-  this.stop = function() {
-    obj.running = false;
-    $('#simulation').unbind('click', obj.stop);
-    $('#simulation').click(obj.start);
-    $('#simulation').button( "option", "icons", {primary: 'ui-icon-play'});
-    $('#progress').hide();
+  
+  
+  var encodeMap = function(state) {  
+    var map = '', i;  
+    for (i in state) 
+      map += +state[i];
+    return map;  
   };
   
-  this.destroy = function() {
-    $('#simulation').unbind('click', obj.start);
-    $('#analyze').unbind('click', obj.attractorSearch);
+  var decodeMap = function(map) {
+    var state = {}, i, j = 0;
+    for (i in net.state)
+      state[i] =  Boolean(parseInt(map[j++], 10));
+    return state;  
+  };
+  
+  var getInitStates = function() {
+    var i, j;
+    var initStates = [];
+    for (i = 0; i < 30; i++) {
+      initStates.push({});
+      for (j in net.state) {
+        initStates[i][j] = Boolean(Math.round(Math.random()));
+      }
+    }
+    return initStates;
+  };
+  
+  var nodeHoverStates = function() {
+    var id = $(this).attr('id');
+    var state = decodeMap(id), i;
+    var info = '';
+    for (i in state)
+      info += i + ': ' + state[i] + '<br>';
+    $('<div/>', {id:'info', html: info}).prependTo('#stg');
+  };
+  
+  var drawAttractors = function(doc, attractors) {
+    var jsbgn = new jSBGN(); 
+    var tmp = JSON.parse(sb.io.write(doc, 'jsbgn'));
+    jsbgn.nodes = tmp.nodes;
+    jsbgn.edges = tmp.edges;
+    
+    trans = importNetwork(jsbgn, '#stg');
+    
+    var color, cycle, i, j;
+    for (i in jsbgn.nodes)
+      $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
+    for (i in attractors) {
+      cycle = attractors[i];
+      color = randomColor();
+      for (j in cycle)
+        $('#' + cycle[j] + ' :eq(0)').css('fill', color);
+    }
   };
   
   this.attractorSearch = function() {
@@ -313,6 +346,31 @@ var Simulator = function() {
     
     drawAttractors(doc, attractors);
   };
-
   
+  
+  
+  
+
+  this.start = function() {
+    obj.running = true;
+    $('#simulation').unbind('click', obj.start);
+    $('#simulation').click(obj.stop);
+    $('#simulation').button( "option", "icons", {primary: 'ui-icon-pause'});
+    $('#progress').show();
+    $('#tabs').tabs('select', '#grn');
+    obj.run();
+  };
+
+  this.stop = function() {
+    obj.running = false;
+    $('#simulation').unbind('click', obj.stop);
+    $('#simulation').click(obj.start);
+    $('#simulation').button( "option", "icons", {primary: 'ui-icon-play'});
+    $('#progress').hide();
+  };
+  
+  this.destroy = function() {
+    $('#simulation').unbind('click', obj.start);
+    $('#analyze').unbind('click', obj.attractorSearch);
+  };
 };

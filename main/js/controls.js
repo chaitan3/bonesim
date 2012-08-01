@@ -44,8 +44,6 @@ function getScripts() {
     }
   });
   
-  $.getScript("settings.js");
-  
   $.getScript("lib/jquery.simulate.js");
 	$.getScript("lib/biographer-ui.min.js", function() {
     bui.settings.css.stylesheetUrl = 'css/visualization-svg.css';
@@ -53,6 +51,7 @@ function getScripts() {
   $.getScript("lib/interact.js");
   $.getScript("lib/d3.v2.min.js");
   $.getScript("lib/libSBGN.min.js");
+  $.getScript("lib/rickshaw.min.js");
 
 	$.getScript("js/import.js");
   $.getScript("js/simulator.js");
@@ -90,6 +89,8 @@ function tabChange(event, ui) {
       return;
     graph = trans;
   }
+  else
+    return;
   $('#zoom').slider('option', 'value', graph.scale());
 }
 
@@ -149,8 +150,10 @@ function importFile() {
       jsbgn.importSBML(file, data);
       
     $('#stg').html('');
+    
     network = importNetwork(jsbgn, '#grn');
     $('#tabs').tabs('select', '#grn');
+    $('#iteration').text(0);
     
     if(simulator !== null) 
       simulator.destroy();

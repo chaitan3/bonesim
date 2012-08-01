@@ -11,7 +11,7 @@ LINT = jshint
 
 all: libs lint doc
 
-libs: libdir bui d3 libSBGN.js
+libs: libdir bui d3 rickshaw libSBGN.js
 
 libdir: 
 	#create the lib directory
@@ -21,8 +21,7 @@ libdir:
 bui:
 	#fetch biographer-ui, install it's compilation dependencies for ubuntu and build it
 	hg clone https://code.google.com/p/biographer.visualization/ UI
-	cd UI
-	python src/build/python/manage.py clean build test compress createDistribution
+	cd UI && python src/build/python/manage.py clean build test compress createDistribution
 	cd ..
 	cp -R UI/target/distribution/css/. main/css
 	cp -R UI/target/distribution/js/. main/lib
@@ -32,7 +31,14 @@ d3:
 	#fetch d3.js min library 
 	wget http://d3js.org/d3.v2.min.js
 	mv d3.v2.min.js main/lib
-	
+
+rickshaw:
+	#fetch Rickshaw from github
+	wget https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.css
+	mv rickshaw.min.css main/css
+	wget https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.js
+	mv rickshaw.min.js main/lib
+
 libSBGN.js: 
 	#fetch libSBGN.js, install ant and build it
 	git clone git://github.com/chemhack/libSBGN.js.git

@@ -2,12 +2,14 @@
 <head>
   <title>biosimulator</title>
   
-  <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.21.custom.css"/>
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.22.custom.css"/>
   <link rel="stylesheet" type="text/css" href="css/simulator.css"/>
   <link rel="stylesheet" type="text/css" href="css/visualization-html.css"/>
+  <link rel="stylesheet" type="text/css" href="css/rickshaw.min.css"/>
 
 	<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="lib/jquery-ui-1.8.21.custom.min.js"></script>
+  <script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
   <script type="text/javascript" src="js/controls.js"></script>
   
 </head>
@@ -17,6 +19,7 @@
     <ul>
       <li><a href="#grn">Network</a></li>
       <li><a href="#stg">Transitions</a></li>
+      <li><a href="#plot">Time Series</a></li>
       
       <li><button id=importButton>Open</button></li>
       <li><button id=exportButton>Save</button></li>
@@ -35,6 +38,12 @@
     </div>
     
     <div id=stg class=tabs>
+    </div>
+    
+    <div id=plot class=tabs>
+      <div id=y></div>
+      <div id=plotter></div>
+      <div id=legend></div>
     </div>
     
   </div>

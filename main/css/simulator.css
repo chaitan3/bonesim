@@ -4,9 +4,29 @@
   padding: 0px;
   border: none;
 }
+
 .tabs {
   padding: 0px !important;
   background-color:white !important;
+}
+
+#plot {
+  width: 100%;
+  height: 100%;
+}
+
+#plot > div {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0px;
+  margin: 10px;
+}
+
+#y {
+  width: 40px;
+}
+#legend {
+  width: 100px;
 }
 
 #importButton {
