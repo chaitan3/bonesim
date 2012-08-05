@@ -384,6 +384,18 @@ var Simulator = function() {
   
   
   
+  this.exportRBoolNet = function() {
+    var rbn = 'targets, factors\n';
+    var i, r;
+    
+    for (i in net.rules) {
+      r = net.rules[i].replace(/&&/g, '&').replace(/\|\|/g, '|')
+                     .replace(/true/g, 'TRUE')
+                     .replace(/false/g, 'FALSE');
+      rbn += i + ',' + r + '\n';
+    }
+    return rbn;
+  };
   
 
   this.start = function() {
@@ -408,4 +420,6 @@ var Simulator = function() {
     $('#simulation').unbind('click', obj.start);
     $('#analyze').unbind('click', obj.attractorSearch);
   };
+  
+  
 };

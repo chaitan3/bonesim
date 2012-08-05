@@ -218,6 +218,14 @@ function exportFile() {
     graph = network;
   else if ($('#transe').attr('checked'))
     graph = trans;
+  else {
+    if(!$('#sbml').attr('checked')) {
+      var rbn = simulator.exportRBoolNet();
+      var content = "data:text/plain," + encodeURIComponent(rbn);
+      window.open(content, 'tmp');
+    }
+    return;
+  }
     
   if ($('#sbgn').attr('checked')) {
     var jsbgn = graph.toJSON();

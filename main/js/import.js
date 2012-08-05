@@ -247,10 +247,8 @@ jSBGN.prototype.importBooleanNetwork = function (file, splitKey) {
           sourceNode = doc.createNode(sourceID).type(sb.NodeType.Macromolecule).label(sourceID);
         }
         edgeID = sourceID + ' -> ' + targetID;
-        if (!(edgeID in rules)) {
-          rules[edgeID] = '';
+        if (doc.arc(edgeID) == null) 
           doc.createArc(edgeID).type(sb.ArcType.LogicArc).source(sourceID).target(targetID);
-        }
       }
 		}
   }

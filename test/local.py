@@ -70,5 +70,11 @@ class TestSBMLAnalyze(TestSimulator):
     testFile(self.driver, 'sbml')
     self.driver.find_element_by_id('analyze').click()
     
+class TestExportRBoolNet(TestSimulator):
+  def runTest(self):
+    testFile(self.driver, 'python')
+    self.driver.find_element_by_id('exportButton').click()
+    self.driver.find_element_by_id('rbn').click()
+    self.driver.find_element_by_id('exportFile').click()
     
     
