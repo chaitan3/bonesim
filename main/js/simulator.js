@@ -9,10 +9,11 @@ var Simulator = function() {
   
   var obj = this;
   var net;
-  var delay;
-  var plot;
   var ruleFunctions = {};
+  
+  var delay;
   var iterationCount = 0;
+  var plot;
   
   var makeFunction = function(rule) {
     rule = rule.replace(/[A-Za-z0-9_]+/g, 
@@ -50,7 +51,28 @@ var Simulator = function() {
     $('#' + id + ' :eq(0)').css('fill', '#10d010').animate({'fill-opacity':opacity}, delay);
   };
   
-  var nodeClick = function() { 
+  var updateRule = function() {
+    var rule = $('#rule').val();
+    var id = $('#ruleID').text();
+    net.rules[id] = rule;
+    ruleFunctions[id] = makeFunction(net.rules[id]);
+    
+    $('#editButton').unbind('click', updateRule);
+    $('#editDialog').dialog('close');
+  }
+  
+  var nodeRightClickEdit = function(e) {
+    
+    e.preventDefault();
+    
+    var id = $(this).attr('id');
+    $('#ruleID').text(id);
+    $('#rule').val(net.rules[id]);
+    $('#editButton').click(updateRule);
+    $('#editDialog').dialog('open');
+  };
+  
+  var nodeClickToggle = function() { 
     
     var id = $(this).attr('id');
     net.state[id] = !net.state[id];
@@ -115,6 +137,7 @@ var Simulator = function() {
     });
     
     plot.render();
+    $('#legend ul :eq(0) span ').trigger('click');
   };
   
   this.init = function(jsbgn, simDelay, guessSeed) {
@@ -142,9 +165,11 @@ var Simulator = function() {
       ruleFunctions[i] = makeFunction(net.rules[i]);
       svgNode = $('#' + i);
       if (svgNode !== null) {
-        if(!this.scopes)
+        if(!this.scopes) {
           svgNode.hover(nodeHoverRule, nodeHoverRemove);
-        svgNode.click(nodeClick);
+          svgNode.bind('contextmenu', nodeRightClickEdit);
+        }
+        svgNode.click(nodeClickToggle);
         nodeColorUpdate(i);
       }
     }
@@ -272,6 +297,13 @@ var Simulator = function() {
     $('<div/>', {id:'info', html: info}).prependTo('#stg');
   };
   
+  var nodeClickStates = function() {
+    var id = $(this).attr('id'), i;
+    net.state = decodeMap(id);
+    for(i in net.state)
+      nodeColorUpdate(i);
+  };
+  
   var drawAttractors = function(doc, attractors) {
     var jsbgn = new jSBGN(); 
     var tmp = JSON.parse(sb.io.write(doc, 'jsbgn'));
@@ -280,14 +312,17 @@ var Simulator = function() {
     
     trans = importNetwork(jsbgn, '#stg');
     
-    var color, cycle, i, j;
-    for (i in jsbgn.nodes)
-      $('#' + jsbgn.nodes[i].id).hover(nodeHoverStates, nodeHoverRemove);
+    var i, id;
+    for (i in jsbgn.nodes) {
+      id = '#' + jsbgn.nodes[i].id;
+      $(id).hover(nodeHoverStates, nodeHoverRemove);
+      $(id).click(nodeClickStates);
+    }
+    var cycle, j;
     for (i in attractors) {
       cycle = attractors[i];
-      color = randomColor();
       for (j in cycle)
-        $('#' + cycle[j] + ' :eq(0)').css('fill', color);
+        $('#' + cycle[j] + ' :eq(0)').css('fill', randomColor());
     }
   };
   

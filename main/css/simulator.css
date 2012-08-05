@@ -62,7 +62,7 @@
   top: 4px;
 }
 
-#importDialog, #exportDialog {
+#importDialog, #exportDialog, #editDialog {
   font-size: 14px;
 }
 
@@ -102,9 +102,13 @@
   margin-left: 30px;
 }
 
-#importFile, #exportFile {
+#importFile, #exportFile, #editButton {
   position:relative;
   margin: 10px;
   margin-top: 20px;
   left:40%;
+}
+
+#rule {
+  width: 100%;
 }

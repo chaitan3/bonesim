@@ -15,6 +15,7 @@ $(document).ready(function() {
   $('#exportButton').button({icons: {primary: "ui-icon-disk" }});
   $('#importDialog').dialog({ autoOpen: false, minWidth: 600, modal: true });
   $('#exportDialog').dialog({ autoOpen: false, minWidth: 400, modal: true });
+  $('#editDialog').dialog({ autoOpen: false, minWidth: 400, modal: true });
   $('#progress').hide();
   
   addListeners();
