@@ -244,6 +244,7 @@ function importFile() {
  * instance.
  * @param {jSBGN} jsbgn The network in the form of a jSBGN object.
  * @param {string} tab The tab in which to display the graph.
+ * @returns {bui.Graph} The graph for the network.
  */
 function importNetwork(jsbgn, tab) {
   $(tab).html('');
@@ -267,7 +268,8 @@ function importNetwork(jsbgn, tab) {
 }
 
 /** 
- * Return the seed to be given initially to the network.
+ * Get the seed to be given initially to the network.
+ * @returns {Boolean} The seed for the node in the network. 
  */
 function getInitialSeed() {
   if($('#allTrue').attr('checked')) 
