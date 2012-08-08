@@ -76,5 +76,12 @@ class TestExportRBoolNet(TestSimulator):
     self.driver.find_element_by_id('exportButton').click()
     self.driver.find_element_by_id('rbn').click()
     self.driver.find_element_by_id('exportFile').click()
+
+class TestExportPythonBooleanNet(TestSimulator):
+  def runTest(self):
+    testFile(self.driver, 'python')
+    self.driver.find_element_by_id('exportButton').click()
+    self.driver.find_element_by_id('pbn').click()
+    self.driver.find_element_by_id('exportFile').click()
     
     

@@ -2,6 +2,12 @@ var trans, serverURL;
 var jSBGN;
 var importNetwork, getInitialSeed;
 
+/** 
+ * The Simulator class represents the network, it's current state and also
+ * it's update rules. It also contains private and privileged functions
+ * to run the simulator, find attractors and plot the time series graph.
+ * @constructor
+ */
 var Simulator = function() {
   
   this.running = false;
@@ -237,6 +243,10 @@ var Simulator = function() {
     }
   };
   
+  /**
+   * Executes the simulator. Time series plots updated and libscopes
+   * server side iteration called if required.
+   */
   this.run = function() {
 
     if(!(this.running))
@@ -244,7 +254,8 @@ var Simulator = function() {
     
     updatePlots(net.nodes, net.state);  
     $('#iteration').text(iterationCount++);
-      
+    
+    // Get the next states from the current state, contact server if required  
     if (this.scopes) {
       $.ajax({
         url: serverURL + '/Simulate/Iterate',
@@ -390,13 +401,24 @@ var Simulator = function() {
     
     for (i in net.rules) {
       r = net.rules[i].replace(/&&/g, '&').replace(/\|\|/g, '|')
-                     .replace(/true/g, 'TRUE')
-                     .replace(/false/g, 'FALSE');
-      rbn += i + ',' + r + '\n';
+        .replace(/true/g, 'TRUE').replace(/false/g, 'FALSE');
+      rbn += i + ', ' + r + '\n';
     }
     return rbn;
   };
   
+  this.exportPythonBooleanNet = function() {
+    var pbn = '';
+    var i, r;
+    
+    for (i in net.rules) {
+      r = net.rules[i].replace(/&&/g, 'and').replace(/\|\|/g, 'or')
+        .replace(/true/g, 'True').replace(/false/g, 'False')
+        .replace(/[!]/g, 'not');
+      pbn += i + '* = ' + r + '\n';
+    }
+    return pbn;
+  };
 
   this.start = function() {
     obj.running = true;
