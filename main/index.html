@@ -17,88 +17,88 @@
 <body>
   <div id=tabs>
     <ul>
-      <li><a href="#grn">Network</a></li>
-      <li><a href="#stg">Transitions</a></li>
+      <li><a href="#graphNetwork">Network</a></li>
+      <li><a href="#graphStateTransition">Transitions</a></li>
       <li><a href="#plot">Time Series</a></li>
       
-      <li><button id=importButton>Open</button></li>
-      <li><button id=exportButton>Save</button></li>
-      <li><button id=simulation>Simulate</button></li>
-      <li><button id=analyze>Analyze</button></li>
+      <li><button id=buttonImportDialog>Open</button></li>
+      <li><button id=buttonExportDialog>Save</button></li>
+      <li><button id=buttonSimulate>Simulate</button></li>
+      <li><button id=buttonAnalyse>Analyse</button></li>
       
-      <div id=zoom></div>
+      <div id=sliderZoom></div>
       
       <div>
-        <li><img id=progress src="img/progress.gif"/></li>
-        <li><label id=iteration>0</label></li>
+        <li><img id=circleProgress src="img/progress.gif"/></li>
+        <li><label id=textIteration>0</label></li>
       </div>
     </ul>
     
-    <div id=grn class=tabs>
+    <div id=graphNetwork class=tabs>
     </div>
     
-    <div id=stg class=tabs>
+    <div id=graphStateTransition class=tabs>
     </div>
     
-    <div id=plot class=tabs>
-      <div id=y></div>
-      <div id=plotter></div>
-      <div id=legend></div>
+    <div id=plotTimeSeries class=tabs>
+      <div id=axisY></div>
+      <div id=plotArea></div>
+      <div id=legendNodes></div>
     </div>
     
   </div>
   
-  <div id=importDialog title="Import File">
-    <input type=file id=file /> 
+  <div id=dialogImport class=dialog title="Import File">
+    <input type=file id=fileNetwork /> 
     <div id=dropFile><span></span></div>
     
-    <div id=seed>
+    <div id=radioSeed>
       <b>Initial Seed:</b> <br>
-      <input type=radio name="seed" id=allTrue checked />All True<br>
-      <input type=radio name="seed" id=allFalse />All False<br>
-      <input type=radio name="seed" id=randomSeed />Random Seed<br>
-      <input type=radio name="seed" id=guessSeed />Guess Seed(SBML only)<br>
+      <input type=radio name="seed" id=seedTrue checked />All True<br>
+      <input type=radio name="seed" id=seedFalse />All False<br>
+      <input type=radio name="seed" id=seedRandom />Random Seed<br>
+      <input type=radio name="seed" id=seedGuess />Guess Seed(SBML only)<br>
     </div>
     
-    <div id=fileType>
+    <div id=radioFormat>
       <b>Type of file:</b> <br>
-      <input type=radio name="fileType" id=r />R BoolNet<br>
-      <input type=radio name="fileType" id=python />Python BooleanNet<br>
-      <input type=radio name="fileType" id=ginml checked />GINML<br>
-      <input type=radio name="fileType" id=sbml />SBML<br>
+      <input type=radio name="format" id=formatRBoolNet />R BoolNet<br>
+      <input type=radio name="format" id=formatPyBooleanNet />Python BooleanNet<br>
+      <input type=radio name="format" id=formatGINML checked />GINML<br>
+      <input type=radio name="format" id=formatSBML />SBML<br>
     </div>
     
-    <div id=options>
+    <div id=checkOptions>
       <b>Other Options:</b> <br>
-      <input type=checkbox id=oneclick />Simulate on node click
-      <input type=checkbox id=scale checked />Scale Graph to fit page
+      <input type=checkbox id=optionsOneClick />Simulate on node click
+      <input type=checkbox id=optionsScale checked />Scale Graph to fit page
     </div>
     
-    <button id=importFile> Import </button>
+    <button id=buttonImportFile class=dialogButton> Import </button>
   </div>
   
-  <div id=exportDialog title="Export">
-    <div id=format>
+  <div id=dialogExport class=dialog title="Export">
+    <div id=radioGraph>
       <b>Format</b><br>
-      <input type=radio name="format" id=sbgn  />SBGN<br>
-      <input type=radio name="format" id=svg checked />SVG<br>
-      <input type=radio name="format" id=jsbgn />jSBGN<br>
+      <input type=radio name="graph" id=graphSBGN  />SBGN<br>
+      <input type=radio name="graph" id=graphSVG checked />SVG<br>
+      <input type=radio name="graph" id=graphjSBGN />jSBGN<br>
     </div>
-    <div id=graph>
+    <div id=radioExport>
       <b>Graph</b><br>
-      <input type=radio name="graph" id=networke checked />Network<br>
-      <input type=radio name="graph" id=transe />Transitions<br><br>
-      <input type=radio name="graph" id=rbn />Network to R BoolNet<br><br>
-      <input type=radio name="graph" id=pbn />Network to Python BooleanNet<br><br>
+      <input type=radio name="export" id=exportNetwork checked />Network<br>
+      <input type=radio name="export" id=exportStateTransition />Transitions<br><br>
+      <input type=radio name="export" id=exportNetworkRBoolNet />Network to R BoolNet<br><br>
+      <input type=radio name="export" id=exportNetworkPyBooleanNet />Network to Python BooleanNet<br><br>
     </div>
     
-    <button id=exportFile> Export </button>
+    <button id=buttonExportFile class=dialogButton> Export </button>
   </div>
   
-  <div id=editDialog title="Edit Rule">
-    <p id=ruleID></p>
-    <input type=text name=rule id=rule />
-    <button id=editButton> Save </button>
+  <div id=dialogEdit class=dialog title="Edit Rule">
+    <p id=textID></p>
+    <input type=text id=textRule />
+    <button id=buttonEdit class=dialogButton> Save </button>
   </div>
 
 </body>

@@ -4,19 +4,19 @@ import os, sys
 import unittest
 
 testFiles = {}
-testFiles['sbml'] = 'simpleX0-T-X1.sbml'
-testFiles['r'] = 'mammal.r'
-testFiles['ginml'] = 'boolean_cell_cycle.ginml'
-testFiles['python'] = 'Whi2.boolenet'
+testFiles['formatSBML'] = 'simpleX0-T-X1.sbml'
+testFiles['formatRBoolNet'] = 'mammal.r'
+testFiles['formatGINML'] = 'boolean_cell_cycle.ginml'
+testFiles['formatPyBooleanNet'] = 'Whi2.boolenet'
 
-def testFile(driver, fileType, seed='allTrue'):
+def testFile(driver, fileType, seed='seedTrue'):
   global testFiles
-  driver.find_element_by_id('importButton').click()
-  driver.find_element_by_id('file').send_keys(os.path.join(os.getcwd(), \
+  driver.find_element_by_id('buttonImportDialog').click()
+  driver.find_element_by_id('fileNetwork').send_keys(os.path.join(os.getcwd(), \
     'demo', testFiles[fileType]))
   driver.find_element_by_id(seed).click()
   driver.find_element_by_id(fileType).click()
-  driver.find_element_by_id('importFile').click()
+  driver.find_element_by_id('buttonImportFile').click()
   
 class TestSimulator(unittest.TestCase):
   def setUp(self):
@@ -32,56 +32,56 @@ class TestSimulator(unittest.TestCase):
 
 class TestR(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'r')
+    testFile(self.driver, 'formatRBoolNet')
 
 class TestPython(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'python')
+    testFile(self.driver, 'formatPyBooleanNet')
 
 class TestGINML(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'ginml')
+    testFile(self.driver, 'formatGINML')
     
 class TestSimulate(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'r')
-    self.driver.find_element_by_id('simulation').click()
+    testFile(self.driver, 'formatRBoolNet')
+    self.driver.find_element_by_id('buttonSimulate').click()
     
 class TestAnalyze(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'r')
-    self.driver.find_element_by_id('analyze').click()    
+    testFile(self.driver, 'formatRBoolNet')
+    self.driver.find_element_by_id('buttonAnalyse').click()    
 
 class TestSBML(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'sbml')
+    testFile(self.driver, 'formatSBML')
 
 class TestSBMLSeed(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'sbml', seed='guessSeed')
+    testFile(self.driver, 'formatSBML', seed='seedGuess')
   
 class TestSBMLSimulate(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'sbml')
-    self.driver.find_element_by_id('simulation').click()
+    testFile(self.driver, 'formatSBML')
+    self.driver.find_element_by_id('buttonSimulate').click()
     
 class TestSBMLAnalyze(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'sbml')
-    self.driver.find_element_by_id('analyze').click()
+    testFile(self.driver, 'formatSBML')
+    self.driver.find_element_by_id('buttonAnalyse').click()
     
 class TestExportRBoolNet(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'python')
-    self.driver.find_element_by_id('exportButton').click()
-    self.driver.find_element_by_id('rbn').click()
-    self.driver.find_element_by_id('exportFile').click()
+    testFile(self.driver, 'formatPyBooleanNet')
+    self.driver.find_element_by_id('buttonExportDialog').click()
+    self.driver.find_element_by_id('exportNetworkRBoolNet').click()
+    self.driver.find_element_by_id('buttonExportFile').click()
 
 class TestExportPythonBooleanNet(TestSimulator):
   def runTest(self):
-    testFile(self.driver, 'python')
-    self.driver.find_element_by_id('exportButton').click()
-    self.driver.find_element_by_id('pbn').click()
-    self.driver.find_element_by_id('exportFile').click()
+    testFile(self.driver, 'formatPyBooleanNet')
+    self.driver.find_element_by_id('buttonExportDialog').click()
+    self.driver.find_element_by_id('exportNetworkPyBooleanNet').click()
+    self.driver.find_element_by_id('buttonExportFile').click()
     
     

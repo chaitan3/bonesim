@@ -1,6 +1,5 @@
-var trans, serverURL;
+var serverURL, controls;
 var jSBGN;
-var importNetwork, getInitialSeed;
 
 /** 
  * The Simulator class represents the network, it's current state and also
@@ -14,10 +13,11 @@ var Simulator = function() {
   this.scopes = false;
   
   var obj = this;
+  var config;
+  
   var net;
   var ruleFunctions = {};
   
-  var delay;
   var iterationCount = 0;
   var plot;
   
@@ -68,7 +68,8 @@ var Simulator = function() {
       opacity = 1;
     else
       opacity = 0;
-    $('#' + id + ' :eq(0)').css('fill', '#10d010').animate({'fill-opacity':opacity}, delay);
+    $('#' + id + ' :eq(0)').css('fill', '#10d010')
+      .animate({'fill-opacity':opacity}, config.simDelay);
   };
   
   /**
@@ -76,14 +77,14 @@ var Simulator = function() {
    * rule dialog box.
    */
   var updateRule = function() {
-    var rule = $('#rule').val();
-    var id = $('#ruleID').text();
+    var rule = $('#textRule').val();
+    var id = $('#textID').text();
     // Update the rule and it's corresponding function
     net.rules[id] = rule;
     ruleFunctions[id] = makeFunction(net.rules[id]);
     
-    $('#editButton').unbind('click', updateRule);
-    $('#editDialog').dialog('close');
+    $('#buttonEdit').unbind('click', updateRule);
+    $('#dialogEdit').dialog('close');
   }
   
   /**
@@ -96,10 +97,10 @@ var Simulator = function() {
     e.preventDefault();
     
     var id = $(this).attr('id');
-    $('#ruleID').text(id);
-    $('#rule').val(net.rules[id]);
-    $('#editButton').click(updateRule);
-    $('#editDialog').dialog('open');
+    $('#textID').text(id);
+    $('#textRule').val(net.rules[id]);
+    $('#buttonEdit').click(updateRule);
+    $('#dialogEdit').dialog('open');
   };
   
   /**
@@ -113,8 +114,8 @@ var Simulator = function() {
     nodeColorUpdate(id);
     
     // Start the simulation if the One click option is checked
-    if($('#oneclick').attr('checked') && !obj.running) 
-      setTimeout(function() { obj.start(); }, delay);
+    if(config.oneClick && !obj.running) 
+      setTimeout(function() { obj.start(); }, config.simDelay);
   };
   
   /**
@@ -125,14 +126,14 @@ var Simulator = function() {
     var id = $(this).attr('id');
     var rule = id + ' = ' + net.rules[id];
     // Create the info box
-    $('<div/>', {id:'info', text: rule}).prependTo('#grn');
+    $('<div/>', {id:'boxInfo', text: rule}).prependTo('#graphNetwork');
   };
   
   /**
    * The event handler for unhovering a node. The info box is deleted.
    */
   var nodeHoverRemove = function() {
-    $('#info').remove();
+    $('#boxInfo').remove();
   };
   
   /**
@@ -164,7 +165,7 @@ var Simulator = function() {
     
     // Create the Graph, constant hold interpolation  
     plot = new Rickshaw.Graph({
-      element: $("#plotter")[0],
+      element: $("#plotArea")[0],
       width: 600,//$(window).width(),
       height: 400,//$(window).height(),
       renderer: 'line',
@@ -181,12 +182,12 @@ var Simulator = function() {
       graph: plot,
       orientation: 'left',
       tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: $('#y')[0]
+      element: $('#axisY')[0]
     });
     
     // Create the legend, separate from the graph
     var legend = new Rickshaw.Graph.Legend({
-      element: $('#legend')[0],
+      element: $('#legendNodes')[0],
       graph: plot
     });
     
@@ -198,11 +199,11 @@ var Simulator = function() {
     
     // Render the plot and select the first node
     plot.render();
-    $('#legend ul :eq(0) span ').trigger('click');
+    $('#legendNodes ul :eq(0) span ').trigger('click');
   };
   
   /**
-   * Initilise the simulator. The initial states are calculated, the 
+   * Initialise the simulator. The initial states are calculated, the 
    * plotter is created and all the event handlers for the nodes are 
    * applied.
    * @param {jSBGN} jsbgn The network represented as a jSBGN object.
@@ -210,23 +211,23 @@ var Simulator = function() {
    * @param {Boolean} guessSeed Truth value for whether the guess seed for
    * SBML files should be applied.
    */
-  this.init = function(jsbgn, simDelay, guessSeed) {
+  this.initialise = function(jsbgn, settings) {
     net = jsbgn;
-    delay = simDelay;
+    config = settings;
     net.state = {};
     
     console.log('Initialising simulator');
     
-    $('#simulation').click(this.start);
-    $('#analyze').click(this.attractorSearch);
+    $('#buttonSimulate').click(this.start);
+    $('#buttonAnalyse').click(this.attractorSearch);
     
     // Initialise the state of the network
     var i;
     for (i in net.rules) {
       if(net.rules[i].length !== 0)
-        net.state[i] = getInitialSeed();
+        net.state[i] = controls.getInitialSeed();
     }
-    if(this.scopes && guessSeed)
+    if(this.scopes && config.guessSeed)
       applyGuessSeed();
       
     createPlotter(net.nodes, net.state);
@@ -296,7 +297,7 @@ var Simulator = function() {
     if (changed.length > 0) {  
       for (i in changed)
         nodeColorUpdate(changed[i]);
-      setTimeout(function() { obj.run(); }, delay);	
+      setTimeout(function() { obj.run(); }, config.simDelay);	
     }
     else {
       console.log('Boolean network reached steady state.');
@@ -352,7 +353,7 @@ var Simulator = function() {
       return;
     
     updatePlots(net.nodes, net.state);  
-    $('#iteration').text(iterationCount++);
+    $('#textIteration').text(iterationCount++);
     
     // Get the next states from the current state, contact server if required  
     if (this.scopes) {
@@ -422,7 +423,7 @@ var Simulator = function() {
     for (i in state)
       info += i + ': ' + state[i] + '<br>';
     // Generate the info box
-    $('<div/>', {id:'info', html: info}).prependTo('#stg');
+    $('<div/>', {id:'boxInfo', html: info}).prependTo('#graphStateTransition');
   };
   
   /**
@@ -450,7 +451,7 @@ var Simulator = function() {
     jsbgn.edges = tmp.edges;
     
     // Import the State transition graph into a bui.Graph instance
-    trans = importNetwork(jsbgn, '#stg');
+    controls.importNetwork(jsbgn, '#graphStateTransition');
     
     // Bind the event handlers for the node
     var i, id;
@@ -460,11 +461,12 @@ var Simulator = function() {
       $(id).click(nodeClickStates);
     }
     // Color all the attractors with a unique color for each attractor
-    var cycle, j;
+    var cycle, j, color;
     for (i in attractors) {
       cycle = attractors[i];
+      color = randomColor();
       for (j in cycle)
-        $('#' + cycle[j] + ' :eq(0)').css('fill', randomColor());
+        $('#' + cycle[j] + ' :eq(0)').css('fill', color);
     }
   };
   
@@ -585,11 +587,11 @@ var Simulator = function() {
   this.start = function() {
     // Update the variable tracking whether the simulator is running or not
     obj.running = true;
-    $('#simulation').unbind('click', obj.start);
-    $('#simulation').click(obj.stop);
-    $('#simulation').button( "option", "icons", {primary: 'ui-icon-pause'});
-    $('#progress').show();
-    $('#tabs').tabs('select', '#grn');
+    $('#buttonSimulate').unbind('click', obj.start);
+    $('#buttonSimulate').click(obj.stop);
+    $('#buttonSimulate').button( "option", "icons", {primary: 'ui-icon-pause'});
+    $('#circleProgress').show();
+    $('#tabs').tabs('select', '#graphNetwork');
     // Start the simulation
     obj.run();
   };
@@ -599,18 +601,18 @@ var Simulator = function() {
    */
   this.stop = function() {
     obj.running = false;
-    $('#simulation').unbind('click', obj.stop);
-    $('#simulation').click(obj.start);
-    $('#simulation').button( "option", "icons", {primary: 'ui-icon-play'});
-    $('#progress').hide();
+    $('#buttonSimulate').unbind('click', obj.stop);
+    $('#buttonSimulate').click(obj.start);
+    $('#buttonSimulate').button( "option", "icons", {primary: 'ui-icon-play'});
+    $('#circleProgress').hide();
   };
   
   /**
    * Destroy the simulator. All the event handlers are unbound.
    */
   this.destroy = function() {
-    $('#simulation').unbind('click', obj.start);
-    $('#analyze').unbind('click', obj.attractorSearch);
+    $('#buttonSimulate').unbind('click', obj.start);
+    $('#buttonAnalyse').unbind('click', obj.attractorSearch);
   };
   
   
