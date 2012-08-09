@@ -88,7 +88,7 @@ var Controls = function() {
   };
 
   /** 
-   * The event handler for a change in the value of the Graph Zool slider.
+   * The event handler for a change in the value of the Graph Zoom slider.
    * @param {Event} event The event object containing information about the 
    * type of event.
    * @param {UI} ui Contains the value of the slider.
@@ -96,6 +96,7 @@ var Controls = function() {
   var zoomGraph = function(event, ui) {
     // Get the index of the selected tab.
     var i = $('#tabs').tabs('option', 'selected');
+    var graph;
     
     // Get the correct bui.Graph instance depending on the current tab.
     if(i === 0) {
@@ -123,6 +124,7 @@ var Controls = function() {
   var tabChange = function(event, ui) {
     // Get the current tab index
     var i = ui.index;
+    var graph;
     
     if(i === 0) {
       if (network === null)
@@ -171,7 +173,7 @@ var Controls = function() {
     // Get the file object and set the file name
     file = event.dataTransfer.files[0];
     $('#dropFile span').html(file.name);
-  }
+  };
 
   /** 
    * The event handler for entering a file into the box space.
@@ -306,7 +308,7 @@ var Controls = function() {
       return Boolean(Math.round(Math.random()));
     else
       return true;
-  }
+  };
 
   /** 
    * The event handler for opening the export dialog.

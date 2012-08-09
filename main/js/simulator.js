@@ -85,7 +85,7 @@ var Simulator = function() {
     
     $('#buttonEdit').unbind('click', updateRule);
     $('#dialogEdit').dialog('close');
-  }
+  };
   
   /**
    * The event handler for right clicking a node. Opens the Edit rule
@@ -255,6 +255,7 @@ var Simulator = function() {
    * @param {Object} state The state of the network.
    */
   var updatePlots = function(nodes, state) {
+    var i;
     for(i in nodes)
       plot.series[i].data.push({x: iterationCount, y: +state[nodes[i].id]});
     plot.render();
