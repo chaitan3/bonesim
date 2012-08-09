@@ -16,7 +16,6 @@ $(document).ready(function() {
 var Controls = function() {
   // Private variables to hold the bui.Graph instances
   var network = null, transition = null;
-  var file = null;
   var obj = this;
   
   /**
@@ -34,29 +33,19 @@ var Controls = function() {
     $('#buttonAnalyse').button({icons: {primary: "ui-icon-gear" }});
     $('#buttonImportDialog').button({icons: {primary: "ui-icon-folder-open" }});
     $('#buttonExportDialog').button({icons: {primary: "ui-icon-disk" }});
-    $('#dialogImport').dialog({ autoOpen: false, minWidth: 600, modal: true });
+    $('#dialogImport').dialog({ autoOpen: false, minWidth: 450, modal: true });
     $('#dialogExport').dialog({ autoOpen: false, minWidth: 400, modal: true });
     $('#dialogEdit').dialog({ autoOpen: false, minWidth: 400, modal: true });
     $('#circleProgress').hide();
     
-    addListeners();
-    
-    getScripts();
-  };
-
-  /** Bind functions to the respective listeners.
-   */
-  var addListeners = function() {
+    // Bind listeners to events
     $('#buttonImportDialog').click(importDialog);
-    $('#fileNetwork')[0].addEventListener('change', readFile, false);
-    $('#dropFile')[0].addEventListener('drop', dropFile, false);
-    $('#dropFile')[0].addEventListener('dragenter', dragEnter, false);
-    $('#dropFile')[0].addEventListener('dragleave', dragExit, false);
-    $('#dropFile')[0].addEventListener('dragover', dnd, false);
     $('#buttonImportFile').click(importFile);
     
     $('#buttonExportDialog').click(exportDialog);
     $('#buttonExportFile').click(exportFile);
+    
+    getScripts();
   };
 
   /** Fetch all the scripts not essential to UI asynchronously.
@@ -96,19 +85,17 @@ var Controls = function() {
   var zoomGraph = function(event, ui) {
     // Get the index of the selected tab.
     var i = $('#tabs').tabs('option', 'selected');
-    var graph;
+    var graph = null;
     
     // Get the correct bui.Graph instance depending on the current tab.
-    if(i === 0) {
-      if (network === null)
-        return;
+    if(i === 0) 
       graph = network;
-    }
-    else if(i === 1) {
-      if (transition === null)
-        return;
+    else if(i === 1)
       graph = transition;
-    }
+    
+    // Exit if the graph has not been imported yet
+    if (graph === null)
+      return;
     
     // Scale the bui graph to the value set by the slider
     graph.scale(ui.value);
@@ -124,76 +111,19 @@ var Controls = function() {
   var tabChange = function(event, ui) {
     // Get the current tab index
     var i = ui.index;
-    var graph;
+    var graph = null;
     
-    if(i === 0) {
-      if (network === null)
-        return;
+    if(i === 0) 
       graph = network;
-    }
-    else if(i === 1) {
-      if (transition === null)
-        return;
+    else if(i === 1)
       graph = transition;
-    }
-    else
+    
+    // Exit if the graph has not been imported yet
+    if (graph === null)
       return;
     
     // Set the slider's value to the current graph's scale 
     $('#sliderZoom').slider('option', 'value', graph.scale());
-  };
-
-  /** 
-   * The event handler for clicking the choose file box.
-   * @param {Event} event The event object containing information about the 
-   * type of event. Contains the file list.
-   */
-  var readFile = function(event) {
-    // Get the file object from the event
-    file = event.target.files[0];
-  };
-
-  /** 
-   * Prevent the default events from triggering for the drag and drop box.
-   * @param {Event} event The event object containing information about the 
-   * type of event. 
-   */
-  var dnd = function(event) {
-    event.stopPropagation();
-    event.preventDefault();
-  };
-
-  /** 
-   * The event handler for dropping a file in the box.
-   * @param {Event} event The event object containing information about the 
-   * type of event. Contains the file list.
-   */
-  var dropFile = function(event) {
-    dnd(event);
-    // Get the file object and set the file name
-    file = event.dataTransfer.files[0];
-    $('#dropFile span').html(file.name);
-  };
-
-  /** 
-   * The event handler for entering a file into the box space.
-   * @param {Event} event The event object containing information about the 
-   * type of event. 
-   */
-  var dragEnter = function(event) {
-    dnd(event);
-    // Change the box to reflect the new state.
-    $('#dropFile span').html('Drop File now');
-  };
-
-  /** 
-   * The event handler for exiting the box space.
-   * @param {Event} event The event object containing information about the 
-   * type of event. 
-   */
-  var dragExit = function(event) {
-    dnd(event);
-    $('#dropFile span').html('Drag and Drop File');
   };
 
   /** 
@@ -205,7 +135,6 @@ var Controls = function() {
       simulator.stop();
       
     // Set all values to their initial states.
-    file = null;
     $('#fileNetwork').attr({ value: '' });
     $('#dropFile span').html('Drag and Drop File');
     $('#dialogImport').dialog('open');
@@ -216,10 +145,13 @@ var Controls = function() {
    * box.
    */  
   var importFile = function() {
-    $('#dialogImport').dialog('close');
     
-    if (file === null)
+    var files = $('#fileNetwork')[0].files;
+    if (files.length === 0)
       return;
+    var file = files[0];
+    
+    $('#dialogImport').dialog('close');
     
     // Create an instance of the file reader and jSBGN.
     var reader = new FileReader();

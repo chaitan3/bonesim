@@ -19,19 +19,19 @@
     <ul>
       <li><a href="#graphNetwork">Network</a></li>
       <li><a href="#graphStateTransition">Transitions</a></li>
-      <li><a href="#plot">Time Series</a></li>
+      <li><a href="#plotTimeSeries">Time Series</a></li>
       
       <li><button id=buttonImportDialog>Open</button></li>
       <li><button id=buttonExportDialog>Save</button></li>
       <li><button id=buttonSimulate>Simulate</button></li>
       <li><button id=buttonAnalyse>Analyse</button></li>
       
-      <div id=sliderZoom></div>
-      
       <div>
         <li><img id=circleProgress src="img/progress.gif"/></li>
         <li><label id=textIteration>0</label></li>
       </div>
+      
+      <div id=sliderZoom></div>
     </ul>
     
     <div id=graphNetwork class=tabs>
@@ -50,7 +50,6 @@
   
   <div id=dialogImport class=dialog title="Import File">
     <input type=file id=fileNetwork /> 
-    <div id=dropFile><span></span></div>
     
     <div id=radioSeed>
       <b>Initial Seed:</b> <br>
@@ -88,8 +87,9 @@
       <b>Graph</b><br>
       <input type=radio name="export" id=exportNetwork checked />Network<br>
       <input type=radio name="export" id=exportStateTransition />Transitions<br><br>
-      <input type=radio name="export" id=exportNetworkRBoolNet />Network to R BoolNet<br><br>
-      <input type=radio name="export" id=exportNetworkPyBooleanNet />Network to Python BooleanNet<br><br>
+      <b>Network Rules</b><br>
+      <input type=radio name="export" id=exportNetworkRBoolNet />R BoolNet<br>
+      <input type=radio name="export" id=exportNetworkPyBooleanNet />Python BooleanNet<br>
     </div>
     
     <button id=buttonExportFile class=dialogButton> Export </button>

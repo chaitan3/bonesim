@@ -36,7 +36,18 @@
 #sliderZoom {
   float: right;
   margin: 10px;
-  width: 200px;
+  width: 150px;
+}
+
+#textIteration{
+  position: absolute;
+  top: 10px;
+  left: 5px;
+}
+
+#circleProgress{
+  position: absolute;
+  top: 4px;
 }
 
 #boxInfo {
@@ -51,39 +62,12 @@
   font-size: 12px;
 }
 
-#textIteration{
-  position: absolute;
-  top: 10px;
-  left: 5px;
-}
-
-#circleProgress{
-  position: absolute;
-  top: 4px;
-}
-
 .dialog {
   font-size: 14px;
 }
 
-#dropFile{
-  width: 40%;
-  height: 50px;
-  border: solid black 1px;
-  text-align: center;
-  margin: 10px;
-}
-#dropFile span {
-  position: relative;
-  top:15px;
-}
-
 #fileNetwork {
-  float: right;
-  width: 50%;
   margin: 10px;
-  position: relative;
-  top: 15px;
 }
 
 #radioFormat, #radioExport {
