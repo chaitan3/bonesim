@@ -1,5 +1,4 @@
 var controls, simulator = null;
-var jSBGN, Simulator;
 
 $(document).ready(function() {
   // Load up the UI
@@ -41,7 +40,6 @@ var Controls = function() {
     // Bind listeners to events
     $('#buttonImportDialog').click(openImportDialog);
     $('#buttonImportFile').click(openImportFile);
-    
     $('#buttonExportDialog').click(exportDialog);
     $('#buttonExportFile').click(exportFile);
     
@@ -84,15 +82,14 @@ var Controls = function() {
    */
   var zoomGraph = function(event, ui) {
     // Get the index of the selected tab.
-    var i = $('#tabs').tabs('option', 'selected');
+    var index = $('#tabs').tabs('option', 'selected');
     var graph = null;
     
     // Get the correct bui.Graph instance depending on the current tab.
-    if(i === 0) 
+    if (index === 0) 
       graph = network;
-    else if(i === 1)
+    else if (index === 1)
       graph = transition;
-    
     // Exit if the graph has not been imported yet
     if (graph === null)
       return;
@@ -110,14 +107,12 @@ var Controls = function() {
    */
   var changeTab = function(event, ui) {
     // Get the current tab index
-    var i = ui.index;
     var graph = null;
     
-    if(i === 0) 
+    if (ui.index === 0) 
       graph = network;
-    else if(i === 1)
+    else if (ui.index === 1)
       graph = transition;
-    
     // Exit if the graph has not been imported yet
     if (graph === null)
       return;
@@ -131,7 +126,7 @@ var Controls = function() {
    */
   var openImportDialog = function() {
     // If the simulator is running stop it.
-    if(simulator !== null) 
+    if (simulator !== null) 
       simulator.stop();
       
     // Set all values to their initial states.
@@ -164,27 +159,26 @@ var Controls = function() {
       
       // Depending on the file type option checked in the import dialog box
       // call the appropriate importer
-      if($('#formatRBoolNet').attr('checked'))
+      if ($('#formatRBoolNet').attr('checked'))
         jsbgn.importBooleanNetwork(data, ',');
-      else if($('#formatPyBooleanNet').attr('checked'))
+      else if ($('#formatPyBooleanNet').attr('checked'))
         jsbgn.importBooleanNetwork(data, '=');
-      else if($('#formatGINML').attr('checked'))
+      else if ($('#formatGINML').attr('checked'))
         jsbgn.importGINML(data);
       else 
         jsbgn.importSBML(file, data);
         
       $('#graphStateTransition').html('');
-      
       // Import the jSBGN object into a bui.Graph instance
       obj.importNetwork(jsbgn, '#graphNetwork');
       $('#tabs').tabs('select', '#graphNetwork');
       $('#textIteration').text(0);
       
       // Delete any previous instance of the Simulator and initialise a new one
-      if(simulator !== null) 
+      if (simulator !== null) 
         simulator.destroy();
       simulator = new Simulator();
-      if($('#formatSBML').attr('checked'))
+      if ($('#formatSBML').attr('checked'))
         simulator.scopes = true;  
       var settings = { 
         simDelay: 500, 
@@ -207,17 +201,19 @@ var Controls = function() {
     $(tab).html('');
     var graph = new bui.Graph($(tab)[0]);
     
-    var importHandle = graph.suspendRedraw(20000);
+    var handle = graph.suspendRedraw(20000);
     bui.importFromJSON(graph, jsbgn);
     // Do the layouting
     jsbgn.connectNodes();
     jsbgn.layoutGraph(graph);
     jsbgn.redrawNodes(graph);
+    
     // Center the graph and optionally scale it
     graph.reduceTopLeftWhitespace();
-    if($('#optionsScale').attr('checked')) 
+    if ($('#optionsScale').attr('checked')) 
       graph.fitToPage();
-    graph.unsuspendRedraw(importHandle);
+    graph.unsuspendRedraw(handle);
+    
     $('#sliderZoom').slider('option', 'value', graph.scale());
     $('#tabs').tabs('select', tab);
     
@@ -232,7 +228,7 @@ var Controls = function() {
    * @returns {Boolean} The seed for the node in the network. 
    */
   this.getInitialSeed = function() {
-    if($('#seedTrue').attr('checked')) 
+    if ($('#seedTrue').attr('checked')) 
       return true;
     else if ($('#seedFalse').attr('checked')) 
       return false;
@@ -246,7 +242,7 @@ var Controls = function() {
    * The event handler for opening the export dialog.
    */
   var openExportDialog = function() {
-    if(simulator !== null) 
+    if (simulator !== null) 
       simulator.stop();
     $('#dialogExport').dialog('open');
   };
@@ -266,7 +262,7 @@ var Controls = function() {
       graph = transition;
     else {
       // Export the update rules to a Boolean Net format file.
-      if(!$('#formatSBML').attr('checked')) {
+      if (!$('#formatSBML').attr('checked')) {
         if ($('#exportNetworkRBoolNet').attr('checked'))
           var bn = simulator.exportRBoolNet();
         else
