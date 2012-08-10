@@ -26,7 +26,7 @@ var Simulator = function() {
    * @param {string} rule The update rule.
    * @returns {Function} The function for the update rule.
    */
-  var makeFunction = function(rule) {
+  var makeRuleFunction = function(rule) {
     // Match the node ids
     rule = rule.replace(/[A-Za-z0-9_]+/g, 
     function(text) { 
@@ -62,7 +62,7 @@ var Simulator = function() {
    * Update the color of a node after every iteration
    * @param {string} id The node id.
    */
-  var nodeColorUpdate = function(id) {
+  var updateNodeColor = function(id) {
     var opacity;
     if (net.state[id]) 
       opacity = 1;
@@ -81,7 +81,7 @@ var Simulator = function() {
     var id = $('#textID').text();
     // Update the rule and it's corresponding function
     net.rules[id] = rule;
-    ruleFunctions[id] = makeFunction(net.rules[id]);
+    ruleFunctions[id] = makeRuleFunction(net.rules[id]);
     
     $('#buttonEdit').unbind('click', updateRule);
     $('#dialogEdit').dialog('close');
@@ -90,11 +90,11 @@ var Simulator = function() {
   /**
    * The event handler for right clicking a node. Opens the Edit rule
    * dialog box.
-   * @param {Event} e The event object.
+   * @param {Event} event The event object.
    */
-  var nodeRightClickEdit = function(e) {
+  var editNodeRule = function(event) {
     
-    e.preventDefault();
+    event.preventDefault();
     
     var id = $(this).attr('id');
     $('#textID').text(id);
@@ -106,12 +106,12 @@ var Simulator = function() {
   /**
    * The event handler for left clicking a node. The node state is toggled.
    */
-  var nodeClickToggle = function() { 
+  var toggleNodeState = function() { 
     
     var id = $(this).attr('id');
     // Toggle the node state
     net.state[id] = !net.state[id];
-    nodeColorUpdate(id);
+    updateNodeColor(id);
     
     // Start the simulation if the One click option is checked
     if(config.oneClick && !obj.running) 
@@ -122,7 +122,7 @@ var Simulator = function() {
    * The event handler for hovering over a node. Displays the update rule
    * of a node.
    */
-  var nodeHoverRule = function() {
+  var showRuleBox = function() {
     var id = $(this).attr('id');
     var rule = id + ' = ' + net.rules[id];
     // Create the info box
@@ -132,7 +132,7 @@ var Simulator = function() {
   /**
    * The event handler for unhovering a node. The info box is deleted.
    */
-  var nodeHoverRemove = function() {
+  var removeInfoBox = function() {
     $('#boxInfo').remove();
   };
   
@@ -140,7 +140,7 @@ var Simulator = function() {
    * Generate a random color. 
    * @returns {string} The random color.
    */
-  var randomColor = function() {
+  var getRandomColor = function() {
     var color = '#', i;
     // Get 6 random characters in hex
     for (i = 0; i < 6; i++) 
@@ -159,7 +159,7 @@ var Simulator = function() {
     // Generate the timeSeries Object for the plotter
     for(i in nodes) {
       id = nodes[i].id;
-      timeSeries.push({ color: randomColor(), 
+      timeSeries.push({ color: getRandomColor(), 
         data: [{x: 0, y: +state[id]}], name: id });
     }
     
@@ -219,7 +219,7 @@ var Simulator = function() {
     console.log('Initialising simulator');
     
     $('#buttonSimulate').click(this.start);
-    $('#buttonAnalyse').click(this.attractorSearch);
+    $('#buttonAnalyse').click(this.search);
     
     // Initialise the state of the network
     var i;
@@ -234,17 +234,17 @@ var Simulator = function() {
     
     var svgNode;  
     for (i in net.state) {
-      ruleFunctions[i] = makeFunction(net.rules[i]);
+      ruleFunctions[i] = makeRuleFunction(net.rules[i]);
       
       // Get the node in the SVG and bind the event handlers
       svgNode = $('#' + i);
       if (svgNode !== null) {
         if(!this.scopes) {
-          svgNode.hover(nodeHoverRule, nodeHoverRemove);
-          svgNode.bind('contextmenu', nodeRightClickEdit);
+          svgNode.hover(showRuleBox, removeInfoBox);
+          svgNode.bind('contextmenu', editNodeRule);
         }
-        svgNode.click(nodeClickToggle);
-        nodeColorUpdate(i);
+        svgNode.click(toggleNodeState);
+        updateNodeColor(i);
       }
     }
   };
@@ -265,7 +265,7 @@ var Simulator = function() {
    * Calculate the new state of the network using the update rules.
    * @returns {Array} A list of the changed nodes.
    */
-  var sync = function(state) {
+  var synchrousUpdate = function(state) {
     var i, id;
     var changed = [];
     var newState = {};
@@ -289,15 +289,15 @@ var Simulator = function() {
    * Run a single iteration. Call the run function after completing an
    * iteration.
    */
-  var iterate = function() {
+  var singleIteration = function() {
     var changed, i;
-    changed = sync(net.state);  
+    changed = synchronousUpdate(net.state);  
     
     // Update the node colors after an iteration and call run again if
     // the Simulation has not reached steady state
     if (changed.length > 0) {  
       for (i in changed)
-        nodeColorUpdate(changed[i]);
+        updateNodeColor(changed[i]);
       setTimeout(function() { obj.run(); }, config.simDelay);	
     }
     else {
@@ -364,12 +364,12 @@ var Simulator = function() {
         data: { state : exportStateJSON([net.state]) },
         success: function (resp) {
           updateNodeRules(JSON.parse(resp));
-          iterate();
+          singleIteration();
         }
       });
     }
     else
-       iterate();
+       singleIteration();
   };
   
   /**
@@ -377,7 +377,7 @@ var Simulator = function() {
    * @param {Object} state The state of the network.
    * @return {string} A map of the state of the network
    */
-  var encodeMap = function(state) {  
+  var encodeStateMap = function(state) {  
     var map = '', i;  
     for (i in state) 
       map += +state[i];
@@ -389,7 +389,7 @@ var Simulator = function() {
    * @param {string} map The map of the state of the network
    * @returns {Object} The state of the network
    */
-  var decodeMap = function(map) {
+  var decodeStateMap = function(map) {
     var state = {}, i, j = 0;
     for (i in net.state)
       state[i] =  Boolean(parseInt(map[j++], 10));
@@ -416,10 +416,10 @@ var Simulator = function() {
    * The event handler for hovering over a node. Displays The state 
    * defined by the node for the network.
    */
-  var nodeHoverStates = function() {
+  var showStateBox = function() {
     var id = $(this).attr('id');
     // Get the state from the node id which is a map
-    var state = decodeMap(id), i;
+    var state = decodeStateMap(id), i;
     var info = '';
     for (i in state)
       info += i + ': ' + state[i] + '<br>';
@@ -431,11 +431,11 @@ var Simulator = function() {
    * Assign the state defined by the node in the State transition graph
    * to the nodes in the Network graph.
    */
-  var nodeClickStates = function() {
+  var copyStateNetwork = function() {
     var id = $(this).attr('id'), i;
-    net.state = decodeMap(id);
+    net.state = decodeStateMap(id);
     for(i in net.state)
-      nodeColorUpdate(i);
+      updateNodeColor(i);
   };
   
   /**
@@ -458,14 +458,14 @@ var Simulator = function() {
     var i, id;
     for (i in jsbgn.nodes) {
       id = '#' + jsbgn.nodes[i].id;
-      $(id).hover(nodeHoverStates, nodeHoverRemove);
-      $(id).click(nodeClickStates);
+      $(id).hover(showStateBox, removeInfoBox);
+      $(id).click(copyStateNetwork);
     }
     // Color all the attractors with a unique color for each attractor
     var cycle, j, color;
     for (i in attractors) {
       cycle = attractors[i];
-      color = randomColor();
+      color = getRandomColor();
       for (j in cycle)
         $('#' + cycle[j] + ' :eq(0)').css('fill', color);
     }
@@ -475,7 +475,7 @@ var Simulator = function() {
    * Calculate the attractors for the network graph and display a state
    * transition graph.
    */
-  this.attractorSearch = function() {
+  this.search = function() {
     var doc = new sb.Document();
     doc.lang(sb.Language.AF);
     
@@ -510,7 +510,7 @@ var Simulator = function() {
       for(j = 0 ; ; j++) {
         // A map is used to match two states, faster than directly
         // comparing the objects
-        map = encodeMap(state);
+        map = encodeStateMap(state);
         node = doc.node(map);
         
         // If the map does not exist in the graph document, create it
@@ -536,7 +536,7 @@ var Simulator = function() {
         if(obj.scopes)
           updateNodeRules(statesList[i][j + 1]);
         // Get the new states
-        sync(state);
+        synchronousUpdate(state);
         prev = map;
       }
     }
@@ -613,7 +613,7 @@ var Simulator = function() {
    */
   this.destroy = function() {
     $('#buttonSimulate').unbind('click', obj.start);
-    $('#buttonAnalyse').unbind('click', obj.attractorSearch);
+    $('#buttonAnalyse').unbind('click', obj.search);
   };
   
   

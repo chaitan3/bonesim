@@ -13,7 +13,7 @@ var jSBGN = function () {
  * Imports the x and y coordinates of all the nodes into the bui graph.
  * @param {bui.Graph} graph The bui graph instance.
  */
-jSBGN.prototype.redraw = function (graph) {
+jSBGN.prototype.redrawNodes = function (graph) {
   var all_drawables = graph.drawables();
   var i, j;
   // Node positions updated first
@@ -33,7 +33,7 @@ jSBGN.prototype.redraw = function (graph) {
  * of edges with the actual node objects, as required for the d3
  * layouter.
  */
-jSBGN.prototype.connect = function () {
+jSBGN.prototype.connectNodes = function () {
   var i, j;
   for (i in this.edges) {
     for (j in this.nodes) {
@@ -49,7 +49,7 @@ jSBGN.prototype.connect = function () {
  * Customised d3 force layouter.
  * @param {bui.Graph} graph The bui graph instance.
  */          
-jSBGN.prototype.layout = function(graph) {
+jSBGN.prototype.layoutGraph = function(graph) {
   // Give a canvas to the d3 layouter with the dimensions of the window
   var ratio = $(window).width()/$(window).height();
   var w = 1e6;

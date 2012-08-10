@@ -25,7 +25,7 @@ var Controls = function() {
     // Load the jQuery UI tabs
     $('#tabs').tabs();
     $('#tabs').tabs('select', '#graphNetwork');
-    $('#tabs').bind('tabsselect', tabChange);
+    $('#tabs').bind('tabsselect', changeTab);
     
     // Initialise all the jQuery UI components
     $('#sliderZoom').slider({ step: 0.1, max: 2, stop: zoomGraph});
@@ -39,8 +39,8 @@ var Controls = function() {
     $('#circleProgress').hide();
     
     // Bind listeners to events
-    $('#buttonImportDialog').click(importDialog);
-    $('#buttonImportFile').click(importFile);
+    $('#buttonImportDialog').click(openImportDialog);
+    $('#buttonImportFile').click(openImportFile);
     
     $('#buttonExportDialog').click(exportDialog);
     $('#buttonExportFile').click(exportFile);
@@ -108,7 +108,7 @@ var Controls = function() {
    * type of event.
    * @param {UI} ui Contains the index of the selected tab.
    */
-  var tabChange = function(event, ui) {
+  var changeTab = function(event, ui) {
     // Get the current tab index
     var i = ui.index;
     var graph = null;
@@ -129,7 +129,7 @@ var Controls = function() {
   /** 
    * The event handler for opening the import dialog box.
    */
-  var importDialog = function() {
+  var openImportDialog = function() {
     // If the simulator is running stop it.
     if(simulator !== null) 
       simulator.stop();
@@ -210,9 +210,9 @@ var Controls = function() {
     var importHandle = graph.suspendRedraw(20000);
     bui.importFromJSON(graph, jsbgn);
     // Do the layouting
-    jsbgn.connect();
-    jsbgn.layout(graph);
-    jsbgn.redraw(graph);
+    jsbgn.connectNodes();
+    jsbgn.layoutGraph(graph);
+    jsbgn.redrawNodes(graph);
     // Center the graph and optionally scale it
     graph.reduceTopLeftWhitespace();
     if($('#optionsScale').attr('checked')) 
@@ -245,7 +245,7 @@ var Controls = function() {
   /** 
    * The event handler for opening the export dialog.
    */
-  var exportDialog = function() {
+  var openExportDialog = function() {
     if(simulator !== null) 
       simulator.stop();
     $('#dialogExport').dialog('open');
