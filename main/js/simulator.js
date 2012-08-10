@@ -616,6 +616,4 @@ var Simulator = function() {
     $('#buttonSimulate').unbind('click', obj.start);
     $('#buttonAnalyse').unbind('click', obj.search);
   };
-  
-  
 };

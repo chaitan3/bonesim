@@ -285,5 +285,3 @@ jSBGN.prototype.importBooleanNetwork = function (data, splitKey) {
   this.edges = jsbgn.edges;
   this.rules = rules;
 };
-
-
