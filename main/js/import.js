@@ -1,7 +1,8 @@
 var serverURL;
 /**
  * Representation of Graphs using nodes and edges arrays. Used as
- * a placeholder for importing graphs into biographer-ui. 
+ * a placeholder for importing graphs into biographer-ui. Look up
+ * on the biographer wiki on the format specification.
  * @constructor
  */
 var jSBGN = function () { 
@@ -11,6 +12,8 @@ var jSBGN = function () {
 
 /**
  * Imports the x and y coordinates of all the nodes into the bui graph.
+ * First the nodes are centered and then the edges coordinates are 
+ * recalculated.
  * @param {bui.Graph} graph The bui graph instance.
  */
 jSBGN.prototype.redrawNodes = function (graph) {
@@ -47,7 +50,9 @@ jSBGN.prototype.connectNodes = function () {
 };
 
 /**
- * Customised d3 force layouter.
+ * Customised d3 force layouter. The d3 layouter is called synchronously.
+ * The layout is calculated till the alpha value drops below a certain 
+ * threshold. 
  * @param {bui.Graph} graph The bui graph instance.
  */          
 jSBGN.prototype.layoutGraph = function(graph) {
@@ -64,8 +69,8 @@ jSBGN.prototype.layoutGraph = function(graph) {
           size = node.id.length;
         return -2000-500*size; 
       })
-    /*Link distance depends on two factors: The length of the labels of 
-    the source and target and the number of nodes connected to the source */
+    // Link distance depends on two factors: The length of the labels of 
+    // the source and target and the number of nodes connected to the source 
     .linkDistance(function(edge) { 
       var size = 0;
       if (typeof(edge.source.data.label) !== 'undefined')
@@ -86,7 +91,9 @@ jSBGN.prototype.layoutGraph = function(graph) {
 };
 
 /** 
- * Import an SBML file into the jSBGN object. 
+ * Import an SBML file into the jSBGN object. The libSBGN.js library is 
+ * used as the initial importer. All the compartment and process nodes
+ * are disabled.
  * @param {File} file The file object of the SBML file.
  * @param {string} data The data contained in the SBML file.
  */
@@ -131,7 +138,9 @@ jSBGN.prototype.importSBML = function(file, data) {
 };
 
 /** 
- * Import a GINML file into the jSBGN object. 
+ * Import a GINML file into the jSBGN object. The jQuery XML library 
+ * makes parsing simple. By just passing a tag, all the respective
+ * elements can be selected.
  * @param {string} data The data contained in the GINML file.
  */
 jSBGN.prototype.importGINML = function(data) {
@@ -213,7 +222,9 @@ jSBGN.prototype.importGINML = function(data) {
 };
 
 /** 
- * Import a Boolean Net file(R/Python) into the jSBGN object. 
+ * Import a Boolean Net file(R/Python) into the jSBGN object. These 
+ * files are quite simple with each line containing an update rule. By 
+ * parsing this line the connections between nodes are made.
  * @param {string} data The data contained in the Boolean Net file.
  * @param {string} splitKey The character separating the LHS and RHS of
  * a update rule.

@@ -18,7 +18,8 @@ var Controls = function() {
   var obj = this;
   
   /**
-   * Initialise all the UI components and fetch the extra js files.
+   * Initialise all the UI components and fetch the extra js files. The
+   * UI consists of buttons, dialog boxes, a slider and a tab interface.
    */
   this.initialise = function() {
     // Load the jQuery UI tabs
@@ -46,7 +47,10 @@ var Controls = function() {
     getScripts();
   };
 
-  /** Fetch all the scripts not essential to UI asynchronously.
+  /** 
+   * Fetch all the scripts not essential to UI asynchronously. All the 
+   * external libraries excluding the jquery core are fetched using this
+   * method in addition to import and simulator js files.
    */
   var getScripts = function() {
     // Ensure that the files are fetched as JS.
@@ -76,6 +80,7 @@ var Controls = function() {
 
   /** 
    * The event handler for a change in the value of the Graph Zoom slider.
+   * A corresponding scale is applied to the selected graph tab.
    * @param {Event} event The event object containing information about the 
    * type of event.
    * @param {UI} ui Contains the value of the slider.
@@ -100,7 +105,8 @@ var Controls = function() {
   };
 
   /** 
-   * The event handler for a tab change.
+   * The event handler for a tab change. It just sets the slider value 
+   * for the current tab graph.
    * @param {Event} event The event object containing information about the 
    * type of event.
    * @param {UI} ui Contains the index of the selected tab.
@@ -122,7 +128,8 @@ var Controls = function() {
   };
 
   /** 
-   * The event handler for opening the import dialog box.
+   * The event handler for opening the import dialog box. All the elements
+   * are given a default value
    */
   var openImportDialog = function() {
     // If the simulator is running stop it.
@@ -137,7 +144,8 @@ var Controls = function() {
 
   /** 
    * The event handler for the import file button in the import file dialog
-   * box.
+   * box. The file is read using the appropriate boolean network importer.
+   * The simulator is then initialised using this network.
    */  
   var importFile = function() {
     
@@ -192,7 +200,8 @@ var Controls = function() {
 
   /** 
    * Import a jSBGN object into the Network tab by creating a new bui.Graph
-   * instance.
+   * instance. First the layouting is done and then the graph is scaled
+   * appropriately.
    * @param {jSBGN} jsbgn The network in the form of a jSBGN object.
    * @param {string} tab The tab in which to display the graph.
    * @returns {bui.Graph} The graph for the network.
@@ -239,7 +248,8 @@ var Controls = function() {
   };
 
   /** 
-   * The event handler for opening the export dialog.
+   * The event handler for opening the export dialog. The simulator is 
+   * stopped if it's running.
    */
   var openExportDialog = function() {
     if (simulator !== null) 
@@ -249,7 +259,10 @@ var Controls = function() {
 
   /** 
    * The event handler for clicking the export file button of the export
-   * file dialog box.
+   * file dialog box. Multiple file export options are supported, if 
+   * a graph is exported then a file is created of the specified graph 
+   * type. If the update rules are exported then the respective boolean
+   * network file is generated. The link is passed as a data URI.
    */
   var exportFile = function() {
     $('#dialogExport').dialog('close');
