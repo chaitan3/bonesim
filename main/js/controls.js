@@ -40,8 +40,8 @@ var Controls = function() {
     
     // Bind listeners to events
     $('#buttonImportDialog').click(openImportDialog);
-    $('#buttonImportFile').click(openImportFile);
-    $('#buttonExportDialog').click(exportDialog);
+    $('#buttonImportFile').click(importFile);
+    $('#buttonExportDialog').click(openExportDialog);
     $('#buttonExportFile').click(exportFile);
     
     getScripts();
@@ -268,7 +268,7 @@ var Controls = function() {
     $('#dialogExport').dialog('close');
     
     // Get the bui.Graph instance of the select graph to export
-    var graph;
+    var graph, bn, content;
     if ($('#exportNetwork').attr('checked'))
       graph = network;
     else if ($('#exportStateTransition').attr('checked'))
@@ -277,29 +277,30 @@ var Controls = function() {
       // Export the update rules to a Boolean Net format file.
       if (!$('#formatSBML').attr('checked')) {
         if ($('#exportNetworkRBoolNet').attr('checked'))
-          var bn = simulator.exportRBoolNet();
+          bn = simulator.exportRBoolNet();
         else
-          var bn = simulator.exportPythonBooleanNet();
-        var content = "data:text/plain," + encodeURIComponent(bn);
+          bn = simulator.exportPythonBooleanNet();
+        content = "data:text/plain," + encodeURIComponent(bn);
         window.open(content, 'tmp');
       }
       return;
     }
     
+    var jsbgn;
     // Check the file format to which the graph has to be exported
     if ($('#graphSBGN').attr('checked')) {
-      var jsbgn = graph.toJSON();
+      jsbgn = graph.toJSON();
       var sbgn = null;
       alert('Wait for Lian to finish his jsbgn reader');
     }
     else if ($('#graphjSBGN').attr('checked')) {
-      var jsbgn = JSON.stringify(graph.toJSON());
-      var content = "data:text/plain," + encodeURIComponent(jsbgn);
+      jsbgn = JSON.stringify(graph.toJSON());
+      content = "data:text/plain," + encodeURIComponent(jsbgn);
       window.open(content, 'tmp');
     }
     else if ($('#graphSVG').attr('checked')) {
       var svg = graph.rawSVG();
-      var content = "data:image/svg+xml," + encodeURIComponent(svg);
+      content = "data:image/svg+xml," + encodeURIComponent(svg);
       window.open(content, 'tmp');
     }
   };

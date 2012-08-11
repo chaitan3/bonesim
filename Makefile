@@ -5,48 +5,54 @@
 #  This file contains the necessary targets for building the simulator 
 #  for production.
 
-JSFILES = main/js/*
-HTML = main/index.html
+SRC = main
+JSFILES = $(SRC)/js/*
+HTML = $(SRC)/index.html
+LIB = $(SRC)/lib
+CSS = $(SRC)/css
+ZIP = simulator
+TEST = test.io.TestImportExport.testR
 LINT = jshint
 
-all: libs lint doc
+all: lint doc test pkg
 
 libs: libdir bui d3 rickshaw libSBGN.js
 
 libdir: 
 	#create the lib directory
-	rm -rf main/lib
-	mkdir -p main/lib
+	rm -rf $(LIB)
+	mkdir -p $(LIB)
 
 bui:
 	#fetch biographer-ui, install it's compilation dependencies for ubuntu and build it
 	hg clone https://code.google.com/p/biographer.visualization/ UI
-	cd UI && python src/build/python/manage.py clean build test compress createDistribution
+	cd UI  ; \
+	python src/build/python/manage.py clean build test compress createDistribution  ; \
 	cd ..
-	cp -R UI/target/distribution/css/. main/css
-	cp -R UI/target/distribution/js/. main/lib
+	cp -R UI/target/distribution/css/. $(CSS)
+	cp -R UI/target/distribution/js/. $(LIB)
 	rm -rf UI
  
 d3:
 	#fetch d3.js min library 
 	wget http://d3js.org/d3.v2.min.js
-	mv d3.v2.min.js main/lib
+	mv d3.v2.min.js $(LIB)
 
 rickshaw:
 	#fetch Rickshaw from github
 	wget https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.css
-	mv rickshaw.min.css main/css
+	mv rickshaw.min.css $(CSS)
 	wget https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.js
-	mv rickshaw.min.js main/lib
+	mv rickshaw.min.js $(LIB)
 
 libSBGN.js: 
 	#fetch libSBGN.js, install ant and build it
 	git clone git://github.com/chemhack/libSBGN.js.git
-	cd libSBGN.js
-	git submodule init
-	git submodule update
-	ant compile
-	cp build/compiled-advanced.js main/lib/libSBGN.min.js
+	cd libSBGN.js ; \
+	git submodule init  ; \
+	git submodule update  ; \
+	ant compile  ; \
+	cp build/compiled-advanced.js $(LIB)/libSBGN.min.js  ; \
 	cd ..
 	rm -rf libSBGN.js
 
@@ -69,11 +75,15 @@ deps:
 browse:
 	#test the app in a small browser
 	python test/browse.py $(HTML)
+	
 test: 
 	#test using selenium webdriver locally
-	python -m unittest test.local.TestR
-remote:
-	#test using selenium webdriver remotely
-	python test/remote.py
+	python test/main.py
+	
+pkg:
+	#create a deployable package
+	cd main ; \
+	zip -r $(ZIP) . ; \
+	mv $(ZIP).zip ../
 
 .PHONY: doc test

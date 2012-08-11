@@ -4,13 +4,31 @@
  * Copyright 2012 Chaitanya Talnikar <chaitukca@gmail.com>
  * 
  */
+TODO:
+Server documentation:
+pydoc + var/func names + inline comments
+Testing:
+Selenium test cases
+Package:
+What to do with the server repo, should it is added to the package or 
+merged with another server or moved to simulator?
+Public Server: 
+Integrate the 4-5 SBML web2py files with the editor on the biographer
+server or a separate simulator server?
+Biographer wiki:
+Add User + Dev usage on front page
+
+WTF should be done with the server repo? 
 
 Welcome to the biographer simulator.
 
-The simulator uses a Makefile to manage the project
+The simulator uses a Makefile to manage the project. make by default
+executes the directive 'all' which consists of 'lint', 'doc', 'test' and
+'pkg'. 
+The simulator source code does not consist of any external libraries
+by default and they have to be fetched and installed.
 
 Build libs:
-To use the simulator, first we have to fetch and build the required libs.
 1. If you are using Ubuntu, install necessary dependences by typing 
 in the terminal:
     make deps
@@ -27,6 +45,7 @@ Otherwise please refer below for a list of dependencies:
     python-qt4
     jshint
     selenium python api
+    chromedriver(selenium webdriver)
 2. Fetch and build the libs by executing the command:
     make libs
 The above commands adds the following libs:
@@ -34,21 +53,40 @@ The above commands adds the following libs:
     d3.js
     libSBGN.js
 
-Code checking:
-To perform jslint on the js files execute:
-    make lint
+3. For testing purposes if you are using Chrome you need to download the
+Chrome WebDriver available at, Firefox does not require anything extra.
+    http://code.google.com/p/chromedriver/downloads/list
+Download the linux zip depending on your architechture and extract the
+zip and copy the chromedriver file to /usr/bin
 
-Documentation:
-To generate documentation execute:
-    make doc
-The docs will reside in the jsdoc directory.
 
-Offline App:
-To test the application using the qt webkit engine. Run:
+Now once we have the necessary libs we are ready to test the simulator or
+create a deployable package.
+
+Offline App(browse):
+To test the application offline using the qt webkit engine. Run:
     make browse
     
-Testing:
-To test the simulator, run:
+Testing(test):
+To run all the tests for the simulator, run:
     make test
-The default is Chrome, it can be changed to Firefox. For more details
-read the local.py file in the test folder.
+This executes all the tests including the file import/export, SBML server
+tests and the Simulate, Analyse and Plot features.
+To run specific tests take a look at the main.py file in the test directory.
+The default browser is Chrome and the default URL is the localhost web2py
+server. To change these settings modify the simulator.py file.
+
+Packaging(pkg):
+To create a package which can be easily deployed on a server execute:
+    make pkg
+A zip file simulator.zip will be created in the root directory. 
+
+The following tasks don't really require the libs.
+Code checking(lint):
+To perform jshint on the js files execute:
+    make lint
+
+Documentation(doc):
+To generate documentation using jsdoc execute:
+    make doc
+The docs will reside in the jsdoc directory.
