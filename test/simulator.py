@@ -1,5 +1,5 @@
 from selenium import webdriver
-import unittest
+import unittest, os
 
 class TestSimulator(unittest.TestCase):
   def checkJSError(self):
@@ -14,10 +14,10 @@ class TestSimulator(unittest.TestCase):
   def tearDown(self):
     self.checkJSError()
     try:
-      os.remove(os.path.join(os.pardir, 'chromedriver.log'))
+      os.remove('chromedriver.log')
     except:
       pass
-    self.driver.close()
+    self.driver.quit()
   
   def testUI(self):
     pass

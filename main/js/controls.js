@@ -291,7 +291,7 @@ var Controls = function() {
     if ($('#graphSBGN').attr('checked')) {
       jsbgn = graph.toJSON();
       var sbgn = null;
-      alert('Wait for Lian to finish his jsbgn reader');
+      console.log('Wait for Lian to finish his jsbgn reader');
     }
     else if ($('#graphjSBGN').attr('checked')) {
       jsbgn = JSON.stringify(graph.toJSON());

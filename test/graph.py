@@ -1,20 +1,24 @@
 from fileio import TestImportExport
-from analyse import TestAnalyse
 from selenium.webdriver.common.action_chains import ActionChains
 
-class TestNetworkGraph(TestImportExport, TestAnalyse):
+class TestGraph(TestImportExport):
   def setUp(self):
-    super(TestNetworkGraph, self).setUp()
+    super(TestGraph, self).setUp()
     self.defaultFile()
+    self.graph = 'network'
     
-  def testZoom(self):
+  def testGraphZoom(self):
     slider = self.driver.find_element_by_css_selector('.ui-slider-handle')
     action = ActionChains(self.driver).click_and_hold(slider).move_by_offset(20, 0) \
       .release()
     action.perform()
     
   def triggerNodeEvent(self, event):
-    selector = '#graph0 > g > g:first-child > g:first-child'
+    if self.graph == 'network':
+      i = 0
+    else:
+      i = 1
+    selector = '#graph' + str(i) + ' > g > g:first-child > g:first-child'
     elem = self.driver.find_element_by_css_selector(selector)
     action = ActionChains(self.driver)
     
@@ -27,16 +31,15 @@ class TestNetworkGraph(TestImportExport, TestAnalyse):
       
     action.perform()
     
-  def testNodeClick(self):
+  def testGraphNodeClick(self):
     self.triggerNodeEvent('click')
     
-  def testEditRule(self):
+  def testGraphEditRule(self):
+    if self.graph == 'transition':
+      return
     self.triggerNodeEvent('right')
     self.driver.find_element_by_id('buttonEdit').click()
   
-  def testInfoBox(self):
+  def testGraphInfoBox(self):
     self.triggerNodeEvent('hover')
     self.driver.find_element_by_id('boxInfo')
-    
-  def testTabTransition(self):
-    self.driver.find_element_by_css_selector('#tabs > ul > li:nth-child(2)').click()

@@ -17,17 +17,17 @@ class TestImportExport(TestSimulator):
     self.driver.find_element_by_id('buttonImportFile').click()
     self.checkJSError()
   
-  def testR(self):
+  def testIOR(self):
     self.importFile('formatRBoolNet')
     
-  def testPython(self):
+  def testIOPython(self):
     self.importFile('formatPyBooleanNet')
     
-  def testGINML(self):
+  def testIOGINML(self):
     self.importFile('formatGINML')
   
   def defaultFile(self):
-    self.testR()
+    self.testIOR()
       
   
   def exportFile(self, click):
@@ -37,18 +37,18 @@ class TestImportExport(TestSimulator):
       self.driver.find_element_by_id(i).click()
     self.driver.find_element_by_id('buttonExportFile').click()
     
-  def exportFileNetworkSVG(self):
+  def testIOExportNetworkSVG(self):
     self.exportFile(['exportNetwork', 'graphSVG'])
     
-  def exportFileNetworkjSBGN(self):
+  def testIOExportNetworkjSBGN(self):
     self.exportFile(['exportNetwork', 'graphjSBGN'])
     
-  def exportFileNetworkSBGN(self):
+  def testIOExportNetworkSBGN(self):
     self.exportFile(['exportNetwork', 'graphSBGN'])
     
-  def exportFileRBoolNet(self):
+  def testIOExportRBoolNet(self):
     self.exportFile(['exportNetworkRBoolNet'])
 
-  def exportFilePythonBooleanNet(self):
+  def testIOExportPythonBooleanNet(self):
     self.exportFile(['exportNetworkPyBooleanNet'])
     

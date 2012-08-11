@@ -1,7 +1,9 @@
-from fileio import TestImportExport
-from analyse import TestAnalyse
+from analysis import TestAnalysis
+from graph import TestGraph
 
-class TestSBML(TestImportExport, TestAnalyse):  
+class TestSBML(TestAnalysis):  
+  def setUp(self):
+    super(TestGraph, self).setUp()
   
   def testSBML(self):
     self.importFile('formatSBML')
@@ -11,8 +13,8 @@ class TestSBML(TestImportExport, TestAnalyse):
     
   def testSBMLSimulate(self):
     self.testSBML()
-    self.testSimulate()
+    self.testAnalysisSimulate()
   
   def testSBMLAnalyse(self):
     self.testSBML()
-    self.testAnalyse()
+    self.testAnalysisAnalyse()

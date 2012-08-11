@@ -71,7 +71,8 @@ Testing(test):
 To run all the tests for the simulator, run:
     make test
 This executes all the tests including the file import/export, SBML server
-tests and the Simulate, Analyse and Plot features.
+tests and the Simulate, Analyse and Plot features using the selenium
+browser testing framework along with python's unittest.
 To run specific tests take a look at the main.py file in the test directory.
 The default browser is Chrome and the default URL is the localhost web2py
 server. To change these settings modify the simulator.py file.
