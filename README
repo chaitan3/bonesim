@@ -6,9 +6,9 @@
  */
  
 TODO:
-1. Biographer-wiki: mention downloadable package and public server for users,
-README for developers. Edit server wiki
 1. Public server: access? cron job for SBML uploaded files
+2. Extra branches? doc img folders in simulator? Merge bui-devel
+bugs: multiple plots appearing, sbml non nodes in plots
 
 Welcome to the biographer simulator.
 
@@ -40,13 +40,14 @@ Otherwise please refer below for a list of dependencies:
     #required for unit testing
     selenium python api
     chromedriver(selenium webdriver)
+    
 2. Fetch and build the libs by executing the command:
     make libs
 The above commands adds the following libs:
     biographer-ui
     d3.js
     libSBGN.js
-
+    
 3. To support SBML files in the simulator the biographer server needs to 
 be setup. Refer to the biographer server wiki on how to get it installed.
 Ensure that the correct server URL is put in main/settings.js :
@@ -55,7 +56,10 @@ Also the biographer server web2py app needs to know the location of the
 simulator, so create a symlink to the main directory of the simulator to
 the static directory of the biographer server application:
     rm -rf /path/to/web2py/biographer-server/static
-    ln -s /path/to/web2py/biographer-server/static /path/to/simulator/main
+    ln -s /path/to/web2py/biographer-server/static /path/to/simulator/main    
+or just copy the main directory to the server static folder:
+    cp -R /path/to/simulator/main/. /path/to/web2py/biographer-server/static 
+    
 4. For testing purposes if you are using Chrome you need to download the
 Chrome WebDriver available at the following url:
     http://code.google.com/p/chromedriver/downloads/list
@@ -63,6 +67,7 @@ Download the linux zip depending on your architechture and install it using
 the commands:
     tar -xvf chromedriver*.zip
     sudo cp chromedriver /usr/bin
+
 
 Now once you have the necessary libs you are ready to test the simulator or
 create a deployable package.

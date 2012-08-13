@@ -82,6 +82,6 @@ pkg:
 	#create a deployable package
 	cd main; \
 	zip -r $(ZIP) .
-	mv main/$(ZIP).zip ../
+	mv main/$(ZIP).zip .
 
 .PHONY: doc test

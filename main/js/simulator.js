@@ -23,7 +23,7 @@ var Simulator = function() {
   
   // Track the number of iterations and the plot
   var iterationCount = 0;
-  var plot;
+  var plot = null;
   
   /**
    * Convert the update rule to a function. This is done by matching all 
@@ -163,14 +163,17 @@ var Simulator = function() {
    * @param {Object} state The state of the network.
    */
   var createPlotter = function(nodes, state) {
-    var i, timeSeries = [], id;
+    var i, timeSeries = [];
+    
+    // Clear any previous plots
+    $('#plotArea').html('');
+    $('#axisY').html('');
+    $('#legendNodes').html('');
     
     // Generate the timeSeries Object for the plotter
-    for (i in nodes) {
-      id = nodes[i].id;
+    for (i in state) 
       timeSeries.push({ color: getRandomColor(), 
-        data: [{x: 0, y: +state[id]}], name: id });
-    }
+        data: [{x: 0, y: +state[i]}], name: i });
     
     // Create the Graph, constant hold interpolation  
     plot = new Rickshaw.Graph({
@@ -209,6 +212,8 @@ var Simulator = function() {
     // Render the plot and select the first node
     plot.render();
     $('#legendNodes ul :eq(0) span ').trigger('click');
+    
+    console.log(plot);
   };
   
   /**
@@ -264,9 +269,13 @@ var Simulator = function() {
    * @param {Object} state The state of the network.
    */
   var updatePlots = function(nodes, state) {
-    var i;
-    for (i in nodes)
-      plot.series[i].data.push({x: iterationCount, y: +state[nodes[i].id]});
+    var i, id;
+    for (i in plot.series) {
+      if (typeof(plot.series[i]) === 'object') {
+        id = plot.series[i].name;
+        plot.series[i].data.push({x: iterationCount, y: +state[id]});
+      }
+    }
     plot.render();
   };
 
