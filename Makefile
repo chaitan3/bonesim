@@ -26,9 +26,8 @@ libdir:
 bui:
 	#fetch biographer-ui, install it's compilation dependencies for ubuntu and build it
 	hg clone https://code.google.com/p/biographer.visualization/ UI
-	cd UI  ; \
-	python src/build/python/manage.py clean build test compress createDistribution  ; \
-	cd ..
+	cd UI; \
+	python src/build/python/manage.py clean build test compress createDistribution
 	cp -R UI/target/distribution/css/. $(CSS)
 	cp -R UI/target/distribution/js/. $(LIB)
 	rm -rf UI
@@ -48,12 +47,11 @@ rickshaw:
 libSBGN.js: 
 	#fetch libSBGN.js, install ant and build it
 	git clone git://github.com/chemhack/libSBGN.js.git
-	cd libSBGN.js ; \
-	git submodule init  ; \
-	git submodule update  ; \
-	ant compile  ; \
-	cp build/compiled-advanced.js $(LIB)/libSBGN.min.js  ; \
-	cd ..
+	cd libSBGN.js; \
+	git submodule init; \
+	git submodule update; \
+	ant compile
+	cp libSBGN.js/build/compiled-advanced.js $(LIB)/libSBGN.min.js 
 	rm -rf libSBGN.js
 
 lint: 
@@ -67,7 +65,7 @@ doc:
 	
 deps: 
 	#dependencies required for the simulator: building libs, checking code
-	sudo apt-get install nodejs npm node-uglify  ant git-core mercurial \
+	sudo apt-get install nodejs npm node-uglify  ant git-core \
 		jsdoc-toolkit liqtwebkit4 python-qt4
 	sudo npm install -g $(LINT)
 	sudo pip install selenium
@@ -82,8 +80,8 @@ test:
 	
 pkg:
 	#create a deployable package
-	cd main ; \
-	zip -r $(ZIP) . ; \
-	mv $(ZIP).zip ../
+	cd main; \
+	zip -r $(ZIP) .
+	mv main/$(ZIP).zip ../
 
 .PHONY: doc test
