@@ -30,13 +30,18 @@ Otherwise please refer below for a list of dependencies:
     checkinstall
     
 Build libraries:
-Fetch and build the libs by executing the command:
-    make libs
-The above commands adds the following libs:
-    libscopes
-    libSBML
-If the libSBML build fails please refer to libSBML's documentation on
-how to install.
+Fetch and build libscopes by executing the command:
+    make libscopes
+You need to install one more library that is libSBML. Download it's 
+latest source tar from:
+    http://sourceforge.net/projects/sbml/files/libsbml
+As building libSBML for every platform varies widely, here is a small 
+set of commands to help you install it:
+    tar -xzf libSBML-*-src.tar.gz
+    cd libsbml-*
+    ./configure --with-python
+    make
+    sudo checkinstall
 
 Setup the server:
 Create required directories by running the command given below:

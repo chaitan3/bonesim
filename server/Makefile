@@ -1,7 +1,5 @@
 all: setup
 
-libs: libscopes libsbml
-
 deps: 
 	#install web2py and build dependencies
 	sudo apt-get install build-essential web2py libxml2-dev python-dev checkinstall
@@ -17,14 +15,5 @@ libscopes:
 	touch modules/__init__.py
 	rm -rf libscopes
 
-libsbml:
-	#fetch the source and build the python module, use checkinstall
-	wget "http://downloads.sourceforge.net/project/sbml/libsbml/4.3.1/libSBML-4.3.1-src.tar.gz?r=&ts=1314024612&use_mirror=freefr" -O libSBML-4.3.1-src.tar.gz
-	tar -xzf libSBML-*-src.tar.gz
-	cd libsbml-*; \
-	./configure --with-python; \
-	make; \
-	sudo checkinstall
-	
 setup: 
 	mkdir -p uploads
