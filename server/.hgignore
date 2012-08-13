@@ -4,6 +4,6 @@ databases
 errors
 sessions
 modules
-static/simulator
+static
 cron
 uploads

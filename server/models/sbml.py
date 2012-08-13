@@ -1,7 +1,7 @@
-#~ try:
-	#~ exec('import applications.%s.modules.Scopes as Scopes' % request.application)
-#~ except ImportError:
-	#~ print "Warning: libScopes wrapper not found"
+try:
+	exec('import applications.%s.modules.Scopes as Scopes' % request.application)
+except ImportError:
+	print "Warning: libScopes wrapper not found"
 
 import string, random
 
