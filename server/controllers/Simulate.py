@@ -1,7 +1,7 @@
 try:
-	import json
+  import json
 except ImportError:
-	print "Warning: JSON library not found"
+  print "Warning: JSON library not found"
 
 def Iterate():
   '''  
@@ -9,14 +9,14 @@ def Iterate():
   taking care of JSON import/export;
   Returns string
   '''
-	return json.dumps(singleIteration(json.loads(request.vars.state)[0]))
+  return json.dumps(singleIteration(json.loads(request.vars.state)[0]))
 	
 def InitialSeed():
   '''  
   Controller to get the Initial Guess Seed;
   Returns string
   '''
-	return json.dumps(getInitialSeed())
+  return json.dumps(getInitialSeed())
 
 def AttractorSearch():
   '''  

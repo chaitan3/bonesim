@@ -31,9 +31,13 @@ Otherwise please refer below for a list of dependencies:
     
 Build libraries:
 Fetch and build the libs by executing the command:
-    make
+    make libs
 The above commands adds the following libs:
     libscopes
     libSBML
 If the libSBML build fails please refer to libSBML's documentation on
 how to install.
+
+Setup the server:
+Create required directories by running the command given below:
+    make
