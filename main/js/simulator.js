@@ -187,8 +187,11 @@ var Simulator = function() {
     
     // Create the X & Y-axis, X is attached to the graph, whereas 
     // Y is separate
+    var time = new Rickshaw.Fixtures.Time().unit('second');
+    time.formatter = function(d) { return d.getUTCSeconds(); };
     var xAxis = new Rickshaw.Graph.Axis.Time({
-      graph: plot
+      graph: plot,
+      timeUnit: time
     });
     var yAxis = new Rickshaw.Graph.Axis.Y({
       graph: plot,
@@ -212,8 +215,6 @@ var Simulator = function() {
     // Render the plot and select the first node
     plot.render();
     $('#legendNodes ul :eq(0) span ').trigger('click');
-    
-    console.log(plot);
   };
   
   /**

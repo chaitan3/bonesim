@@ -7,8 +7,7 @@
  
 TODO:
 1. Public server: access? cron job for SBML uploaded files
-2. Extra branches? doc img folders in simulator? Merge bui-devel
-bugs: multiple plots appearing, sbml non nodes in plots
+2. doc img folders in simulator? Merge bui-devel
 
 Welcome to the biographer simulator.
 
