@@ -1,4 +1,5 @@
 from graph import TestGraph
+from selenium.webdriver.support.ui import WebDriverWait
 
 class TestAnalysis(TestGraph):
   def testAnalysisSimulate(self):
