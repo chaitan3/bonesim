@@ -10,7 +10,7 @@ Welcome to the biographer server.
 The server provides the web2py application to provide services for the 
 biographer simulator. The service mainly used is the simulation of SBML
 files using libscopes.
-To use the server it can be copied to the web2py application directory.
+To use the server it can be copied to the web2py applications directory.
 But first we need to install the necessary dependencies and libraries.
 
 Dependencies:
@@ -21,14 +21,13 @@ Otherwise please refer below for a list of dependencies:
     #gcc, make and other stuff
     build-essential
     #server application
-    web2py
+    python-web2py
     #required to build libSBML
     libxml2-dev
     #required to build libscopes and libSBML python libs
     python-dev
     #optional: to ensure that the package can be uninstalled later
     checkinstall
-    
 Build libraries:
 Fetch and build libscopes by executing the command:
     make libscopes
