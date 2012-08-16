@@ -7,6 +7,7 @@ class TestAnalysis(TestGraph):
     
   def testAnalysisAnalyse(self):
     self.driver.find_element_by_id('buttonAnalyse').click()
+    WebDriverWait(self.driver, 10).until(lambda x: x.find_element_by_id('graph1'))
     self.checkJSError()
     
   def testAnalysisPlot(self):

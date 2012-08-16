@@ -1,5 +1,6 @@
 import os
 from simulator import TestSimulator
+from selenium.webdriver.support.ui import WebDriverWait
 
 class TestImportExport(TestSimulator):
   testFiles = {}
@@ -15,6 +16,7 @@ class TestImportExport(TestSimulator):
     self.driver.find_element_by_id(seed).click()
     self.driver.find_element_by_id(fileType).click()
     self.driver.find_element_by_id('buttonImportFile').click()
+    WebDriverWait(self.driver, 10).until(lambda x: x.find_element_by_id('graph0'))
     self.checkJSError()
   
   def testIOR(self):
