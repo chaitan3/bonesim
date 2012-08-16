@@ -9,6 +9,12 @@ if(debug) {
     errors += url + ':' + lineNumber + ' ' + message + '\n';
     $('body').attr('JSError', errors);
   }
+  //Capture AJAX errors
+  $.ajaxSetup({ error: function(xhr, text, http) {
+      errors += text + ':' + http + ' ' + xhr.requestURL + '\n';
+      $('body').attr('JSError', errors);
+    }
+  });
 
   // Capture JS errors from js files called using the $.getScript function
   $.extend({
