@@ -66,7 +66,7 @@ doc:
 deps: 
 	#dependencies required for the simulator: building libs, checking code
 	sudo apt-get install nodejs npm node-uglify  ant git-core \
-		jsdoc-toolkit liqtwebkit4 python-qt4
+		jsdoc-toolkit libqtwebkit4 python-qt4 python-pip
 	sudo npm install -g $(LINT)
 	sudo pip install selenium
 	
