@@ -2,7 +2,8 @@ all: setup
 
 deps: 
 	#install web2py and build dependencies
-	sudo apt-get install build-essential python-web2py libxml2-dev python-dev checkinstall
+	sudo apt-get install build-essential python-web2py libxml2-dev python-dev \
+		checkinstall swig
 
 libscopes: 
 	#clone the libscopes repo and compile the python module
