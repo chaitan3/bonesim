@@ -11,7 +11,8 @@ if(debug) {
   }
   //Capture AJAX errors
   $.ajaxSetup({ error: function(xhr, text, http) {
-      errors += text + ':' + http + ' ' + xhr.requestURL + '\n';
+      errors += text + ':' + http + ' ' + this.url + '\n';
+      console.log(errors);
       $('body').attr('JSError', errors);
     }
   });
