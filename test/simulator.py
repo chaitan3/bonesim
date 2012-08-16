@@ -1,8 +1,10 @@
 from selenium import webdriver
 import unittest, os
+from time import sleep
 
 class TestSimulator(unittest.TestCase):
   def checkJSError(self):
+    sleep(1)
     self.assertIsNone(self.driver.find_element_by_tag_name('body').get_attribute('JSError'))
 
   def setUp(self):

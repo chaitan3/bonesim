@@ -1,10 +1,9 @@
-from time import sleep
 from graph import TestGraph
 
 class TestAnalysis(TestGraph):
   def testAnalysisSimulate(self):
     self.driver.find_element_by_id('buttonSimulate').click()
-    sleep(1)
+    self.checkJSError()
     
   def testAnalysisAnalyse(self):
     self.driver.find_element_by_id('buttonAnalyse').click()
