@@ -12,7 +12,7 @@ class TestImportExport(TestSimulator):
   def importFile(self, fileType, seed = 'seedTrue'):
     self.driver.find_element_by_id('buttonImportDialog').click()
     self.driver.find_element_by_id('fileNetwork').send_keys(os.path.join(os.getcwd(), \
-      'demo', self.testFiles[fileType]))
+      'examples', self.testFiles[fileType]))
     self.driver.find_element_by_id(seed).click()
     self.driver.find_element_by_id(fileType).click()
     self.driver.find_element_by_id('buttonImportFile').click()
