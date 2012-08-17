@@ -72,11 +72,11 @@ deps:
 	
 browse:
 	#test the app in a small browser
-	python test/browse.py $(HTML)
+	python tests/browse.py $(HTML)
 	
 test: 
 	#test using selenium webdriver locally
-	python test/main.py
+	python tests/main.py
 	
 pkg:
 	#create a deployable package
@@ -84,4 +84,3 @@ pkg:
 	zip -r $(ZIP) .
 	mv main/$(ZIP).zip .
 
-.PHONY: doc test

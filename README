@@ -5,10 +5,6 @@
  * 
  */
  
-TODO:
-1. Public server: access? cron job for SBML uploaded files
-2. doc img folders in simulator? Merge bui-devel
-
 Welcome to the biographer simulator.
 
 The simulator uses a Makefile to manage the project. make by default
@@ -86,7 +82,7 @@ To run all the tests for the simulator, run:
 This executes all the tests including the file import/export, SBML server
 tests and the Simulate, Analyse and Plot features using the selenium
 browser testing framework along with python's unittest.
-To run specific tests take a look at the main.py file in the test directory.
+To run specific tests take a look at the main.py file in the tests directory.
 The default browser is Chrome and the default URL is the localhost web2py
 server. To change these settings modify the simulator.py file.
 

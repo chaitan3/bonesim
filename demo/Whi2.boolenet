@@ -7,169 +7,251 @@
 
 
 ##
-## input values
+## Inputs
 ##
 
-Glucose				= True
-# States of Glucose:		True="present", False="absent"
-
-Pyruvat*			= Glucose or Glycerol
-# States of Pyruvat:		True="present", False="absent"
-
-Rapamycin			= False
-# States of Rapamycin:		True="present", False="absent"
+Glucose					= True
+Glycerol				= True
+Ammonia					= True
+Rapamycin				= False
 
 
 ##
-## logic
+## Nutrient metabolism
 ##
 
 #
-# "helper" values
+# glycolysis
 #
 
+Glucosephosphate*			= Glucose and Hexokinase and ATP
+Fructosephosphate*			= Glucosephosphate and Phosphoglucokinase
+Fructosebisphosphate*			= Fructosephosphate and Phosphofructokinase and ATP
 
-nutrient_fermentation*			= Glucose
-# States of nutrient_fermentation:	True="anaerob metabolism", False="anaerob metabolism absent"
-oxidative_phosphorylation*		= not Glucose and Pyruvat
-# States of oxidative_phosphorylation:	True="taking place", False="not taking place"
+Glycerolphosphate*			= Glycerol and Glycerolkinase and ATP
+processF*				= Fructosebisphosphate and Aldolase
+processD*				= Dihydroxyacetonephosphate and Triosephosphateisomerase
+processG*				= Glycerolphosphate and Glycerolphosphatedehydrogenase and FAD and NADH
+NAD*					= processG or processAlc2
+FADH2*					= processG or processS2
+Glycerolaldehydephosphate*		= processF or processD
+Dihydroxyacetonephosphate*		= processF or processG
 
-Nitrogen				= True
+processA*				= Glycerolaldehydephosphate and Glycerolaldehydephosphatedehydrogenase and NAD
+Bisphosphoglycerate*			= processA
+NADH*					= processA or processI or processK or processM
+
+Phosphoglycerate*			= Bisphosphoglycerate and Phosphoglyceratkinase
+
+processB*				= Phosphoglycerate and Enolase
+Phosphoenolpyruvate*			= processB
+
+processE*				= Phosphoenolpyruvate and Pyruvatkinase
+Pyruvate*				= processE
+ATP*					= processB or processE or processCV
+processP*				= Pyruvate and Pyruvatdecarboxylase
+
+#
+# alcoholic fermentation
+#
+
+processAlc1*				= Pyruvate and Pyruvatedecarboxylase and (not O2)
+Acetaldehyde*				= processAlc1
+processAlc2*				= NADH and Acetaldehyde and Alcoholdehydrogenase
+Ethanol*				= processAlc2
+
+#
+# citric acid cycle
+#
+
+AcetylCoA*				= Pyruvate and Pyruvatdehydrogenase and CoA
+Citrate*				= Oxalacetate and AcetylCoA and Citratesynthase
+Aconitate*				= Citrate and Aconitase
+Isocitrate*				= Aconitate and Aconitase
+
+processI*				= Isocitrate and Isocitratedehydrogenase and NAD
+Ketoglutarate*				= processI
+CO2*					= processI or processK or processAlc1
+
+processK*				= Ketoglutarate and Ketoglutaratedehydrogenase and CoA
+SuccinylCoA*				= processK
+
+processS*				= SuccinylCoA and SuccinylCoAsynthetase and GDP
+Succinate*				= processS
+GTP*					= processS
+CoA*					= processS
+
+processS2*				= Succinate and Succinyldehydrogenase and FAD
+Fumarate*				= processS2
+
+Malate*					= Fumarate and Fumarase
+
+processM*				= Malate and Malatedehydrogenase and NAD
+Oxalacetate*				= processM or processP
+
+#
+# electron transport chain
+#
+
+processCI*				= NADH and Complex_I and Q
+proton_gradient*			= processCI or processCIII or processCIV
+processCII*				= FADH2 and Complex_II and Q
+QH2*					= processCI or processCII
+processCIII*				= cytochromeC and QH2
+cytochromeC_minus*			= processCIII
+processCIV*				= cytochromeC_minus and O2 and QH2
+cytochromeC*				= processCIV
+H2O*					= processCIV
+Q*					= processCIV
+processCV*				= ADP and ATPsynthase and proton_gradient
+
+cytosol_acidification*			= CO2 or Pyruvate
+
+#
+# urea cycle
+#
+
+urea_cycle*				= Ammonia
+Nitrogen*				= urea_cycle
 # States of Nitrogen:			True="present", False="nitrogen starvation"
 
-energy*					= nutrient_fermentation or oxidative_phosphorylation or degradation
-# States of energy:			True="available", False="lacking"
-
-
 #
-# PKA pathway
+# vacuolar degradation (catabolism)
 #
 
-Ras*				= (Ras1 or Ras2) and Gpa2
-# Annotation of Ras:		"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
-# Annotation of Ras1:		"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
-# Annotation of Ras2:		"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
+# ATP* = ...
 
-Ras_palm*			= Ras
-# States of Ras_palm:		True="active Ras was subsequentially palmitoylated", False="Ras is not palmitoylated"
-Ras_farn*			= Ras
-# States of Ras_farn:		True="active Ras was subsequentially farnesylated", False="Ras is not farnesylated"
+
+##
+## Ras-PKA pathway
+##
+
+Ras_GTP_palm_farn*			= Ras and GTP and cytosol_acidification
+
+# Annotation of Ras:			"<iframe src='http://en.wikipedia.org/wiki/Ras2'></iframe>"
 
 # Cyr1p: adenylate cyclase
-Cyr1*				= Ras_palm and Ras_farn
+Cyr1*					= Ras_GTP_palm_farn or Gpa2
 
-cAMP*				= Cyr1
-# States of cAMP:		True="present", False="absent"
+cAMP*					= Cyr1 and ATP
+# States of cAMP:			True="present", False="absent"
 
-PKA*				= cAMP
-# Annotation of PKA:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
-
-
-#
-# Sch9 pathway
-#
-
-Sch9*				= TORC1
-Rim15*				= ( not PKA) and ( not Sch9) and ( not TORC1)
+PKA*					= cAMP
+# Annotation of PKA:			"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
 
 
-#
-# Gpr1 pathway
-#
+##
+## Nutrient sensing:
+## Gpr1 pathway
+##
 
-Gpr1p*				= Glucose
-# States of Gpr1p:		True="receptor firing", False="receptor silent"
+Gpr1*					= Glucose
+# States of Gpr1:			True="receptor firing", False="receptor silent"
 
 # presumably an adenylate cyclase
-Gpa2*				= Gpr1p
+Gpa2*					= Gpr1
 
 
-#
-# TOR kinase pathway
-#
+##
+## Nutrient sensing:
+## TOR kinase pathway
+##
 
 # Rapamycin forms a complex with Fpr1 and this way inhibits TORC1 (but not TORC2 !) complex activity
-Rapa_Fpr1*			= Rapamycin and Fpr1
-# States of Rapa_Fpr1:		True="complexed",	False="dissociated"
-# States of Fpr1:		True="present",		False="absent"
+Rapa_Fpr1*				= Rapamycin and Fpr1
+# States of Rapa_Fpr1:			True="complexed",	False="dissociated"
+# States of Fpr1:			True="present",		False="absent"
 
 # TORC1 is active under nutrient rich conditions
 # Rapamycin "simulates" Nitrogen
-TORC1*				= Nitrogen and ( not Rapa_Fpr1)
-# States of TORC1:		True="complex active", False="complex inactive"
-# Annotation of TORC1:		"M<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
+TORC1*					= Nitrogen and ( not Rapa_Fpr1)
+# States of TORC1:			True="complex active", False="complex inactive"
+# Annotation of TORC1:			"M<iframe src='http://www.matthiasbock.net/wiki/index.php?title=PKA,_TORC1_und_Co'></iframe>"
 
 
-#
-# Whi2 pathway
-#
+##
+## downstream signalling:
+## Sch9 pathway
+##
 
-# Annotation of Whi2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
-
-Whi2_Psr1_2*			= Whi2 and (Psr1 or Psr2) and ( not Glucose and not Nitrogen)
-# States of Whi2_Psr1_2:	True="complexed", False="dissociated"
-# States of Psr1:		True="present", False="absent"
-# States of Psr2:		True="present", False="absent"
-
-#
-# actin organization
-#
-
-App1*				= Whi2_Psr1_2
-
-actin*				= App1
-# States of actin:		True="wild-type", False="disorganized"
+Sch9*					= TORC1
+Rim15*					= ( not PKA) and ( not Sch9) and ( not TORC1)
 
 
-#
-# cell cycle
-#
+##
+## downstream signalling:
+## Whi2 pathway
+##
 
-Cdc28*				= ( not Whi2_Psr1_2) or ( not Whi3) or ( not Whi4)
-# States of Whi3:		True="present", False="absent"
-# States of Whi4:		True="present", False="absent"
+# Annotation of Whi2:			"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Whi2'></iframe>"
 
-Cln1*				= Cdc28
-Cln2*				= Whi3 and Cdc28
+Whi2_Psr*				= Whi2 and Psr and ( not Glucose and not Nitrogen)
+# States of Whi2_Psr:			True="complexed", False="dissociated"
+# States of Psr:			True="present", False="absent"
+
+##
+## actin organization
+##
+
+App1*					= Whi2_Psr
+
+actin*					= App1
+# States of actin:			True="wild-type", False="disorganized"
+
+
+##
+## processed signal effector pathway:
+## cell cycle control
+##
+
+Cdc28*					= ( not Whi2_Psr) or ( not Whi3) or ( not Whi4)
+# States of Whi3:			True="present", False="absent"
+# States of Whi4:			True="present", False="absent"
+
+Cln1*					= Cdc28
+Cln2*					= Whi3 and Cdc28
 # Whi1 is another name for Cln3
-Cln3*				= Whi3
+Cln3*					= Whi3
 
-G1_cyclins*			= Cln1 and Cln2 and Cln3
-# States of G1_cyclins:		True="present", False="absent"
+G1_cyclins*				= Cln1 and Cln2 and Cln3
+# States of G1_cyclins:			True="present", False="absent"
 
-# States of Cln1:		True="present", False="absent"
-# States of Cln2:		True="present", False="absent"
-# States of Cln3:		True="present", False="absent"
+# States of Cln1:			True="present", False="absent"
+# States of Cln2:			True="present", False="absent"
+# States of Cln3:			True="present", False="absent"
 
 # Whi5p is a transcriptional repressor for SCB-binding factor SBF and MCB-binding factor MBF,
 # required for G1/S phase transcription (yeastgenome.org)
-Whi5*				= not (Cdc28 and Cln3)
-# States of Whi5:		True="repressing", False="inactive"
+Whi5*					= not (Cdc28 and Cln3)
+# States of Whi5:			True="repressing", False="inactive"
 
-G1_arrest*			= Whi5 and ( not G1_cyclins)
-# States of G1_arrest:		True="cell arresting in G1", False="cell fails to arrest in G1"
-
-
-#
-# unknown function
-#
-
-Lsm2*				= Whi2_Psr1_2
-
-RNA_processing*			= Lsm2
-mRNA_decay*			= Lsm2
+G1_arrest*				= Whi5 and ( not G1_cyclins)
+# States of G1_arrest:			True="cell arresting in G1", False="cell fails to arrest in G1"
 
 
-#
-# microtubule nucleation
-#
+##
+## processed signal effector pathway:
+## RNA processing (unknown function)
+##
 
-Spc98*				= Whi2_Psr1_2
+Lsm2*					= Whi2_Psr
+
+RNA_processing*				= Lsm2
+mRNA_decay*				= Lsm2
 
 
-#
-# general stress response
-#
+##
+## processed signal effector pathway:
+## microtubule nucleation (unknown function)
+##
+
+Spc98*					= Whi2_Psr
+
+
+##
+## processed signal effector pathway:
+## general stress response
+##
 
 # phosphorylated is the deactivated state
 # dephosphorylation triggers to nuclear import
@@ -179,87 +261,90 @@ Spc98*				= Whi2_Psr1_2
 # TORC1 activity deactivates Msn2_4 activity
 # 
 
-Msn2_4*				= Whi2_Psr1_2 and not (PKA and ( not Rim15) and ( not TORC1))
-# States of Msn2_4:		True="dephosphorylated = active", False="phosphorylated = inactive"
+Msn2_4*					= Whi2_Psr and not (PKA and ( not Rim15) and ( not TORC1))
+# States of Msn2_4:			True="dephosphorylated = active", False="phosphorylated = inactive"
 
-STRE*				= Msn2_4
+STRE*					= Msn2_4
 
-bulk_autophagy*			= AP_expansion
+bulk_autophagy*				= AP_expansion
+
+
+##
+## processed signal effector pathway:
+## induction of autophagy
+##
 
 # nur damit das PKA irgendwie drinnebleibt
 # A.Reichert vermutet Wichtigkeit von PKA, falls TORC1 deletiert
-Atg1*				= (PKA or ( not PKA)) and ( not TORC1)
+Atg1*					= (PKA or ( not PKA)) and ( not TORC1)
 
 # Atg13 is phosphorylated by PKA and TORC1
 # Atg13 becomes active, when hypophosphorylated (building complexes)
-Atg13*				= not (TORC1 or (TORC1 and PKA))
-# States of Atg13:		True="active = hypophosphorylated", False="inactive = phosphorylated"
+Atg13*					= not (TORC1 or (TORC1 and PKA))
+# States of Atg13:			True="active = hypophosphorylated", False="inactive = phosphorylated"
 
-Atg1_13_17*			= Atg1 and Atg13 and Atg17
-
-
-heatshock_resistance*		= STRE
-carbohydrate_storage*		= STRE
-# States of carbohydrate_storage: True="increased trehalose and glycogen levels", False="wild-type"
+Atg1_13_17*				= Atg1 and Atg13 and Atg17
 
 
-#
-# ER stress pathway
-#
-
-misfolding			= False
-# States of misfolding:		True="misfold accumulation", False="native folding"
-
-ER_stress*			= misfolding
-
-# unfolded protein response
-UPR*				= ER_stress
+heatshock_resistance*			= STRE
+carbohydrate_storage*			= STRE
+# States of carbohydrate_storage:	 True="increased trehalose and glycogen levels", False="wild-type"
 
 
-#
-# autophagy / mitophagy / cvt
-#
+##
+## different types of autophagy:
+## ER stress response -> aggrephagy
+##
+
+misfolding				= False
+# States of misfolding:			True="misfolded protein accumulation", False="vital protein folding"
+ER_stress*				= misfolding
+UPR*					= ER_stress
+aggrephagy*				= UPR and selective_autophagy
+# Annotation of UPR:			"unfolded protein response pathway"
 
 
-#
-# cvt pathway
-#
-Lap4				= True
-Ams1				= True
-Lap4_PAS*			= PAS and Lap4 and Atg11 and Atg19 and Atg20_24
-# States of Lap4_PAS:		True="transported", False="free"
-# States of Atg19:		True="present", False="absent"
+##
+## autophagy associated pathway:
+## cytoplasm-to-vacuole-targeting
+##
 
-Atg20_24*			= Atg20 and Atg24
+Lap4					= True
+Ams1					= True
+Lap4_PAS*				= PAS and Lap4 and Atg11 and Atg19 and Atg20_24
+# States of Lap4_PAS:			True="transported", False="free"
+# States of Atg19:			True="present", False="absent"
 
-Ams1_PAS*			= PAS and Ams1 and Atg11 and (Atg19 or Atg34)
-# States of Ams1_PAS:		True="transported", False="free"
+Atg20_24*				= Atg20 and Atg24
 
-preApe1				= True
-# States of preApe1:		True="dodecamer", False="dissociated"
-Ape1*				= preApe1
-# States of Ape1:		True="complexed", False="dissociated"
+Ams1_PAS*				= PAS and Ams1 and Atg11 and (Atg19 or Atg34)
+# States of Ams1_PAS:			True="transported", False="free"
 
-CVT*				= selective_autophagy and Ape1 and (Lap4_PAS or Ams1_PAS)
-# States of CVT:		True="complex assembled", False="absent"
+preApe1					= True
+# States of preApe1:			True="dodecamer", False="dissociated"
+Ape1*					= preApe1
+# States of Ape1:			True="complexed", False="dissociated"
 
-Lap4_Vac*			= CVT and Lap4_PAS
-Ams1_Vac*			= CVT and Ams1_PAS
+CVT*					= selective_autophagy and Ape1 and (Lap4_PAS or Ams1_PAS)
+# States of CVT:			True="complex assembled", False="absent"
 
-# States of Lap4_Vac:		True="vacuolar", False="absent"
-# States of Ams1_Vac:		True="vacuolar", False="absent"
+Lap4_Vac*				= CVT and Lap4_PAS
+Ams1_Vac*				= CVT and Ams1_PAS
 
-MVB				= True
-Atg15_ER*			= MVB
-Atg15_Vac*			= Atg15_ER
+# States of Lap4_Vac:			True="vacuolar", False="absent"
+# States of Ams1_Vac:			True="vacuolar", False="absent"
 
-Atg9_PAS*			= Atg9 and PAS
-Atg9_mt*			= Atg9_PAS and Atg2
-# States of Atg9_mt:		True="localized to mitochondria", False="free"
+MVB					= True
+Atg15_ER*				= MVB
+Atg15_Vac*				= Atg15_ER
 
-PAS*				= Atg1_13_17 and Atg29 and Atg31
-# States of PAS:		True="assembled", False="absent"
-# Annotation of PAS:		"pre-autophagosomal structure"
+Atg9_PAS*				= Atg9 and PAS
+Atg9_mt*				= Atg9_PAS and Atg2
+# States of Atg9_mt:			True="localized to mitochondria", False="free"
+
+PAS*					= Atg1_13_17 and Atg29 and Atg31
+# States of PAS:			True="assembled", False="absent"
+# Annotation of PAS:			"pre-autophagosomal structure"
 
 
 #
@@ -275,56 +360,79 @@ PAS*				= Atg1_13_17 and Atg29 and Atg31
 # aggrephagy
 
 # autophagic vacuole assembly (GO:0000045)
-AP_assembly*			= PAS
-AP_expansion*			= AP_assembly and Atg8_PE
+AP_assembly*				= PAS
+AP_expansion*				= AP_assembly and Atg8_PE
 
-Atg11_32_mito*			= Atg11 and Atg32 and mitochondria
-Atg33_mito*			= Atg33 and mitochondria
-mitophagy*			= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito and Atg33_mito)
+
+##
+## different types of autophagy:
+## mitophagy
+##
+
+Atg11_32_mito*				= Atg11 and Atg32 and mitochondria
+Atg33_mito*				= Atg33 and mitochondria
+mitophagy*				= selective_autophagy and Atg8_mtub and Atg9_mt and (Atg11_32_mito and Atg33_mito)
 #and MitoX
 
-#MitoX*				= Whi2_Psr1_2 and ( not PKA)
-## _tates of MitoX:		True="dephosphorylated", False="phosphorylated"
+#MitoX*					= Whi2_Psr and ( not PKA)
+## _tates of MitoX:			True="dephosphorylated", False="phosphorylated"
 
-Atg30_Px*			= Atg30 and peroxisome
-Atg11_30_Px*			= Atg11 and Atg30_Px
-pexophagy*			= selective_autophagy and Atg11_30_Px
 
-ribophagy*			= selective_autophagy
-aggrephagy*			= UPR and selective_autophagy
-# Annotation of UPR:		"unfolded protein response pathway"
+##
+## different types of autophagy:
+## pexophagy
+##
 
-selective_autophagy*		= AP_expansion
+Atg30_Px*				= Atg30 and peroxisome
+Atg11_30_Px*				= Atg11 and Atg30_Px
+pexophagy*				= selective_autophagy and Atg11_30_Px
 
-Atg8_cleaved*			= Atg8 and Atg4
-Atg8_PE*			= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
-# States of Atg8_PE:		True="Atg8 membrane bound", False="Atg8 free"
-# Annotation of PE:		"<iframe src='http://en.wikipedia.org/wiki/Phosphatidylethanolamine'></iframe>"
 
-Atg5_12*			= Atg12 and Atg5 and Atg10 and Atg7
+##
+## different types of autophagy:
+## ribophagy
+##
 
-induced_autophagy*		= STRE
+ribophagy*				= selective_autophagy
+
+
+##
+## autophagy associated pathway:
+## autophagy machinery
+##
+
+
+selective_autophagy*			= AP_expansion
+
+Atg8_cleaved*				= Atg8 and Atg4
+Atg8_PE*				= Atg8_cleaved and Atg3 and Atg7 and Atg5_12 and Atg16
+# States of Atg8_PE:			True="Atg8 membrane bound", False="Atg8 free"
+# Annotation of PE:			"<iframe src='http://en.wikipedia.org/wiki/Phosphatidylethanolamine'></iframe>"
+
+Atg5_12*				= Atg12 and Atg5 and Atg10 and Atg7
+
+induced_autophagy*			= STRE
 
 # http://www.ncbi.nlm.nih.gov/pubmed/9649430
 
 # Aut2 is Atg4
 # Aut7 is Atg8
-Atg8_mtub*			= Atg8_PE and Atg4
-# States of Atg8_mtub:		True="bound to microtubule", False="free"
+Atg8_mtub*				= Atg8_PE and Atg4
+# States of Atg8_mtub:			True="bound to microtubule", False="free"
 
-mature_AP*			=  bulk_autophagy or pexophagy or ribophagy or aggrephagy or mitophagy or CVT
-transport_to_vacuole*		= mature_AP and Atg8_mtub
+mature_AP*				=  bulk_autophagy or pexophagy or ribophagy or aggrephagy or mitophagy or CVT
+transport_to_vacuole*			= mature_AP and Atg8_mtub
 
 # autophagic vacuole docking (GO:0016240)
-docking*			= transport_to_vacuole
+docking*				= transport_to_vacuole
 
 # autophagic vacuole fusion (GO:0000046)
-fusion*				= docking and Ccz1 and Vam3 and Atg8_PE
+fusion*					= docking and Ccz1 and Vam3 and Atg8_PE
 
 # autophagic membrane disassembly (GO:0030399)
-lysis* = fusion and Atg15_Vac
+lysis*					= fusion and Atg15_Vac
 
-degradation*			= lysis and (Lap4_Vac or Ams1_Vac)
+degradation*				= lysis and (Lap4_Vac or Ams1_Vac)
 
 # Annotation of Atg1:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins#Atg1-13-17'></iframe>"
 # Annotation of Atg2:		"<iframe src='http://www.matthiasbock.net/wiki/index.php?title=Kategorie:Autophagy_related_proteins#Atg2'></iframe>"
