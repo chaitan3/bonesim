@@ -1,6 +1,2 @@
-deploy.sh
-main/lib
-main/css
 jsdoc
-*.pdf
 *.pyc
