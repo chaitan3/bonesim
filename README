@@ -44,21 +44,7 @@ The above commands adds the following libs:
     libSBGN.js
     
 3. To support SBML files in the simulator the biographer server needs to 
-be setup. First clone it:
-    hg clone https://code.google.com/p/biographer.server/ server
-Now go through the README to install it and then link the server directory
-to the web2py applications directory
-    ln -s $PWD/server /path/to/web2py/applications/biographer
-Ensure that the correct server URL is put in main/settings.js(The 
-default URL is 'http://127.0.0.1:8000/biographer'):
-    serverURL = 'http://web2py-url:port/application-name'
-Also the biographer server web2py app needs to know the location of the 
-simulator, so create a symlink to the main directory of the simulator to
-the static directory of the biographer server application:
-    rm -rf /path/to/web2py/applications/biographer/static
-    ln -s  $PWD/main /path/to/web2py/applications/biographer/static   
-or just copy the main directory to the server static folder:
-    cp -R main/. /path/to/web2py/biographer-server/static 
+be setup. Please read the README in the server folder. 
     
 4. For testing purposes if you are using Chrome you need to download the
 Chrome WebDriver available at the following url:
