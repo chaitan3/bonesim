@@ -18,3 +18,5 @@ libscopes:
 
 setup: 
 	mkdir -p uploads
+	rm -rf static
+	cp -r ../main static

@@ -46,3 +46,8 @@ Fetch and build libscopes by executing the command:
 Setup the server:
 Create required directories by running the command given below:
     make
+Link the server directory to the web2py applications directory
+    ln -s . /path/to/web2py/applications/biographer
+Ensure that the correct server URL is put in main/settings.js(The 
+default URL is 'http://127.0.0.1:8000/biographer'):
+    serverURL = 'http://web2py-url:port/application-name'
