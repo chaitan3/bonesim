@@ -120,8 +120,7 @@ var Simulator = function() {
     updateNodeColor(id);
     
     //Update the value in the plot
-    $('rect.' + iterationCount).remove();
-    $('text.' + iterationCount).remove();
+    removeStateColumn(iterationCount);
     createStateColumn(net.state);
     
     // Start the simulation if the One click option is checked
@@ -178,8 +177,12 @@ var Simulator = function() {
   var createStateColumn = function(state) {
     var xOffset = parseInt($('rect.labels').attr('width'));
     var h = parseInt($('rect.labels').attr('height'));
-    var yPos = 0, xPos = xOffset + iterationCount * h; 
+    var maxColumns = 40;
+    var yPos = 0, xPos = xOffset + (iterationCount % maxColumns) * h; 
     var color;
+    
+    if (iterationCount >= maxColumns) 
+      removeStateColumn(iterationCount - maxColumns);
     
     for (i in state) {
       if (state[i]) color = 'red'; else color = 'green';
@@ -193,6 +196,11 @@ var Simulator = function() {
           .attr('dx', 5).attr('dy', 15)
           .attr('class', iterationCount)
           .text(iterationCount);
+  }
+  
+  var removeStateColumn = function(index) {
+    $('rect.' + index).remove();
+    $('text.' + index).remove();
   }
   /**
    * Create the Heatmap Plotter. 

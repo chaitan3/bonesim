@@ -10,14 +10,9 @@
   background-color:white !important;
 }
 
-#plotTimeSeries {
-  width: 100%;
-  height: 100%;
-}
-
-#plotTimeSeries svg {
-  padding: 20px;
-  width: 100%;
+#plotTimeSeries > svg {
+  margin: 20px;
+  min-width: 800px;
 }
 
 #plotTimeSeries rect.labels {
