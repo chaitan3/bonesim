@@ -68,7 +68,6 @@ var Controls = function() {
     $.getScript("lib/interact.js");
     $.getScript("lib/d3.v2.min.js");
     $.getScript("lib/libSBGN.min.js");
-    $.getScript("lib/rickshaw.min.js");
 
     $.getScript("js/import.js");
     $.getScript("js/simulator.js");
