@@ -15,18 +15,17 @@
   height: 100%;
 }
 
-#plotTimeSeries > div {
-  display: inline-block;
-  vertical-align: top;
-  padding: 0px;
-  margin: 10px;
+#plotTimeSeries svg {
+  padding: 20px;
+  width: 100%;
 }
 
-#axisY {
-  width: 40px;
+#plotTimeSeries rect.labels {
+  fill: white;
 }
-#legendNodes {
-  width: 100px;
+#plotTimeSeries text {
+  fill: black;
+  font-size: 12px;
 }
 
 #buttonImportDialog {

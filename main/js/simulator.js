@@ -119,6 +119,11 @@ var Simulator = function() {
     net.state[id] = !net.state[id];
     updateNodeColor(id);
     
+    //Update the value in the plot
+    $('rect.' + iterationCount).remove();
+    $('text.' + iterationCount).remove();
+    createStateColumn(net.state);
+    
     // Start the simulation if the One click option is checked
     if (config.oneClick && !obj.running) 
       setTimeout(function() { obj.start(); }, config.simDelay);
@@ -155,66 +160,54 @@ var Simulator = function() {
     return color;
   };
   
+  
+  var createNodesColumn = function(state, w, h) {
+    var yPos = 0; 
+    
+    for (i in state) {
+      plot.append('svg:rect').attr('y', function(d) { return yPos; })
+          .attr('height', h).attr('width', w)
+          .attr('class', 'labels');
+      plot.append('svg:text').attr('y', function(d) { return yPos; })
+          .attr('dx', 10).attr('dy', 15)
+          .text(i)
+      yPos += h;
+    }  
+  }
+  
+  var createStateColumn = function(state) {
+    var xOffset = parseInt($('rect.labels').attr('width'));
+    var h = parseInt($('rect.labels').attr('height'));
+    var yPos = 0, xPos = xOffset + iterationCount * h; 
+    var color;
+    
+    for (i in state) {
+      if (state[i]) color = 'red'; else color = 'green';
+      plot.append('svg:rect').attr('y', function(d) { return yPos; }).attr('x', xPos)
+          .attr('height', h).attr('width', h)
+          .attr('fill', color)
+          .attr('class', iterationCount);
+      yPos += h;
+    }  
+    plot.append('svg:text').attr('y', function(d) { return yPos; }).attr('x', xPos)
+          .attr('dx', 5).attr('dy', 15)
+          .attr('class', iterationCount)
+          .text(iterationCount);
+  }
   /**
-   * Create the Rickshaw Plotter. The time series variable is first created,
-   * then the plotter, X-axis, Y-axis and finally the legend and it's 
-   * node select option.
+   * Create the Heatmap Plotter. 
    * @param {Array} nodes The list of nodes in the graph.
    * @param {Object} state The state of the network.
    */
   var createPlotter = function(nodes, state) {
-    var i, timeSeries = [];
     
     // Clear any previous plots
-    $('#plotArea').html('');
-    $('#axisY').html('');
-    $('#legendNodes').html('');
+    $('#plotTimeSeries').html('');
     
-    // Generate the timeSeries Object for the plotter
-    for (i in state) 
-      timeSeries.push({ color: getRandomColor(), 
-        data: [{x: 0, y: +state[i]}], name: i });
+    plot = d3.select('#plotTimeSeries').append('svg:svg')
+    createNodesColumn(state, 100, 20);
+    createStateColumn(state);
     
-    // Create the Graph, constant hold interpolation  
-    plot = new Rickshaw.Graph({
-      element: $("#plotArea")[0],
-      width: 600,//$(window).width(),
-      height: 400,//$(window).height(),
-      renderer: 'line',
-      interpolation: 'step-after',
-      series: timeSeries
-    });
-    
-    // Create the X & Y-axis, X is attached to the graph, whereas 
-    // Y is separate
-    var time = new Rickshaw.Fixtures.Time().unit('second');
-    time.formatter = function(d) { return d.getUTCSeconds(); };
-    var xAxis = new Rickshaw.Graph.Axis.Time({
-      graph: plot,
-      timeUnit: time
-    });
-    var yAxis = new Rickshaw.Graph.Axis.Y({
-      graph: plot,
-      orientation: 'left',
-      tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-      element: $('#axisY')[0]
-    });
-    
-    // Create the legend, separate from the graph
-    var legend = new Rickshaw.Graph.Legend({
-      element: $('#legendNodes')[0],
-      graph: plot
-    });
-    
-    // Create the choice list for the nodes, attach to legend
-    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-      graph: plot,
-      legend: legend
-    });
-    
-    // Render the plot and select the first node
-    plot.render();
-    $('#legendNodes ul :eq(0) span ').trigger('click');
   };
   
   /**
@@ -263,23 +256,6 @@ var Simulator = function() {
     }
   };
   
-  /**
-   * Append the newly calculated node states to the graph. The plot is 
-   * then updated using the render function.
-   * @param {Array} nodes The list of nodes in the graph.
-   * @param {Object} state The state of the network.
-   */
-  var updatePlots = function(nodes, state) {
-    var i, id;
-    for (i in plot.series) {
-      if (typeof(plot.series[i]) === 'object') {
-        id = plot.series[i].name;
-        plot.series[i].data.push({x: iterationCount, y: +state[id]});
-      }
-    }
-    plot.render();
-  };
-
   /**
    * Calculate the new state of the network using the update rules.
    * The node state is updated synchronously in the sense that the update
@@ -373,10 +349,7 @@ var Simulator = function() {
   this.run = function() {
     if (!(this.running))
       return;
-    
-    updatePlots(net.nodes, net.state);  
-    $('#textIteration').text(iterationCount++);
-    
+
     // Get the next states from the current state, contact server if required  
     if (this.scopes) {
       $.ajax({
@@ -391,6 +364,10 @@ var Simulator = function() {
     }
     else
        singleIteration();
+    
+    $('#textIteration').text(++iterationCount);   
+    createStateColumn(net.state);
+    
   };
   
   /**
