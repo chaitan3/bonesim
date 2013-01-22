@@ -23,6 +23,10 @@
   font-size: 12px;
 }
 
+#currMarker {
+  fill: black;
+}
+
 #buttonImportDialog {
   margin-left: 20px;
 }

@@ -120,7 +120,6 @@ var Simulator = function() {
     updateNodeColor(id);
     
     //Update the value in the plot
-    removeStateColumn(iterationCount);
     createStateColumn(net.state);
     
     // Start the simulation if the One click option is checked
@@ -193,8 +192,7 @@ var Simulator = function() {
     var color;
     
     // Replace previous column
-    if (iterationCount >= maxColumns) 
-      removeStateColumn(iterationCount - maxColumns);
+    removeStateColumn(iterationCount - maxColumns);
     
     for (i in state) {
       if (state[i]) color = 'red'; else color = 'green';
@@ -210,6 +208,10 @@ var Simulator = function() {
           .attr('dx', 5).attr('dy', 15)
           .attr('class', iterationCount)
           .text(iterationCount);
+    // Add the marker for current iteration
+    plot.append('svg:rect').attr('height', yPos).attr('width', 7)
+          .attr('id', 'currMarker')
+          .attr('x', xPos + h);      
   }
   
   /**
@@ -219,6 +221,7 @@ var Simulator = function() {
   var removeStateColumn = function(index) {
     $('rect.' + index).remove();
     $('text.' + index).remove();
+    d3.selectAll('#currMarker').remove();
   }
   /**
    * Create the Heatmap Plotter. 
@@ -229,10 +232,11 @@ var Simulator = function() {
     
     // Clear any previous plots
     $('#plotTimeSeries').html('');
+    var w = 100, h = 20;
     
     // Use d3 to create the initial svg with the start states
-    plot = d3.select('#plotTimeSeries').append('svg:svg')
-    createNodesColumn(state, 100, 20);
+    plot = d3.select('#plotTimeSeries').append('svg:svg');
+    createNodesColumn(state, w, h);
     createStateColumn(state);
   };
   
