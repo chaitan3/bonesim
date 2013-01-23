@@ -62,11 +62,11 @@ var Controls = function() {
     });
     
     $.getScript("lib/jquery.simulate.js");
-    $.getScript("lib/biographer-ui.min.js", function() {
+    $.getScript("lib/biographer-ui.js", function() {
       bui.settings.css.stylesheetUrl = 'css/visualization-svg.css';
     });
     $.getScript("lib/interact.js");
-    $.getScript("lib/d3.v2.min.js");
+    $.getScript("lib/d3.v3.min.js");
     $.getScript("lib/libSBGN.min.js");
 
     $.getScript("js/import.js");
@@ -210,6 +210,17 @@ var Controls = function() {
     var graph = new bui.Graph($(tab)[0]);
     
     var handle = graph.suspendRedraw(20000);
+    
+    // Fix Self-loop edges
+    for (i in jsbgn.edges) {
+      var edge = jsbgn.edges[i];
+      if (edge.source == edge.target) {
+        edge.data.type = 'curve';
+        //~ edge.data.handles = [10,10,-5,-5];
+        edge.data.handles = [{x:100, y:200}, {x:100, y:50}];
+      }
+    }
+    
     bui.importFromJSON(graph, jsbgn);
     // Do the layouting
     jsbgn.connectNodes();

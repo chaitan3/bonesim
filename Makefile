@@ -16,7 +16,7 @@ LINT = jshint
 
 all: lint doc test pkg
 
-libs: libdir bui d3 rickshaw libSBGN.js
+libs: libdir bui d3 libSBGN.js
 
 libdir: 
 	#create the lib directory
@@ -25,24 +25,17 @@ libdir:
 
 bui:
 	#fetch biographer-ui, install it's compilation dependencies for ubuntu and build it
-	hg clone https://code.google.com/p/biographer.visualization/ UI
-	cd UI; \
+	hg clone https://chaitukca@code.google.com/p/biographer/
+	cd biographer/bui; \
 	python src/build/python/manage.py clean build test compress createDistribution
-	cp -R UI/target/distribution/css/. $(CSS)
-	cp -R UI/target/distribution/js/. $(LIB)
-	rm -rf UI
+	cp -R biographer/bui/target/distribution/css/. $(CSS)
+	cp -R biographer/bui/target/distribution/js/. $(LIB)
+	rm -rf biographer
  
 d3:
 	#fetch d3.js min library 
-	wget http://d3js.org/d3.v2.min.js
-	mv d3.v2.min.js $(LIB)
-
-rickshaw:
-	#fetch Rickshaw from github
-	wget https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.css
-	mv rickshaw.min.css $(CSS)
-	wget https://raw.github.com/shutterstock/rickshaw/master/rickshaw.min.js
-	mv rickshaw.min.js $(LIB)
+	wget http://d3js.org/d3.v3.min.js
+	mv d3.v3.min.js $(LIB)
 
 libSBGN.js: 
 	#fetch libSBGN.js, install ant and build it
