@@ -206,26 +206,25 @@ var Controls = function() {
    * @returns {bui.Graph} The graph for the network.
    */
   this.importNetwork = function(jsbgn, tab) {
-    $(tab).html('');
-    var graph = new bui.Graph($(tab)[0]);
     
-    var handle = graph.suspendRedraw(20000);
+    // Do the layouting
+    jsbgn.connectNodes(true);
+    jsbgn.layoutGraph();
+    jsbgn.connectNodes(false);
     
     // Fix Self-loop edges
     for (i in jsbgn.edges) {
       var edge = jsbgn.edges[i];
       if (edge.source == edge.target) {
-        edge.data.type = 'curve';
-        //~ edge.data.handles = [10,10,-5,-5];
-        edge.data.handles = [{x:100, y:200}, {x:100, y:50}];
+        edge.data.type = 'spline';
+        edge.data.handles = [10,20, -10, -20];
       }
     }
     
+    $(tab).html('');
+    var graph = new bui.Graph($(tab)[0]);
+    var handle = graph.suspendRedraw(20000);
     bui.importFromJSON(graph, jsbgn);
-    // Do the layouting
-    jsbgn.connectNodes();
-    jsbgn.layoutGraph(graph);
-    jsbgn.redrawNodes(graph);
     
     // Center the graph and optionally scale it
     graph.reduceTopLeftWhitespace();
@@ -239,7 +238,7 @@ var Controls = function() {
     if (tab === '#graphStateTransition')
       transition = graph;
     else
-      network = graph;
+      networ = graph;
   };
 
   /** 
