@@ -398,7 +398,8 @@ var Simulator = function() {
        singleIteration();
     
     $('#textIteration').text(++iterationCount);   
-    createStateColumn(net.state);
+    if (plot !== null)
+      createStateColumn(net.state);
     
   };
   

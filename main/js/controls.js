@@ -119,7 +119,7 @@ var Controls = function() {
     else if (ui.index === 1)
       graph = transition;
     else {
-      if (simular !== null)
+      if (simulator !== null)
         simulator.createPlotter();
     }
       
