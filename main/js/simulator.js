@@ -19,6 +19,7 @@ var Simulator = function() {
   
   // Network and update rules
   var net;
+  var states = [];
   var ruleFunctions = {};
   
   // Track the number of iterations and the plot
@@ -123,7 +124,8 @@ var Simulator = function() {
     
     //Update the value in the plot
     iterationCount += 2;
-    createStateColumn(net.state);
+    createStateColumn(net.state, iterationCount);
+    
     
     // Start the simulation if the One click option is checked
     if (config.oneClick && !obj.running) 
@@ -187,16 +189,17 @@ var Simulator = function() {
   /**
    * Construct a column with all the states.
    * @param {Object} state Current state of the network.
+   * @param {number} count Iteration Count.
    */
-  var createStateColumn = function(state) {
+  var createStateColumn = function(state, count) {
     var maxColumns = 40;
     
     // Calculate position of the column
-    var yPos = 0, xPos = plotW + (iterationCount % maxColumns) * plotH; 
+    var yPos = 0, xPos = plotW + (count % maxColumns) * plotH; 
     var color;
     
     // Replace previous column
-    removeStateColumn(iterationCount - maxColumns);
+    removeStateColumn(count - maxColumns);
     
     for (i in state) {
       if (state[i]) color = 'red'; else color = 'green';
@@ -204,14 +207,14 @@ var Simulator = function() {
       plot.append('svg:rect').attr('y', function(d) { return yPos; }).attr('x', xPos)
           .attr('height', plotH).attr('width', plotH)
           .attr('fill', color)
-          .attr('class', iterationCount);
+          .attr('class', count);
       yPos += plotH;
     }  
     // Iteration count text on the bottom
     plot.append('svg:text').attr('y', function(d) { return yPos; }).attr('x', xPos)
           .attr('dx', 5).attr('dy', 15)
-          .attr('class', iterationCount)
-          .text(iterationCount);
+          .attr('class', count)
+          .text(count);
     // Add the marker for current iteration
     plot.append('svg:rect').attr('height', yPos).attr('width', 7)
           .attr('id', 'currMarker')
@@ -241,7 +244,9 @@ var Simulator = function() {
     // Use d3 to create the initial svg with the start states
     plot = d3.select('#plotTimeSeries').append('svg:svg');
     createNodesColumn(net.state);
-    createStateColumn(net.state);
+    
+    for (j = iterationCount - iterationCount % 40; j <= iterationCount; j++)
+      createStateColumn(states[j], j);
   };
   
   /**
@@ -271,6 +276,9 @@ var Simulator = function() {
     }
     if (this.scopes && config.guessSeed)
       applyGuessSeed();
+    // Push the initial state into the states array
+    states.push({});
+    $.extend(states[0], net.state);
     
     var svgNode;  
     for (i in net.state) {
@@ -322,6 +330,8 @@ var Simulator = function() {
   var singleIteration = function() {
     var changed, i;
     changed = synchronousUpdate(net.state);  
+    states.push({});
+    $.extend(states[iterationCount + 1], net.state);
     
     // Update the node colors after an iteration and call run again if
     // the Simulation has not reached steady state
@@ -381,6 +391,7 @@ var Simulator = function() {
   this.run = function() {
     if (!(this.running))
       return;
+      
 
     // Get the next states from the current state, contact server if required  
     if (this.scopes) {
@@ -399,7 +410,7 @@ var Simulator = function() {
     
     $('#textIteration').text(++iterationCount);   
     if (plot !== null)
-      createStateColumn(net.state);
+      createStateColumn(net.state, iterationCount);
     
   };
   
