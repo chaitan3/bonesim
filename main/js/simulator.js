@@ -24,6 +24,8 @@ var Simulator = function() {
   // Track the number of iterations and the plot
   var iterationCount = 0;
   var plot = null;
+  var plotH = 20;
+  var plotW = 100;
   
   /**
    * Convert the update rule to a function. This is done by matching all 
@@ -120,6 +122,7 @@ var Simulator = function() {
     updateNodeColor(id);
     
     //Update the value in the plot
+    iterationCount += 2;
     createStateColumn(net.state);
     
     // Start the simulation if the One click option is checked
@@ -161,21 +164,24 @@ var Simulator = function() {
   /**
    * Construct the node label column
    * @param {Object} state Current state of the network.
-   * @param {number} w Width of the labels.
-   * @param {number} h Height of the labels.
    */
-  var createNodesColumn = function(state, w, h) {
-    var yPos = 0; 
+  var createNodesColumn = function(state) {
+    var yPos = 0;
     
     for (i in state) {
-      plot.append('svg:rect').attr('y', function(d) { return yPos; })
-          .attr('height', h).attr('width', w)
-          .attr('class', 'labels');
       plot.append('svg:text').attr('y', function(d) { return yPos; })
           .attr('dx', 10).attr('dy', 15)
           .text(i)
-      yPos += h;
+          .attr('id', 'label' + i);
+          
+      // Get the width of the text and find maximum
+      var width = d3.select('#label' + i).node().getBBox()['width'];
+      if (width > plotW)
+        plotW = width + 50;
+      yPos += plotH;
     }  
+    // Resize SVG
+    plot.attr('height', yPos + 50);
   }
   
   /**
@@ -183,12 +189,10 @@ var Simulator = function() {
    * @param {Object} state Current state of the network.
    */
   var createStateColumn = function(state) {
-    var xOffset = parseInt($('rect.labels').attr('width'));
-    var h = parseInt($('rect.labels').attr('height'));
     var maxColumns = 40;
     
     // Calculate position of the column
-    var yPos = 0, xPos = xOffset + (iterationCount % maxColumns) * h; 
+    var yPos = 0, xPos = plotW + (iterationCount % maxColumns) * plotH; 
     var color;
     
     // Replace previous column
@@ -198,10 +202,10 @@ var Simulator = function() {
       if (state[i]) color = 'red'; else color = 'green';
       // Add a rectangle of required color
       plot.append('svg:rect').attr('y', function(d) { return yPos; }).attr('x', xPos)
-          .attr('height', h).attr('width', h)
+          .attr('height', plotH).attr('width', plotH)
           .attr('fill', color)
           .attr('class', iterationCount);
-      yPos += h;
+      yPos += plotH;
     }  
     // Iteration count text on the bottom
     plot.append('svg:text').attr('y', function(d) { return yPos; }).attr('x', xPos)
@@ -211,7 +215,7 @@ var Simulator = function() {
     // Add the marker for current iteration
     plot.append('svg:rect').attr('height', yPos).attr('width', 7)
           .attr('id', 'currMarker')
-          .attr('x', xPos + h);      
+          .attr('x', xPos + plotH);      
   }
   
   /**
@@ -225,19 +229,19 @@ var Simulator = function() {
   }
   /**
    * Create the Heatmap Plotter. 
-   * @param {Array} nodes The list of nodes in the graph.
-   * @param {Object} state The state of the network.
    */
-  var createPlotter = function(nodes, state) {
+  this.createPlotter = function() {
+    
+    if (plot !== null)
+      return;
     
     // Clear any previous plots
-    $('#plotTimeSeries').html('');
-    var w = 100, h = 20;
+    $('#plotTimeSeries > svg').remove();
     
     // Use d3 to create the initial svg with the start states
     plot = d3.select('#plotTimeSeries').append('svg:svg');
-    createNodesColumn(state, w, h);
-    createStateColumn(state);
+    createNodesColumn(net.state);
+    createStateColumn(net.state);
   };
   
   /**
@@ -267,8 +271,6 @@ var Simulator = function() {
     }
     if (this.scopes && config.guessSeed)
       applyGuessSeed();
-      
-    createPlotter(net.nodes, net.state);
     
     var svgNode;  
     for (i in net.state) {

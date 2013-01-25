@@ -13,12 +13,10 @@
 #plotTimeSeries > svg {
   margin: 20px;
   min-width: 800px;
+  min-height: 800px;
 }
 
-#plotTimeSeries rect.labels {
-  fill: white;
-}
-#plotTimeSeries text {
+#plotTimeSeries text{
   fill: black;
   font-size: 12px;
 }
@@ -26,6 +24,28 @@
 #currMarker {
   fill: black;
 }
+
+#legend {
+  padding: 10px;
+}
+
+#legend > ul > li {
+  display: inline-block;
+  list-style-type: none;
+}
+.legend {
+  height: 20px;
+  width: 20px;
+}
+
+#legendOn {
+  background-color: red;
+}
+
+#legendOff {
+  background-color: green;
+}
+
 
 #buttonImportDialog {
   margin-left: 20px;
