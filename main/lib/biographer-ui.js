@@ -137,7 +137,7 @@ bui.settings = {
      * The url from which the CSS file should be imported and CSS classes
      */
     css : {
-        stylesheetUrl : '../static/bui/css/visualization-svg.css',
+        stylesheetUrl : 'resources/css/visualization-svg.css',
         classes : {
             invisible : 'hidden',
             selected : 'selected',
@@ -2612,8 +2612,9 @@ var getSBOForMarkerId = function(id) {
                     if (privates.drawables.hasOwnProperty(i)) {
                         drawable = privates.drawables[i];
 
-                        if (drawable.bottomRight !== undefined &&
-                                drawable.hasParent() === false) {
+                        if ((drawable.bottomRight !== undefined) &&
+                                (drawable.hasParent() === false) &&
+                                (drawable.identifier() !== 'SplineEdgeHandle')) {
                             topLeft = drawable.position();
 
                             drawable.move(minX, minY, duration);
@@ -6771,11 +6772,11 @@ var getSBOForMarkerId = function(id) {
         if (newX !== null) {
             newX.bind(bui.Drawable.ListenerType.remove,
                     sourceRemoveListener.createDelegate(this),
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'source');
         }
 
         if (oldX !== null) {
-            oldX.unbindAll(listenerIdentifier(this));
+            oldX.unbindAll(listenerIdentifier(this) + 'source');
         }
     };
 
@@ -6787,11 +6788,11 @@ var getSBOForMarkerId = function(id) {
         if (newX !== null) {
             newX.bind(bui.Drawable.ListenerType.remove,
                     targetRemoveListener.createDelegate(this),
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'target');
         }
 
         if (oldX !== null) {
-            oldX.unbindAll(listenerIdentifier(this));
+            oldX.unbindAll(listenerIdentifier(this) + 'target');
         }
     };
 
@@ -6802,11 +6803,11 @@ var getSBOForMarkerId = function(id) {
         var privates = this._privates(identifier);
 
         if (privates.source !== null) {
-            privates.source.unbindAll(listenerIdentifier(this));
+            privates.source.unbindAll(listenerIdentifier(this) + 'source');
         }
 
         if (privates.target !== null) {
-            privates.target.unbindAll(listenerIdentifier(this));
+            privates.target.unbindAll(listenerIdentifier(this) + 'target');
         }
     };
 
@@ -6997,20 +6998,20 @@ var getSBOForMarkerId = function(id) {
      */
     var sourceChanged = function(drawable, newSource, oldSource) {
         if (oldSource !== null) {
-            oldSource.unbindAll(listenerIdentifier(this));
+            oldSource.unbindAll(listenerIdentifier(this) + 'source');
         }
 
         if (newSource !== null) {
             var listener = this._sourceOrTargetDimensionChanged
                     .createDelegate(this);
             newSource.bind(bui.Node.ListenerType.absolutePosition, listener,
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'source');
             newSource.bind(bui.Node.ListenerType.size, listener,
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'source');
 
             newSource.bind(bui.Drawable.ListenerType.visible,
                     endpointVisibilityChanged.createDelegate(this),
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'source');
         }
 
         this._sourceOrTargetDimensionChanged();
@@ -7022,20 +7023,20 @@ var getSBOForMarkerId = function(id) {
      */
     var targetChanged = function(drawable, newTarget, oldTarget) {
         if (oldTarget !== null) {
-            oldTarget.unbindAll(listenerIdentifier(this));
+            oldTarget.unbindAll(listenerIdentifier(this) + 'target');
         }
 
         if (newTarget !== null) {
             var listener = this._sourceOrTargetDimensionChanged
                     .createDelegate(this);
             newTarget.bind(bui.Node.ListenerType.absolutePosition, listener,
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'target');
             newTarget.bind(bui.Node.ListenerType.size, listener,
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'target');
 
             newTarget.bind(bui.Drawable.ListenerType.visible,
                     endpointVisibilityChanged.createDelegate(this),
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'target');
         }
 
         this._sourceOrTargetDimensionChanged();
@@ -7844,6 +7845,18 @@ var getSBOForMarkerId = function(id) {
       privates.detectMove.prev[type]={x:x,y:y};
       privates.detectMove.last={type:type,dx:dx,dy:dy};
     }
+    /*
+     * @private
+     * if edge is a loop, make initial edge a spline which is a loop of a size similar to the node size
+     */
+    var fixLoopEdge=function(){
+       var privates = this._privates(identifier);
+       if (privates.points && privates.points.length) return; // then the user should know on its own
+       var size=this.source().size();
+       privates.sourceSplineHandleVec={x:size.width,y:-size.height};
+       privates.targetSplineHandleVec={x:-size.width,y:-size.height};
+       makeSpline.call(this);
+    }
     /**
      * @private
      * Source changed event listener
@@ -7851,10 +7864,11 @@ var getSBOForMarkerId = function(id) {
     var sourceChanged = function(node, source, old) {
         var privates = this._privates(identifier);
         if (privates.isSpline) privates.sourceHelperLine.target(source);
-        if (old !== undefined && old !== null) old.unbindAll(listenerIdentifier(this));
+        if (old !== undefined && old !== null) old.unbindAll(listenerIdentifier(this) + 'source');
         if (source !== undefined && source !== null) source.bind(bui.Node.ListenerType.absolutePosition,
                     detectWholeEdgeMove.createDelegate(this),
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'source');
+        if (source && source == this.target()) fixLoopEdge.call(this);
     };
 
     /**
@@ -7864,10 +7878,11 @@ var getSBOForMarkerId = function(id) {
     var targetChanged = function(node, target, old) {
         var privates = this._privates(identifier);
         if (privates.isSpline) privates.targetHelperLine.target(target);
-        if (old !== undefined && old !== null) old.unbindAll(listenerIdentifier(this));
+        if (old !== undefined && old !== null) old.unbindAll(listenerIdentifier(this) + 'target');
         if (target !== undefined && target !== null) target.bind(bui.Node.ListenerType.absolutePosition,
                     detectWholeEdgeMove.createDelegate(this),
-                    listenerIdentifier(this));
+                    listenerIdentifier(this) + 'target');
+        if (target && target == this.source()) fixLoopEdge.call(this);
     };
 
     /**
@@ -7947,6 +7962,14 @@ var getSBOForMarkerId = function(id) {
             updateEdge.call(this);
         },
         /**
+        * method to return length of edge (in segments).
+        * 
+        * @return {length} number of points+1
+        */
+        length : function(){
+          return this._privates(identifier).points.length+1;
+        },
+        /**
         * method to add a point to edge. 
         * 
         * @param {x,y} position of new point
@@ -7967,6 +7990,32 @@ var getSBOForMarkerId = function(id) {
           var point=_addPoint.call(this,x,y,type,position,dx,dy);
           updateEdge.call(this);
           return point;
+        },
+        /**
+        * method to update position and spline vector of a point  
+        * 
+        * @param {idx} index of the point in edge
+        * @param {x,y} new position of point
+        * @param {dx,dy} spline handle vector if edge is spline
+        * @return {bui.Edge} fluent interface
+        */
+        updatePoint : function(idx,x,y,dx,dy,duration){
+          var privates = this._privates(identifier);
+          if (idx===undefined || idx<0 || idx>=privates.points.length) {
+            console.log("updatePoint expects point idx in current range of edge points");
+            return this;
+          }
+          if (privates.isSpline){
+            if (dx===undefined || dy===undefined) {
+              console.log("edge is spline, but dx,dy in updatePoint not set.");
+              return this; 
+            }
+            
+            privates.points[idx].dx=dx;
+            privates.points[idx].dy=dy;
+          }
+          privates.points[idx].point.absolutePositionCenter(x,y,duration); // this triggers updateEdge automatically
+          return this;
         },
         /**
         * method to get point at specified index
@@ -8155,22 +8204,22 @@ var getSBOForMarkerId = function(id) {
                 privates = this._privates(identifier);
 
             var handles = [], points = [], pointtypes = [];
-            if (privates.isSpline) handles.push(privates.sourceSplineHandleVec.x,privates.sourceSplineHandleVec.y);
+            if (privates.isSpline) handles.push({x:privates.sourceSplineHandleVec.x,y:privates.sourceSplineHandleVec.y});
             if (privates.points.length > 0) {
               
               for (var i = 0; i < privates.points.length; i++) {
                 var position = privates.points[i].point.absoluteCenter();
-                points.push(position.x,position.y);
+                points.push({x:position.x,y:position.y});
                 if (privates.isSpline) {
                   var ps = privates.points[i].splineHandle.absoluteCenter();
-                  handles.push(ps.x-position.x,ps.y-position.y);
+                  handles.push({x:ps.x-position.x,y:ps.y-position.y});
                 }
                 if (privates.points[i].point.hasClass('Outcome')){
                   pointtypes[i]='Outcome';
                 }
               }
             }
-            if (privates.isSpline) handles.push(privates.targetSplineHandleVec.x,privates.targetSplineHandleVec.y);
+            if (privates.isSpline) handles.push({x:privates.targetSplineHandleVec.x,y:privates.targetSplineHandleVec.y});
             if (privates.isSpline) updateJson(json, dataFormat.edge.type, "spline");
             if (points.length) updateJson(json, dataFormat.edge.points, points);
             if (handles.length) updateJson(json, dataFormat.edge.handles, handles);
@@ -8643,16 +8692,16 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
             var spline=(edgeJSON.data.type=='curve' || edgeJSON.data.type=='spline');
             edge.spline(spline);
             if (spline){
-              edge.sourceSplineHandle(edgeJSON.data.handles[0],edgeJSON.data.handles[1]);
-              edge.targetSplineHandle(edgeJSON.data.handles[edgeJSON.data.handles.length-2],edgeJSON.data.handles[edgeJSON.data.handles.length-1]);
+              edge.sourceSplineHandle(edgeJSON.data.handles[0].x,edgeJSON.data.handles[0].y);
+              edge.targetSplineHandle(edgeJSON.data.handles[edgeJSON.data.handles.length-1].x,edgeJSON.data.handles[edgeJSON.data.handles.length-1].y);
             }
             if(edgeJSON.data.points !== undefined){
-              for(var j=0; j<edgeJSON.data.points.length; j += 2){
-                var type = (edgeJSON.data.pointtypes ? edgeJSON.data.pointtypes[i] : undefined);
+              for(var j=0; j<edgeJSON.data.points.length; j ++){
+                var type = (edgeJSON.data.pointtypes ? edgeJSON.data.pointtypes[j] : undefined);
                 if (spline){
-                  edge.addPoint(edgeJSON.data.points[j], edgeJSON.data.points[j+1],type,undefined,edgeJSON.data.handles[j+2],edgeJSON.data.handles[j+3])
+                  edge.addPoint(edgeJSON.data.points[j].x, edgeJSON.data.points[j].y,type,undefined,edgeJSON.data.handles[j+1].x,edgeJSON.data.handles[j+1].y)
                 } else {
-                  edge.addPoint(edgeJSON.data.points[j], edgeJSON.data.points[j+1],type)
+                  edge.addPoint(edgeJSON.data.points[j].x, edgeJSON.data.points[j].y,type)
                 }
               }
             }
@@ -8897,13 +8946,43 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
                 log('Warning: Can\'t update edge for json edge id ' +
                         edgeJSON.id + ' because the edge can\'t be found.');
                 continue;
-            } else if (!bui.util.propertySetAndNotNull(edgeJSON,
-                    ['data', 'type'], ['data', 'handles'])) {
-                continue;
-            } else if (edgeJSON.data.type !== 'curve') {
-                continue;
             }
-
+            var isSpline=(edgeJSON.data.type == 'curve' || edgeJSON.data.type == 'spline');
+            var points=[];
+            if (bui.util.propertySetAndNotNull(edgeJSON,['data', 'points'])) {
+                points=edgeJSON.data.points;
+            }
+            var handles=[];
+            if (isSpline && (!bui.util.propertySetAndNotNull(edgeJSON,['data', 'handles']) || edgeJSON.data.handles.length+2!=points.length)) { 
+              log('no/wrong data.handles property for spline edge');
+              isSpline=false;
+            }
+            edge.spline(isSpline); // update spline status
+            if (isSpline){
+              handles=edgeJSON.data.handles
+              edge.sourceSplineHandle(handles[0].x,handles[0].y);
+              edge.targetSplineHandle(handles[handles.length-1].x,handles[handles.length-1].y);
+            }
+            for (var k=edge.length()-2;k>=points.length;k--){
+              edge.removePoint(k);
+            }
+            for (var k=0;k<points.length;k++){
+                //var type = (pointtypes ? pointtypes[j] : undefined); //WARNING cannot update type yet
+              if (isSpline){
+                edge.updatePoint(k,points[k].x, points[k].y,handles[k+1].x,handles[k+1].y,duration);
+              } else {
+                edge.updatePoint(k,points[k].x, points[k].y,undefined,undefined,duration);
+              }
+              
+            }
+            for (var k=edge.length();k<points.length;k++){
+              var type = (pointtypes ? pointtypes[j] : undefined);
+              if (isSpline){
+                edge.addPoint(points[k].x, points[k].y,type,undefined,handles[k+1].x,handles[k+1].y)
+              } else {
+                edge.addPoint(points[k].x, points[k].y,type)
+              }
+            }
             edge.setSplineHandlePositions(edgeJSON.data.handles, duration);
             edge.setSplinePoints(edgeJSON.data.points, duration);
         }
@@ -8913,6 +8992,13 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
 
 (function(bui){
    bui.layouter={};
+   var arraytoxy=function(array){
+     var xyar=[];
+     for (var i=0;i<array.length/2;i++){
+       xyar.push({x:array[2*i],y:array[2*i+1]});
+     }
+     return xyar;
+   }
    /* creates a string from the json data which serves as input for the layouter */
    bui.layouter.makeLayouterFormat = function(jdata){
       var cc=0; // node index counter
@@ -9116,9 +9202,9 @@ addModificationMapping([111100], 'PTM_sumoylation', 'S');
             isx=1-isx;
          }
          if (!jdata.edges[eidx].data) jdata.edges[eidx].data={};
-         if (handles.length) jdata.edges[eidx].data.handles=handles;
+         if (handles.length) jdata.edges[eidx].data.handles=arraytoxy(handles);
          if (handles.length) jdata.edges[eidx].data.type="curve";
-         if (points.length) jdata.edges[eidx].data.points=points;
+         if (points.length) jdata.edges[eidx].data.points=arraytoxy(points);
  
       }
       return jdata;

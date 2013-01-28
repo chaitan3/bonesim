@@ -123,8 +123,12 @@ var Simulator = function() {
     updateNodeColor(id);
     
     //Update the value in the plot
-    iterationCount += 2;
-    createStateColumn(net.state, iterationCount);
+    states[iterationCount] = {};
+    $.extend(states[iterationCount], net.state);
+    if (plot !== null) {
+      iterationCount += 2;
+      createStateColumn(net.state, iterationCount);
+    }
     
     
     // Start the simulation if the One click option is checked

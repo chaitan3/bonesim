@@ -12,6 +12,7 @@ $(document).ready(function() {
  * functions to fetch scripts and import networks into graphs.
  * @constructor
  */
+
 var Controls = function() {
   // Private variables to hold the bui.Graph instances
   var network = null, transition = null;
@@ -216,13 +217,14 @@ var Controls = function() {
     jsbgn.connectNodes(true);
     jsbgn.layoutGraph();
     jsbgn.connectNodes(false);
+    console.log(jsbgn);
     
     // Fix Self-loop edges
     for (i in jsbgn.edges) {
       var edge = jsbgn.edges[i];
       if (edge.source == edge.target) {
         edge.data.type = 'spline';
-        edge.data.handles = [10,20, -10, -20];
+        edge.data.handles = [{"x":80.25,"y":-136},{"x":-92.25,"y":-119}];
       }
     }
     
@@ -235,6 +237,7 @@ var Controls = function() {
     graph.reduceTopLeftWhitespace();
     if ($('#optionsScale').attr('checked')) 
       graph.fitToPage();
+     
     graph.unsuspendRedraw(handle);
     
     $('#sliderZoom').slider('option', 'value', graph.scale());
